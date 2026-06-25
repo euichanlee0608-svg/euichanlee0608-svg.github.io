@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Euichan Lee — Research & Systems</title>
+<meta name="description" content="Euichan Lee (Leechan) — undergraduate researcher at the intersection of AI and mechanical engineering: broadband acoustic energy harvesting, active learning, and fault-tolerant control, with the reproducible tooling built around them.">
+<meta name="author" content="Euichan Lee">
+<meta name="theme-color" content="#fbfbfa">
+<meta property="og:title" content="Euichan Lee — Research & Systems">
+<meta property="og:description" content="Research at the intersection of AI and mechanical engineering — honest framing, reproducible tooling.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231f3a5f'/><text x='16' y='22' font-size='14' font-family='Georgia,serif' font-weight='600' fill='white' text-anchor='middle'>EL</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fbfbfa; --panel:#fff; --ink:#15171c; --body:#373c44; --mut:#737985;
+    --line:#e9e9e6; --line2:#dcdcd7; --accent:#1f3a5f; --accent2:#2f6f6a; --soft:#eef1f5;
+    --folder:#f4f1e8; --folder-d:#e7e2d2; --folder-tab:#e9e4d4;
+    --fl-body:linear-gradient(168deg,#faf7ee,#efe9d9); --fl-flat:#f3eee1; --fl-tab:#e7e0cd; --fl-edge:#e0d8c4; --fl-ink:#3a3526; --fl-mut:#9b9170;
+    --green:#2f7d4f; --blue:#2f5fa5; --amber:#9a7a1e;
+    --serif:"Newsreader",Georgia,serif; --sans:"Inter",system-ui,sans-serif; --mono:"JetBrains Mono",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{font-size:17.5px}
+  body{background:
+      radial-gradient(120% 80% at 20% -10%,rgba(255,255,255,.8),transparent 60%),
+      var(--bg);
+    color:var(--body);font-family:var(--sans);line-height:1.68;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+  ::selection{background:#dfe6ef}
+  b{color:var(--ink);font-weight:600} em{font-style:italic;color:var(--accent)}
+  a{color:inherit}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 34px}
+
+  /* header */
+  .head{padding:60px 0 8px}
+  .namerow{font-family:var(--serif);font-weight:600;font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-.01em;color:var(--ink);line-height:1;margin-bottom:14px}
+  .namerow span{color:var(--mut);font-weight:400;font-size:.6em;letter-spacing:0}
+  .eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+  .head h1{font-family:var(--serif);font-weight:500;font-size:clamp(2.1rem,4.6vw,3.3rem);letter-spacing:-.02em;color:var(--ink);margin:20px 0 0;line-height:1.12;max-width:22ch}
+  .head .intro{margin-top:22px;color:var(--body);max-width:64ch;font-size:1.15rem}
+  .head .intro b{color:var(--ink)}
+  .hint{margin-top:24px;font-family:var(--mono);font-size:12.5px;color:var(--mut);display:inline-flex;gap:10px;align-items:center}
+  .hint .k{background:#fff;border:1px solid var(--line2);border-radius:5px;padding:2px 8px;color:var(--body)}
+  .reset{margin-left:8px;font-family:var(--mono);font-size:12px;color:var(--mut);background:#fff;border:1px solid var(--line2);border-radius:6px;padding:4px 10px;cursor:pointer}
+  .reset:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* board (desktop desk) */
+  .board{position:relative;height:430px;margin:34px 0 64px;touch-action:none}
+  .obj{position:absolute;cursor:grab;user-select:none;transition:filter .2s,box-shadow .25s,transform .12s}
+  .obj:active{cursor:grabbing}
+  .obj:focus-visible{outline:2px solid var(--accent);outline-offset:5px;border-radius:12px}
+  @media(max-width:820px){.board{display:none}}
+
+  /* sr-only (crawlable + screen-reader content that lives behind clicks) */
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+  /* mobile card deck */
+  .deck{display:none}
+  .deck-ui{display:none}
+  .deck-cap{display:none}
+  .intro-m{display:none}
+  .more-note{display:none}
+  @media(max-width:820px){
+    /* horizontal scroll-snap carousel */
+    .deck{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 20px 16px;margin:18px -20px 0;
+      -webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain}
+    .deck::-webkit-scrollbar{display:none}
+    .dcard{flex:0 0 80%;scroll-snap-align:center;position:relative;min-height:236px;border-radius:18px;overflow:hidden;cursor:pointer;
+      box-shadow:0 16px 32px -22px rgba(40,40,30,.5)}
+    .dcard:last-child{margin-right:4px}
+    .dcard:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+    /* folder card — mirrors desktop folder (left tab + body) */
+    .dcard.fold{background:transparent;overflow:visible;box-shadow:none}
+    .dcard.fold .dtab{position:absolute;top:0;left:0;width:50%;height:38px;background:var(--fl-tab);border:1px solid var(--fl-edge);border-bottom:none;border-radius:15px 17px 0 0;padding:11px 20px 0;z-index:2}
+    .dcard.fold .dtab span{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--fl-mut)}
+    .dcard.fold .dbody{position:absolute;top:24px;left:0;right:0;bottom:0;background:var(--fl-body);border:1px solid var(--fl-edge);border-radius:17px;box-shadow:0 16px 30px -22px rgba(60,55,35,.4);padding:28px 22px 22px}
+    .dcard.fold .dbody::before{content:"";position:absolute;top:10px;left:18px;right:18px;height:5px;border-radius:4px;background:#fff}
+    .dcard.fold h3{color:var(--fl-ink);margin-top:4px}
+    .dcard.fold p{color:var(--fl-mut);font-size:1.08rem}
+    .dcard.fold .dgo{color:var(--fl-mut)}
+    /* pin card — mirrors desktop pinned card */
+    .dcard.pinc{background:var(--panel);border:1px solid var(--line);padding:24px 22px}
+    .dcard.pinc::before{content:"";position:absolute;top:-7px;left:50%;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#5b82b8,var(--accent));box-shadow:0 2px 5px rgba(0,0,0,.25);transform:translateX(-50%)}
+    .dcard .dk{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--accent)}
+    .dcard h3{font-family:var(--serif);font-size:1.7rem;font-weight:500;color:var(--ink);letter-spacing:-.01em;margin:12px 0 10px;line-height:1.05}
+    .dcard p{font-size:1.0rem;color:var(--mut);line-height:1.5}
+    .dcard .dgo{margin-top:18px;font-family:var(--mono);font-size:12px;color:var(--accent)}
+    .deck-ui{display:flex;align-items:center;justify-content:center;gap:16px;margin:4px 0 30px}
+    .dots{display:flex;gap:8px}
+    .dots i{width:7px;height:7px;border-radius:50%;background:var(--line2);transition:.25s}
+    .dots i.on{background:var(--accent);transform:scale(1.3)}
+    .dnav{width:42px;height:42px;border-radius:50%;border:1px solid var(--line2);background:#fff;color:var(--body);display:grid;place-items:center;cursor:pointer;font-size:19px;line-height:1}
+    .dnav:active{border-color:var(--accent);color:var(--accent);background:var(--soft)}
+    .deck-cap{display:block;text-align:center;font-family:var(--mono);font-size:11.5px;color:var(--mut);margin:-2px 0 8px;letter-spacing:.03em}
+  }
+
+  /* folder (flat, folder.jpg style — light beige) */
+  .folder{width:296px;height:202px}
+  .folder .tab{position:absolute;top:0;left:0;width:146px;height:42px;background:var(--fl-tab);border:1px solid var(--fl-edge);border-bottom:none;border-radius:16px 18px 0 0}
+  .folder .tab span{position:absolute;left:22px;top:13px;font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--fl-mut)}
+  .folder .front{position:absolute;left:0;right:0;top:26px;bottom:0;background:var(--fl-body);border:1px solid var(--fl-edge);border-radius:18px;box-shadow:0 16px 30px -20px rgba(60,55,35,.4);padding:30px 28px;transition:transform .25s,box-shadow .25s}
+  .folder .front::before{content:"";position:absolute;top:9px;left:20px;right:20px;height:5px;border-radius:4px;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,.03)}
+  .folder:hover{transform:translateY(-4px)}
+  .folder:hover .front{box-shadow:0 26px 40px -20px rgba(60,55,35,.46)}
+  .folder .ftitle{font-family:var(--serif);font-size:27px;letter-spacing:-.012em;color:var(--fl-ink);line-height:1;margin-top:4px}
+  .folder .fcount{font-family:var(--mono);font-size:12.5px;letter-spacing:.02em;color:var(--fl-mut);margin-top:14px;display:block}
+
+  /* pinned card */
+  .pin{width:248px;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:24px 24px 20px;box-shadow:0 14px 30px -18px rgba(40,40,30,.4)}
+  .pin::before{content:"";position:absolute;top:-8px;left:50%;width:13px;height:13px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#5b82b8,var(--accent));box-shadow:0 2px 5px rgba(0,0,0,.25);transform:translateX(-50%)}
+  .pin .pk{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+  .pin h3{font-family:var(--serif);font-size:25px;letter-spacing:-.02em;color:var(--ink);margin:10px 0 8px;line-height:1.06}
+  .pin p{font-size:14.5px;color:var(--mut);line-height:1.5}
+  .pin .pgo{margin-top:15px;font-family:var(--mono);font-size:11.5px;color:var(--accent)}
+  .pin.tilt{transform:rotate(-1.8deg)}.pin.tilt2{transform:rotate(1.5deg)}
+  .pin.tilt:hover,.pin.tilt2:hover{transform:rotate(0) translateY(-3px)}
+
+  /* ===== modal viewer ===== */
+  .scrim{position:fixed;inset:0;background:rgba(28,30,38,.4);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .3s;z-index:900}
+  .scrim.on{opacity:1;pointer-events:auto}
+  .viewer{position:fixed;left:50%;top:50%;transform:translate(-50%,-46%) scale(.98);width:min(900px,94vw);max-height:88vh;background:var(--bg);border-radius:16px;box-shadow:0 50px 110px -30px rgba(20,22,30,.55);overflow:hidden;opacity:0;pointer-events:none;transition:opacity .32s cubic-bezier(.16,1,.3,1),transform .32s cubic-bezier(.16,1,.3,1);z-index:1000;display:flex;flex-direction:column}
+  .viewer.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+  .v-head{display:flex;align-items:center;justify-content:space-between;padding:20px 28px;border-bottom:1px solid var(--line);background:var(--panel);flex-shrink:0}
+  .v-head .vt{font-family:var(--serif);font-size:1.55rem;font-weight:500;color:var(--ink);letter-spacing:-.01em}
+  .v-head .vc{font-family:var(--mono);font-size:11.5px;color:var(--mut);margin-top:3px}
+  .close{width:36px;height:36px;border-radius:9px;border:1px solid var(--line2);background:#fff;cursor:pointer;display:grid;place-items:center;color:var(--mut);transition:.2s}
+  .close:hover{border-color:var(--accent);color:var(--accent)}
+  .v-body{overflow-y:auto;padding:30px 32px 36px}
+  @media(max-width:560px){.v-body{padding:22px 20px 28px}}
+
+  /* chips */
+  .chip{font-family:var(--mono);font-size:11.5px;padding:4px 11px;border-radius:999px;white-space:nowrap;border:1px solid}
+  .chip.green{color:var(--green);border-color:#cde3d5;background:#f1f8f3}
+  .chip.blue{color:var(--blue);border-color:#d3def0;background:#f1f5fb}
+  .chip.amber{color:var(--amber);border-color:#e8dfc2;background:#faf6e9}
+
+  /* research accordion */
+  .acc{border:1px solid var(--line);border-radius:13px;background:var(--panel);margin-bottom:14px;overflow:hidden;transition:border-color .25s,box-shadow .25s}
+  .acc.flag{border-color:#cdd8e8}
+  .acc.open{border-color:var(--accent);box-shadow:0 16px 40px -28px rgba(31,58,95,.6)}
+  .acc-h{padding:21px 23px;cursor:pointer;display:flex;gap:16px;align-items:flex-start}
+  .acc-h:hover{background:#fcfcfb}
+  .acc-h .m{flex:1;min-width:0}
+  .kick{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:9px}
+  .acc-title{font-family:var(--serif);font-size:1.46rem;font-weight:500;color:var(--ink);line-height:1.16;margin-bottom:7px}
+  .acc-lead{font-size:1.05rem;color:var(--body)}.acc-lead b{color:var(--ink)}
+  .acc-r{display:flex;flex-direction:column;align-items:flex-end;gap:12px;flex-shrink:0}
+  .tog{width:30px;height:30px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;color:var(--mut);transition:.25s;font-size:18px}
+  .acc.open .tog{transform:rotate(45deg);color:var(--accent);border-color:var(--accent)}
+  .acc-b{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.4,0,.2,1)}
+  .acc-in{padding:2px 23px 26px}
+  .blk{margin-top:20px}
+  .blk .l{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin-bottom:7px}
+  .blk p{color:var(--body);font-size:1.06rem;line-height:1.7}.blk p b{color:var(--ink)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}
+  @media(max-width:560px){.stats{grid-template-columns:1fr}}
+  .stat{background:var(--soft);border-radius:10px;padding:16px}
+  .stat .v{font-family:var(--serif);font-size:1.5rem;color:var(--accent);line-height:1;margin-bottom:6px}
+  .stat .l{font-size:12.5px;color:var(--mut);line-height:1.45}
+  figure{margin-top:22px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+  figure img{width:100%;display:block}
+  figcaption{font-family:var(--mono);font-size:12px;color:var(--mut);padding:11px 15px;border-top:1px solid var(--line);line-height:1.55}
+  .meth{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}
+  .meth b{font-family:var(--mono);font-size:11.5px;font-weight:400;color:var(--body);background:var(--soft);border:1px solid var(--line);padding:5px 11px;border-radius:6px}
+  .limit{margin-top:20px;padding:14px 16px;border-left:2px solid var(--amber);background:#faf6e9;border-radius:0 8px 8px 0;font-size:1rem;color:#6a5f43}
+  .interests{border-top:1px dashed var(--line2);margin-top:10px;padding-top:22px}
+  .interests .l{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin-bottom:14px}
+  .ilist{display:flex;flex-direction:column;gap:10px}
+  .ilist .i{display:flex;gap:13px;align-items:baseline;font-size:1.04rem;color:var(--body)}
+  .ilist .i .n{font-family:var(--mono);font-size:11.5px;color:var(--accent)}
+
+  /* systems timeline */
+  .iv-lead{font-size:1.12rem;color:var(--body);max-width:64ch;margin-bottom:30px}.iv-lead b{color:var(--ink)}
+  .flow{position:relative;padding-left:30px}
+  .flow::before{content:"";position:absolute;left:7px;top:6px;bottom:24px;width:2px;background:linear-gradient(var(--line2),var(--accent))}
+  .node{position:relative;margin-bottom:28px}
+  .node::before{content:"";position:absolute;left:-30px;top:3px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+  .node.dep::before{border-color:var(--line2)}.node.fut::before{border-style:dashed}
+  .node .nt{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:7px}
+  .node h4{font-family:var(--serif);font-size:1.26rem;font-weight:500;color:var(--ink)}
+  .node.dep h4{color:var(--mut);text-decoration:line-through;text-decoration-color:var(--line2)}
+  .node .role{font-family:var(--mono);font-size:10.5px;color:var(--mut);border:1px solid var(--line2);border-radius:4px;padding:2px 7px}
+  .node p{font-size:1.04rem;color:var(--body);line-height:1.66;max-width:62ch}
+  .band{margin-top:10px;border:1px dashed var(--line2);border-radius:12px;padding:19px 21px;background:var(--panel);display:flex;gap:14px;align-items:flex-start}
+  .band .ic{font-family:var(--mono);font-size:11px;color:var(--accent);border:1px solid #cdd8e8;border-radius:6px;padding:4px 8px;white-space:nowrap}
+  .band p{font-size:1rem;color:var(--body);line-height:1.62}
+  .toy{margin-top:16px;font-size:.98rem;color:var(--mut);font-style:italic}.toy b{color:var(--body);font-style:normal}
+
+  /* about grid */
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  @media(max-width:560px){.facts{grid-template-columns:1fr}}
+  .facts .f{background:var(--panel);padding:24px 26px}
+  .facts .f .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:11px}
+  .facts .f .v{font-size:1.18rem;color:var(--ink);line-height:1.4;font-family:var(--serif);font-weight:500}
+  .facts .f .v small{color:var(--body);font-size:.74em;display:block;margin-top:9px;line-height:1.85;font-family:var(--sans);font-weight:400}
+  .facts .f .v small a{color:var(--accent);text-decoration:none;border-bottom:1px solid #cdd8e8}
+  .facts .f .v small a:hover{color:var(--ink)}
+  .ab-cta{margin-top:24px;text-align:center;font-family:var(--serif);font-size:1.2rem;color:var(--ink)}
+  .ab-cta a{color:var(--accent);font-family:var(--mono);font-size:1rem;text-decoration:none;border-bottom:1px solid #cdd8e8}
+
+  /* simops */
+  .so-prog{font-family:var(--mono);font-size:12.5px;color:var(--accent);margin-bottom:10px;line-height:1.5}
+  .so-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0 24px}
+  @media(max-width:560px){.so-stats{grid-template-columns:1fr}}
+  .so-stat{border:1px solid var(--line);border-radius:11px;background:var(--panel);padding:17px 19px}
+  .so-stat .v{font-family:var(--serif);font-size:1.6rem;color:var(--accent);line-height:1}
+  .so-stat .l{font-size:12.5px;color:var(--mut);margin-top:7px;line-height:1.45}
+  .so-diagram{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:22px 20px;margin:4px 0 22px}
+  .so-diagram svg{width:100%;height:auto;display:block}
+  .so-desc{font-size:1.08rem;color:var(--body);line-height:1.72}.so-desc b{color:var(--ink)}
+
+  /* ===== mobile redesign (phone-first readability) ===== */
+  @media(max-width:820px){
+    .hint{display:none}
+  }
+  @media(max-width:640px){
+    html{font-size:16.5px}
+    .wrap{padding:0 20px}
+    .head{padding:24px 0 0}
+    .namerow{font-size:1.5rem;margin-bottom:8px}
+    .eyebrow{font-size:11px}
+    .head h1{font-size:1.7rem;line-height:1.2;margin-top:11px;max-width:none}
+    .head .intro{display:none}
+    .intro-m{display:block;font-size:1rem;color:var(--body);line-height:1.55;margin-top:12px;max-width:38ch}
+    .intro-m b{color:var(--ink)}
+    .deck{margin-top:14px}
+    .dcard{flex-basis:84%}
+    .more-note{display:block;text-align:center;font-size:.92rem;color:var(--mut);line-height:1.5;margin:2px 0 28px}
+    .more-note b{color:var(--body);font-weight:500}
+
+    /* detail view becomes a bottom sheet */
+    .viewer{left:0;top:auto;bottom:0;transform:translateY(102%) scale(1);width:100%;max-width:100%;
+      max-height:92vh;border-radius:22px 22px 0 0}
+    .viewer.on{transform:translateY(0) scale(1)}
+    .v-head{padding:16px 20px 16px;position:relative}
+    .v-head::before{content:"";position:absolute;top:7px;left:50%;transform:translateX(-50%);width:38px;height:4px;border-radius:99px;background:var(--line2)}
+    .v-head .vt{font-size:1.3rem}
+    .v-head .vc{font-size:11px}
+    .v-body{padding:18px 18px 32px;-webkit-overflow-scrolling:touch}
+
+    /* readable detail typography */
+    .acc-h{flex-direction:column;align-items:stretch;padding:17px 16px;gap:12px}
+    .acc-r{flex-direction:row;align-items:center;justify-content:space-between;width:100%;gap:10px}
+    .acc-title{font-size:1.28rem}
+    .acc-lead{font-size:1rem}
+    .acc-in{padding:2px 17px 22px}
+    .kick{font-size:10.5px}
+    .blk p{font-size:1.02rem;line-height:1.66}
+    .stat .v{font-size:1.35rem}
+    figcaption{font-size:11.5px;line-height:1.6;padding:10px 13px}
+    .iv-lead{font-size:1.05rem}
+    .node h4{font-size:1.18rem}
+    .node p{font-size:1.0rem}
+    .band{padding:16px 17px}
+    .facts .f{padding:20px 20px}
+    .facts .f .v{font-size:1.1rem}
+    .so-desc{font-size:1.02rem}
+    .so-diagram{padding:16px 12px;overflow-x:auto}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="namerow">Euichan&nbsp;Lee <span>(Leechan)</span></div>
+    <div class="eyebrow">Korea University · Mechanical Engineering &amp; AI</div>
+    <h1>Toward research where AI and mechanical engineering meet.</h1>
+    <p class="intro">I'm working toward becoming a researcher at the intersection of <b>AI and mechanical engineering</b> — applying data-efficient learning and careful verification to physical-system problems. The work below spans acoustic energy harvesting, active learning, and fault-tolerant control, alongside the tooling I built to make that research reproducible.</p>
+    <p class="intro-m">Research at the meeting point of <b>AI and mechanical engineering</b>.</p>
+    <div class="hint">Open a folder to look inside · drag to rearrange · <span class="k">Esc</span> to close
+      <button class="reset" id="reset">reset</button>
+    </div>
+  </div>
+  <div class="board" id="board"></div>
+  <p class="deck-cap">swipe sideways · tap a card to open</p>
+  <div class="deck" id="deck"></div>
+  <div class="deck-ui">
+    <button class="dnav" id="dprev" type="button" aria-label="Previous card">&lsaquo;</button>
+    <div class="dots" id="dots" aria-hidden="true"></div>
+    <button class="dnav" id="dnext" type="button" aria-label="Next card">&rsaquo;</button>
+  </div>
+  <p class="more-note">Tap a card for the short version. <b>Open this page on a computer for the full detail.</b></p>
+
+  <section class="sr-only" aria-label="Summary">
+    <h2>Projects</h2>
+    <p>Broadband acoustic energy harvesting — the contribution is robustness, not peak power (power variation CoV 21% vs 29% across 11 measured noise environments; advantage grows with resonator quality factor). Active learning for carbon nanofilm synthesis. Asymmetric-geometry rotor fault tolerance.</p>
+    <h2>Systems and engineering judgment</h2>
+    <p>A local-first research toolkit where change records come from the git diff, decisions are captured, low-quality experiments are dropped honestly, and an engineering-reasoning dataset feeds local-LLM fine-tuning.</p>
+    <h2>About</h2>
+    <p>Euichan Lee (Leechan), Korea University — Mechanical Engineering and Applied Artificial Intelligence. Incoming undergraduate researcher at the Materials Innovation Lab (Prof. Byungseok Seo), Fall 2026. Contact leechan0608@korea.ac.kr.</p>
+  </section>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="vt">
+  <div class="v-head">
+    <div><div class="vt" id="vt">—</div><div class="vc" id="vc"></div></div>
+    <button class="close" id="close" aria-label="Close"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+  </div>
+  <div class="v-body" id="vbody"></div>
+</div>
+
+<script>
+/* ============ CONTENT ============ */
+const RESEARCH = [
+  {flag:true,kick:"Piezoelectric energy harvesting · flagship",title:"Broadband Acoustic Energy Harvesting",
+   chip:["Verified analysis suite","green"],lead:"The contribution isn't peak power — it's <b>robustness</b>.",
+   blocks:[["Problem","Microscale acoustic harvesters produce inherently tiny power (~100 fW for a 300-wire array at 70 dB SPL). A single-resonance design chases the spectral peak, but real noise spreads its energy across a wide band — so most of that energy is missed.","Tiny power (~100 fW). One-resonance designs chase a single peak, but real noise is spread wide — so most energy is missed."],
+     ["Approach","A <b>length-distributed</b> piezoelectric cantilever-wire array, evaluated across <b>11 measured noise environments</b> with a validated single-degree-of-freedom electromechanical model, bootstrap 95% confidence intervals, and parametric sweeps over fabrication tolerance, tip mass, and wire density.","A <b>length-distributed</b> piezo array, tested across <b>11 measured noise environments</b> with a validated SDOF model + bootstrap CIs."],
+     ["Finding","The broadband array matches narrowband mean power (99 vs 108 fW) but holds up far better across environments (<b>CoV 21% vs 29%</b>) and is nearly immune to fabrication tolerance. The gap widens with resonator quality factor Q.","Same mean power as narrowband (99 vs 108 fW) but far steadier across environments (<b>CoV 21% vs 29%</b>). The edge grows with Q."]],
+   stats:[["21% / 29%","power variation across environments (CoV) — broadband vs narrowband"],["1.07→1.19×","broadband advantage as Q rises (PZT-5A → AlN)"],["11","measured noise environments, cross-evaluated"]],
+   figs:[["assets/figures/acoustic_heatmap.png","Each row is a harvester design; each column a real noise environment (color = power relative to the best design for that environment). The broadband design (top) stays strong everywhere, while narrowband designs win their own environment but fall off elsewhere."],
+     ["assets/figures/acoustic_spectrum.png","A measured noise source. Its energy is spread across a wide band rather than concentrated at one peak — the reason a single-resonance harvester leaves most of it uncaptured."]],
+   meth:["SDOF electromechanical model","bootstrap 95% CI","cross-environment evaluation","parametric sweeps","Numba Monte-Carlo"],
+   limit:"Absolute output is fW-scale at 70 dB SPL — reported as-is, not normalized away. The claim is robustness of the design, not raw power.",
+   mlimit:"Output is fW-scale at 70 dB SPL, reported as-is. The claim is robustness, not raw power."},
+  {kick:"Active learning · process optimization",title:"Active Learning for Carbon Nanofilm Synthesis",
+   chip:["Code validated · awaiting lab data","blue"],lead:"Reaching the best process conditions in <b>fewer measurements</b>.",
+   blocks:[["Approach","Each (power, dwell-time) condition costs a real lab measurement, so the pipeline compares two acquisition strategies — <b>AL-Map</b> (sample where the model is most uncertain) and <b>AL-Opt</b> (sample for expected improvement, to find the best G/D ratio) — against random and grid baselines, adding one measurement at a time.","Each (power, dwell) point costs a real measurement, so it compares <b>AL-Map</b> (most uncertain) and <b>AL-Opt</b> (expected improvement) vs random/grid — one point at a time."],
+     ["Status","The approach is validated on the existing dataset (15 conditions, 45 replicates). The pipeline is set up to rerun on the low-power lab measurements once they're collected.","Validated on existing data (15 conditions, 45 replicates); ready to rerun on lab data."]],
+   meth:["surrogate model","expected improvement","uncertainty sampling","learning-curve benchmark","sequential design"]},
+  {kick:"Fault-tolerant control",title:"Asymmetric-Geometry Rotor Fault Tolerance",
+   chip:["Simulation — 6-DOF rebuild","amber"],lead:"Surviving a rotor hit — and rebuilding the model so the result is honest.",
+   blocks:[["Approach","A Monte-Carlo search (~10⁸ samples) over four-rotor geometry maximizes the static stability margin after a rotor fails; the optimum sits at the <b>incenter</b> of the remaining support triangle. The damaged craft is then flown with 3-motor control allocation, deliberately giving up yaw.","A ~10⁸-sample search places the rotors for best post-failure stability (optimum = <b>incenter</b> of the support triangle); the craft then flies on 3 motors, giving up yaw."],
+     ["Honest rebuild","My first model judged \"survival\" from attitude alone — which flattered the result. I rebuilt it as a realistic <b>6-DOF</b> simulation: it adds translational motion and altitude (so a craft that holds attitude but sinks now counts as a crash), an <b>instantaneous impact impulse</b> instead of a smeared 50 ms force, a post-hit drop in mass / shift in center-of-gravity / change in inertia from losing the rotor, and asymmetric motor spin-up/down with battery voltage sag.","My first model called \"survival\" from attitude alone — too flattering. I rebuilt it in <b>6-DOF</b>: real altitude (sink = crash), an <b>instantaneous</b> impact impulse, post-hit mass/CoG/inertia change, and asymmetric motor response."],
+     ["Finding","Even under the stricter model the craft survives — recovering attitude <em>and</em> holding altitude — for fragment hits up to <b>~420–520 m/s</b> on the axes, and up to <b>~960–1050 m/s</b> for glancing 60° strikes; shallow 30° strikes fall in between (~540–570 m/s).","Even realistically it survives fragment hits up to <b>~420–520 m/s</b> axial, and <b>~960–1050 m/s</b> for 60° glancing strikes (30° in between)."]],
+   stats:[["420–520 m/s","survivable axial fragment speed (1 g) under the realistic 6-DOF model"],["~1050 m/s","survivable glancing 60° strike — shallow angles deflect most of the momentum"],["6-DOF","attitude + altitude + crash, replacing the earlier attitude-only model"]],
+   figs:[["assets/figures/drone_survival_boundary.png","Critical fragment speed the craft can survive (attitude error ≤ 45° and no crash) after losing one rotor, by strike direction and angle. Glancing 60° hits (right) are survivable far faster than near-axial hits (left), because most of their momentum deflects past the airframe rather than spinning it."]],
+   meth:["~10⁸-sample geometry search","realistic 6-DOF dynamics","instantaneous impact impulse","post-loss mass / CoG / inertia shift","asymmetric motor + voltage sag"],
+   limit:"These are simulation thresholds, not flight tests. The point of the rebuild is the opposite of inflation — it removes the idealizations that made the earlier numbers look better than they should have.",
+   mlimit:"Simulation thresholds, not flight tests — but with the flattering idealizations removed."},
+];
+const INTERESTS = [
+  "Physics-informed neural networks with active learning",
+  "Model predictive control",
+  "Sim-to-real reinforcement learning for an asymmetric inverted pendulum",
+  "Variable center-of-mass drone disturbance rejection",
+  "Active dynamic collision-risk detection",
+  "Energy self-sufficiency for microplastic-capture devices",
+];
+const SYSTEMS = [
+  {cls:"",h:"Research automation",role:"research_pipeline + pipeline",
+   p:"A local-first toolkit that keeps my research reproducible. Change summaries come from the actual <b>git diff</b>, not from what a model says it did — so the record can't be fabricated. Only registered, tested modules are trusted, pushes are gated on a verification step, and a baseline-metric check flags silent regressions in either direction.",
+   mp:"Local-first toolkit. Change records come from the <b>git diff</b>, not the model — so they can't be faked. Pushes are gated on verification."},
+  {cls:"dep",h:"second_brain — decision capture",role:"deprecated · 2026-06",
+   p:"An attempt to auto-extract the decisions I made during work sessions. It ran fine, but the captured reasoning was <b>too low-quality to be useful</b>, so I retired it instead of keeping a system that just produced noise. The idea I kept: store the raw record <em>before</em> any processing can distort it.",
+   mp:"Tried auto-extracting my decisions. Too low-quality, so I retired it. Kept the idea: <b>store the raw record first</b>."},
+  {cls:"",h:"Engineering Brain",role:"reasoning dataset · active",
+   p:"The replacement. It poses hard engineering questions, records my free-text answers verbatim, and keeps the model that asks separate from the model that grades — so the raw answers stay clean. The output is a dataset of engineering reasoning in my own words.",
+   mp:"Poses hard questions, saves my answers verbatim, asker kept separate from grader. Output: a dataset of my engineering reasoning."},
+  {cls:"",h:"Local-LLM LoRA fine-tuning",role:"in progress",
+   p:"That dataset feeds the current work: <b>LoRA fine-tuning a local language model</b> on engineering reasoning, run entirely on local hardware.",
+   mp:"That dataset now <b>LoRA-fine-tunes a local model</b>, run on local hardware."},
+  {cls:"fut",h:"Engineering-domain tendency filter",role:"planned",
+   p:"The next step I'm planning: use the fine-tuned model as a domain filter, and <b>measure its accuracy and reliability against the base model</b> before relying on it.",
+   mp:"Next: use it as a domain filter and <b>measure its accuracy vs the base model</b> before trusting it."},
+];
+const ABOUT = [
+  ["Education","Korea University",
+    "B.S. Mechanical Engineering &mdash; primary major<br>Applied Artificial Intelligence &mdash; convergence major<br>Expected graduation 2028"],
+  ["Research — incoming","Materials Innovation Lab",
+    "Undergraduate researcher<br>Prof. Byungseok Seo · starting Fall 2026<br><a href='https://matinnovlab.com/' target='_blank' rel='noopener'>matinnovlab.com</a>"],
+  ["Direction","AI × Mechanical engineering",
+    "Data-efficient learning and verification,<br>applied to physical-system research"],
+  ["Contact","Get in touch",
+    "<a href='mailto:leechan0608@korea.ac.kr'>leechan0608@korea.ac.kr</a><br><a href='https://github.com/euichanlee0608-svg' target='_blank' rel='noopener'>github.com/euichanlee0608-svg</a>"],
+];
+const SIMOPS = {
+  prog:"Living Paper · Korea University Lab-Startup Innovation Corps (I-Corps, 2026 · UC Berkeley KIC)",
+  stats:[["30%+","of research time lost to debugging pipeline collisions"],["50%↓","targeted reduction in that debugging time"],["20","field interviews so far"]],
+  desc:"In a simulation pipeline — <b>model generation → FEM solve → surrogate model</b> — each stage runs fine on its own, but unexplained errors show up where the stages meet. Since it's hard to tell which boundary caused it, teams rerun the whole pipeline by hand and adjust parameters by intuition. Living Paper <b>detects the problem region, isolates the cause, and re-validates only the suspect segment</b> instead of restarting — with a shared change log so the team works from the same picture. This is a concept being developed through the I-Corps program; there's no MVP yet.",
+  mdesc:"In a pipeline (<b>model → FEM → surrogate</b>), each stage is fine alone but errors appear where they meet. Living Paper <b>finds the bad region, isolates the cause, and re-validates only that</b> — no full restart. Concept stage; no MVP yet.",
+};
+const MOB=()=>window.matchMedia("(max-width:640px)").matches;
+
+/* ============ BOARD ============ */
+const ENGBRAIN_URL="https://euichanlee0608-svg.github.io/engineering-brain/";
+const BOARD = [
+  {type:"folder",id:"research",view:"research",title:"Projects",count:"projects + interests",x:8,y:24},
+  {type:"folder",id:"systems",view:"systems",title:"Systems",count:"automation → LoRA → filter",x:340,y:14},
+  {type:"pin",id:"engbrain",view:"engbrain",cls:"tilt2",pk:"Live project · external",title:"Engineering Brain",lead:"A web app that turns engineering reasoning into a dataset — try a question.",link:ENGBRAIN_URL,x:676,y:28},
+  {type:"pin",id:"simops",view:"simops",cls:"tilt",pk:"Venture · in program",title:"SimOps",lead:"Find the collision without rerunning the whole pipeline.",x:120,y:250},
+  {type:"pin",id:"about",view:"about",cls:"tilt2",pk:"About · contact",title:"About me",lead:"AI × mechanical engineering — and how to reach me.",x:470,y:242},
+];
+const INIT = BOARD.map(o=>[o.x,o.y]);
+
+const board=document.getElementById("board");
+function renderBoard(){
+  board.innerHTML=BOARD.map(o=>{
+    const a11y=`tabindex="0" role="button" aria-label="Open ${o.title}"`;
+    if(o.type==="folder") return `<div class="obj folder" data-id="${o.id}" ${a11y} style="left:${o.x}px;top:${o.y}px">
+      <div class="tab"></div>
+      <div class="front"><div class="ftitle">${o.title}</div><span class="fcount">${o.count}</span></div></div>`;
+    return `<div class="obj pin ${o.cls}" data-id="${o.id}" ${a11y} style="left:${o.x}px;top:${o.y}px">
+      <div class="pk">${o.pk}</div><h3>${o.title}</h3><p>${o.lead}</p><div class="pgo">${o.link?"Open site ↗":"Open →"}</div></div>`;
+  }).join("");
+}
+renderBoard();
+
+/* ============ DRAG + OPEN ============ */
+let drag=null;
+board.addEventListener("pointerdown",e=>{
+  if(window.innerWidth<=820) return;
+  const el=e.target.closest(".obj"); if(!el) return;
+  drag={el,sx:e.clientX,sy:e.clientY,ox:el.offsetLeft,oy:el.offsetTop,moved:false};
+  el.setPointerCapture(e.pointerId); el.style.zIndex=50; el.style.transition="none";
+});
+board.addEventListener("pointermove",e=>{
+  if(!drag) return;
+  const dx=e.clientX-drag.sx,dy=e.clientY-drag.sy;
+  if(Math.abs(dx)+Math.abs(dy)>6) drag.moved=true;
+  drag.el.style.left=(drag.ox+dx)+"px"; drag.el.style.top=(drag.oy+dy)+"px";
+});
+function endDrag(){
+  if(!drag) return;
+  const el=drag.el; el.style.transition=""; el.style.zIndex="";   /* release z-index so a dragged object can't cover the modal */
+  if(!drag.moved) openObj(el.dataset.id);
+  const o=BOARD.find(b=>b.id===el.dataset.id); if(o){o.x=el.offsetLeft;o.y=el.offsetTop;}
+  drag=null;
+}
+board.addEventListener("pointerup",endDrag);
+board.addEventListener("pointercancel",endDrag);
+board.addEventListener("keydown",e=>{
+  if(e.key!=="Enter"&&e.key!==" ") return;
+  const el=e.target.closest(".obj"); if(!el) return;
+  e.preventDefault(); openObj(el.dataset.id);
+});
+
+/* ============ MOBILE CAROUSEL (horizontal scroll-snap) ============ */
+const deck=document.getElementById("deck"),dotsEl=document.getElementById("dots");
+function deckCard(o){
+  const a11y=`tabindex="0" role="button" aria-label="Open ${o.title}"`;
+  if(o.type==="folder") return `<article class="dcard fold" data-id="${o.id}" ${a11y}>
+    <div class="dtab"></div>
+    <div class="dbody"><h3>${o.title}</h3><p>${o.count}</p>
+    <div class="dgo">tap to open</div></div></article>`;
+  return `<article class="dcard pinc" data-id="${o.id}" ${a11y}>
+    <div class="dk">${o.pk}</div><h3>${o.title}</h3><p>${o.lead}</p>
+    <div class="dgo">${o.link?"tap to open site ↗":"tap to open"}</div></article>`;
+}
+deck.innerHTML=BOARD.map(deckCard).join("");
+dotsEl.innerHTML=BOARD.map((_,i)=>`<i class="${i===0?'on':''}"></i>`).join("");
+
+function deckStep(){const c=deck.querySelector(".dcard");return c?c.offsetWidth+14:1;}
+function activeIdx(){return Math.max(0,Math.min(BOARD.length-1,Math.round(deck.scrollLeft/deckStep())));}
+function paintDots(){const i=activeIdx();[...dotsEl.children].forEach((d,k)=>d.classList.toggle("on",k===i));}
+function goCard(i){i=Math.max(0,Math.min(BOARD.length-1,i));deck.scrollTo({left:i*deckStep(),behavior:"smooth"});}
+deck.addEventListener("scroll",paintDots,{passive:true});
+deck.addEventListener("click",e=>{const c=e.target.closest(".dcard");if(c)openObj(c.dataset.id);});
+deck.addEventListener("keydown",e=>{
+  const c=e.target.closest(".dcard"); if(!c) return;
+  if(e.key==="Enter"||e.key===" "){e.preventDefault();openObj(c.dataset.id);}
+  else if(e.key==="ArrowRight"){e.preventDefault();goCard(activeIdx()+1);}
+  else if(e.key==="ArrowLeft"){e.preventDefault();goCard(activeIdx()-1);}
+});
+document.getElementById("dnext").onclick=()=>goCard(activeIdx()+1);
+document.getElementById("dprev").onclick=()=>goCard(activeIdx()-1);
+
+/* ============ RENDERERS ============ */
+const scrim=document.getElementById("scrim"),viewer=document.getElementById("viewer");
+const vbody=document.getElementById("vbody"),vt=document.getElementById("vt"),vc=document.getElementById("vc");
+
+function chip(c){return `<span class="chip ${c[1]}">${c[0]}</span>`;}
+function renderResearch(){
+  const m=MOB();
+  const cards=RESEARCH.map(r=>`
+    <div class="acc ${r.flag?'flag':''}">
+      <div class="acc-h" data-acc>
+        <div class="m"><span class="kick">${r.kick}</span><div class="acc-title">${r.title}</div><div class="acc-lead">${r.lead}</div></div>
+        <div class="acc-r">${chip(r.chip)}<span class="tog">+</span></div>
+      </div>
+      <div class="acc-b"><div class="acc-in">
+        ${r.blocks.map(b=>`<div class="blk"><div class="l">${b[0]}</div><p>${m&&b[2]?b[2]:b[1]}</p></div>`).join("")}
+        ${r.stats?`<div class="stats">${r.stats.map(s=>`<div class="stat"><div class="v">${s[0]}</div><div class="l">${s[1]}</div></div>`).join("")}</div>`:""}
+        ${r.figs?r.figs.map(f=>`<figure><img src="${f[0]}" alt="" loading="lazy"><figcaption>${f[1]}</figcaption></figure>`).join(""):""}
+        ${r.meth?`<div class="meth">${r.meth.map(x=>`<b>${x}</b>`).join("")}</div>`:""}
+        ${r.limit?`<div class="limit"><b>Stated plainly:</b> ${m&&r.mlimit?r.mlimit:r.limit}</div>`:""}
+      </div></div>
+    </div>`).join("");
+  const interests=`<div class="interests"><div class="l">Also scoping — earlier-stage directions</div>
+    <div class="ilist">${INTERESTS.map((t,i)=>`<div class="i"><span class="n">${String(i+1).padStart(2,'0')}</span><span>${t}</span></div>`).join("")}</div></div>`;
+  return cards+interests;
+}
+function renderSystems(){
+  const m=MOB();
+  const lead=m?"I built the research infrastructure I couldn't buy — and kept changing it. The path, <b>including what I dropped</b>:"
+    :"My research needed infrastructure I couldn't buy, so I built it — and it kept changing as I learned what mattered. Here's the path, including <b>what I dropped and why</b>.";
+  const band=m?"A Telegram bot ties it together — run any task from my phone, with approval before anything touches files."
+    :"None of this gets used if it's a hassle, so I built a general-purpose Telegram bot as one place to run all of it — triggering any task from my phone, with an approval step before anything touches files.";
+  const toy=m?"Same spirit: a guitar-tab extractor that checks itself by re-synthesizing and re-transcribing (note-F1 0.912)."
+    :"A smaller project in the same spirit: a guitar-tab extractor that checks itself — it turns its transcription back into audio, re-transcribes that, and keeps the parameter settings that score best (note-F1 0.912).";
+  return `<p class="iv-lead">${lead}</p>
+    <div class="flow">${SYSTEMS.map(n=>`<div class="node ${n.cls}"><div class="nt"><h4>${n.h}</h4><span class="role">${n.role}</span></div><p>${m&&n.mp?n.mp:n.p}</p></div>`).join("")}</div>
+    <div class="band"><span class="ic">telegram_bot</span><p>${band}</p></div>
+    <p class="toy">${toy}</p>`;
+}
+function renderAbout(){
+  return `<div class="facts">${ABOUT.map(f=>`<div class="f"><div class="k">${f[0]}</div><div class="v">${f[1]}<small>${f[2]}</small></div></div>`).join("")}</div>
+    <div class="ab-cta">Open to research collaboration &amp; graduate study — <a href="mailto:leechan0608@korea.ac.kr">leechan0608@korea.ac.kr</a></div>`;
+}
+function renderSimops(){
+  const svg=`<svg viewBox="0 0 720 200" role="img" aria-label="Pipeline collision diagram">
+    <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#737985"/></marker></defs>
+    <g font-family="Inter, sans-serif">
+      <rect x="20" y="58" width="150" height="64" rx="10" fill="#fff" stroke="#dcdcd7"/>
+      <text x="95" y="84" text-anchor="middle" font-size="14" font-weight="600" fill="#15171c">Model gen</text>
+      <text x="95" y="103" text-anchor="middle" font-size="10.5" fill="#737985">mesh · material · BC</text>
+      <rect x="285" y="58" width="150" height="64" rx="10" fill="#fff" stroke="#dcdcd7"/>
+      <text x="360" y="84" text-anchor="middle" font-size="14" font-weight="600" fill="#15171c">FEM solve</text>
+      <text x="360" y="103" text-anchor="middle" font-size="10.5" fill="#737985">solver · convergence</text>
+      <rect x="550" y="58" width="150" height="64" rx="10" fill="#fff" stroke="#dcdcd7"/>
+      <text x="625" y="84" text-anchor="middle" font-size="14" font-weight="600" fill="#15171c">Surrogate</text>
+      <text x="625" y="103" text-anchor="middle" font-size="10.5" fill="#737985">model · optimize</text>
+      <line x1="170" y1="90" x2="278" y2="90" stroke="#737985" stroke-width="1.5" marker-end="url(#ar)"/>
+      <line x1="435" y1="90" x2="543" y2="90" stroke="#737985" stroke-width="1.5" marker-end="url(#ar)"/>
+      <text x="224" y="50" text-anchor="middle" font-size="18">⚡</text>
+      <text x="489" y="50" text-anchor="middle" font-size="18">⚡</text>
+      <text x="356" y="30" text-anchor="middle" font-size="11.5" fill="#9a3b2e" font-weight="600">errors appear where stages meet</text>
+      <rect x="150" y="150" width="420" height="34" rx="9" fill="#eef1f5" stroke="#cdd8e8"/>
+      <text x="360" y="172" text-anchor="middle" font-size="12" font-weight="600" fill="#1f3a5f">detect the region → isolate the cause → re-validate only the suspect segment</text>
+      <line x1="224" y1="124" x2="300" y2="148" stroke="#cdd8e8" stroke-width="1.3"/>
+      <line x1="489" y1="124" x2="420" y2="148" stroke="#cdd8e8" stroke-width="1.3"/>
+    </g></svg>`;
+  return `<div class="so-prog">${SIMOPS.prog}</div>
+    <div class="so-diagram">${svg}</div>
+    <div class="so-stats">${SIMOPS.stats.map(s=>`<div class="so-stat"><div class="v">${s[0]}</div><div class="l">${s[1]}</div></div>`).join("")}</div>
+    <p class="so-desc">${MOB()?SIMOPS.mdesc:SIMOPS.desc}</p>`;
+}
+const RENDER={research:renderResearch,systems:renderSystems,about:renderAbout,simops:renderSimops};
+const TITLES={research:["Projects","3 projects + interests"],systems:["Systems & engineering judgment","what I built, dropped, and where it's heading"],about:["About","Euichan Lee (Leechan)"],simops:["SimOps / Living Paper","FEM-pipeline collision detection"]};
+
+let lastFocus=null;
+function openObj(id){
+  const o=BOARD.find(b=>b.id===id); if(!o) return;
+  if(o.link){ window.open(o.link,"_blank","noopener"); return; }
+  lastFocus=document.activeElement;
+  vt.textContent=TITLES[o.view][0]; vc.textContent=TITLES[o.view][1];
+  vbody.innerHTML=RENDER[o.view]();
+  vbody.scrollTop=0;
+  scrim.classList.add("on"); viewer.classList.add("on");
+  document.getElementById("close").focus();
+}
+/* accordion toggle (delegated) */
+vbody.addEventListener("click",e=>{
+  const h=e.target.closest("[data-acc]"); if(!h) return;
+  const acc=h.closest(".acc"), b=acc.querySelector(".acc-b");
+  const open=acc.classList.toggle("open");
+  b.style.maxHeight=open?b.scrollHeight+'px':0;
+});
+/* recompute height when a figure finishes loading inside an open card */
+vbody.addEventListener("load",e=>{
+  if(e.target.tagName==="IMG"){const b=e.target.closest(".acc-b"); if(b&&b.closest(".acc").classList.contains("open")) b.style.maxHeight=b.scrollHeight+'px';}
+},true);
+
+function closeViewer(){scrim.classList.remove("on");viewer.classList.remove("on");if(lastFocus){lastFocus.focus();lastFocus=null;}}
+document.getElementById("close").onclick=closeViewer;
+scrim.onclick=closeViewer;
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeViewer();});
+document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][0];o.y=INIT[i][1];});renderBoard();};
+</script>
+</body>
+</html>
