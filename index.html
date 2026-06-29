@@ -288,7 +288,7 @@
 
   <section class="sr-only" aria-label="Summary">
     <h2>Projects</h2>
-    <p>Broadband acoustic energy harvesting — the contribution is robustness, not peak power (power variation CoV 21% vs 29% across 11 measured noise environments; advantage grows with resonator quality factor). Active learning for carbon nanofilm synthesis. Asymmetric-geometry rotor fault tolerance.</p>
+    <p>Broadband acoustic energy harvesting — the contribution is robustness, not peak power (power variation CoV 21% vs 29% across 11 measured noise environments; advantage grows with resonator quality factor). A team-capstone autonomous pole-climbing and coconut-harvesting robot, where I led the control software and power electronics. Active learning for carbon nanofilm synthesis. Asymmetric-geometry rotor fault tolerance.</p>
     <h2>Systems and engineering judgment</h2>
     <p>A local-first research toolkit where change records come from the git diff, decisions are captured, low-quality experiments are dropped honestly, and an engineering-reasoning dataset feeds local-LLM fine-tuning.</p>
     <h2>About</h2>
@@ -319,6 +319,16 @@ const RESEARCH = [
    meth:["SDOF electromechanical model","bootstrap 95% CI","cross-environment evaluation","parametric sweeps","Numba Monte-Carlo"],
    limit:"Absolute output is fW-scale at 70 dB SPL — reported as-is, not normalized away. The claim is robustness of the design, not raw power.",
    mlimit:"Output is fW-scale at 70 dB SPL, reported as-is. The claim is robustness, not raw power."},
+  {kick:"Mechanical capstone · control & power systems",title:"Autonomous Pole-Climbing & Harvesting Robot",
+   chip:["Team capstone · built & demonstrated","green"],lead:"My one <b>hands-on, built-and-tested</b> system — I owned control and power.",
+   blocks:[["Role","A four-part team built an autonomous robot that climbs a vertical PVC pole and harvests the coconut at the top. The team's core mechanism kept the motor count low — a <b>one-way bearing</b> (rather than a ratchet) paired with a <b>C-shaped gear</b> drove the harvesting motion off the climb drivetrain. I led the <b>control software and electrical/power systems</b> — motor drivers, sensing, voltage stabilization, and the climb logic.","Team capstone: a robot that climbs a pole and harvests the coconut on top. The team's core mechanism cut motor count with a <b>one-way bearing</b> (not a ratchet) + <b>C-shaped gear</b> harvest drive; I owned the <b>control + power electronics</b>."],
+     ["Hard problem","Budget forced two mismatched motors (gear ratios 1/144 vs 1/500, stall currents 24 A vs 2 A) onto one synchronized drive. I matched their angular acceleration by inverse-calculating PWM from the spec sheets, then tuned the offset empirically over dozens of climb tests, while a distributed <b>11,000 µF</b> capacitor bank held the rail above the 7 V reset floor through 24 A stall surges.","Two mismatched motors (1/144 vs 1/500, 24 A vs 2 A stall) on one drive — synced by inverse-calculated PWM + empirical tuning; an <b>11,000 µF</b> cap bank held the rail above reset."],
+     ["Honest read","It climbed on contest day, but the control is threshold on/off rather than PID, and the motor mismatch left a residual twist. The deeper lesson was process: the first design was scrapped three weeks out for a center-of-mass flaw that a simple design-review gate would have caught on paper.","It worked, but control was on/off (not PID), and a scrapped first design taught me a design-review gate would have caught the flaw on paper."]],
+   figs:[["assets/figures/climbing_robot_cad.png","The redesigned assembly: the two motors sit symmetrically about the pole axis so the center of mass falls on the climb axis — the fix for the first design's center-of-mass offset."],
+     ["assets/figures/climbing_robot_build.jpg","The actual build — drive gears, magnets, and wiring, with the cable tie (circled) that finally fixed the body-guide derailment after magnets and tape had failed."]],
+   meth:["Arduino multi-board (sensing / control split)","heterogeneous-motor synchronization","11,000 µF capacitor bank","moving-average + outlier filtering","torque & current safety-factor budgeting"],
+   limit:"A team course project with a defined goal, not original research — on/off control, empirically tuned. Included as the hands-on hardware-and-team complement to the simulation work above.",
+   mlimit:"Team course project, not research — on/off control, hands-on. My hardware-and-team complement to the simulation work."},
   {kick:"Active learning · process optimization",title:"Active Learning for Carbon Nanofilm Synthesis",
    chip:["Code validated · awaiting lab data","blue"],lead:"Reaching the best process conditions in <b>fewer measurements</b>.",
    blocks:[["Approach","Each (power, dwell-time) condition costs a real lab measurement, so the pipeline compares two acquisition strategies — <b>AL-Map</b> (sample where the model is most uncertain) and <b>AL-Opt</b> (sample for expected improvement, to find the best G/D ratio) — against random and grid baselines, adding one measurement at a time.","Each (power, dwell) point costs a real measurement, so it compares <b>AL-Map</b> (most uncertain) and <b>AL-Opt</b> (expected improvement) vs random/grid — one point at a time."],
@@ -532,7 +542,7 @@ function renderSimops(){
     <p class="so-desc">${MOB()?SIMOPS.mdesc:SIMOPS.desc}</p>`;
 }
 const RENDER={research:renderResearch,systems:renderSystems,about:renderAbout,simops:renderSimops};
-const TITLES={research:["Projects","3 projects + interests"],systems:["Systems & engineering judgment","what I built, dropped, and where it's heading"],about:["About","Euichan Lee (Leechan)"],simops:["SimOps / Living Paper","FEM-pipeline collision detection"]};
+const TITLES={research:["Projects","4 projects + interests"],systems:["Systems & engineering judgment","what I built, dropped, and where it's heading"],about:["About","Euichan Lee (Leechan)"],simops:["SimOps / Living Paper","FEM-pipeline collision detection"]};
 
 let lastFocus=null;
 function openObj(id){
