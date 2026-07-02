@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Euichan Lee — Research & Systems</title>
-<meta name="description" content="Euichan Lee (Leechan) — undergraduate researcher at the intersection of AI and mechanical engineering: broadband acoustic energy harvesting, active learning, and fault-tolerant control, with the reproducible tooling built around them.">
+<meta name="description" content="Euichan Lee (Leechan), undergraduate researcher at the intersection of AI and mechanical engineering: broadband acoustic energy harvesting, active learning, and fault-tolerant control, with the reproducible tooling built around them.">
 <meta name="author" content="Euichan Lee">
-<meta name="theme-color" content="#fbfbfa">
+<meta name="theme-color" content="#f7f8fa">
 <meta property="og:title" content="Euichan Lee — Research & Systems">
-<meta property="og:description" content="Research at the intersection of AI and mechanical engineering — honest framing, reproducible tooling.">
+<meta property="og:description" content="Research at the intersection of AI and mechanical engineering: honest framing, reproducible tooling.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary">
@@ -18,10 +18,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#fbfbfa; --panel:#fff; --ink:#15171c; --body:#373c44; --mut:#737985;
-    --line:#e9e9e6; --line2:#dcdcd7; --accent:#1f3a5f; --accent2:#2f6f6a; --soft:#eef1f5;
-    --folder:#f4f1e8; --folder-d:#e7e2d2; --folder-tab:#e9e4d4;
-    --fl-body:linear-gradient(168deg,#faf7ee,#efe9d9); --fl-flat:#f3eee1; --fl-tab:#e7e0cd; --fl-edge:#e0d8c4; --fl-ink:#3a3526; --fl-mut:#9b9170;
+    --bg:#f7f8fa; --panel:#fff; --ink:#15171c; --body:#373c44; --mut:#737985;
+    --line:#e8eaed; --line2:#dbdee3; --accent:#2a2d33; --accent2:#4a4e56; --soft:#eef1f5;
+    --folder:#f2f4f6; --folder-d:#e4e7ec; --folder-tab:#e8ebef;
+    --fl-body:linear-gradient(168deg,#fbfcfd,#eef0f3); --fl-flat:#f2f4f6; --fl-tab:#e8ebef; --fl-edge:#dde0e5; --fl-ink:#1c1e22; --fl-mut:#878c95;
     --green:#2f7d4f; --blue:#2f5fa5; --amber:#9a7a1e;
     --serif:"Newsreader",Georgia,serif; --sans:"Inter",system-ui,sans-serif; --mono:"JetBrains Mono",monospace;
   }
@@ -71,21 +71,21 @@
       -webkit-overflow-scrolling:touch;scrollbar-width:none;overscroll-behavior-x:contain}
     .deck::-webkit-scrollbar{display:none}
     .dcard{flex:0 0 80%;scroll-snap-align:center;position:relative;min-height:236px;border-radius:18px;overflow:hidden;cursor:pointer;
-      box-shadow:0 16px 32px -22px rgba(40,40,30,.5)}
+      box-shadow:0 16px 32px -22px rgba(40,44,52,.42)}
     .dcard:last-child{margin-right:4px}
     .dcard:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
     /* folder card — mirrors desktop folder (left tab + body) */
     .dcard.fold{background:transparent;overflow:visible;box-shadow:none}
     .dcard.fold .dtab{position:absolute;top:0;left:0;width:50%;height:38px;background:var(--fl-tab);border:1px solid var(--fl-edge);border-bottom:none;border-radius:15px 17px 0 0;padding:11px 20px 0;z-index:2}
     .dcard.fold .dtab span{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--fl-mut)}
-    .dcard.fold .dbody{position:absolute;top:24px;left:0;right:0;bottom:0;background:var(--fl-body);border:1px solid var(--fl-edge);border-radius:17px;box-shadow:0 16px 30px -22px rgba(60,55,35,.4);padding:28px 22px 22px}
+    .dcard.fold .dbody{position:absolute;top:24px;left:0;right:0;bottom:0;background:var(--fl-body);border:1px solid var(--fl-edge);border-radius:17px;box-shadow:0 16px 30px -22px rgba(40,44,52,.35);padding:28px 22px 22px}
     .dcard.fold .dbody::before{content:"";position:absolute;top:10px;left:18px;right:18px;height:5px;border-radius:4px;background:#fff}
     .dcard.fold h3{color:var(--fl-ink);margin-top:4px}
     .dcard.fold p{color:var(--fl-mut);font-size:1.08rem}
     .dcard.fold .dgo{color:var(--fl-mut)}
     /* pin card — mirrors desktop pinned card */
     .dcard.pinc{background:var(--panel);border:1px solid var(--line);padding:24px 22px}
-    .dcard.pinc::before{content:"";position:absolute;top:-7px;left:50%;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#5b82b8,var(--accent));box-shadow:0 2px 5px rgba(0,0,0,.25);transform:translateX(-50%)}
+    .dcard.pinc::before{content:"";position:absolute;top:-7px;left:50%;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#7a7f88,var(--accent));box-shadow:0 2px 5px rgba(0,0,0,.25);transform:translateX(-50%)}
     .dcard .dk{font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--accent)}
     .dcard h3{font-family:var(--serif);font-size:1.7rem;font-weight:500;color:var(--ink);letter-spacing:-.01em;margin:12px 0 10px;line-height:1.05}
     .dcard p{font-size:1.0rem;color:var(--mut);line-height:1.5}
@@ -103,16 +103,16 @@
   .folder{width:296px;height:202px}
   .folder .tab{position:absolute;top:0;left:0;width:146px;height:42px;background:var(--fl-tab);border:1px solid var(--fl-edge);border-bottom:none;border-radius:16px 18px 0 0}
   .folder .tab span{position:absolute;left:22px;top:13px;font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--fl-mut)}
-  .folder .front{position:absolute;left:0;right:0;top:26px;bottom:0;background:var(--fl-body);border:1px solid var(--fl-edge);border-radius:18px;box-shadow:0 16px 30px -20px rgba(60,55,35,.4);padding:30px 28px;transition:transform .25s,box-shadow .25s}
+  .folder .front{position:absolute;left:0;right:0;top:26px;bottom:0;background:var(--fl-body);border:1px solid var(--fl-edge);border-radius:18px;box-shadow:0 16px 30px -20px rgba(40,44,52,.35);padding:30px 28px;transition:transform .25s,box-shadow .25s}
   .folder .front::before{content:"";position:absolute;top:9px;left:20px;right:20px;height:5px;border-radius:4px;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,.03)}
   .folder:hover{transform:translateY(-4px)}
-  .folder:hover .front{box-shadow:0 26px 40px -20px rgba(60,55,35,.46)}
+  .folder:hover .front{box-shadow:0 26px 40px -20px rgba(40,44,52,.4)}
   .folder .ftitle{font-family:var(--serif);font-size:27px;letter-spacing:-.012em;color:var(--fl-ink);line-height:1;margin-top:4px}
   .folder .fcount{font-family:var(--mono);font-size:12.5px;letter-spacing:.02em;color:var(--fl-mut);margin-top:14px;display:block}
 
   /* pinned card */
-  .pin{width:248px;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:24px 24px 20px;box-shadow:0 14px 30px -18px rgba(40,40,30,.4)}
-  .pin::before{content:"";position:absolute;top:-8px;left:50%;width:13px;height:13px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#5b82b8,var(--accent));box-shadow:0 2px 5px rgba(0,0,0,.25);transform:translateX(-50%)}
+  .pin{width:248px;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:24px 24px 20px;box-shadow:0 14px 30px -18px rgba(40,44,52,.35)}
+  .pin::before{content:"";position:absolute;top:-8px;left:50%;width:13px;height:13px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#7a7f88,var(--accent));box-shadow:0 2px 5px rgba(0,0,0,.25);transform:translateX(-50%)}
   .pin .pk{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
   .pin h3{font-family:var(--serif);font-size:25px;letter-spacing:-.02em;color:var(--ink);margin:10px 0 8px;line-height:1.06}
   .pin p{font-size:14.5px;color:var(--mut);line-height:1.5}
@@ -270,7 +270,7 @@
     <div class="namerow">Euichan&nbsp;Lee <span>(Leechan)</span></div>
     <div class="eyebrow">Korea University · Mechanical Engineering &amp; AI</div>
     <h1>Toward research where AI and mechanical engineering meet.</h1>
-    <p class="intro">I'm working toward becoming a researcher at the intersection of <b>AI and mechanical engineering</b> — applying data-efficient learning and careful verification to physical-system problems. The work below spans acoustic energy harvesting, active learning, and fault-tolerant control, alongside the tooling I built to make that research reproducible.</p>
+    <p class="intro">I'm working toward becoming a researcher at the intersection of <b>AI and mechanical engineering</b>, applying data-efficient learning and careful verification to physical-system problems. The work below spans acoustic energy harvesting, a hands-on robotics capstone, active learning, and fault-tolerant control, alongside the tooling I built to keep that work reproducible.</p>
     <p class="intro-m">Research at the meeting point of <b>AI and mechanical engineering</b>.</p>
     <div class="hint">Open a folder to look inside · drag to rearrange · <span class="k">Esc</span> to close
       <button class="reset" id="reset">reset</button>
@@ -288,11 +288,11 @@
 
   <section class="sr-only" aria-label="Summary">
     <h2>Projects</h2>
-    <p>Broadband acoustic energy harvesting — the contribution is robustness, not peak power (power variation CoV 21% vs 29% across 11 measured noise environments; advantage grows with resonator quality factor). A team-capstone autonomous pole-climbing and coconut-harvesting robot, where I led the control software and power electronics. Active learning for carbon nanofilm synthesis. Asymmetric-geometry rotor fault tolerance.</p>
+    <p>Broadband acoustic energy harvesting, where the contribution is robustness rather than peak power (power variation CoV 21% vs 29% across 11 measured noise environments; advantage grows with resonator quality factor). A team-capstone autonomous pole-climbing and coconut-harvesting robot, where I led the control software and power electronics. Active learning for carbon nanofilm synthesis. Asymmetric-geometry rotor fault tolerance.</p>
     <h2>Systems and engineering judgment</h2>
     <p>A local-first research toolkit where change records come from the git diff, decisions are captured, low-quality experiments are dropped honestly, and an engineering-reasoning dataset feeds local-LLM fine-tuning.</p>
     <h2>About</h2>
-    <p>Euichan Lee (Leechan), Korea University — Mechanical Engineering and Applied Artificial Intelligence. Incoming undergraduate researcher at the Materials Innovation Lab (Prof. Byungseok Seo), Fall 2026. Contact leechan0608@korea.ac.kr.</p>
+    <p>Euichan Lee (Leechan), Korea University, Mechanical Engineering and Applied Artificial Intelligence. Incoming undergraduate researcher at the Materials Innovation Lab (Prof. Byungseok Seo), Fall 2026. Contact leechan0608@korea.ac.kr.</p>
   </section>
 </div>
 
@@ -308,42 +308,42 @@
 <script>
 /* ============ CONTENT ============ */
 const RESEARCH = [
-  {flag:true,kick:"Piezoelectric energy harvesting · flagship",title:"Broadband Acoustic Energy Harvesting",
-   chip:["Verified analysis suite","green"],lead:"The contribution isn't peak power — it's <b>robustness</b>.",
-   blocks:[["Problem","Microscale acoustic harvesters produce inherently tiny power (~100 fW for a 300-wire array at 70 dB SPL). A single-resonance design chases the spectral peak, but real noise spreads its energy across a wide band — so most of that energy is missed.","Tiny power (~100 fW). One-resonance designs chase a single peak, but real noise is spread wide — so most energy is missed."],
+  {flag:true,kick:"Piezoelectric energy harvesting",title:"Broadband Acoustic Energy Harvesting",
+   chip:["Verified analysis suite","green"],lead:"The result that matters is <b>robustness</b> across real noise environments.",
+   blocks:[["Problem","Microscale acoustic harvesters produce inherently tiny power (~100 fW for a 300-wire array at 70 dB SPL). A single-resonance design chases the spectral peak, but real noise spreads its energy across a wide band, so most of that energy is missed.","Tiny power (~100 fW). One-resonance designs chase a single peak, but real noise is spread wide, so most energy is missed."],
      ["Approach","A <b>length-distributed</b> piezoelectric cantilever-wire array, evaluated across <b>11 measured noise environments</b> with a validated single-degree-of-freedom electromechanical model, bootstrap 95% confidence intervals, and parametric sweeps over fabrication tolerance, tip mass, and wire density.","A <b>length-distributed</b> piezo array, tested across <b>11 measured noise environments</b> with a validated SDOF model + bootstrap CIs."],
      ["Finding","The broadband array matches narrowband mean power (99 vs 108 fW) but holds up far better across environments (<b>CoV 21% vs 29%</b>) and is nearly immune to fabrication tolerance. The gap widens with resonator quality factor Q.","Same mean power as narrowband (99 vs 108 fW) but far steadier across environments (<b>CoV 21% vs 29%</b>). The edge grows with Q."]],
-   stats:[["21% / 29%","power variation across environments (CoV) — broadband vs narrowband"],["1.07→1.19×","broadband advantage as Q rises (PZT-5A → AlN)"],["11","measured noise environments, cross-evaluated"]],
+   stats:[["21% / 29%","power variation across environments (CoV), broadband vs narrowband"],["1.07→1.19×","broadband advantage as Q rises (PZT-5A → AlN)"],["11","measured noise environments, cross-evaluated"]],
    figs:[["assets/figures/acoustic_heatmap.png","Each row is a harvester design; each column a real noise environment (color = power relative to the best design for that environment). The broadband design (top) stays strong everywhere, while narrowband designs win their own environment but fall off elsewhere."],
-     ["assets/figures/acoustic_spectrum.png","A measured noise source. Its energy is spread across a wide band rather than concentrated at one peak — the reason a single-resonance harvester leaves most of it uncaptured."]],
+     ["assets/figures/acoustic_spectrum.png","A measured noise source. Its energy is spread across a wide band rather than concentrated at one peak, which is why a single-resonance harvester leaves most of it uncaptured."]],
    meth:["SDOF electromechanical model","bootstrap 95% CI","cross-environment evaluation","parametric sweeps","Numba Monte-Carlo"],
-   limit:"Absolute output is fW-scale at 70 dB SPL — reported as-is, not normalized away. The claim is robustness of the design, not raw power.",
+   limit:"Absolute output is fW-scale at 70 dB SPL, reported as-is rather than normalized away. The claim is the design's robustness, not raw power.",
    mlimit:"Output is fW-scale at 70 dB SPL, reported as-is. The claim is robustness, not raw power."},
   {kick:"Mechanical capstone · control & power systems",title:"Autonomous Pole-Climbing & Harvesting Robot",
-   chip:["Team capstone · built & demonstrated","green"],lead:"My one <b>hands-on, built-and-tested</b> system — I owned control and power.",
-   blocks:[["Role","A four-part team built an autonomous robot that climbs a vertical PVC pole and harvests the coconut at the top. The team's core mechanism kept the motor count low — a <b>one-way bearing</b> (rather than a ratchet) paired with a <b>C-shaped gear</b> drove the harvesting motion off the climb drivetrain. I led the <b>control software and electrical/power systems</b> — motor drivers, sensing, voltage stabilization, and the climb logic.","Team capstone: a robot that climbs a pole and harvests the coconut on top. The team's core mechanism cut motor count with a <b>one-way bearing</b> (not a ratchet) + <b>C-shaped gear</b> harvest drive; I owned the <b>control + power electronics</b>."],
-     ["Hard problem","Budget forced two mismatched motors (gear ratios 1/144 vs 1/500, stall currents 24 A vs 2 A) onto one synchronized drive. I matched their angular acceleration by inverse-calculating PWM from the spec sheets, then tuned the offset empirically over dozens of climb tests, while a distributed <b>11,000 µF</b> capacitor bank held the rail above the 7 V reset floor through 24 A stall surges.","Two mismatched motors (1/144 vs 1/500, 24 A vs 2 A stall) on one drive — synced by inverse-calculated PWM + empirical tuning; an <b>11,000 µF</b> cap bank held the rail above reset."],
+   chip:["Team capstone · built & demonstrated","green"],lead:"My one <b>hands-on, built-and-tested</b> system. I owned control and power.",
+   blocks:[["Role","A four-part team built an autonomous robot that climbs a vertical PVC pole and harvests the coconut at the top. The team's core mechanism kept the motor count low: a <b>one-way bearing</b> (rather than a ratchet) paired with a <b>C-shaped gear</b> drove the harvesting motion off the climb drivetrain. I led the <b>control software and electrical/power systems</b>: motor drivers, sensing, voltage stabilization, and the climb logic.","Team capstone: a robot that climbs a pole and harvests the coconut on top. The team's core mechanism cut motor count with a <b>one-way bearing</b> (not a ratchet) + <b>C-shaped gear</b> harvest drive; I owned the <b>control + power electronics</b>."],
+     ["Hard problem","Budget forced two mismatched motors (gear ratios 1/144 vs 1/500, stall currents 24 A vs 2 A) onto one synchronized drive. I matched their angular acceleration by inverse-calculating PWM from the spec sheets, then tuned the offset empirically over dozens of climb tests, while a distributed <b>11,000 µF</b> capacitor bank held the rail above the 7 V reset floor through 24 A stall surges.","Two mismatched motors (1/144 vs 1/500, 24 A vs 2 A stall) on one drive, synced by inverse-calculated PWM + empirical tuning; an <b>11,000 µF</b> cap bank held the rail above reset."],
      ["Honest read","It climbed on contest day, but the control is threshold on/off rather than PID, and the motor mismatch left a residual twist. The deeper lesson was process: the first design was scrapped three weeks out for a center-of-mass flaw that a simple design-review gate would have caught on paper.","It worked, but control was on/off (not PID), and a scrapped first design taught me a design-review gate would have caught the flaw on paper."]],
-   figs:[["assets/figures/climbing_robot_cad.png","The redesigned assembly: the two motors sit symmetrically about the pole axis so the center of mass falls on the climb axis — the fix for the first design's center-of-mass offset."],
-     ["assets/figures/climbing_robot_build.jpg","The actual build — drive gears, magnets, and wiring, with the cable tie (circled) that finally fixed the body-guide derailment after magnets and tape had failed."]],
+   figs:[["assets/figures/climbing_robot_cad.png","The redesigned assembly: the two motors sit symmetrically about the pole axis so the center of mass falls on the climb axis, fixing the first design's center-of-mass offset."],
+     ["assets/figures/climbing_robot_build.jpg","The actual build: drive gears, magnets, and wiring, with the cable tie (circled) that finally fixed the body-guide derailment after magnets and tape had failed."]],
    meth:["Arduino multi-board (sensing / control split)","heterogeneous-motor synchronization","11,000 µF capacitor bank","moving-average + outlier filtering","torque & current safety-factor budgeting"],
-   limit:"A team course project with a defined goal, not original research — on/off control, empirically tuned. Included as the hands-on hardware-and-team complement to the simulation work above.",
-   mlimit:"Team course project, not research — on/off control, hands-on. My hardware-and-team complement to the simulation work."},
+   limit:"A team course project with a defined goal, not original research: on/off control, empirically tuned. Included as the hands-on hardware-and-team complement to the simulation work above.",
+   mlimit:"Team course project, not research: on/off control, hands-on. My hardware-and-team complement to the simulation work."},
   {kick:"Active learning · process optimization",title:"Active Learning for Carbon Nanofilm Synthesis",
    chip:["Code validated · awaiting lab data","blue"],lead:"Reaching the best process conditions in <b>fewer measurements</b>.",
-   blocks:[["Approach","Each (power, dwell-time) condition costs a real lab measurement, so the pipeline compares two acquisition strategies — <b>AL-Map</b> (sample where the model is most uncertain) and <b>AL-Opt</b> (sample for expected improvement, to find the best G/D ratio) — against random and grid baselines, adding one measurement at a time.","Each (power, dwell) point costs a real measurement, so it compares <b>AL-Map</b> (most uncertain) and <b>AL-Opt</b> (expected improvement) vs random/grid — one point at a time."],
+   blocks:[["Approach","Each (power, dwell-time) condition costs a real lab measurement, so the pipeline compares two acquisition strategies, <b>AL-Map</b> (sample where the model is most uncertain) and <b>AL-Opt</b> (sample for expected improvement, to find the best G/D ratio), against random and grid baselines, adding one measurement at a time.","Each (power, dwell) point costs a real measurement, so it compares <b>AL-Map</b> (most uncertain) and <b>AL-Opt</b> (expected improvement) vs random/grid, one point at a time."],
      ["Status","The approach is validated on the existing dataset (15 conditions, 45 replicates). The pipeline is set up to rerun on the low-power lab measurements once they're collected.","Validated on existing data (15 conditions, 45 replicates); ready to rerun on lab data."]],
    meth:["surrogate model","expected improvement","uncertainty sampling","learning-curve benchmark","sequential design"]},
   {kick:"Fault-tolerant control",title:"Asymmetric-Geometry Rotor Fault Tolerance",
-   chip:["Simulation — 6-DOF rebuild","amber"],lead:"Surviving a rotor hit — and rebuilding the model so the result is honest.",
+   chip:["Simulation · 6-DOF rebuild","amber"],lead:"Surviving a rotor hit, then rebuilding the model so the result stays honest.",
    blocks:[["Approach","A Monte-Carlo search (~10⁸ samples) over four-rotor geometry maximizes the static stability margin after a rotor fails; the optimum sits at the <b>incenter</b> of the remaining support triangle. The damaged craft is then flown with 3-motor control allocation, deliberately giving up yaw.","A ~10⁸-sample search places the rotors for best post-failure stability (optimum = <b>incenter</b> of the support triangle); the craft then flies on 3 motors, giving up yaw."],
-     ["Honest rebuild","My first model judged \"survival\" from attitude alone — which flattered the result. I rebuilt it as a realistic <b>6-DOF</b> simulation: it adds translational motion and altitude (so a craft that holds attitude but sinks now counts as a crash), an <b>instantaneous impact impulse</b> instead of a smeared 50 ms force, a post-hit drop in mass / shift in center-of-gravity / change in inertia from losing the rotor, and asymmetric motor spin-up/down with battery voltage sag.","My first model called \"survival\" from attitude alone — too flattering. I rebuilt it in <b>6-DOF</b>: real altitude (sink = crash), an <b>instantaneous</b> impact impulse, post-hit mass/CoG/inertia change, and asymmetric motor response."],
-     ["Finding","Even under the stricter model the craft survives — recovering attitude <em>and</em> holding altitude — for fragment hits up to <b>~420–520 m/s</b> on the axes, and up to <b>~960–1050 m/s</b> for glancing 60° strikes; shallow 30° strikes fall in between (~540–570 m/s).","Even realistically it survives fragment hits up to <b>~420–520 m/s</b> axial, and <b>~960–1050 m/s</b> for 60° glancing strikes (30° in between)."]],
-   stats:[["420–520 m/s","survivable axial fragment speed (1 g) under the realistic 6-DOF model"],["~1050 m/s","survivable glancing 60° strike — shallow angles deflect most of the momentum"],["6-DOF","attitude + altitude + crash, replacing the earlier attitude-only model"]],
+     ["Honest rebuild","My first model judged \"survival\" from attitude alone, which flattered the result. I rebuilt it as a realistic <b>6-DOF</b> simulation: it adds translational motion and altitude (so a craft that holds attitude but sinks now counts as a crash), an <b>instantaneous impact impulse</b> instead of a smeared 50 ms force, a post-hit drop in mass / shift in center-of-gravity / change in inertia from losing the rotor, and asymmetric motor spin-up/down with battery voltage sag.","My first model called \"survival\" from attitude alone, too flattering. I rebuilt it in <b>6-DOF</b>: real altitude (sink = crash), an <b>instantaneous</b> impact impulse, post-hit mass/CoG/inertia change, and asymmetric motor response."],
+     ["Finding","Even under the stricter model the craft survives (recovering attitude <em>and</em> holding altitude) for fragment hits up to <b>~420–520 m/s</b> on the axes, and up to <b>~960–1050 m/s</b> for glancing 60° strikes; shallow 30° strikes fall in between (~540–570 m/s).","Even realistically it survives fragment hits up to <b>~420–520 m/s</b> axial, and <b>~960–1050 m/s</b> for 60° glancing strikes (30° in between)."]],
+   stats:[["420–520 m/s","survivable axial fragment speed (1 g) under the realistic 6-DOF model"],["~1050 m/s","survivable glancing 60° strike; shallow angles deflect most of the momentum"],["6-DOF","attitude + altitude + crash, replacing the earlier attitude-only model"]],
    figs:[["assets/figures/drone_survival_boundary.png","Critical fragment speed the craft can survive (attitude error ≤ 45° and no crash) after losing one rotor, by strike direction and angle. Glancing 60° hits (right) are survivable far faster than near-axial hits (left), because most of their momentum deflects past the airframe rather than spinning it."]],
    meth:["~10⁸-sample geometry search","realistic 6-DOF dynamics","instantaneous impact impulse","post-loss mass / CoG / inertia shift","asymmetric motor + voltage sag"],
-   limit:"These are simulation thresholds, not flight tests. The point of the rebuild is the opposite of inflation — it removes the idealizations that made the earlier numbers look better than they should have.",
-   mlimit:"Simulation thresholds, not flight tests — but with the flattering idealizations removed."},
+   limit:"These are simulation thresholds, not flight tests. The point of the rebuild is the opposite of inflation: it removes the idealizations that made the earlier numbers look better than they should have.",
+   mlimit:"Simulation thresholds, not flight tests, but with the flattering idealizations removed."},
 ];
 const INTERESTS = [
   "Physics-informed neural networks with active learning",
@@ -355,13 +355,13 @@ const INTERESTS = [
 ];
 const SYSTEMS = [
   {cls:"",h:"Research automation",role:"research_pipeline + pipeline",
-   p:"A local-first toolkit that keeps my research reproducible. Change summaries come from the actual <b>git diff</b>, not from what a model says it did — so the record can't be fabricated. Only registered, tested modules are trusted, pushes are gated on a verification step, and a baseline-metric check flags silent regressions in either direction.",
-   mp:"Local-first toolkit. Change records come from the <b>git diff</b>, not the model — so they can't be faked. Pushes are gated on verification."},
-  {cls:"dep",h:"second_brain — decision capture",role:"deprecated · 2026-06",
+   p:"A local-first toolkit that keeps my research reproducible. Change summaries come from the actual <b>git diff</b>, not from what a model says it did, so the record can't be fabricated. Only registered, tested modules are trusted, pushes are gated on a verification step, and a baseline-metric check flags silent regressions in either direction.",
+   mp:"Local-first toolkit. Change records come from the <b>git diff</b>, not the model, so they can't be faked. Pushes are gated on verification."},
+  {cls:"dep",h:"second_brain · decision capture",role:"deprecated · 2026-06",
    p:"An attempt to auto-extract the decisions I made during work sessions. It ran fine, but the captured reasoning was <b>too low-quality to be useful</b>, so I retired it instead of keeping a system that just produced noise. The idea I kept: store the raw record <em>before</em> any processing can distort it.",
    mp:"Tried auto-extracting my decisions. Too low-quality, so I retired it. Kept the idea: <b>store the raw record first</b>."},
   {cls:"",h:"Engineering Brain",role:"reasoning dataset · active",
-   p:"The replacement. It poses hard engineering questions, records my free-text answers verbatim, and keeps the model that asks separate from the model that grades — so the raw answers stay clean. The output is a dataset of engineering reasoning in my own words.",
+   p:"The replacement. It poses hard engineering questions and records my free-text answers verbatim, keeping the model that asks separate from the model that grades so the raw answers stay clean. The output is a dataset of engineering reasoning in my own words.",
    mp:"Poses hard questions, saves my answers verbatim, asker kept separate from grader. Output: a dataset of my engineering reasoning."},
   {cls:"",h:"Local-LLM LoRA fine-tuning",role:"in progress",
    p:"That dataset feeds the current work: <b>LoRA fine-tuning a local language model</b> on engineering reasoning, run entirely on local hardware.",
@@ -373,18 +373,18 @@ const SYSTEMS = [
 const ABOUT = [
   ["Education","Korea University",
     "B.S. Mechanical Engineering &mdash; primary major<br>Applied Artificial Intelligence &mdash; convergence major<br>Expected graduation 2028"],
-  ["Research — incoming","Materials Innovation Lab",
+  ["Research · incoming","Materials Innovation Lab",
     "Undergraduate researcher<br>Prof. Byungseok Seo · starting Fall 2026<br><a href='https://matinnovlab.com/' target='_blank' rel='noopener'>matinnovlab.com</a>"],
   ["Direction","AI × Mechanical engineering",
     "Data-efficient learning and verification,<br>applied to physical-system research"],
   ["Contact","Get in touch",
-    "<a href='mailto:leechan0608@korea.ac.kr'>leechan0608@korea.ac.kr</a><br><a href='https://github.com/euichanlee0608-svg' target='_blank' rel='noopener'>github.com/euichanlee0608-svg</a>"],
+    "<a href='mailto:leechan0608@korea.ac.kr'>leechan0608@korea.ac.kr</a><br><a href='https://github.com/euichanlee0608-svg' target='_blank' rel='noopener'>github.com/euichanlee0608-svg</a><br><a href='https://www.linkedin.com/in/euichanlee0608-svg' target='_blank' rel='noopener'>linkedin.com/in/euichanlee0608-svg</a>"],
 ];
 const SIMOPS = {
   prog:"Living Paper · Korea University Lab-Startup Innovation Corps (I-Corps, 2026 · UC Berkeley KIC)",
   stats:[["30%+","of research time lost to debugging pipeline collisions"],["50%↓","targeted reduction in that debugging time"],["20","field interviews so far"]],
-  desc:"In a simulation pipeline — <b>model generation → FEM solve → surrogate model</b> — each stage runs fine on its own, but unexplained errors show up where the stages meet. Since it's hard to tell which boundary caused it, teams rerun the whole pipeline by hand and adjust parameters by intuition. Living Paper <b>detects the problem region, isolates the cause, and re-validates only the suspect segment</b> instead of restarting — with a shared change log so the team works from the same picture. This is a concept being developed through the I-Corps program; there's no MVP yet.",
-  mdesc:"In a pipeline (<b>model → FEM → surrogate</b>), each stage is fine alone but errors appear where they meet. Living Paper <b>finds the bad region, isolates the cause, and re-validates only that</b> — no full restart. Concept stage; no MVP yet.",
+  desc:"In a simulation pipeline (<b>model generation → FEM solve → surrogate model</b>), each stage runs fine on its own, but unexplained errors show up where the stages meet. Since it's hard to tell which boundary caused it, teams rerun the whole pipeline by hand and adjust parameters by intuition. Living Paper <b>finds the problem region, isolates the cause, and re-validates only the suspect segment</b> instead of restarting, with a shared change log so the team works from the same picture. This is a concept being developed through the I-Corps program; there's no MVP yet.",
+  mdesc:"In a pipeline (<b>model → FEM → surrogate</b>), each stage is fine alone but errors appear where they meet. Living Paper <b>finds the bad region, isolates the cause, and re-validates only that</b>, with no full restart. Concept stage; no MVP yet.",
 };
 const MOB=()=>window.matchMedia("(max-width:640px)").matches;
 
@@ -393,9 +393,9 @@ const ENGBRAIN_URL="https://euichanlee0608-svg.github.io/engineering-brain/";
 const BOARD = [
   {type:"folder",id:"research",view:"research",title:"Projects",count:"projects + interests",x:8,y:24},
   {type:"folder",id:"systems",view:"systems",title:"Systems",count:"automation → LoRA → filter",x:340,y:14},
-  {type:"pin",id:"engbrain",view:"engbrain",cls:"tilt2",pk:"Live project · external",title:"Engineering Brain",lead:"A web app that turns engineering reasoning into a dataset — try a question.",link:ENGBRAIN_URL,x:676,y:28},
-  {type:"pin",id:"simops",view:"simops",cls:"tilt",pk:"Venture · in program",title:"SimOps",lead:"Find the collision without rerunning the whole pipeline.",x:120,y:250},
-  {type:"pin",id:"about",view:"about",cls:"tilt2",pk:"About · contact",title:"About me",lead:"AI × mechanical engineering — and how to reach me.",x:470,y:242},
+  {type:"pin",id:"engbrain",view:"engbrain",cls:"tilt2",pk:"Live project · external",title:"Engineering Brain",lead:"A web app that turns engineering reasoning into a dataset. Try a question.",link:ENGBRAIN_URL,x:676,y:28},
+  {type:"pin",id:"simops",view:"simops",cls:"tilt",pk:"Concept · in program",title:"SimOps",lead:"Find the collision without rerunning the whole pipeline.",x:120,y:250},
+  {type:"pin",id:"about",view:"about",cls:"tilt2",pk:"About · contact",title:"About me",lead:"AI × mechanical engineering, and how to reach me.",x:470,y:242},
 ];
 const INIT = BOARD.map(o=>[o.x,o.y]);
 
@@ -492,18 +492,18 @@ function renderResearch(){
         ${r.limit?`<div class="limit"><b>Stated plainly:</b> ${m&&r.mlimit?r.mlimit:r.limit}</div>`:""}
       </div></div>
     </div>`).join("");
-  const interests=`<div class="interests"><div class="l">Also scoping — earlier-stage directions</div>
+  const interests=`<div class="interests"><div class="l">Also scoping · earlier-stage directions</div>
     <div class="ilist">${INTERESTS.map((t,i)=>`<div class="i"><span class="n">${String(i+1).padStart(2,'0')}</span><span>${t}</span></div>`).join("")}</div></div>`;
   return cards+interests;
 }
 function renderSystems(){
   const m=MOB();
-  const lead=m?"I built the research infrastructure I couldn't buy — and kept changing it. The path, <b>including what I dropped</b>:"
-    :"My research needed infrastructure I couldn't buy, so I built it — and it kept changing as I learned what mattered. Here's the path, including <b>what I dropped and why</b>.";
-  const band=m?"A Telegram bot ties it together — run any task from my phone, with approval before anything touches files."
-    :"None of this gets used if it's a hassle, so I built a general-purpose Telegram bot as one place to run all of it — triggering any task from my phone, with an approval step before anything touches files.";
+  const lead=m?"I built the research infrastructure I couldn't buy, and kept changing it. The path, <b>including what I dropped</b>:"
+    :"My research needed infrastructure I couldn't buy, so I built it, and it kept changing as I learned what mattered. Here's the path, including <b>what I dropped and why</b>.";
+  const band=m?"A Telegram bot ties it together: run any task from my phone, with approval before anything touches files."
+    :"None of this gets used if it's a hassle, so I built a general-purpose Telegram bot as one place to run all of it, triggering any task from my phone, with an approval step before anything touches files.";
   const toy=m?"Same spirit: a guitar-tab extractor that checks itself by re-synthesizing and re-transcribing (note-F1 0.912)."
-    :"A smaller project in the same spirit: a guitar-tab extractor that checks itself — it turns its transcription back into audio, re-transcribes that, and keeps the parameter settings that score best (note-F1 0.912).";
+    :"A smaller project in the same spirit: a guitar-tab extractor that checks itself by turning its transcription back into audio, re-transcribing that, and keeping the parameter settings that score best (note-F1 0.912).";
   return `<p class="iv-lead">${lead}</p>
     <div class="flow">${SYSTEMS.map(n=>`<div class="node ${n.cls}"><div class="nt"><h4>${n.h}</h4><span class="role">${n.role}</span></div><p>${m&&n.mp?n.mp:n.p}</p></div>`).join("")}</div>
     <div class="band"><span class="ic">telegram_bot</span><p>${band}</p></div>
@@ -511,7 +511,7 @@ function renderSystems(){
 }
 function renderAbout(){
   return `<div class="facts">${ABOUT.map(f=>`<div class="f"><div class="k">${f[0]}</div><div class="v">${f[1]}<small>${f[2]}</small></div></div>`).join("")}</div>
-    <div class="ab-cta">Open to research collaboration &amp; graduate study — <a href="mailto:leechan0608@korea.ac.kr">leechan0608@korea.ac.kr</a></div>`;
+    <div class="ab-cta">Open to research collaboration &amp; graduate study · <a href="mailto:leechan0608@korea.ac.kr">leechan0608@korea.ac.kr</a></div>`;
 }
 function renderSimops(){
   const svg=`<svg viewBox="0 0 720 200" role="img" aria-label="Pipeline collision diagram">
@@ -532,7 +532,7 @@ function renderSimops(){
       <text x="489" y="50" text-anchor="middle" font-size="18">⚡</text>
       <text x="356" y="30" text-anchor="middle" font-size="11.5" fill="#9a3b2e" font-weight="600">errors appear where stages meet</text>
       <rect x="150" y="150" width="420" height="34" rx="9" fill="#eef1f5" stroke="#cdd8e8"/>
-      <text x="360" y="172" text-anchor="middle" font-size="12" font-weight="600" fill="#1f3a5f">detect the region → isolate the cause → re-validate only the suspect segment</text>
+      <text x="360" y="172" text-anchor="middle" font-size="12" font-weight="600" fill="#2a2d33">detect the region → isolate the cause → re-validate only the suspect segment</text>
       <line x1="224" y1="124" x2="300" y2="148" stroke="#cdd8e8" stroke-width="1.3"/>
       <line x1="489" y1="124" x2="420" y2="148" stroke="#cdd8e8" stroke-width="1.3"/>
     </g></svg>`;
