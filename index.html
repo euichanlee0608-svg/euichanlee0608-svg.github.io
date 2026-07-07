@@ -168,6 +168,9 @@
   .meth{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}
   .meth b{font-family:var(--mono);font-size:11.5px;font-weight:400;color:var(--body);background:var(--soft);border:1px solid var(--line);padding:5px 11px;border-radius:6px}
   .limit{margin-top:20px;padding:14px 16px;border-left:2px solid var(--amber);background:#faf6e9;border-radius:0 8px 8px 0;font-size:1rem;color:#6a5f43}
+  .igrid{display:grid;grid-template-columns:1fr;gap:10px}
+  .ichip{border:1px dashed var(--line2);border-radius:10px;padding:13px 15px;background:#fafbfc;font-size:1rem;color:var(--body);display:flex;gap:12px;align-items:baseline;line-height:1.5}
+  .ichip span{font-family:var(--mono);font-size:11px;color:var(--accent)}
   .interests{border-top:1px dashed var(--line2);margin-top:10px;padding-top:22px}
   .interests .l{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin-bottom:14px}
   .ilist{display:flex;flex-direction:column;gap:10px}
@@ -262,6 +265,80 @@
     .so-desc{font-size:1.02rem}
     .so-diagram{padding:16px 12px;overflow-x:auto}
   }
+
+  /* ===== mobile arcade (phone-only game shell) ===== */
+  #mgame{display:none}
+  @media(max-width:820px){
+    /* game replaces the carousel on phones; carousel kept as a list fallback */
+    #mgame{display:block;margin:16px -20px 24px}
+    .deck,.deck-ui,.deck-cap,.more-note{display:none!important}
+    body.listmode #mgame{display:none}
+    body.listmode .deck{display:flex!important}
+    body.listmode .deck-ui{display:flex!important}
+    body.listmode .deck-cap{display:block!important}
+    body.listmode .more-note{display:block!important}
+    /* desk mode: compact header so intro + desk fit one screen */
+    body:not(.listmode) .head h1,body:not(.listmode) .head .intro{display:none}
+    body:not(.listmode) .head{padding-bottom:0}
+
+    .g-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 20px 10px;font-family:var(--mono)}
+    .g-bar .gtip{font-size:11px;color:var(--mut);letter-spacing:.02em;line-height:1.4}
+    .g-bar .gtip b{color:var(--body);font-weight:500}
+    .g-toggle{flex-shrink:0;font-size:11px;color:var(--body);background:#fff;border:1px solid var(--line2);border-radius:7px;padding:5px 10px;cursor:pointer;white-space:nowrap}
+    .g-toggle:active{border-color:var(--accent);color:var(--accent)}
+
+    #gstage{position:relative;height:calc(100vh - 205px);height:calc(100dvh - 205px);min-height:400px;max-height:720px;overflow:hidden;
+      background:
+        linear-gradient(180deg,#fbfcfd,#eef1f5),
+        repeating-linear-gradient(90deg,transparent,transparent 33px,rgba(42,45,51,.035) 33px,rgba(42,45,51,.035) 34px);
+      border-top:1px solid var(--line);border-bottom:1px solid var(--line);touch-action:none;user-select:none;-webkit-user-select:none}
+    #gstage .gscore{position:absolute;top:12px;right:16px;font-family:var(--mono);font-size:10.5px;color:var(--mut);pointer-events:none;z-index:15}
+
+    /* desk objects */
+    .fo{position:absolute;will-change:transform;left:0;top:0;cursor:grab}
+    .fo.seen{opacity:.55}
+    .fo:active .fcard,.fo:active .ffront{filter:brightness(.96);transform:scale(.985)}   /* press feedback */
+    .fo .fcard{width:136px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 11px 9px;
+      box-shadow:0 10px 20px -14px rgba(40,44,52,.35);transition:transform .1s,filter .1s}
+    .fo .fcard .fk{font-family:var(--mono);font-size:7.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+    .fo .fcard h4{font-family:var(--serif);font-size:.92rem;font-weight:500;color:var(--ink);line-height:1.15;margin-top:5px}
+    .fo .fcard .fs{font-size:9px;color:var(--mut);line-height:1.35;margin-top:4px}
+    .fo .fcard .fgo{margin-top:6px;font-family:var(--mono);font-size:7.5px;letter-spacing:.04em;color:var(--accent)}
+    /* type palettes — white → gray, one per kind */
+    .fo.mini .fcard{background:#fff;border-top:3px solid var(--accent)}                    /* projects: white + graphite bar */
+    .fcard.t-sys{background:#eceef1}                                                       /* systems: soft gray */
+    .fcard.t-so{background:#e2e4e9}                                                        /* simops: mid gray */
+    .fcard.t-ab{background:#fff;border:1.5px solid var(--accent)}                          /* about: business card */
+    .fcard.t-eb{background:linear-gradient(180deg,#34383f,#1e2025);border-color:#1e2025}   /* live app: graphite */
+    .fcard.t-eb .fk{color:#a9afba}.fcard.t-eb h4{color:#fff}.fcard.t-eb .fs{color:#8d939e}.fcard.t-eb .fgo{color:#c3c8d1}
+    .fcard.t-int{background:#f1f2f4;border:1px dashed #c6cad2;border-radius:5px;box-shadow:0 8px 15px -12px rgba(40,44,52,.4)}  /* interests: sticky note */
+    .fcard.t-int h4{font-family:var(--mono);font-size:.72rem;line-height:1.35;font-weight:400;color:var(--body)}
+    /* folder object */
+    .fo.fold{width:126px;height:88px}
+    .fo.fold .ftab{position:absolute;top:0;left:0;width:60px;height:20px;background:var(--fl-tab);border:1px solid var(--fl-edge);border-bottom:none;border-radius:8px 10px 0 0}
+    .fo.fold .ffront{position:absolute;left:0;right:0;top:12px;bottom:0;background:var(--fl-body);border:1px solid var(--fl-edge);border-radius:11px;box-shadow:0 10px 20px -14px rgba(40,44,52,.35);padding:13px 13px}
+    .fo.fold .ffront::before{content:"";position:absolute;top:6px;left:12px;right:12px;height:3px;border-radius:3px;background:#fff}
+    .fo.fold .ffront h4{font-family:var(--serif);font-size:1.02rem;color:var(--fl-ink);line-height:1;margin-top:4px}
+    .fo.fold .ffront span{display:block;margin-top:7px;font-family:var(--mono);font-size:8px;letter-spacing:.04em;color:var(--fl-mut)}
+    /* the Projects folder is the entry point — noticeably bigger than the cards */
+    .fo.fold.big{width:178px;height:118px}
+    .fo.fold.big .ftab{width:86px;height:26px;border-radius:10px 12px 0 0}
+    .fo.fold.big .ffront{top:16px;border-radius:13px;padding:18px 17px}
+    .fo.fold.big .ffront h4{font-size:1.38rem;margin-top:5px}
+    .fo.fold.big .ffront span{font-size:9.5px;margin-top:10px}
+    .fo.hit{animation:foburst .26s ease-out forwards}
+    @keyframes foburst{to{transform:scale(1.35);opacity:0;filter:blur(2px)}}
+
+    /* end-of-desk overlay (all cards opened) */
+    #gover{position:absolute;inset:0;display:none;place-items:center;text-align:center;padding:24px;
+      background:rgba(247,248,250,.88);backdrop-filter:blur(3px);z-index:20}
+    #gover.on{display:grid}
+    #gover .got{font-family:var(--serif);font-size:1.5rem;color:var(--ink);margin-bottom:8px}
+    #gover .gos{font-size:.98rem;color:var(--mut);max-width:30ch;line-height:1.55;margin:0 auto 20px}
+    .gorow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+    .gob{font-family:var(--mono);font-size:12px;color:#fff;background:var(--accent);border:none;border-radius:9px;padding:11px 22px;cursor:pointer;text-decoration:none;display:inline-block}
+    .gob.gob2{background:#fff;color:var(--body);border:1px solid var(--line2)}
+  }
 </style>
 </head>
 <body>
@@ -277,6 +354,24 @@
     </div>
   </div>
   <div class="board" id="board"></div>
+
+  <div id="mgame">
+    <div class="g-bar">
+      <div class="gtip"><b>Tap</b> a card to open it · <b>flick</b> to toss it around</div>
+      <button class="g-toggle" id="gtoggle" type="button">List view</button>
+    </div>
+    <div id="gstage">
+      <div class="gscore" id="gscore"></div>
+      <div id="gover">
+        <div>
+          <div class="got">That's the whole desk.</div>
+          <div class="gos">You've opened everything. If anything here caught your eye, I'd genuinely like to hear from you.</div>
+          <div class="gorow"><a class="gob" href="mailto:leechan0608@korea.ac.kr">Email me</a><button class="gob gob2" id="grestart" type="button">Start over</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <p class="deck-cap">swipe sideways · tap a card to open</p>
   <div class="deck" id="deck"></div>
   <div class="deck-ui">
@@ -541,17 +636,44 @@ function renderSimops(){
     <div class="so-stats">${SIMOPS.stats.map(s=>`<div class="so-stat"><div class="v">${s[0]}</div><div class="l">${s[1]}</div></div>`).join("")}</div>
     <p class="so-desc">${MOB()?SIMOPS.mdesc:SIMOPS.desc}</p>`;
 }
-const RENDER={research:renderResearch,systems:renderSystems,about:renderAbout,simops:renderSimops};
-const TITLES={research:["Projects","4 projects + interests"],systems:["Systems & engineering judgment","what I built, dropped, and where it's heading"],about:["About","Euichan Lee (Leechan)"],simops:["SimOps / Living Paper","FEM-pipeline collision detection"]};
+function renderResearchOne(i){
+  const r=RESEARCH[i]; if(!r) return renderResearch();
+  return `<div class="acc flag open">
+    <div class="acc-h"><div class="m"><span class="kick">${r.kick}</span>
+      <div class="acc-title">${r.title}</div><div class="acc-lead">${r.lead}</div></div>
+      <div class="acc-r">${chip(r.chip)}</div></div>
+    <div class="acc-b" style="max-height:none"><div class="acc-in">
+      ${r.blocks.map(b=>`<div class="blk"><div class="l">${b[0]}</div><p>${b[2]||b[1]}</p></div>`).join("")}
+      ${r.stats?`<div class="stats">${r.stats.map(s=>`<div class="stat"><div class="v">${s[0]}</div><div class="l">${s[1]}</div></div>`).join("")}</div>`:""}
+      ${r.figs?r.figs.map(f=>`<figure><img src="${f[0]}" alt="" loading="lazy"><figcaption>${f[1]}</figcaption></figure>`).join(""):""}
+      ${r.meth?`<div class="meth">${r.meth.map(x=>`<b>${x}</b>`).join("")}</div>`:""}
+      ${r.limit?`<div class="limit"><b>Stated plainly:</b> ${r.mlimit||r.limit}</div>`:""}
+    </div></div></div>`;
+}
+function renderInterests(){
+  return `<p class="iv-lead">Directions I'm actively scoping. Earlier-stage than the four projects, listed as-is.</p>
+    <div class="igrid">${INTERESTS.map((t,i)=>`<div class="ichip"><span>${String(i+1).padStart(2,'0')}</span>${t}</div>`).join("")}</div>`;
+}
+const RENDER={research:renderResearch,systems:renderSystems,about:renderAbout,simops:renderSimops,interests:renderInterests};
+const TITLES={research:["Projects","4 projects + interests"],systems:["Systems & engineering judgment","what I built, dropped, and where it's heading"],about:["About","Euichan Lee (Leechan)"],simops:["SimOps / Living Paper","FEM-pipeline collision detection"],interests:["Research interests","6 early-stage directions"]};
 
-let lastFocus=null;
+let lastFocus=null,openT=0;
 function openObj(id){
   const o=BOARD.find(b=>b.id===id); if(!o) return;
   if(o.link){ window.open(o.link,"_blank","noopener"); return; }
   lastFocus=document.activeElement;
   vt.textContent=TITLES[o.view][0]; vc.textContent=TITLES[o.view][1];
   vbody.innerHTML=RENDER[o.view]();
-  vbody.scrollTop=0;
+  vbody.scrollTop=0; openT=performance.now();
+  scrim.classList.add("on"); viewer.classList.add("on");
+  document.getElementById("close").focus();
+}
+/* generic opener used by the mobile desk (view + optional research index) */
+function openContent(view,title,sub,ri){
+  lastFocus=document.activeElement;
+  vt.textContent=title; vc.textContent=sub;
+  vbody.innerHTML=(view==="research"&&ri!=null)?renderResearchOne(ri):RENDER[view]();
+  vbody.scrollTop=0; openT=performance.now();
   scrim.classList.add("on"); viewer.classList.add("on");
   document.getElementById("close").focus();
 }
@@ -567,11 +689,166 @@ vbody.addEventListener("load",e=>{
   if(e.target.tagName==="IMG"){const b=e.target.closest(".acc-b"); if(b&&b.closest(".acc").classList.contains("open")) b.style.maxHeight=b.scrollHeight+'px';}
 },true);
 
-function closeViewer(){scrim.classList.remove("on");viewer.classList.remove("on");if(lastFocus){lastFocus.focus();lastFocus=null;}}
+function closeViewer(){
+  /* ignore the ghost click a phone fires right after the opening tap —
+     it lands on the scrim (or close button) and would shut the sheet instantly */
+  if(performance.now()-openT<400) return;
+  scrim.classList.remove("on");viewer.classList.remove("on");if(lastFocus){lastFocus.focus();lastFocus=null;}if(window.__resumeGame)window.__resumeGame();}
 document.getElementById("close").onclick=closeViewer;
 scrim.onclick=closeViewer;
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeViewer();});
 document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][0];o.y=INIT[i][1];});renderBoard();};
+
+/* ============ MOBILE DESK (phone-only · tap to open, flick to toss) ============ */
+(function(){
+  if(!window.matchMedia("(max-width:820px)").matches) return;   /* desktop untouched */
+  const stage=document.getElementById("gstage"); if(!stage) return;
+  const scoreEl=document.getElementById("gscore"),gover=document.getElementById("gover");
+
+  /* plain-words titles: what each project actually does, at a glance */
+  const MINIS=[
+    {key:"r0",kind:"mini",ri:0,fk:"Project 01 · energy",title:"Turning noise into power",sub:"a harvester array that stays strong in any real noise"},
+    {key:"r1",kind:"mini",ri:1,fk:"Project 02 · robotics",title:"A robot that climbs poles & harvests",sub:"built and demonstrated with a team"},
+    {key:"r2",kind:"mini",ri:2,fk:"Project 03 · ML",title:"Best recipe, fewest experiments",sub:"active learning for film synthesis"},
+    {key:"r3",kind:"mini",ri:3,fk:"Project 04 · control",title:"A drone that survives losing a rotor",sub:"realistic 6-DOF fault simulation"},
+  ];
+  const ITEMS=[
+    {key:"projects",kind:"folder",big:true,title:"Projects",sub:"4 projects · tap to spill",burst:true},
+    {key:"systems",kind:"card",view:"systems",cls:"t-sys",fk:"Systems",title:"The tools behind the research",sub:"reproducible, honest-by-design infra"},
+    {key:"engbrain",kind:"card",ext:ENGBRAIN_URL,cls:"t-eb",fk:"Live app",title:"Engineering Brain",sub:"try one hard question yourself"},
+    {key:"simops",kind:"card",view:"simops",cls:"t-so",fk:"Startup concept",title:"SimOps",sub:"debugging simulation pipelines"},
+    {key:"about",kind:"card",view:"about",cls:"t-ab",fk:"About",title:"Euichan Lee",sub:"background & contact"},
+    {key:"interests",kind:"card",view:"interests",cls:"t-int",fk:"Scoping",title:"6 research directions I'm circling",sub:""},
+  ];
+  const GOAL=9;   /* 4 project minis + systems + engbrain + simops + about + interests */
+
+  let W=stage.clientWidth,H=stage.clientHeight;
+  let objs=[],opened=new Set(),done=false,over=false,raf=0,last=0;
+
+  function build(d){
+    const el=document.createElement("div");
+    el.className="fo "+(d.kind==="folder"?"fold":d.kind==="mini"?"mini":"")+(d.big?" big":"");
+    el.innerHTML=d.kind==="folder"
+      ? `<div class="ftab"></div><div class="ffront"><h4>${d.title}</h4><span>${d.sub}</span></div>`
+      : `<div class="fcard ${d.cls||""}">${d.fk?`<div class="fk">${d.fk}</div>`:""}<h4>${d.title}</h4>${d.sub?`<div class="fs">${d.sub}</div>`:""}<div class="fgo">${d.ext?"tap to open ↗":"tap to open"}</div></div>`;
+    stage.appendChild(el); return el;
+  }
+  function place(o){o.el.style.transform=`translate(${o.x}px,${o.y}px) rotate(${o.rot}deg)`;}
+  function spawn(d,x,y,vx,vy){
+    const el=build(d),w=el.offsetWidth,h=el.offsetHeight;
+    const o={d,el,w,h,x:Math.max(6,Math.min(W-w-6,x)),y:Math.max(6,Math.min(H-h-6,y)),
+      vx:vx||0,vy:vy||0,rot:Math.random()*6-3};
+    if(opened.has(d.key)) el.classList.add("seen");
+    objs.push(o); place(o); return o;
+  }
+  function deal(){
+    objs.forEach(o=>o.el.remove()); objs=[];
+    const spots=[[.05,.02],[.5,.07],[.07,.24],[.5,.42],[.08,.6],[.48,.78]];
+    ITEMS.forEach((d,i)=>{const s=spots[i];
+      spawn(d,s[0]*W+Math.random()*12,s[1]*H+Math.random()*10);});
+  }
+
+  function score(){scoreEl.textContent="opened "+opened.size+"/"+GOAL;done=opened.size>=GOAL;}
+  function showDone(){over=true;gover.classList.add("on");}
+  window.__resumeGame=function(){if(done&&!over)showDone();};
+
+  function burst(o){                        /* Projects folder pops into 4 mini cards */
+    o.el.classList.add("hit");setTimeout(()=>o.el.remove(),260);
+    objs=objs.filter(x=>x!==o);
+    const sx=o.x+o.w/2-68,sy=o.y+o.h/2-50;
+    /* glide each mini toward its own spot: with friction k, travel = v0/k, so v0 = dist*k */
+    const spots=[[.05,.02],[.52,.08],[.05,.26],[.52,.34]];
+    MINIS.forEach((m,i)=>{
+      const tx=spots[i][0]*W+Math.random()*10,ty=spots[i][1]*H+Math.random()*10;
+      const vx=Math.max(-750,Math.min(750,(tx-sx)*3.2)),vy=Math.max(-750,Math.min(750,(ty-sy)*3.2));
+      spawn(m,sx,sy,vx,vy);});
+  }
+  function activate(o){
+    const d=o.d;
+    if(d.burst){burst(o);return;}
+    o.el.classList.add("seen");
+    opened.add(d.key);score();
+    if(d.ext){window.open(d.ext,"_blank","noopener");if(done)showDone();return;}
+    if(d.kind==="mini")openContent("research",RESEARCH[d.ri].title,RESEARCH[d.ri].kick,d.ri);
+    else{const t=TITLES[d.view];openContent(d.view,t[0],t[1]);}
+  }
+
+  function loop(t){
+    raf=requestAnimationFrame(loop);
+    if(!last)last=t;const dt=Math.min(.05,(t-last)/1000);last=t;
+    if(over)return;
+    const f=Math.exp(-3.2*dt);              /* friction: flicked cards glide then stop */
+    for(const o of objs){
+      if(o===held)continue;
+      o.x+=o.vx*dt;o.y+=o.vy*dt;o.vx*=f;o.vy*=f;
+      if(Math.abs(o.vx)<2)o.vx=0; if(Math.abs(o.vy)<2)o.vy=0;
+      if(o.x<6){o.x=6;o.vx*=-.4} if(o.x>W-o.w-6){o.x=W-o.w-6;o.vx*=-.4}
+      if(o.y<6){o.y=6;o.vy*=-.4} if(o.y>H-o.h-6){o.y=H-o.h-6;o.vy*=-.4}
+    }
+    /* soft separation so cards never bury one another */
+    for(let i=0;i<objs.length;i++)for(let j=i+1;j<objs.length;j++){
+      const a=objs[i],b=objs[j];
+      const ox=Math.min(a.x+a.w,b.x+b.w)-Math.max(a.x,b.x);
+      const oy=Math.min(a.y+a.h,b.y+b.h)-Math.max(a.y,b.y);
+      if(ox<=0||oy<=0)continue;
+      if(ox<oy){const s=(a.x+a.w/2<b.x+b.w/2?-1:1)*ox*.18;
+        if(a!==held)a.x=Math.max(6,Math.min(W-a.w-6,a.x+s));
+        if(b!==held)b.x=Math.max(6,Math.min(W-b.w-6,b.x-s));}
+      else{const s=(a.y+a.h/2<b.y+b.h/2?-1:1)*oy*.18;
+        if(a!==held)a.y=Math.max(6,Math.min(H-a.h-6,a.y+s));
+        if(b!==held)b.y=Math.max(6,Math.min(H-b.h-6,b.y-s));}
+    }
+    objs.forEach(place);
+  }
+
+  /* input — tap opens, drag tosses with momentum.
+     A tap = total displacement from the touch-down point stays under 14px
+     (accumulated-path thresholds misread normal finger jitter as a drag). */
+  let held=null,isTap=false,x0=0,y0=0,px=0,py=0,fvx=0,fvy=0,lt=0;
+  stage.addEventListener("pointerdown",e=>{
+    if(over)return;
+    const el=e.target.closest(".fo"); if(!el)return;
+    const o=objs.find(x=>x.el===el); if(!o)return;
+    e.preventDefault();
+    held=o;isTap=true;x0=px=e.clientX;y0=py=e.clientY;fvx=fvy=0;lt=performance.now();
+    o.vx=o.vy=0;el.style.zIndex=30;
+    try{stage.setPointerCapture(e.pointerId);}catch(_){}
+  });
+  stage.addEventListener("pointermove",e=>{
+    if(!held)return;
+    const dx=e.clientX-px,dy=e.clientY-py;px=e.clientX;py=e.clientY;
+    if(Math.hypot(e.clientX-x0,e.clientY-y0)>14)isTap=false;
+    const now=performance.now(),dms=Math.max(1,now-lt);lt=now;
+    fvx=.75*fvx+.25*(dx/dms*1000); fvy=.75*fvy+.25*(dy/dms*1000);
+    held.x=Math.max(6,Math.min(W-held.w-6,held.x+dx));
+    held.y=Math.max(6,Math.min(H-held.h-6,held.y+dy));
+    place(held);
+  });
+  function release(open){
+    if(!held)return;
+    const o=held;held=null;o.el.style.zIndex="";
+    if(open&&isTap)activate(o);
+    else{o.vx=Math.max(-900,Math.min(900,fvx));o.vy=Math.max(-900,Math.min(900,fvy));}
+  }
+  stage.addEventListener("pointerup",()=>release(true));
+  stage.addEventListener("pointercancel",()=>release(false));
+
+  document.getElementById("grestart").onclick=()=>{
+    opened.clear();score();over=false;gover.classList.remove("on");last=0;deal();
+  };
+  const tgl=document.getElementById("gtoggle");
+  tgl.onclick=()=>{
+    const on=document.body.classList.toggle("listmode");
+    tgl.textContent=on?"Desk view":"List view";
+    if(on){cancelAnimationFrame(raf);raf=0;}
+    else{W=stage.clientWidth;H=stage.clientHeight;last=0;if(!raf)raf=requestAnimationFrame(loop);}
+  };
+  window.addEventListener("resize",()=>{W=stage.clientWidth;H=stage.clientHeight;});
+
+  score();deal();
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) tgl.click();   /* accessible fallback: straight to list */
+  else raf=requestAnimationFrame(loop);
+})();
 </script>
 </body>
 </html>

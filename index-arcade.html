@@ -320,6 +320,12 @@
     .fo.fold .ffront::before{content:"";position:absolute;top:6px;left:12px;right:12px;height:3px;border-radius:3px;background:#fff}
     .fo.fold .ffront h4{font-family:var(--serif);font-size:1.02rem;color:var(--fl-ink);line-height:1;margin-top:4px}
     .fo.fold .ffront span{display:block;margin-top:7px;font-family:var(--mono);font-size:8px;letter-spacing:.04em;color:var(--fl-mut)}
+    /* the Projects folder is the entry point — noticeably bigger than the cards */
+    .fo.fold.big{width:178px;height:118px}
+    .fo.fold.big .ftab{width:86px;height:26px;border-radius:10px 12px 0 0}
+    .fo.fold.big .ffront{top:16px;border-radius:13px;padding:18px 17px}
+    .fo.fold.big .ffront h4{font-size:1.38rem;margin-top:5px}
+    .fo.fold.big .ffront span{font-size:9.5px;margin-top:10px}
     .fo.hit{animation:foburst .26s ease-out forwards}
     @keyframes foburst{to{transform:scale(1.35);opacity:0;filter:blur(2px)}}
 
@@ -707,7 +713,7 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
     {key:"r3",kind:"mini",ri:3,fk:"Project 04 · control",title:"A drone that survives losing a rotor",sub:"realistic 6-DOF fault simulation"},
   ];
   const ITEMS=[
-    {key:"projects",kind:"folder",title:"Projects",sub:"4 projects · tap to spill",burst:true},
+    {key:"projects",kind:"folder",big:true,title:"Projects",sub:"4 projects · tap to spill",burst:true},
     {key:"systems",kind:"card",view:"systems",cls:"t-sys",fk:"Systems",title:"The tools behind the research",sub:"reproducible, honest-by-design infra"},
     {key:"engbrain",kind:"card",ext:ENGBRAIN_URL,cls:"t-eb",fk:"Live app",title:"Engineering Brain",sub:"try one hard question yourself"},
     {key:"simops",kind:"card",view:"simops",cls:"t-so",fk:"Startup concept",title:"SimOps",sub:"debugging simulation pipelines"},
@@ -721,7 +727,7 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
 
   function build(d){
     const el=document.createElement("div");
-    el.className="fo "+(d.kind==="folder"?"fold":d.kind==="mini"?"mini":"");
+    el.className="fo "+(d.kind==="folder"?"fold":d.kind==="mini"?"mini":"")+(d.big?" big":"");
     el.innerHTML=d.kind==="folder"
       ? `<div class="ftab"></div><div class="ffront"><h4>${d.title}</h4><span>${d.sub}</span></div>`
       : `<div class="fcard ${d.cls||""}">${d.fk?`<div class="fk">${d.fk}</div>`:""}<h4>${d.title}</h4>${d.sub?`<div class="fs">${d.sub}</div>`:""}<div class="fgo">${d.ext?"tap to open ↗":"tap to open"}</div></div>`;
