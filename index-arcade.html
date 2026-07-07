@@ -298,12 +298,12 @@
     .fo{position:absolute;will-change:transform;left:0;top:0;cursor:grab}
     .fo.seen{opacity:.55}
     .fo:active .fcard,.fo:active .ffront{filter:brightness(.96);transform:scale(.985)}   /* press feedback */
-    .fo .fcard{width:164px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px 14px 12px;
-      box-shadow:0 14px 26px -18px rgba(40,44,52,.4);transition:transform .1s,filter .1s}
-    .fo .fcard .fk{font-family:var(--mono);font-size:8.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut)}
-    .fo .fcard h4{font-family:var(--serif);font-size:1.06rem;font-weight:500;color:var(--ink);line-height:1.16;margin-top:7px}
-    .fo .fcard .fs{font-size:10.5px;color:var(--mut);line-height:1.4;margin-top:5px}
-    .fo .fcard .fgo{margin-top:8px;font-family:var(--mono);font-size:8.5px;letter-spacing:.04em;color:var(--accent)}
+    .fo .fcard{width:136px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 11px 9px;
+      box-shadow:0 10px 20px -14px rgba(40,44,52,.35);transition:transform .1s,filter .1s}
+    .fo .fcard .fk{font-family:var(--mono);font-size:7.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+    .fo .fcard h4{font-family:var(--serif);font-size:.92rem;font-weight:500;color:var(--ink);line-height:1.15;margin-top:5px}
+    .fo .fcard .fs{font-size:9px;color:var(--mut);line-height:1.35;margin-top:4px}
+    .fo .fcard .fgo{margin-top:6px;font-family:var(--mono);font-size:7.5px;letter-spacing:.04em;color:var(--accent)}
     /* type palettes — white → gray, one per kind */
     .fo.mini .fcard{background:#fff;border-top:3px solid var(--accent)}                    /* projects: white + graphite bar */
     .fcard.t-sys{background:#eceef1}                                                       /* systems: soft gray */
@@ -311,15 +311,15 @@
     .fcard.t-ab{background:#fff;border:1.5px solid var(--accent)}                          /* about: business card */
     .fcard.t-eb{background:linear-gradient(180deg,#34383f,#1e2025);border-color:#1e2025}   /* live app: graphite */
     .fcard.t-eb .fk{color:#a9afba}.fcard.t-eb h4{color:#fff}.fcard.t-eb .fs{color:#8d939e}.fcard.t-eb .fgo{color:#c3c8d1}
-    .fcard.t-int{background:#f1f2f4;border:1px dashed #c6cad2;border-radius:5px;box-shadow:0 10px 18px -14px rgba(40,44,52,.4)}  /* interests: sticky note */
-    .fcard.t-int h4{font-family:var(--mono);font-size:.82rem;line-height:1.35;font-weight:400;color:var(--body)}
+    .fcard.t-int{background:#f1f2f4;border:1px dashed #c6cad2;border-radius:5px;box-shadow:0 8px 15px -12px rgba(40,44,52,.4)}  /* interests: sticky note */
+    .fcard.t-int h4{font-family:var(--mono);font-size:.72rem;line-height:1.35;font-weight:400;color:var(--body)}
     /* folder object */
-    .fo.fold{width:152px;height:104px}
-    .fo.fold .ftab{position:absolute;top:0;left:0;width:74px;height:22px;background:var(--fl-tab);border:1px solid var(--fl-edge);border-bottom:none;border-radius:9px 11px 0 0}
-    .fo.fold .ffront{position:absolute;left:0;right:0;top:14px;bottom:0;background:var(--fl-body);border:1px solid var(--fl-edge);border-radius:12px;box-shadow:0 14px 26px -18px rgba(40,44,52,.4);padding:16px 16px}
-    .fo.fold .ffront::before{content:"";position:absolute;top:7px;left:14px;right:14px;height:4px;border-radius:3px;background:#fff}
-    .fo.fold .ffront h4{font-family:var(--serif);font-size:1.2rem;color:var(--fl-ink);line-height:1;margin-top:5px}
-    .fo.fold .ffront span{display:block;margin-top:9px;font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;color:var(--fl-mut)}
+    .fo.fold{width:126px;height:88px}
+    .fo.fold .ftab{position:absolute;top:0;left:0;width:60px;height:20px;background:var(--fl-tab);border:1px solid var(--fl-edge);border-bottom:none;border-radius:8px 10px 0 0}
+    .fo.fold .ffront{position:absolute;left:0;right:0;top:12px;bottom:0;background:var(--fl-body);border:1px solid var(--fl-edge);border-radius:11px;box-shadow:0 10px 20px -14px rgba(40,44,52,.35);padding:13px 13px}
+    .fo.fold .ffront::before{content:"";position:absolute;top:6px;left:12px;right:12px;height:3px;border-radius:3px;background:#fff}
+    .fo.fold .ffront h4{font-family:var(--serif);font-size:1.02rem;color:var(--fl-ink);line-height:1;margin-top:4px}
+    .fo.fold .ffront span{display:block;margin-top:7px;font-family:var(--mono);font-size:8px;letter-spacing:.04em;color:var(--fl-mut)}
     .fo.hit{animation:foburst .26s ease-out forwards}
     @keyframes foburst{to{transform:scale(1.35);opacity:0;filter:blur(2px)}}
 
@@ -651,23 +651,23 @@ function renderInterests(){
 const RENDER={research:renderResearch,systems:renderSystems,about:renderAbout,simops:renderSimops,interests:renderInterests};
 const TITLES={research:["Projects","4 projects + interests"],systems:["Systems & engineering judgment","what I built, dropped, and where it's heading"],about:["About","Euichan Lee (Leechan)"],simops:["SimOps / Living Paper","FEM-pipeline collision detection"],interests:["Research interests","6 early-stage directions"]};
 
-let lastFocus=null;
+let lastFocus=null,openT=0;
 function openObj(id){
   const o=BOARD.find(b=>b.id===id); if(!o) return;
   if(o.link){ window.open(o.link,"_blank","noopener"); return; }
   lastFocus=document.activeElement;
   vt.textContent=TITLES[o.view][0]; vc.textContent=TITLES[o.view][1];
   vbody.innerHTML=RENDER[o.view]();
-  vbody.scrollTop=0;
+  vbody.scrollTop=0; openT=performance.now();
   scrim.classList.add("on"); viewer.classList.add("on");
   document.getElementById("close").focus();
 }
-/* generic opener used by the mobile arcade (view + optional research index) */
+/* generic opener used by the mobile desk (view + optional research index) */
 function openContent(view,title,sub,ri){
   lastFocus=document.activeElement;
   vt.textContent=title; vc.textContent=sub;
   vbody.innerHTML=(view==="research"&&ri!=null)?renderResearchOne(ri):RENDER[view]();
-  vbody.scrollTop=0;
+  vbody.scrollTop=0; openT=performance.now();
   scrim.classList.add("on"); viewer.classList.add("on");
   document.getElementById("close").focus();
 }
@@ -683,7 +683,11 @@ vbody.addEventListener("load",e=>{
   if(e.target.tagName==="IMG"){const b=e.target.closest(".acc-b"); if(b&&b.closest(".acc").classList.contains("open")) b.style.maxHeight=b.scrollHeight+'px';}
 },true);
 
-function closeViewer(){scrim.classList.remove("on");viewer.classList.remove("on");if(lastFocus){lastFocus.focus();lastFocus=null;}if(window.__resumeGame)window.__resumeGame();}
+function closeViewer(){
+  /* ignore the ghost click a phone fires right after the opening tap —
+     it lands on the scrim (or close button) and would shut the sheet instantly */
+  if(performance.now()-openT<400) return;
+  scrim.classList.remove("on");viewer.classList.remove("on");if(lastFocus){lastFocus.focus();lastFocus=null;}if(window.__resumeGame)window.__resumeGame();}
 document.getElementById("close").onclick=closeViewer;
 scrim.onclick=closeViewer;
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeViewer();});
@@ -745,7 +749,7 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
   function burst(o){                        /* Projects folder pops into 4 mini cards */
     o.el.classList.add("hit");setTimeout(()=>o.el.remove(),260);
     objs=objs.filter(x=>x!==o);
-    const sx=o.x+o.w/2-82,sy=o.y+o.h/2-58;
+    const sx=o.x+o.w/2-68,sy=o.y+o.h/2-50;
     /* glide each mini toward its own spot: with friction k, travel = v0/k, so v0 = dist*k */
     const spots=[[.05,.02],[.52,.08],[.05,.26],[.52,.34]];
     MINIS.forEach((m,i)=>{
