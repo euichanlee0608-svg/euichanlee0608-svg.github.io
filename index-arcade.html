@@ -168,6 +168,9 @@
   .meth{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}
   .meth b{font-family:var(--mono);font-size:11.5px;font-weight:400;color:var(--body);background:var(--soft);border:1px solid var(--line);padding:5px 11px;border-radius:6px}
   .limit{margin-top:20px;padding:14px 16px;border-left:2px solid var(--amber);background:#faf6e9;border-radius:0 8px 8px 0;font-size:1rem;color:#6a5f43}
+  .igrid{display:grid;grid-template-columns:1fr;gap:10px}
+  .ichip{border:1px dashed var(--line2);border-radius:10px;padding:13px 15px;background:#fafbfc;font-size:1rem;color:var(--body);display:flex;gap:12px;align-items:baseline;line-height:1.5}
+  .ichip span{font-family:var(--mono);font-size:11px;color:var(--accent)}
   .interests{border-top:1px dashed var(--line2);margin-top:10px;padding-top:22px}
   .interests .l{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin-bottom:14px}
   .ilist{display:flex;flex-direction:column;gap:10px}
@@ -293,15 +296,23 @@
 
     /* desk objects */
     .fo{position:absolute;will-change:transform;left:0;top:0;cursor:grab}
-    .fo.seen{opacity:.62}
-    .fo .fcard{width:150px;background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:15px 15px 14px;
-      box-shadow:0 14px 26px -18px rgba(40,44,52,.4)}
-    .fo .fcard .fk{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
-    .fo .fcard h4{font-family:var(--serif);font-size:1.18rem;font-weight:500;color:var(--ink);line-height:1.08;margin-top:8px}
-    .fo .fcard .fgo{margin-top:10px;font-family:var(--mono);font-size:9.5px;color:var(--mut)}
-    /* mini research card (from a split folder) */
-    .fo.mini .fcard{width:138px;padding:13px 13px 12px;border-color:#cdd8e8;background:linear-gradient(180deg,#fff,#f6f8fb)}
-    .fo.mini .fcard h4{font-size:1.02rem}
+    .fo.seen{opacity:.55}
+    .fo:active .fcard,.fo:active .ffront{filter:brightness(.96);transform:scale(.985)}   /* press feedback */
+    .fo .fcard{width:164px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:13px 14px 12px;
+      box-shadow:0 14px 26px -18px rgba(40,44,52,.4);transition:transform .1s,filter .1s}
+    .fo .fcard .fk{font-family:var(--mono);font-size:8.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut)}
+    .fo .fcard h4{font-family:var(--serif);font-size:1.06rem;font-weight:500;color:var(--ink);line-height:1.16;margin-top:7px}
+    .fo .fcard .fs{font-size:10.5px;color:var(--mut);line-height:1.4;margin-top:5px}
+    .fo .fcard .fgo{margin-top:8px;font-family:var(--mono);font-size:8.5px;letter-spacing:.04em;color:var(--accent)}
+    /* type palettes — white → gray, one per kind */
+    .fo.mini .fcard{background:#fff;border-top:3px solid var(--accent)}                    /* projects: white + graphite bar */
+    .fcard.t-sys{background:#eceef1}                                                       /* systems: soft gray */
+    .fcard.t-so{background:#e2e4e9}                                                        /* simops: mid gray */
+    .fcard.t-ab{background:#fff;border:1.5px solid var(--accent)}                          /* about: business card */
+    .fcard.t-eb{background:linear-gradient(180deg,#34383f,#1e2025);border-color:#1e2025}   /* live app: graphite */
+    .fcard.t-eb .fk{color:#a9afba}.fcard.t-eb h4{color:#fff}.fcard.t-eb .fs{color:#8d939e}.fcard.t-eb .fgo{color:#c3c8d1}
+    .fcard.t-int{background:#f1f2f4;border:1px dashed #c6cad2;border-radius:5px;box-shadow:0 10px 18px -14px rgba(40,44,52,.4)}  /* interests: sticky note */
+    .fcard.t-int h4{font-family:var(--mono);font-size:.82rem;line-height:1.35;font-weight:400;color:var(--body)}
     /* folder object */
     .fo.fold{width:152px;height:104px}
     .fo.fold .ftab{position:absolute;top:0;left:0;width:74px;height:22px;background:var(--fl-tab);border:1px solid var(--fl-edge);border-bottom:none;border-radius:9px 11px 0 0}
@@ -348,7 +359,7 @@
       <div id="gover">
         <div>
           <div class="got">That's the whole desk.</div>
-          <div class="gos">You've opened all 8 cards. If anything here caught your eye, I'd genuinely like to hear from you.</div>
+          <div class="gos">You've opened everything. If anything here caught your eye, I'd genuinely like to hear from you.</div>
           <div class="gorow"><a class="gob" href="mailto:leechan0608@korea.ac.kr">Email me</a><button class="gob gob2" id="grestart" type="button">Start over</button></div>
         </div>
       </div>
@@ -633,8 +644,12 @@ function renderResearchOne(i){
       ${r.limit?`<div class="limit"><b>Stated plainly:</b> ${r.mlimit||r.limit}</div>`:""}
     </div></div></div>`;
 }
-const RENDER={research:renderResearch,systems:renderSystems,about:renderAbout,simops:renderSimops};
-const TITLES={research:["Projects","4 projects + interests"],systems:["Systems & engineering judgment","what I built, dropped, and where it's heading"],about:["About","Euichan Lee (Leechan)"],simops:["SimOps / Living Paper","FEM-pipeline collision detection"]};
+function renderInterests(){
+  return `<p class="iv-lead">Directions I'm actively scoping. Earlier-stage than the four projects, listed as-is.</p>
+    <div class="igrid">${INTERESTS.map((t,i)=>`<div class="ichip"><span>${String(i+1).padStart(2,'0')}</span>${t}</div>`).join("")}</div>`;
+}
+const RENDER={research:renderResearch,systems:renderSystems,about:renderAbout,simops:renderSimops,interests:renderInterests};
+const TITLES={research:["Projects","4 projects + interests"],systems:["Systems & engineering judgment","what I built, dropped, and where it's heading"],about:["About","Euichan Lee (Leechan)"],simops:["SimOps / Living Paper","FEM-pipeline collision detection"],interests:["Research interests","6 early-stage directions"]};
 
 let lastFocus=null;
 function openObj(id){
@@ -680,16 +695,22 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
   const stage=document.getElementById("gstage"); if(!stage) return;
   const scoreEl=document.getElementById("gscore"),gover=document.getElementById("gover");
 
-  const SHORT=["Acoustic Harvesting","Climbing Robot","Active Learning","Rotor Fault Tolerance"];
-  const MINIS=RESEARCH.map((r,i)=>({key:"r"+i,kind:"mini",ri:i,title:SHORT[i]}));
-  const ITEMS=[
-    {key:"projects",kind:"folder",title:"Projects",sub:"4 studies · tap to spill",burst:true},
-    {key:"systems",kind:"folder",title:"Systems",sub:"tap to open ▸",view:"systems"},
-    {key:"engbrain",kind:"card",ext:ENGBRAIN_URL,fk:"Live · external",title:"Engineering Brain"},
-    {key:"simops",kind:"card",view:"simops",fk:"Concept",title:"SimOps"},
-    {key:"about",kind:"card",view:"about",fk:"About",title:"About me"},
+  /* plain-words titles: what each project actually does, at a glance */
+  const MINIS=[
+    {key:"r0",kind:"mini",ri:0,fk:"Project 01 · energy",title:"Turning noise into power",sub:"a harvester array that stays strong in any real noise"},
+    {key:"r1",kind:"mini",ri:1,fk:"Project 02 · robotics",title:"A robot that climbs poles & harvests",sub:"built and demonstrated with a team"},
+    {key:"r2",kind:"mini",ri:2,fk:"Project 03 · ML",title:"Best recipe, fewest experiments",sub:"active learning for film synthesis"},
+    {key:"r3",kind:"mini",ri:3,fk:"Project 04 · control",title:"A drone that survives losing a rotor",sub:"realistic 6-DOF fault simulation"},
   ];
-  const GOAL=8;   /* 4 research minis + systems + engbrain + simops + about */
+  const ITEMS=[
+    {key:"projects",kind:"folder",title:"Projects",sub:"4 projects · tap to spill",burst:true},
+    {key:"systems",kind:"card",view:"systems",cls:"t-sys",fk:"Systems",title:"The tools behind the research",sub:"reproducible, honest-by-design infra"},
+    {key:"engbrain",kind:"card",ext:ENGBRAIN_URL,cls:"t-eb",fk:"Live app",title:"Engineering Brain",sub:"try one hard question yourself"},
+    {key:"simops",kind:"card",view:"simops",cls:"t-so",fk:"Startup concept",title:"SimOps",sub:"debugging simulation pipelines"},
+    {key:"about",kind:"card",view:"about",cls:"t-ab",fk:"About",title:"Euichan Lee",sub:"background & contact"},
+    {key:"interests",kind:"card",view:"interests",cls:"t-int",fk:"Scoping",title:"6 research directions I'm circling",sub:""},
+  ];
+  const GOAL=9;   /* 4 project minis + systems + engbrain + simops + about + interests */
 
   let W=stage.clientWidth,H=stage.clientHeight;
   let objs=[],opened=new Set(),done=false,over=false,raf=0,last=0;
@@ -699,7 +720,7 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
     el.className="fo "+(d.kind==="folder"?"fold":d.kind==="mini"?"mini":"");
     el.innerHTML=d.kind==="folder"
       ? `<div class="ftab"></div><div class="ffront"><h4>${d.title}</h4><span>${d.sub}</span></div>`
-      : `<div class="fcard">${d.fk?`<div class="fk">${d.fk}</div>`:""}<h4>${d.title}</h4><div class="fgo">${d.ext?"tap to open ↗":"tap to open"}</div></div>`;
+      : `<div class="fcard ${d.cls||""}">${d.fk?`<div class="fk">${d.fk}</div>`:""}<h4>${d.title}</h4>${d.sub?`<div class="fs">${d.sub}</div>`:""}<div class="fgo">${d.ext?"tap to open ↗":"tap to open"}</div></div>`;
     stage.appendChild(el); return el;
   }
   function place(o){o.el.style.transform=`translate(${o.x}px,${o.y}px) rotate(${o.rot}deg)`;}
@@ -712,7 +733,7 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
   }
   function deal(){
     objs.forEach(o=>o.el.remove()); objs=[];
-    const spots=[[.06,.02],[.48,.17],[.08,.38],[.5,.56],[.1,.74]];
+    const spots=[[.05,.02],[.5,.07],[.07,.24],[.5,.42],[.08,.6],[.48,.78]];
     ITEMS.forEach((d,i)=>{const s=spots[i];
       spawn(d,s[0]*W+Math.random()*12,s[1]*H+Math.random()*10);});
   }
@@ -724,9 +745,9 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
   function burst(o){                        /* Projects folder pops into 4 mini cards */
     o.el.classList.add("hit");setTimeout(()=>o.el.remove(),260);
     objs=objs.filter(x=>x!==o);
-    const sx=o.x+o.w/2-69,sy=o.y+o.h/2-46;
+    const sx=o.x+o.w/2-82,sy=o.y+o.h/2-58;
     /* glide each mini toward its own spot: with friction k, travel = v0/k, so v0 = dist*k */
-    const spots=[[.07,.02],[.56,.05],[.07,.21],[.56,.3]];
+    const spots=[[.05,.02],[.52,.08],[.05,.26],[.52,.34]];
     MINIS.forEach((m,i)=>{
       const tx=spots[i][0]*W+Math.random()*10,ty=spots[i][1]*H+Math.random()*10;
       const vx=Math.max(-750,Math.min(750,(tx-sx)*3.2)),vy=Math.max(-750,Math.min(750,(ty-sy)*3.2));
@@ -770,20 +791,23 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
     objs.forEach(place);
   }
 
-  /* input — tap opens, drag tosses with momentum */
-  let held=null,tot=0,px=0,py=0,fvx=0,fvy=0,lt=0;
+  /* input — tap opens, drag tosses with momentum.
+     A tap = total displacement from the touch-down point stays under 14px
+     (accumulated-path thresholds misread normal finger jitter as a drag). */
+  let held=null,isTap=false,x0=0,y0=0,px=0,py=0,fvx=0,fvy=0,lt=0;
   stage.addEventListener("pointerdown",e=>{
     if(over)return;
     const el=e.target.closest(".fo"); if(!el)return;
     const o=objs.find(x=>x.el===el); if(!o)return;
-    held=o;tot=0;px=e.clientX;py=e.clientY;fvx=fvy=0;lt=performance.now();
+    e.preventDefault();
+    held=o;isTap=true;x0=px=e.clientX;y0=py=e.clientY;fvx=fvy=0;lt=performance.now();
     o.vx=o.vy=0;el.style.zIndex=30;
-    stage.setPointerCapture(e.pointerId);
+    try{stage.setPointerCapture(e.pointerId);}catch(_){}
   });
   stage.addEventListener("pointermove",e=>{
     if(!held)return;
     const dx=e.clientX-px,dy=e.clientY-py;px=e.clientX;py=e.clientY;
-    tot+=Math.abs(dx)+Math.abs(dy);
+    if(Math.hypot(e.clientX-x0,e.clientY-y0)>14)isTap=false;
     const now=performance.now(),dms=Math.max(1,now-lt);lt=now;
     fvx=.75*fvx+.25*(dx/dms*1000); fvy=.75*fvy+.25*(dy/dms*1000);
     held.x=Math.max(6,Math.min(W-held.w-6,held.x+dx));
@@ -792,10 +816,9 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
   });
   function release(open){
     if(!held)return;
-    held.el.style.zIndex="";
-    if(open&&tot<8)activate(held);
-    else{held.vx=Math.max(-900,Math.min(900,fvx));held.vy=Math.max(-900,Math.min(900,fvy));}
-    held=null;
+    const o=held;held=null;o.el.style.zIndex="";
+    if(open&&isTap)activate(o);
+    else{o.vx=Math.max(-900,Math.min(900,fvx));o.vy=Math.max(-900,Math.min(900,fvy));}
   }
   stage.addEventListener("pointerup",()=>release(true));
   stage.addEventListener("pointercancel",()=>release(false));
