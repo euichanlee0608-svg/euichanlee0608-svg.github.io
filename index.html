@@ -366,7 +366,7 @@
         <div>
           <div class="got">That's the whole desk.</div>
           <div class="gos">You've opened everything. If anything here caught your eye, I'd genuinely like to hear from you.</div>
-          <div class="gorow"><a class="gob" href="mailto:leechan0608@korea.ac.kr">Email me</a><button class="gob gob2" id="grestart" type="button">Start over</button></div>
+          <div class="gorow"><a class="gob" href="mailto:leechan0608@korea.ac.kr">Email me</a><button class="gob gob2" id="gtolist" type="button">View as a list</button></div>
         </div>
       </div>
     </div>
@@ -833,10 +833,11 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
   stage.addEventListener("pointerup",()=>release(true));
   stage.addEventListener("pointercancel",()=>release(false));
 
-  document.getElementById("grestart").onclick=()=>{
-    opened.clear();score();over=false;gover.classList.remove("on");last=0;deal();
-  };
   const tgl=document.getElementById("gtoggle");
+  document.getElementById("gtolist").onclick=()=>{
+    gover.classList.remove("on");over=false;
+    if(!document.body.classList.contains("listmode"))tgl.click();
+  };
   tgl.onclick=()=>{
     const on=document.body.classList.toggle("listmode");
     tgl.textContent=on?"Desk view":"List view";
