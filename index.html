@@ -284,7 +284,7 @@
     .g-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 20px 10px;font-family:var(--mono)}
     .g-bar .gtip{font-size:11px;color:var(--mut);letter-spacing:.02em;line-height:1.4}
     .g-bar .gtip b{color:var(--body);font-weight:500}
-    .g-toggle{flex-shrink:0;font-size:11px;color:var(--body);background:#fff;border:1px solid var(--line2);border-radius:7px;padding:5px 10px;cursor:pointer;white-space:nowrap}
+    .g-toggle{flex-shrink:0;font-size:12px;color:var(--body);background:#fff;border:1px solid var(--line2);border-radius:3px;padding:6px 13px;cursor:pointer;white-space:nowrap}
     .g-toggle:active{border-color:var(--accent);color:var(--accent)}
 
     #gstage{position:relative;height:calc(100vh - 205px);height:calc(100dvh - 205px);min-height:400px;max-height:720px;overflow:hidden;
@@ -298,11 +298,11 @@
     .fo{position:absolute;will-change:transform;left:0;top:0;cursor:grab}
     .fo.seen{opacity:.55}
     .fo:active .fcard,.fo:active .ffront{filter:brightness(.96);transform:scale(.985)}   /* press feedback */
-    .fo .fcard{width:136px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 11px 9px;
+    .fo .fcard{width:124px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:9px 10px 8px;
       box-shadow:0 10px 20px -14px rgba(40,44,52,.35);transition:transform .1s,filter .1s}
     .fo .fcard .fk{font-family:var(--mono);font-size:7.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
-    .fo .fcard h4{font-family:var(--serif);font-size:.92rem;font-weight:500;color:var(--ink);line-height:1.15;margin-top:5px}
-    .fo .fcard .fs{font-size:9px;color:var(--mut);line-height:1.35;margin-top:4px}
+    .fo .fcard h4{font-family:var(--serif);font-size:.87rem;font-weight:500;color:var(--ink);line-height:1.15;margin-top:4px}
+    .fo .fcard .fs{font-size:8.5px;color:var(--mut);line-height:1.35;margin-top:4px}
     .fo .fcard .fgo{margin-top:6px;font-family:var(--mono);font-size:7.5px;letter-spacing:.04em;color:var(--accent)}
     /* type palettes — white → gray, one per kind */
     .fo.mini .fcard{background:#fff;border-top:3px solid var(--accent)}                    /* projects: white + graphite bar */
@@ -314,18 +314,18 @@
     .fcard.t-int{background:#f1f2f4;border:1px dashed #c6cad2;border-radius:5px;box-shadow:0 8px 15px -12px rgba(40,44,52,.4)}  /* interests: sticky note */
     .fcard.t-int h4{font-family:var(--mono);font-size:.72rem;line-height:1.35;font-weight:400;color:var(--body)}
     /* folder object */
-    .fo.fold{width:126px;height:88px}
-    .fo.fold .ftab{position:absolute;top:0;left:0;width:60px;height:20px;background:var(--fl-tab);border:1px solid var(--fl-edge);border-bottom:none;border-radius:8px 10px 0 0}
-    .fo.fold .ffront{position:absolute;left:0;right:0;top:12px;bottom:0;background:var(--fl-body);border:1px solid var(--fl-edge);border-radius:11px;box-shadow:0 10px 20px -14px rgba(40,44,52,.35);padding:13px 13px}
+    .fo.fold{width:116px;height:82px}
+    .fo.fold .ftab{position:absolute;top:0;left:0;width:56px;height:18px;background:var(--fl-tab);border:1px solid var(--fl-edge);border-bottom:none;border-radius:8px 10px 0 0}
+    .fo.fold .ffront{position:absolute;left:0;right:0;top:11px;bottom:0;background:var(--fl-body);border:1px solid var(--fl-edge);border-radius:11px;box-shadow:0 10px 20px -14px rgba(40,44,52,.35);padding:12px 12px}
     .fo.fold .ffront::before{content:"";position:absolute;top:6px;left:12px;right:12px;height:3px;border-radius:3px;background:#fff}
-    .fo.fold .ffront h4{font-family:var(--serif);font-size:1.02rem;color:var(--fl-ink);line-height:1;margin-top:4px}
+    .fo.fold .ffront h4{font-family:var(--serif);font-size:.96rem;color:var(--fl-ink);line-height:1;margin-top:4px}
     .fo.fold .ffront span{display:block;margin-top:7px;font-family:var(--mono);font-size:8px;letter-spacing:.04em;color:var(--fl-mut)}
     /* the Projects folder is the entry point — noticeably bigger than the cards */
-    .fo.fold.big{width:178px;height:118px}
-    .fo.fold.big .ftab{width:86px;height:26px;border-radius:10px 12px 0 0}
-    .fo.fold.big .ffront{top:16px;border-radius:13px;padding:18px 17px}
-    .fo.fold.big .ffront h4{font-size:1.38rem;margin-top:5px}
-    .fo.fold.big .ffront span{font-size:9.5px;margin-top:10px}
+    .fo.fold.big{width:164px;height:110px}
+    .fo.fold.big .ftab{width:80px;height:24px;border-radius:10px 12px 0 0}
+    .fo.fold.big .ffront{top:15px;border-radius:13px;padding:16px 15px}
+    .fo.fold.big .ffront h4{font-size:1.28rem;margin-top:5px}
+    .fo.fold.big .ffront span{font-size:9px;margin-top:9px}
     .fo.hit{animation:foburst .26s ease-out forwards}
     @keyframes foburst{to{transform:scale(1.35);opacity:0;filter:blur(2px)}}
 
@@ -485,12 +485,14 @@ const MOB=()=>window.matchMedia("(max-width:640px)").matches;
 
 /* ============ BOARD ============ */
 const ENGBRAIN_URL="https://euichanlee0608-svg.github.io/engineering-brain/";
+const NEWSLAB_URL="https://euichanlee0608-svg.github.io/news-literacy-lab/";
 const BOARD = [
   {type:"folder",id:"research",view:"research",title:"Projects",count:"projects + interests",x:8,y:24},
   {type:"folder",id:"systems",view:"systems",title:"Systems",count:"automation → LoRA → filter",x:340,y:14},
   {type:"pin",id:"engbrain",view:"engbrain",cls:"tilt2",pk:"Live project · external",title:"Engineering Brain",lead:"A web app that turns engineering reasoning into a dataset. Try a question.",link:ENGBRAIN_URL,x:676,y:28},
   {type:"pin",id:"simops",view:"simops",cls:"tilt",pk:"Concept · in program",title:"SimOps",lead:"Find the collision without rerunning the whole pipeline.",x:120,y:250},
   {type:"pin",id:"about",view:"about",cls:"tilt2",pk:"About · contact",title:"About me",lead:"AI × mechanical engineering, and how to reach me.",x:470,y:242},
+  {type:"pin",id:"newslab",cls:"tilt",pk:"Live project · external",title:"News Literacy Lab",lead:"A web app that breaks a news article down by stakeholders, not camps. Paste a link.",link:NEWSLAB_URL,x:824,y:236},
 ];
 const INIT = BOARD.map(o=>[o.x,o.y]);
 
@@ -716,11 +718,12 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
     {key:"projects",kind:"folder",big:true,title:"Projects",sub:"4 projects · tap to spill",burst:true},
     {key:"systems",kind:"card",view:"systems",cls:"t-sys",fk:"Systems",title:"The tools behind the research",sub:"reproducible, honest-by-design infra"},
     {key:"engbrain",kind:"card",ext:ENGBRAIN_URL,cls:"t-eb",fk:"Live app",title:"Engineering Brain",sub:"try one hard question yourself"},
+    {key:"newslab",kind:"card",ext:NEWSLAB_URL,cls:"t-eb",fk:"Live app",title:"News Literacy Lab",sub:"see how an article is framed"},
     {key:"simops",kind:"card",view:"simops",cls:"t-so",fk:"Startup concept",title:"SimOps",sub:"debugging simulation pipelines"},
     {key:"about",kind:"card",view:"about",cls:"t-ab",fk:"About",title:"Euichan Lee",sub:"background & contact"},
     {key:"interests",kind:"card",view:"interests",cls:"t-int",fk:"Scoping",title:"6 research directions I'm circling",sub:""},
   ];
-  const GOAL=9;   /* 4 project minis + systems + engbrain + simops + about + interests */
+  const GOAL=10;   /* 4 project minis + systems + engbrain + newslab + simops + about + interests */
 
   let W=stage.clientWidth,H=stage.clientHeight;
   let objs=[],opened=new Set(),done=false,over=false,raf=0,last=0;
@@ -743,7 +746,7 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
   }
   function deal(){
     objs.forEach(o=>o.el.remove()); objs=[];
-    const spots=[[.05,.02],[.5,.07],[.07,.24],[.5,.42],[.08,.6],[.48,.78]];
+    const spots=[[.05,.02],[.5,.07],[.07,.22],[.5,.38],[.08,.55],[.48,.72],[.24,.82]];
     ITEMS.forEach((d,i)=>{const s=spots[i];
       spawn(d,s[0]*W+Math.random()*12,s[1]*H+Math.random()*10);});
   }
@@ -755,7 +758,7 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
   function burst(o){                        /* Projects folder pops into 4 mini cards */
     o.el.classList.add("hit");setTimeout(()=>o.el.remove(),260);
     objs=objs.filter(x=>x!==o);
-    const sx=o.x+o.w/2-68,sy=o.y+o.h/2-50;
+    const sx=o.x+o.w/2-62,sy=o.y+o.h/2-46;
     /* glide each mini toward its own spot: with friction k, travel = v0/k, so v0 = dist*k */
     const spots=[[.05,.02],[.52,.08],[.05,.26],[.52,.34]];
     MINIS.forEach((m,i)=>{
