@@ -851,5 +851,18 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
   else raf=requestAnimationFrame(loop);
 })();
 </script>
+<script>
+(function(){
+  var WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxWKySPAxWsYnoZ9zo7G2wUK2CusxPwjy1USt_DyCFmmIe_y2pu8lAKBluImAHXXKHv4A/exec';
+  try {
+    if (location.search.indexOf('owner=1') !== -1) {
+      localStorage.setItem('__is_owner__', '1');
+    } else if (localStorage.getItem('__is_owner__') !== '1') {
+      var img = new Image();
+      img.src = WEBAPP_URL + '?ref=' + encodeURIComponent(document.referrer || 'direct');
+    }
+  } catch (e) {}
+})();
+</script>
 </body>
 </html>
