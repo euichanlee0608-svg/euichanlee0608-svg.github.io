@@ -383,7 +383,7 @@
 
   <section class="sr-only" aria-label="Summary">
     <h2>Projects</h2>
-    <p>Broadband acoustic energy harvesting, where the contribution is robustness rather than peak power (power variation CoV 21% vs 29% across 11 measured noise environments; advantage grows with resonator quality factor). A team-capstone autonomous pole-climbing and coconut-harvesting robot, where I led the control software and power electronics. Active learning for carbon nanofilm synthesis. Asymmetric-geometry rotor fault tolerance.</p>
+    <p>Broadband acoustic energy harvesting, where the contribution is robustness rather than peak power (power variation CoV 21% vs 29% across 11 measured noise environments; advantage grows with resonator quality factor). A team-capstone autonomous pole-climbing and coconut-harvesting robot, where I led the control software and power electronics. Active learning for carbon nanofilm synthesis. Asymmetric-geometry rotor fault tolerance. A short-range air-defense interception simulator with a playable in-browser demo, where four optimization methods are compared under proportional-navigation guidance.</p>
     <h2>Systems and engineering judgment</h2>
     <p>A local-first research toolkit where change records come from the git diff, decisions are captured, low-quality experiments are dropped honestly, and an engineering-reasoning dataset feeds local-LLM fine-tuning.</p>
     <h2>About</h2>
@@ -439,6 +439,16 @@ const RESEARCH = [
    meth:["~10⁸-sample geometry search","realistic 6-DOF dynamics","instantaneous impact impulse","post-loss mass / CoG / inertia shift","asymmetric motor + voltage sag"],
    limit:"These are simulation thresholds, not flight tests. The point of the rebuild is the opposite of inflation: it removes the idealizations that made the earlier numbers look better than they should have.",
    mlimit:"Simulation thresholds, not flight tests, but with the flattering idealizations removed."},
+  {kick:"Optimal control · guidance · playable",title:"Short-Range Air-Defense Interception",
+   chip:["Simulation + live demo","green"],
+   lead:"Steering an interceptor onto an evasive drone, and finding the design that hits best. <a href='https://euichanlee0608-svg.github.io/divert-sim/' target='_blank' rel='noopener'>Try the live demo &rarr;</a>",
+   blocks:[["Problem","A short-range air-defense missile changes course only by pushing sideways, so hitting a small drone that jinks at random is genuinely hard. The design question is how much sideways force to give it, where to mount the thruster, and how sensitive the guidance should be.","A short-range interceptor steers only by pushing sideways. Hitting a small jinking drone is hard, so which design hits best?"],
+     ["Approach","A 2D rigid-body engine (RK4) flies the missile under proportional-navigation guidance against a reactive, randomly-evading drone, with seeker measurement noise and first-order control delay. Four methods, grid search, gradient descent, a genetic algorithm, and PPO reinforcement learning, minimize the same objective (intercept time, fuel, miss distance), and each design is scored as a Monte-Carlo average over random evasions.","A 2D RK4 engine flies PN guidance against a jinking drone with noise and delay; four optimizers minimize one objective, scored by Monte-Carlo."],
+     ["Finding","The genetic algorithm reached the best objective with a fifth of grid search's evaluations. The decisive variable was raw sideways force rather than thruster placement, and once realistic delay is included, a fast, agile drone becomes hard for a missile of this class to reach. Every figure is anchored to public specifications for a small counter-drone interceptor.","The genetic algorithm won on efficiency; sideways force, not placement, decided the hit, and realistic delay makes agile drones hard to catch. Numbers follow public specs."]],
+   stats:[["1/5","of grid-search evaluations for the best design, via the genetic algorithm"],["23","automated physics tests against analytic solutions and conservation laws"],["live","in-browser steering demo, computed in real time"]],
+   meth:["RK4 rigid-body dynamics","proportional navigation","genetic algorithm / PPO","Monte-Carlo robustness","seeker-noise & delay models"],
+   limit:"A 2D simulation with a single target and simplified aerodynamics, built to study control and optimization tradeoffs rather than as a high-fidelity flight model. Included as the interactive, playable piece.",
+   mlimit:"2D, single target, simplified aero: a control-and-optimization study, not a flight model. Built to be playable."},
 ];
 const INTERESTS = [
   "Physics-informed neural networks with active learning",
@@ -653,11 +663,11 @@ function renderResearchOne(i){
     </div></div></div>`;
 }
 function renderInterests(){
-  return `<p class="iv-lead">Directions I'm actively scoping. Earlier-stage than the four projects, listed as-is.</p>
+  return `<p class="iv-lead">Directions I'm actively scoping. Earlier-stage than the five projects, listed as-is.</p>
     <div class="igrid">${INTERESTS.map((t,i)=>`<div class="ichip"><span>${String(i+1).padStart(2,'0')}</span>${t}</div>`).join("")}</div>`;
 }
 const RENDER={research:renderResearch,systems:renderSystems,about:renderAbout,simops:renderSimops,interests:renderInterests};
-const TITLES={research:["Projects","4 projects + interests"],systems:["Systems & engineering judgment","what I built, dropped, and where it's heading"],about:["About","Euichan Lee (Leechan)"],simops:["SimOps / Living Paper","FEM-pipeline collision detection"],interests:["Research interests","6 early-stage directions"]};
+const TITLES={research:["Projects","5 projects + interests"],systems:["Systems & engineering judgment","what I built, dropped, and where it's heading"],about:["About","Euichan Lee (Leechan)"],simops:["SimOps / Living Paper","FEM-pipeline collision detection"],interests:["Research interests","6 early-stage directions"]};
 
 let lastFocus=null,openT=0;
 function openObj(id){
@@ -713,9 +723,10 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
     {key:"r1",kind:"mini",ri:1,fk:"Project 02 · robotics",title:"A robot that climbs poles & harvests",sub:"built and demonstrated with a team"},
     {key:"r2",kind:"mini",ri:2,fk:"Project 03 · ML",title:"Best recipe, fewest experiments",sub:"active learning for film synthesis"},
     {key:"r3",kind:"mini",ri:3,fk:"Project 04 · control",title:"A drone that survives losing a rotor",sub:"realistic 6-DOF fault simulation"},
+    {key:"r4",kind:"mini",ri:4,fk:"Project 05 · guidance",title:"Intercepting an evasive drone",sub:"steer it yourself · live demo"},
   ];
   const ITEMS=[
-    {key:"projects",kind:"folder",big:true,title:"Projects",sub:"4 projects · tap to spill",burst:true},
+    {key:"projects",kind:"folder",big:true,title:"Projects",sub:"5 projects · tap to spill",burst:true},
     {key:"systems",kind:"card",view:"systems",cls:"t-sys",fk:"Systems",title:"The tools behind the research",sub:"reproducible, honest-by-design infra"},
     {key:"engbrain",kind:"card",ext:ENGBRAIN_URL,cls:"t-eb",fk:"Live app",title:"Engineering Brain",sub:"try one hard question yourself"},
     {key:"newslab",kind:"card",ext:NEWSLAB_URL,cls:"t-eb",fk:"Live app",title:"News Literacy Lab",sub:"see how an article is framed"},
@@ -723,7 +734,7 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
     {key:"about",kind:"card",view:"about",cls:"t-ab",fk:"About",title:"Euichan Lee",sub:"background & contact"},
     {key:"interests",kind:"card",view:"interests",cls:"t-int",fk:"Scoping",title:"6 research directions I'm circling",sub:""},
   ];
-  const GOAL=10;   /* 4 project minis + systems + engbrain + newslab + simops + about + interests */
+  const GOAL=11;   /* 5 project minis + systems + engbrain + newslab + simops + about + interests */
 
   let W=stage.clientWidth,H=stage.clientHeight;
   let objs=[],opened=new Set(),done=false,over=false,raf=0,last=0;
@@ -760,7 +771,7 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
     objs=objs.filter(x=>x!==o);
     const sx=o.x+o.w/2-62,sy=o.y+o.h/2-46;
     /* glide each mini toward its own spot: with friction k, travel = v0/k, so v0 = dist*k */
-    const spots=[[.05,.02],[.52,.08],[.05,.26],[.52,.34]];
+    const spots=[[.05,.02],[.52,.08],[.05,.26],[.52,.34],[.28,.55]];
     MINIS.forEach((m,i)=>{
       const tx=spots[i][0]*W+Math.random()*10,ty=spots[i][1]*H+Math.random()*10;
       const vx=Math.max(-750,Math.min(750,(tx-sx)*3.2)),vy=Math.max(-750,Math.min(750,(ty-sy)*3.2));
