@@ -383,7 +383,7 @@
 
   <section class="sr-only" aria-label="Summary">
     <h2>Projects</h2>
-    <p>Broadband acoustic energy harvesting, where the contribution is robustness rather than peak power (power variation CoV 21% vs 29% across 11 measured noise environments; advantage grows with resonator quality factor). A team-capstone autonomous pole-climbing and coconut-harvesting robot, where I led the control software and power electronics. Active learning for carbon nanofilm synthesis. Asymmetric-geometry rotor fault tolerance. A short-range air-defense interception simulator with a playable in-browser demo, where four optimization methods are compared under proportional-navigation guidance.</p>
+    <p>Broadband acoustic energy harvesting, where the contribution is robustness rather than peak power (power variation CoV 21% vs 29% across 11 measured noise environments; advantage grows with resonator quality factor). A Human-in-the-Loop, risk-aware bidding system for a virtual power plant, built with a team at a Korea University × Upstage hackathon (1st place, 20 teams), where I led the system architecture, objective function, and verification/feedback loop. A team-capstone autonomous pole-climbing and coconut-harvesting robot, where I led the control software and power electronics. Active learning for carbon nanofilm synthesis. Asymmetric-geometry rotor fault tolerance. A short-range air-defense interception simulator with a playable in-browser demo, where four optimization methods are compared under proportional-navigation guidance.</p>
     <h2>Systems and engineering judgment</h2>
     <p>A local-first research toolkit where change records come from the git diff, decisions are captured, low-quality experiments are dropped honestly, and an engineering-reasoning dataset feeds local-LLM fine-tuning.</p>
     <h2>About</h2>
@@ -414,6 +414,15 @@ const RESEARCH = [
    meth:["SDOF electromechanical model","bootstrap 95% CI","cross-environment evaluation","parametric sweeps","Numba Monte-Carlo"],
    limit:"Absolute output is fW-scale at 70 dB SPL, reported as-is rather than normalized away. The claim is the design's robustness, not raw power.",
    mlimit:"Output is fW-scale at 70 dB SPL, reported as-is. The claim is robustness, not raw power."},
+  {kick:"Human-in-the-loop energy AI · team hackathon",title:"VPP Trade-Guard: Risk-Aware Bidding for a Virtual Power Plant",
+   chip:["1st place · team hackathon","green"],lead:"As team lead I designed the architecture and the verification loop, not the plumbing. <a href='https://euichanlee0608-svg.github.io/vpp-trade-guard/' target='_blank' rel='noopener'>Read the case study &rarr;</a>",
+   blocks:[["Role","A 3-person team built a Human-in-the-Loop bidding system for Jeju's virtual-power-plant market at a Korea University × Upstage hackathon (<b>1st place, 20 teams</b>). As team lead I owned the <b>system architecture, the objective function, and the verification/feedback loop</b>; my teammates built the n8n node implementation, the Slack UI, and the data-ingestion pipeline.","Team hackathon, <b>1st of 20 teams</b>. I owned the <b>architecture, objective function, and verification loop</b>; teammates built the n8n nodes, Slack UI, and data ingestion."],
+     ["Problem","Existing VPP trading logic always assumes equipment is 100% healthy: when the power price rises, it drives batteries into aggressive output regardless of their actual condition, and the resulting failures can outweigh the trading profit they were chasing.","Existing VPP logic assumes equipment is always 100% healthy, so it overdrives batteries whenever price is high, and failure losses can outweigh the profit."],
+     ["System design","I put failure risk directly into the objective function (net profit = revenue − failure-probability × risk cost), then built the verification around one rule: <b>the AI only proposes, code always decides</b>. A proposer LLM suggests output ratios without doing any math; a deterministic engine computes the actual revenue and risk cost; two LLM reviewers cross-check the recommendation from different angles (safety vs. financial); and a separate rule-based node independently re-derives the same numbers and diffs them against the AI's, rejecting on any mismatch. A rejected recommendation gets exactly one automatic retry before falling back to a human.","Design rule: <b>AI only proposes, code always decides</b> — a proposer LLM suggests ratios, a deterministic engine computes the real numbers, two reviewer LLMs cross-check from different angles, and a rule-based node independently re-derives and diffs the numbers, rejecting on mismatch. One automatic retry, then a human."]],
+   stats:[["1st / 20","teams, Korea University × Upstage Energy AI Hackathon"],["2","independent LLM reviewers cross-checking each recommendation from different angles"],["≤1","automatic retry before a rejected recommendation goes to a human"]],
+   meth:["objective-function design","dual LLM cross-review","rule-based recompute diff-check","bounded retry gate","Human-in-the-Loop UX"],
+   limit:"Built in a hackathon timeframe: the BMS sensor feed is dummy data rather than real hardware telemetry, and the failure-probability multiplier is an approximation backed out from a single anchor assumption, documented as such in the code.",
+   mlimit:"Hackathon timeframe: dummy sensor data, and the failure-probability model is a documented single-anchor approximation, not a fitted one."},
   {kick:"Mechanical capstone · control & power systems",title:"Autonomous Pole-Climbing & Harvesting Robot",
    chip:["Team capstone · built & demonstrated","green"],lead:"My one <b>hands-on, built-and-tested</b> system. I owned control and power.",
    blocks:[["Role","A four-part team built an autonomous robot that climbs a vertical PVC pole and harvests the coconut at the top. The team's core mechanism kept the motor count low: a <b>one-way bearing</b> (rather than a ratchet) paired with a <b>C-shaped gear</b> drove the harvesting motion off the climb drivetrain. I led the <b>control software and electrical/power systems</b>: motor drivers, sensing, voltage stabilization, and the climb logic.","Team capstone: a robot that climbs a pole and harvests the coconut on top. The team's core mechanism cut motor count with a <b>one-way bearing</b> (not a ratchet) + <b>C-shaped gear</b> harvest drive; I owned the <b>control + power electronics</b>."],
@@ -667,7 +676,7 @@ function renderInterests(){
     <div class="igrid">${INTERESTS.map((t,i)=>`<div class="ichip"><span>${String(i+1).padStart(2,'0')}</span>${t}</div>`).join("")}</div>`;
 }
 const RENDER={research:renderResearch,systems:renderSystems,about:renderAbout,simops:renderSimops,interests:renderInterests};
-const TITLES={research:["Projects","5 projects + interests"],systems:["Systems & engineering judgment","what I built, dropped, and where it's heading"],about:["About","Euichan Lee (Leechan)"],simops:["SimOps / Living Paper","FEM-pipeline collision detection"],interests:["Research interests","6 early-stage directions"]};
+const TITLES={research:["Projects","6 projects + interests"],systems:["Systems & engineering judgment","what I built, dropped, and where it's heading"],about:["About","Euichan Lee (Leechan)"],simops:["SimOps / Living Paper","FEM-pipeline collision detection"],interests:["Research interests","6 early-stage directions"]};
 
 let lastFocus=null,openT=0;
 function openObj(id){
@@ -720,13 +729,14 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
   /* plain-words titles: what each project actually does, at a glance */
   const MINIS=[
     {key:"r0",kind:"mini",ri:0,fk:"Project 01 · energy",title:"Turning noise into power",sub:"a harvester array that stays strong in any real noise"},
-    {key:"r1",kind:"mini",ri:1,fk:"Project 02 · robotics",title:"A robot that climbs poles & harvests",sub:"built and demonstrated with a team"},
-    {key:"r2",kind:"mini",ri:2,fk:"Project 03 · ML",title:"Best recipe, fewest experiments",sub:"active learning for film synthesis"},
-    {key:"r3",kind:"mini",ri:3,fk:"Project 04 · control",title:"A drone that survives losing a rotor",sub:"realistic 6-DOF fault simulation"},
-    {key:"r4",kind:"mini",ri:4,fk:"Project 05 · guidance",title:"Intercepting an evasive drone",sub:"steer it yourself · live demo"},
+    {key:"r1",kind:"mini",ri:1,fk:"Project 02 · energy AI",title:"AI proposes, code decides",sub:"risk-aware VPP bidding · hackathon, 1st place"},
+    {key:"r2",kind:"mini",ri:2,fk:"Project 03 · robotics",title:"A robot that climbs poles & harvests",sub:"built and demonstrated with a team"},
+    {key:"r3",kind:"mini",ri:3,fk:"Project 04 · ML",title:"Best recipe, fewest experiments",sub:"active learning for film synthesis"},
+    {key:"r4",kind:"mini",ri:4,fk:"Project 05 · control",title:"A drone that survives losing a rotor",sub:"realistic 6-DOF fault simulation"},
+    {key:"r5",kind:"mini",ri:5,fk:"Project 06 · guidance",title:"Intercepting an evasive drone",sub:"steer it yourself · live demo"},
   ];
   const ITEMS=[
-    {key:"projects",kind:"folder",big:true,title:"Projects",sub:"5 projects · tap to spill",burst:true},
+    {key:"projects",kind:"folder",big:true,title:"Projects",sub:"6 projects · tap to spill",burst:true},
     {key:"systems",kind:"card",view:"systems",cls:"t-sys",fk:"Systems",title:"The tools behind the research",sub:"reproducible, honest-by-design infra"},
     {key:"engbrain",kind:"card",ext:ENGBRAIN_URL,cls:"t-eb",fk:"Live app",title:"Engineering Brain",sub:"try one hard question yourself"},
     {key:"newslab",kind:"card",ext:NEWSLAB_URL,cls:"t-eb",fk:"Live app",title:"News Literacy Lab",sub:"see how an article is framed"},
@@ -734,7 +744,7 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
     {key:"about",kind:"card",view:"about",cls:"t-ab",fk:"About",title:"Euichan Lee",sub:"background & contact"},
     {key:"interests",kind:"card",view:"interests",cls:"t-int",fk:"Scoping",title:"6 research directions I'm circling",sub:""},
   ];
-  const GOAL=11;   /* 5 project minis + systems + engbrain + newslab + simops + about + interests */
+  const GOAL=12;   /* 6 project minis + systems + engbrain + newslab + simops + about + interests */
 
   let W=stage.clientWidth,H=stage.clientHeight;
   let objs=[],opened=new Set(),done=false,over=false,raf=0,last=0;
@@ -771,7 +781,7 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
     objs=objs.filter(x=>x!==o);
     const sx=o.x+o.w/2-62,sy=o.y+o.h/2-46;
     /* glide each mini toward its own spot: with friction k, travel = v0/k, so v0 = dist*k */
-    const spots=[[.05,.02],[.52,.08],[.05,.26],[.52,.34],[.28,.55]];
+    const spots=[[.05,.02],[.52,.05],[.05,.25],[.52,.28],[.05,.51],[.52,.54]];
     MINIS.forEach((m,i)=>{
       const tx=spots[i][0]*W+Math.random()*10,ty=spots[i][1]*H+Math.random()*10;
       const vx=Math.max(-750,Math.min(750,(tx-sx)*3.2)),vy=Math.max(-750,Math.min(750,(ty-sy)*3.2));
