@@ -53,7 +53,8 @@
     transition:transform .22s cubic-bezier(.16,1,.3,1),box-shadow .22s,border-color .22s}
   .tile:hover,.tile:focus-visible{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 30px 52px -28px rgba(40,44,52,.5);outline:none}
   .tile-drive{background:linear-gradient(166deg,#fff,#f0f2f6)}
-  .tile .tic{width:44px;height:44px;color:var(--accent)}
+  .tile .tic{width:44px;height:44px;color:var(--accent);transition:transform .3s cubic-bezier(.16,1,.3,1)}
+  .tile:hover .tic{transform:translateY(-2px) scale(1.06)}
   .tile .tic svg{width:100%;height:100%;display:block}
   .tile h2{font-family:var(--serif);font-weight:500;font-size:1.6rem;color:var(--ink);letter-spacing:-.015em;margin:15px 0 7px;line-height:1.12}
   .tile p{font-size:1rem;color:var(--mut);line-height:1.55;max-width:40ch}
@@ -64,6 +65,16 @@
   .tile:hover .tgo i{transform:translateX(4px)}
   .lead-hint{font-family:var(--mono);font-size:12px;color:var(--mut);line-height:1.6;margin:16px 0 64px}
   .lead-hint b{color:var(--body);font-weight:500}
+  /* phones stack the tiles, so About Me can sit under the fold — say so, then
+     get out of the way as soon as the tile is actually on screen */
+  .scroll-cue{display:none}
+  @media(max-width:820px){
+    .scroll-cue{display:flex;align-items:center;justify-content:center;gap:8px;margin:-2px 0 -1px;
+      font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--mut);transition:opacity .35s}
+    .scroll-cue i{font-style:normal;animation:cueBob 1.7s ease-in-out infinite}
+    .scroll-cue.gone{opacity:0}
+  }
+  @keyframes cueBob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
 
   /* ===== file explorer ===== */
   .explorer{display:none;margin:22px 0 64px;border:1px solid var(--line2);border-radius:14px;background:var(--panel);overflow:hidden;
@@ -81,6 +92,18 @@
   .ex-path a:hover{background:var(--soft);color:var(--accent)}
   .ex-path .sep{color:var(--line2);flex-shrink:0}
   .ex-path .cur{color:var(--ink);padding:2px 6px;overflow:hidden;text-overflow:ellipsis}
+  /* toolbar: instant filter, plus the keyboard hint that teaches the shortcuts */
+  .ex-tools{display:flex;align-items:center;gap:12px;padding:9px 13px;border-bottom:1px solid var(--line);background:#fbfcfd}
+  .ex-search{flex:1;min-width:0;max-width:330px;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line2);
+    border-radius:8px;padding:0 11px;transition:border-color .18s,box-shadow .18s}
+  .ex-search:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(42,45,51,.07)}
+  .ex-search svg{width:14px;height:14px;flex-shrink:0;color:var(--mut)}
+  .ex-search input{flex:1;min-width:0;border:0;outline:0;background:none;padding:8px 0;color:var(--ink);
+    font-family:var(--mono);font-size:12.5px}
+  .ex-search input::placeholder{color:var(--mut)}
+  .ex-search input::-webkit-search-cancel-button{-webkit-appearance:none}
+  .ex-kbd{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--mut);white-space:nowrap}
+  .ex-kbd b{color:var(--body);background:#fff;border:1px solid var(--line2);border-radius:4px;padding:1px 5px;font-weight:400}
   /* min-width:0 everywhere a grid item holds text — without it the track grows to
      its min-content and the file list spills out past the explorer's rounded box */
   .ex-main{display:grid;grid-template-columns:216px 1fr;min-height:430px}
@@ -95,15 +118,37 @@
   .ex-side a svg{width:16px;height:16px;flex-shrink:0;color:var(--mut)}
   .ex-side a.on svg{color:var(--accent)}
   .ex-side .sl.gap{padding-top:18px}
-  .ex-cols{display:grid;grid-template-columns:1fr 150px 176px;gap:16px;padding:10px 22px;border-bottom:1px solid var(--line);background:#fbfcfd;
-    font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut)}
-  .row{display:grid;grid-template-columns:1fr 150px 176px;grid-template-areas:"nm ty st";gap:16px;align-items:center;
+  .ex-cols{display:grid;grid-template-columns:1fr 150px 176px;gap:16px;padding:4px 22px;border-bottom:1px solid var(--line);background:#fbfcfd}
+  .colb{display:flex;align-items:center;gap:5px;background:none;border:0;padding:7px 0;cursor:pointer;text-align:left;
+    font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);transition:color .15s}
+  .colb:hover{color:var(--accent)}
+  .colb i{font-style:normal;font-size:9px;opacity:0;transition:opacity .15s,transform .2s}
+  .colb:hover i{opacity:.45}
+  .colb.on{color:var(--ink)}
+  .colb.on i{opacity:1}
+  .colb.on.desc i{transform:rotate(180deg)}
+  .row{position:relative;display:grid;grid-template-columns:1fr 150px 176px;grid-template-areas:"nm ty st";gap:16px;align-items:center;
     padding:14px 22px;border-bottom:1px solid var(--line);text-decoration:none;transition:background .15s}
-  .row:hover{background:var(--soft)}
-  .row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+  .row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;background:var(--accent);transition:width .18s cubic-bezier(.16,1,.3,1)}
+  .row:hover,.row:focus-visible{background:var(--soft)}
+  .row:hover::before,.row:focus-visible::before{width:3px}
+  .row:focus-visible{outline:none}
+  .row.hid{display:none}
+  /* rows deal in one at a time when a folder opens, like a list being filled */
+  @keyframes rowIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .row{animation:rowIn .36s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--d,0ms)}
+  #exlist.settled .row{animation:none}   /* deal in once per folder, not on every keystroke */
   .row .nm{grid-area:nm;display:flex;gap:13px;align-items:flex-start;min-width:0}
   .row .nm>span{min-width:0}
-  .row .nm>svg{width:22px;height:22px;flex-shrink:0;margin-top:1px;color:var(--accent2)}
+  /* folder icons open on hover; every other kind just warms to the accent colour */
+  .row .ico{position:relative;width:22px;height:22px;flex-shrink:0;margin-top:1px;color:var(--accent2);transition:color .18s}
+  .row:hover .ico,.row:focus-visible .ico{color:var(--accent)}
+  .row .ico svg{position:absolute;inset:0;width:22px;height:22px;transition:opacity .2s}
+  .row .ico .op{opacity:0}
+  .row:hover .ico .op,.row:focus-visible .ico .op{opacity:1}
+  .row:hover .ico .cl,.row:focus-visible .ico .cl{opacity:0}
+  .ex-empty{padding:44px 22px;text-align:center;font-family:var(--mono);font-size:12px;color:var(--mut);line-height:1.7}
+  .ex-empty b{color:var(--body);font-weight:500}
   .row .rn{font-family:var(--serif);font-size:1.08rem;font-weight:500;color:var(--ink);line-height:1.28;letter-spacing:-.005em;display:block}
   .row .rn .ext{font-family:var(--mono);font-size:11px;color:var(--mut)}
   .row .d{display:block;font-size:.87rem;color:var(--mut);line-height:1.5;margin-top:4px;overflow-wrap:break-word}
@@ -113,7 +158,8 @@
   .row .ty{grid-area:ty;font-family:var(--mono);font-size:11.5px;color:var(--mut)}
   .row .st{grid-area:st;justify-self:start;min-width:0}
   .row .st .chip{white-space:normal}   /* never let a status token get clipped by the column */
-  .row .ch{display:none;grid-area:ch;color:var(--mut);font-size:19px;line-height:1}
+  .row .ch{display:none;grid-area:ch;color:var(--mut);font-size:19px;line-height:1;transition:transform .18s,color .18s}
+  .row:hover .ch{transform:translateX(3px);color:var(--accent)}
   .ex-foot{padding:10px 20px;border-top:1px solid var(--line);background:#fafbfc;font-family:var(--mono);font-size:11px;color:var(--mut);
     display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
   .ex-foot a{color:var(--accent);text-decoration:none;border-bottom:1px solid #cdd8e8}
@@ -218,7 +264,10 @@
     /* full-bleed so the file list uses the whole phone width */
     .explorer{margin:16px -20px 44px;border-radius:0;border-left:none;border-right:none}
     .ex-main{grid-template-columns:1fr;min-height:0}
-    .ex-side,.ex-cols{display:none}
+    .ex-side,.ex-cols,.ex-kbd{display:none}
+    .ex-tools{padding:9px 20px}
+    .ex-search{max-width:none}
+    .ex-search input{font-size:16px;padding:7px 0}   /* 16px keeps iOS from zooming on focus */
     .row{grid-template-columns:1fr auto;grid-template-areas:"nm ch" "meta meta";gap:7px 12px;padding:15px 20px}
     .row .meta{display:flex;grid-area:meta;align-items:center;flex-wrap:wrap;gap:8px;margin-left:35px;min-width:0}
     .row .ty{margin:0}
@@ -268,6 +317,10 @@
     .so-desc{font-size:1.02rem}
     .so-diagram{padding:16px 12px;overflow-x:auto}
   }
+
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  }
 </style>
 </head>
 <body>
@@ -288,6 +341,7 @@
       <span class="pills"><span>6 projects</span><span>7 live web apps</span><span>3 documents</span></span>
       <span class="tgo">Open <i>&#9654;</i></span>
     </a>
+    <p class="scroll-cue" id="scue">There's an About Me below <i>&#8595;</i></p>
     <a class="tile tile-about" href="#about">
       <span class="tic" aria-hidden="true"></span>
       <h2>About Me</h2>
@@ -303,10 +357,21 @@
       <a class="ex-btn" id="exup" href="#" aria-label="Go up one level">&#8593;</a>
       <div class="ex-path" id="expath"></div>
     </div>
+    <div class="ex-tools">
+      <label class="ex-search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.4"/><path d="M10.3 10.3 14 14"/></svg>
+        <input id="exq" type="search" placeholder="Filter this folder" aria-label="Filter files in this folder" autocomplete="off" spellcheck="false">
+      </label>
+      <span class="ex-kbd"><b>&#8593;</b> <b>&#8595;</b> to move · <b>&#8629;</b> to open</span>
+    </div>
     <div class="ex-main">
       <nav class="ex-side" id="exside" aria-label="Locations"></nav>
       <div>
-        <div class="ex-cols"><span>Name</span><span>Type</span><span>Status</span></div>
+        <div class="ex-cols" id="excols">
+          <button class="colb" type="button" data-k="name">Name <i>&#9662;</i></button>
+          <button class="colb" type="button" data-k="type">Type <i>&#9662;</i></button>
+          <button class="colb" type="button" data-k="status">Status <i>&#9662;</i></button>
+        </div>
         <div id="exlist"></div>
       </div>
     </div>
@@ -438,14 +503,9 @@ const MOB=()=>window.matchMedia("(max-width:640px)").matches;
 
 /* ============ FILE TREE ============ */
 const SITE="https://euichanlee0608-svg.github.io/";
-/* live web apps, ordered: the three tied to a project first, then the standalone ones */
+/* live web apps: the ones that stand on their own first, then the three that
+   come out of a project (those are already covered in the Projects folder) */
 const APPS=[
-  {id:"acoustic",name:"Acoustic Harvester",url:SITE+"acoustic-harvester/",type:"Interactive demo",
-   desc:"Place resonant wires across a noise spectrum and see how the array holds up across 11 environments.",status:["From Project 01","green"]},
-  {id:"divertsim",name:"Divert-Sim",url:SITE+"divert-sim/",type:"Playable simulator",
-   desc:"Fly the interceptor onto an evasive drone yourself, then compare your run with the optimizers.",status:["From Project 06","green"]},
-  {id:"vppguard",name:"VPP Trade-Guard",url:SITE+"vpp-trade-guard/",type:"Case study",
-   desc:"The hackathon system walked through end to end, with a what-if slider over the real objective function.",status:["From Project 02","green"]},
   {id:"engbrain",name:"Engineering Brain",url:SITE+"engineering-brain/",type:"Web app",
    desc:"It asks a hard engineering question, you answer in your own words, and it grades the reasoning.",status:["Live","green"]},
   {id:"newslab",name:"News Literacy Lab",url:SITE+"news-literacy-lab/",type:"Web app",
@@ -454,6 +514,12 @@ const APPS=[
    desc:"Narrows 434 Korean emotion words down to the one you actually mean, one choice at a time.",status:["Live","green"]},
   {id:"stick357",name:"357 Stick Breaker",url:SITE+"stick-breaker-game/",type:"Game",
    desc:"A misère Nim variant drawn like a notebook doodle. Play the solver, or a friend on the same phone.",status:["Live","green"]},
+  {id:"acoustic",name:"Acoustic Harvester",url:SITE+"acoustic-harvester/",type:"Interactive demo",
+   desc:"Place resonant wires across a noise spectrum and see how the array holds up across 11 environments.",status:["From Project 01","blue"]},
+  {id:"divertsim",name:"Divert-Sim",url:SITE+"divert-sim/",type:"Playable simulator",
+   desc:"Fly the interceptor onto an evasive drone yourself, then compare your run with the optimizers.",status:["From Project 06","blue"]},
+  {id:"vppguard",name:"VPP Trade-Guard",url:SITE+"vpp-trade-guard/",type:"Case study",
+   desc:"The hackathon system walked through end to end, with a what-if slider over the real objective function.",status:["From Project 02","blue"]},
 ];
 /* file-list summaries: [type, one-line description, short status].
    The status here is the scannable token; the full, qualified wording stays on
@@ -469,6 +535,7 @@ const PROJ_META=[
 const ICO={
   drive:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.75" y="4.25" width="18.5" height="6.75" rx="2"/><rect x="2.75" y="13" width="18.5" height="6.75" rx="2"/><path d="M6 7.6h6.5M6 16.4h6.5"/><circle cx="17.8" cy="7.6" r=".95" fill="currentColor" stroke="none"/><circle cx="17.8" cy="16.4" r=".95" fill="currentColor" stroke="none"/></svg>`,
   folder:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M3 7.6A1.6 1.6 0 0 1 4.6 6h4.1a1.6 1.6 0 0 1 1.13.47l1.27 1.27H19.4A1.6 1.6 0 0 1 21 9.34V18a1.6 1.6 0 0 1-1.6 1.6H4.6A1.6 1.6 0 0 1 3 18z"/></svg>`,
+  folderOpen:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M3 18V7.6A1.6 1.6 0 0 1 4.6 6h4.1a1.6 1.6 0 0 1 1.13.47l1.27 1.27H19.4A1.6 1.6 0 0 1 21 9.34v1.86"/><path d="M3 18 5.9 11.9a1.6 1.6 0 0 1 1.44-.9H22l-2.9 6.1a1.6 1.6 0 0 1-1.44.9H4.6A1.6 1.6 0 0 1 3 18z"/></svg>`,
   proj:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M13.8 3.6H7.2A1.6 1.6 0 0 0 5.6 5.2v13.6a1.6 1.6 0 0 0 1.6 1.6h9.6a1.6 1.6 0 0 0 1.6-1.6V8.2z"/><path d="M13.8 3.6V8.2h4.6"/><path d="M9 16.6v-3M12 16.6v-5.4M15 16.6v-2" stroke-linecap="round"/></svg>`,
   doc:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M13.8 3.6H7.2A1.6 1.6 0 0 0 5.6 5.2v13.6a1.6 1.6 0 0 0 1.6 1.6h9.6a1.6 1.6 0 0 0 1.6-1.6V8.2z"/><path d="M13.8 3.6V8.2h4.6"/><path d="M8.8 12.4h6.4M8.8 15.8h4.4" stroke-linecap="round"/></svg>`,
   app:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><rect x="3" y="4.6" width="18" height="14.8" rx="2"/><path d="M3 9.2h18"/><circle cx="6.1" cy="6.9" r=".72" fill="currentColor" stroke="none"/><circle cx="8.5" cy="6.9" r=".72" fill="currentColor" stroke="none"/><path d="M10.4 15.6 15 11m-3.3 0H15v3.3" stroke-linecap="round"/></svg>`,
@@ -477,7 +544,7 @@ const ICO={
 const TREE={id:"pieces",name:"Portfolio Pieces",kids:[
   {id:"projects",kind:"dir",name:"Projects",type:"Folder",desc:"Six engineering and research projects, each with its method, its result, and its limits stated plainly.",
    kids:RESEARCH.map((r,i)=>({id:"p"+i,kind:"proj",ri:i,name:r.title,type:PROJ_META[i][0],desc:PROJ_META[i][1],status:PROJ_META[i][2]}))},
-  {id:"apps",kind:"dir",name:"Live Web Apps",type:"Folder",desc:"Things you can open and use right now. Three come out of the projects; the rest stand on their own.",
+  {id:"apps",kind:"dir",name:"Live Web Apps",type:"Folder",desc:"Things you can open and use right now. The first four stand on their own; the last three come out of the projects.",
    kids:APPS.map(a=>Object.assign({kind:"app"},a))},
   {id:"systems",kind:"view",view:"systems",name:"Systems & Tooling",type:"Document",
    sub:"what I built, dropped, and where it's heading",
@@ -494,35 +561,139 @@ const TREE={id:"pieces",name:"Portfolio Pieces",kids:[
 const explorer=document.getElementById("explorer"),exlist=document.getElementById("exlist"),
       expath=document.getElementById("expath"),exside=document.getElementById("exside"),
       exfoot=document.getElementById("exfoot"),exup=document.getElementById("exup");
-const iconOf=n=>n.kind==="dir"?ICO.folder:n.kind==="app"?ICO.app:n.kind==="proj"?ICO.proj:ICO.doc;
+const exq=document.getElementById("exq"),excols=document.getElementById("excols");
+const iconOf=n=>n.kind==="dir"
+  ? `<span class="ico">${ICO.folder.replace("<svg",'<svg class="cl"')}${ICO.folderOpen.replace("<svg",'<svg class="op"')}</span>`
+  : `<span class="ico">${n.kind==="app"?ICO.app:n.kind==="proj"?ICO.proj:ICO.doc}</span>`;
 const hashOf=(dir,n)=>"#pieces"+(dir===TREE?"":"/"+dir.id)+"/"+n.id;
+const statusText=n=>n.status?n.status[0]:"";
 
-function rowHTML(dir,n){
+let curDir=TREE,sortKey=null,sortDesc=false;
+
+function rowHTML(dir,n,i){
   const out=!!n.url;
-  return `<a class="row" href="${out?n.url:hashOf(dir,n)}"${out?' target="_blank" rel="noopener"':''}>
+  return `<a class="row" style="--d:${i*38}ms" href="${out?n.url:hashOf(dir,n)}"${out?' target="_blank" rel="noopener"':''}>
     <span class="nm">${iconOf(n)}<span><span class="rn">${n.name}${out?' <span class="ext">&#8599;</span>':''}</span><span class="d">${n.desc}</span></span></span>
     <span class="meta"><span class="ty">${n.type}</span><span class="st">${n.status?chip(n.status):""}</span></span>
     <span class="ch" aria-hidden="true">&#8250;</span></a>`;
 }
+/* sorting keeps folders above files, the way a file manager does; with no sort
+   key the curated order in TREE is what you see */
+function sortedKids(dir){
+  const ks=dir.kids.slice();
+  if(!sortKey) return ks;
+  const val=n=>(sortKey==="name"?n.name:sortKey==="type"?n.type:statusText(n)).toLowerCase();
+  ks.sort((a,b)=>{
+    if((a.kind==="dir")!==(b.kind==="dir")) return a.kind==="dir"?-1:1;
+    const r=val(a).localeCompare(val(b));
+    return sortDesc?-r:r;
+  });
+  return ks;
+}
+function paintRows(){
+  const ks=sortedKids(curDir);
+  exlist.innerHTML=ks.map((n,i)=>rowHTML(curDir,n,i)).join("")
+    +`<div class="ex-empty" hidden>No files match <b></b> in this folder.</div>`;
+  applyFilter();
+  [...excols.children].forEach(b=>{
+    b.classList.toggle("on",b.dataset.k===sortKey);
+    b.classList.toggle("desc",b.dataset.k===sortKey&&sortDesc);
+  });
+}
+function applyFilter(){
+  const q=(exq.value||"").trim().toLowerCase();
+  const rows=[...exlist.querySelectorAll(".row")];
+  const ks=sortedKids(curDir);
+  let shown=0;
+  rows.forEach((el,i)=>{
+    const n=ks[i];
+    const hay=(n.name+" "+n.desc+" "+n.type+" "+statusText(n)).toLowerCase();
+    const hit=!q||hay.includes(q);
+    el.classList.toggle("hid",!hit);
+    if(hit) shown++;
+  });
+  const empty=exlist.querySelector(".ex-empty");
+  empty.hidden=shown>0;
+  empty.querySelector("b").textContent='"'+exq.value.trim()+'"';
+  const dirs=curDir.kids.filter(n=>n.kind==="dir").length;
+  exfoot.textContent=q
+    ? shown+" of "+curDir.kids.length+" items"
+    : curDir.kids.length+" items"+(dirs?" · "+dirs+" folders":"")+(curDir===TREE?"":" · in "+curDir.name);
+}
 function paintExplorer(dir){
   document.body.classList.add("exp");
   explorer.classList.add("on");
-  exlist.innerHTML=dir.kids.map(n=>rowHTML(dir,n)).join("");
+  const moved=dir!==curDir;
+  curDir=dir;
+  if(moved){ exq.value=""; sortKey=null; sortDesc=false; }
+  exlist.classList.remove("settled");
+  paintRows();
+  /* let the deal-in animation play once, then stop re-animating on filter/sort */
+  clearTimeout(paintExplorer.t);
+  paintExplorer.t=setTimeout(()=>exlist.classList.add("settled"),dir.kids.length*38+420);
   expath.innerHTML=dir===TREE
     ? `<span class="cur">Portfolio Pieces</span>`
     : `<a href="#pieces">Portfolio Pieces</a><span class="sep">&#8250;</span><span class="cur">${dir.name}</span>`;
   exup.setAttribute("href",dir===TREE?"#":"#pieces");
   exup.setAttribute("aria-label",dir===TREE?"Back to start":"Up to Portfolio Pieces");
-  const dirs=dir.kids.filter(n=>n.kind==="dir").length;
-  exfoot.textContent=dir.kids.length+" items"+(dirs?" · "+dirs+" folders":"")+(dir===TREE?"":" · in "+dir.name);
+  exq.setAttribute("placeholder","Filter "+(dir===TREE?"Portfolio Pieces":dir.name));
   exside.innerHTML=`<div class="sl">Locations</div>
     <a href="#pieces" class="${dir===TREE?"on":""}">${ICO.drive}Portfolio Pieces</a>`
     +TREE.kids.map(k=>`<a class="sub ${k===dir?"on":""}" href="#pieces/${k.id}">${k.kind==="dir"?ICO.folder:ICO.doc}${k.name}</a>`).join("")
     +`<div class="sl gap">Also</div><a href="#about">${ICO.person}About Me</a>`;
 }
+
+/* filter · sort · keyboard */
+exq.addEventListener("input",applyFilter);
+excols.addEventListener("click",e=>{
+  const b=e.target.closest(".colb"); if(!b) return;
+  const k=b.dataset.k;
+  if(sortKey!==k){sortKey=k;sortDesc=false;}
+  else if(!sortDesc)sortDesc=true;
+  else {sortKey=null;sortDesc=false;}   /* third click returns to the curated order */
+  paintRows();
+});
+const visRows=()=>[...exlist.querySelectorAll(".row:not(.hid)")];
+explorer.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){
+    if(exq.value){exq.value="";applyFilter();exq.focus();}
+    else location.hash=exup.getAttribute("href");
+    e.preventDefault(); return;
+  }
+  if(e.key==="ArrowDown"||e.key==="ArrowUp"||e.key==="Home"||e.key==="End"){
+    const rows=visRows(); if(!rows.length) return;
+    const at=rows.indexOf(document.activeElement);
+    let next;
+    if(e.key==="Home") next=0;
+    else if(e.key==="End") next=rows.length-1;
+    else if(at<0) next=e.key==="ArrowDown"?0:rows.length-1;
+    else next=Math.max(0,Math.min(rows.length-1,at+(e.key==="ArrowDown"?1:-1)));
+    rows[next].focus(); e.preventDefault(); return;
+  }
+  /* start typing anywhere in the explorer and it goes to the filter box —
+     but never swallow Space, which is how people scroll the page */
+  if(e.target!==exq&&e.key.length===1&&e.key!==" "&&!e.metaKey&&!e.ctrlKey&&!e.altKey){
+    exq.focus(); exq.value+=e.key; applyFilter(); e.preventDefault();
+  }
+});
 function showLanding(){document.body.classList.remove("exp");explorer.classList.remove("on");}
 document.querySelector(".tile-drive .tic").innerHTML=ICO.drive;
 document.querySelector(".tile-about .tic").innerHTML=ICO.person;
+
+/* the About Me hint retires itself once the tile it points at is on screen */
+(function(){
+  const cue=document.getElementById("scue"),about=document.querySelector(".tile-about");
+  if(!cue||!about||!("IntersectionObserver" in window)) return;
+  /* "partly poking into view" is exactly the case the hint exists for, so retire
+     it only once the tile is essentially all there (or its bottom is on screen,
+     for phones too short to ever show it whole) */
+  new IntersectionObserver(es=>{
+    es.forEach(x=>{
+      const settled=x.intersectionRatio>=.9||x.boundingClientRect.bottom<=window.innerHeight+8;
+      cue.classList.toggle("gone",x.isIntersecting&&settled);
+    });
+  },{threshold:[0,.25,.5,.75,.9,1]}).observe(about);
+})();
 
 /* ============ RENDERERS ============ */
 const scrim=document.getElementById("scrim"),viewer=document.getElementById("viewer");
