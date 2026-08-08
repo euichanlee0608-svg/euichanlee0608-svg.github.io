@@ -50,7 +50,7 @@
   .reset:hover{border-color:var(--accent);color:var(--accent)}
 
   /* board (desktop desk) */
-  .board{position:relative;height:430px;margin:34px 0 64px;touch-action:none}
+  .board{position:relative;height:740px;margin:34px 0 64px;touch-action:none}
   .obj{position:absolute;cursor:grab;user-select:none;transition:filter .2s,box-shadow .25s,transform .12s}
   .obj:active{cursor:grabbing}
   .obj:focus-visible{outline:2px solid var(--accent);outline-offset:5px;border-radius:12px}
@@ -505,6 +505,7 @@ const MOB=()=>window.matchMedia("(max-width:640px)").matches;
 /* ============ BOARD ============ */
 const ENGBRAIN_URL="https://euichanlee0608-svg.github.io/engineering-brain/";
 const NEWSLAB_URL="https://euichanlee0608-svg.github.io/news-literacy-lab/";
+const EMOQUAD_URL="https://euichanlee0608-svg.github.io/emotion-quadrant/";
 const BOARD = [
   {type:"folder",id:"research",view:"research",title:"Projects",count:"projects + interests",x:8,y:24},
   {type:"folder",id:"systems",view:"systems",title:"Systems",count:"automation → LoRA → filter",x:340,y:14},
@@ -512,6 +513,7 @@ const BOARD = [
   {type:"pin",id:"simops",view:"simops",cls:"tilt",pk:"Concept · in program",title:"SimOps",lead:"Find the collision without rerunning the whole pipeline.",x:120,y:250},
   {type:"pin",id:"about",view:"about",cls:"tilt2",pk:"About · contact",title:"About me",lead:"AI × mechanical engineering, and how to reach me.",x:470,y:242},
   {type:"pin",id:"newslab",cls:"tilt",pk:"Live project · external",title:"News Literacy Lab",lead:"A web app that breaks a news article down by stakeholders, not camps. Paste a link.",link:NEWSLAB_URL,x:824,y:236},
+  {type:"pin",id:"emoquad",cls:"tilt2",pk:"Live project · external",title:"Emotion Quadrant",lead:"Naming a feeling precisely: pick a word, it becomes the origin, the axes sharpen. Korean.",link:EMOQUAD_URL,x:452,y:498},
 ];
 const INIT = BOARD.map(o=>[o.x,o.y]);
 
@@ -740,11 +742,12 @@ document.getElementById("reset").onclick=()=>{BOARD.forEach((o,i)=>{o.x=INIT[i][
     {key:"systems",kind:"card",view:"systems",cls:"t-sys",fk:"Systems",title:"The tools behind the research",sub:"reproducible, honest-by-design infra"},
     {key:"engbrain",kind:"card",ext:ENGBRAIN_URL,cls:"t-eb",fk:"Live app",title:"Engineering Brain",sub:"try one hard question yourself"},
     {key:"newslab",kind:"card",ext:NEWSLAB_URL,cls:"t-eb",fk:"Live app",title:"News Literacy Lab",sub:"see how an article is framed"},
+    {key:"emoquad",kind:"card",ext:EMOQUAD_URL,cls:"t-eb",fk:"Live app",title:"Emotion Quadrant",sub:"name the feeling you couldn't name · Korean"},
     {key:"simops",kind:"card",view:"simops",cls:"t-so",fk:"Startup concept",title:"SimOps",sub:"debugging simulation pipelines"},
     {key:"about",kind:"card",view:"about",cls:"t-ab",fk:"About",title:"Euichan Lee",sub:"background & contact"},
     {key:"interests",kind:"card",view:"interests",cls:"t-int",fk:"Scoping",title:"6 research directions I'm circling",sub:""},
   ];
-  const GOAL=12;   /* 6 project minis + systems + engbrain + newslab + simops + about + interests */
+  const GOAL=13;   /* 6 project minis + systems + engbrain + newslab + emoquad + simops + about + interests */
 
   let W=stage.clientWidth,H=stage.clientHeight;
   let objs=[],opened=new Set(),done=false,over=false,raf=0,last=0;
