@@ -11,7 +11,13 @@
 <meta property="og:description" content="Research at the intersection of AI and mechanical engineering: honest framing, reproducible tooling.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
-<meta name="twitter:card" content="summary">
+<meta property="og:url" content="https://euichanlee0608-svg.github.io/">
+<meta property="og:image" content="https://euichanlee0608-svg.github.io/assets/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Euichan Lee (Leechan), Korea University — Toward research where AI and mechanical engineering meet.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://euichanlee0608-svg.github.io/assets/og-card.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231f3a5f'/><text x='16' y='22' font-size='14' font-family='Georgia,serif' font-weight='600' fill='white' text-anchor='middle'>EL</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -761,7 +767,7 @@ function renderResearchOne(i){
     </div></div></div>`;
 }
 function renderInterests(){
-  return `<p class="iv-lead">Directions I'm actively scoping. Earlier-stage than the five projects, listed as-is.</p>
+  return `<p class="iv-lead">Directions I'm actively scoping. Earlier-stage than the six projects, listed as-is.</p>
     <div class="igrid">${INTERESTS.map((t,i)=>`<div class="ichip"><span>${String(i+1).padStart(2,'0')}</span>${t}</div>`).join("")}</div>`;
 }
 const RENDER={systems:renderSystems,about:renderAbout,simops:renderSimops,interests:renderInterests};
