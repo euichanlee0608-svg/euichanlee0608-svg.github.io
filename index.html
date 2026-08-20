@@ -549,9 +549,9 @@ const ABOUT_EN = [
     "<a href='mailto:leechan0608@korea.ac.kr'>leechan0608@korea.ac.kr</a><br><a href='https://github.com/euichanlee0608-svg' target='_blank' rel='noopener'>github.com/euichanlee0608-svg</a><br><a href='https://www.linkedin.com/in/euichanlee0608-svg' target='_blank' rel='noopener'>linkedin.com/in/euichanlee0608-svg</a>"],
 ];
 const SIMOPS_EN = {
-  prog:"Living Paper · Korea University Lab-Startup Innovation Corps (I-Corps, 2026 · UC Berkeley KIC)",
+  prog:"Living Paper · Korea University Lab-Startup Innovation Corps (Korean I-Corps, 2026 · UC Berkeley KIC)",
   stats:[["50","field interviews behind the pivot"],["95% / 88%","of interviewees requiring on-premise privacy / domain accuracy"],["30%","wanted live AI summaries — the obvious product, dropped"]],
-  desc:"This started in I-Corps as SimOps, a tool for debugging simulation-pipeline collisions. Fifty field interviews moved it somewhere else: the recurring pain wasn't pipelines, it was the moment in a meeting when you <b>nod along without actually understanding</b>. The obvious product, live AI summaries, polled at 30%; what people demanded instead was privacy (95% wanted processing kept on premises) and domain accuracy (88%). Living Paper is what came out, and its <b>MVP is live</b>: one tap marks the moment you let something slide, and after the meeting it explains that moment grounded in <b>your own lab's documents</b>. The cloud is only a courier — plaintext and keys never leave your device and the in-lab node, the relay stores ciphertext it cannot read, and a security tab lets you <b>search the relay's actual stored bytes</b> for any word you just typed. Zero hits, verifiably.",
+  desc:"This started in the Korean I-Corps program as SimOps, a tool for debugging simulation-pipeline collisions. Fifty field interviews moved it somewhere else: the recurring pain wasn't pipelines, it was the moment in a meeting when you <b>nod along without actually understanding</b>. The obvious product, live AI summaries, polled at 30%; what people demanded instead was privacy (95% wanted processing kept on premises) and domain accuracy (88%). Living Paper is what came out, and its <b>MVP is live</b>: one tap marks the moment you let something slide, and after the meeting it explains that moment grounded in <b>your own lab's documents</b>. The cloud is only a courier — plaintext and keys never leave your device and the in-lab node, the relay stores ciphertext it cannot read, and a security tab lets you <b>search the relay's actual stored bytes</b> for any word you just typed. Zero hits, verifiably.",
   mdesc:"Started as pipeline debugging; 50 interviews moved it to the real pain — <b>nodding along in meetings without understanding</b>. One tap marks the moment; afterwards it explains it from <b>your own lab's documents</b>. MVP live. The cloud relays ciphertext only, and a security tab proves it by searching the relay's real bytes.",
 };
 const MOB=()=>window.matchMedia("(max-width:640px)").matches;
@@ -633,7 +633,7 @@ window.KO_PATCH = {
       sub:"직접 구축한 도구의 안전장치, 그리고 폐기한 하나",
       desc:"모든 도구에 동일한 원칙을 적용했습니다 — 도구 자신을 신뢰하지 않는 독립적 검증. diff 기반 기록, 계약 테스트 게이트, 승인 단계, 등급이 부여된 수식.", status:["진행 중","blue"]},
     simops:{name:"Living Paper", type:"문서",
-      sub:"파이프라인 디버깅에서 미팅 어시스턴트로 · I-Corps 2026",
+      sub:"파이프라인 디버깅에서 미팅 어시스턴트로 · 한국형 I-Corps 2026",
       desc:"현장 인터뷰 50건이 초기 아이템을 어떻게 바꿨는지, 그리고 그 결과로 구현한 Zero-Knowledge Relay MVP.", status:["MVP 운영 중","green"]},
     interests:{name:"Research Interests", type:"문서",
       sub:"최적설계 스택 전 과정",
@@ -702,9 +702,9 @@ window.KO_PATCH = {
     ["연락처","연락하기",null],
   ],
   SIMOPS:{
-    prog:"Living Paper · 고려대학교 실험실창업혁신단 (I-Corps, 2026 · UC Berkeley KIC)",
+    prog:"Living Paper · 고려대학교 실험실창업혁신단 (한국형 I-Corps, 2026 · UC Berkeley KIC)",
     stats:[["50","피봇의 근거가 된 현장 인터뷰"],["95% / 88%","원내 처리 요구 비율 / 도메인 정확도 요구 비율"],["30%","실시간 AI 요약 선호 비율 — 당연시했던 방향, 폐기"]],
-    desc:"I-Corps에서 SimOps로 출발했습니다. 시뮬레이션 파이프라인의 충돌을 진단하는 도구였습니다. 그러나 현장 인터뷰 50건이 방향을 바꿨습니다 — 반복적으로 확인된 페인포인트는 파이프라인이 아니라, 미팅 중 <b>이해하지 못한 채 넘어가는 순간</b>이었습니다. 당연시했던 실시간 AI 요약은 선호도가 30%에 그쳤고, 실제 요구는 프라이버시(95%가 원내 처리 요구)와 도메인 정확도(88%)였습니다. 그 결과로 구현한 것이 Living Paper이며, <b>현재 MVP를 운영 중</b>입니다. 놓친 대목을 원클릭으로 표시해 두면, 회의 종료 후 <b>랩실 문서를 근거로</b> 해당 대목을 설명해 줍니다. 아키텍처상 클라우드는 전달자에 불과합니다 — 평문과 복호키는 기기와 원내 노드를 벗어나지 않고, 릴레이는 해독 불가능한 암호문만 저장하며, 보안 탭에서 <b>릴레이가 실제 저장한 바이트</b>를 방금 입력한 단어로 검색해 0건임을 직접 검증하실 수 있습니다.",
+    desc:"한국형 I-Corps에서 SimOps로 출발했습니다. 시뮬레이션 파이프라인의 충돌을 진단하는 도구였습니다. 그러나 현장 인터뷰 50건이 방향을 바꿨습니다 — 반복적으로 확인된 페인포인트는 파이프라인이 아니라, 미팅 중 <b>이해하지 못한 채 넘어가는 순간</b>이었습니다. 당연시했던 실시간 AI 요약은 선호도가 30%에 그쳤고, 실제 요구는 프라이버시(95%가 원내 처리 요구)와 도메인 정확도(88%)였습니다. 그 결과로 구현한 것이 Living Paper이며, <b>현재 MVP를 운영 중</b>입니다. 놓친 대목을 원클릭으로 표시해 두면, 회의 종료 후 <b>랩실 문서를 근거로</b> 해당 대목을 설명해 줍니다. 아키텍처상 클라우드는 전달자에 불과합니다 — 평문과 복호키는 기기와 원내 노드를 벗어나지 않고, 릴레이는 해독 불가능한 암호문만 저장하며, 보안 탭에서 <b>릴레이가 실제 저장한 바이트</b>를 방금 입력한 단어로 검색해 0건임을 직접 검증하실 수 있습니다.",
     mdesc:"파이프라인 진단으로 출발했으나 인터뷰 50건이 실제 페인포인트로 이끌었습니다 — <b>미팅 중 이해하지 못한 채 넘어가는 순간</b>. 원클릭으로 표시해 두면 회의 후 <b>랩실 문서를 근거로</b> 설명해 줍니다. MVP 운영 중이며, 클라우드는 암호문만 중계하고 보안 탭에서 이를 직접 검증하실 수 있습니다.",
   },
   RESEARCH:[
@@ -862,7 +862,7 @@ const TREEMETA_EN={
   projects:{name:"Projects",type:"Folder",countWord:"project",desc:"Engineering and research projects, each with its method, its result, and its limits stated plainly."},
   apps:{name:"Live Web Apps",type:"Folder",countWord:"live web app",desc:"Things you can open and use right now. The ones at the top stand on their own; the rest come out of the projects."},
   systems:{name:"Systems & Tooling",type:"Document",sub:"the safeguards in my own tooling, and the piece I dropped",desc:"One design rule everywhere: an independent check that doesn't trust the tool itself. Diff-based records, contract-tested gates, approval steps, graded equations.",status:["Ongoing","blue"]},
-  simops:{name:"Living Paper",type:"Document",sub:"from pipeline debugging to a meeting assistant · I-Corps 2026",desc:"What 50 field interviews did to the original idea, and the zero-knowledge-relay MVP that came out of it.",status:["MVP live","green"]},
+  simops:{name:"Living Paper",type:"Document",sub:"from pipeline debugging to a meeting assistant · Korean I-Corps 2026",desc:"What 50 field interviews did to the original idea, and the zero-knowledge-relay MVP that came out of it.",status:["MVP live","green"]},
   interests:{name:"Research Interests",type:"Document",sub:"the optimal-design stack, end to end",desc:"What I'm currently studying: experiment design, surrogate models, optimizers, and reliability-based design.",status:["Studying","blue"]},
 };
 function buildTree(){ const M=TREEMETA; return {id:"pieces",name:M.drive,kids:[
