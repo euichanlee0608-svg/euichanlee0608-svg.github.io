@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Euichan Lee — Research & Systems</title>
-<meta name="description" content="Euichan Lee (Leechan), undergraduate researcher at the intersection of AI and mechanical engineering: broadband acoustic energy harvesting, active learning, and fault-tolerant control, with the reproducible tooling built around them.">
+<meta name="description" content="Euichan Lee (Leechan), undergraduate researcher at the intersection of AI and mechanical engineering: broadband acoustic energy harvesting, optimization, and fault-tolerant control, with the reproducible tooling built around them.">
 <meta name="author" content="Euichan Lee">
 <meta name="theme-color" content="#f7f8fa">
 <meta property="og:title" content="Euichan Lee — Research & Systems">
@@ -335,7 +335,7 @@
     <div class="namerow">Euichan&nbsp;Lee <span>(Leechan)</span></div>
     <div class="eyebrow">Korea University · Mechanical Engineering &amp; AI</div>
     <h1>Toward research where AI and mechanical engineering meet.</h1>
-    <p class="intro">I'm working toward becoming a researcher at the intersection of <b>AI and mechanical engineering</b>, applying data-efficient learning and careful verification to physical-system problems. The work below spans acoustic energy harvesting, a hands-on robotics capstone, active learning, and fault-tolerant control, alongside the tooling I built to keep that work reproducible.</p>
+    <p class="intro">I'm working toward becoming a researcher at the intersection of <b>AI and mechanical engineering</b>, applying data-efficient learning and careful verification to physical-system problems. The work below spans acoustic energy harvesting, a hands-on robotics capstone, optimization, and fault-tolerant control, alongside the tooling I built to keep that work reproducible.</p>
     <p class="intro-m">Research at the meeting point of <b>AI and mechanical engineering</b>.</p>
   </div>
 
@@ -344,7 +344,7 @@
       <span class="tic" aria-hidden="true"></span>
       <h2>Portfolio Pieces</h2>
       <p>Everything I've built, filed into folders: the projects, the web apps you can open right now, and the tooling behind them.</p>
-      <span class="pills"><span>6 projects</span><span>7 live web apps</span><span>3 documents</span></span>
+      <span class="pills" id="drivepills"></span>
       <span class="tgo">Open <i>&#9654;</i></span>
     </a>
     <p class="scroll-cue" id="scue">There's an About Me below <i>&#8595;</i></p>
@@ -386,7 +386,7 @@
 
   <section class="sr-only" aria-label="Summary">
     <h2>Projects</h2>
-    <p>Broadband acoustic energy harvesting, where the contribution is robustness rather than peak power (power variation CoV 21% vs 29% across 11 measured noise environments; advantage grows with resonator quality factor). A Human-in-the-Loop, risk-aware bidding system for a virtual power plant, built with a team at a Korea University × Upstage hackathon (1st place, 23 teams), where I led the system architecture, objective function, and verification/feedback loop. A team-capstone autonomous pole-climbing and coconut-harvesting robot, where I led the control software and power electronics. Active learning for carbon nanofilm synthesis. Asymmetric-geometry rotor fault tolerance. A short-range air-defense interception simulator with a playable in-browser demo, where four optimization methods are compared under proportional-navigation guidance.</p>
+    <p>Broadband acoustic energy harvesting, where the contribution is robustness rather than peak power (power variation CoV 21% vs 29% across 11 measured noise environments; advantage grows with resonator quality factor). A Human-in-the-Loop, risk-aware bidding system for a virtual power plant, built with a team at a Korea University × Upstage hackathon (1st place, 23 teams), where I led the system architecture, objective function, and verification/feedback loop. A team-capstone autonomous pole-climbing and coconut-harvesting robot, where I led the control software and power electronics. Asymmetric-geometry rotor fault tolerance. A short-range air-defense interception simulator with a playable in-browser demo, where four optimization methods are compared under proportional-navigation guidance.</p>
     <h2>Live web apps</h2>
     <p>Acoustic Harvester, an interactive version of the harvesting study. Divert-Sim, a playable interception simulator. VPP Trade-Guard, a case study of the hackathon system. Engineering Brain, which poses engineering questions and grades the answers. News Literacy Lab, which breaks a news article down by stakeholder. Emotion Quadrant, a Korean-language tool for naming a feeling precisely. 357 Stick Breaker, a misère Nim variant played against a solver.</p>
     <h2>Systems and engineering judgment</h2>
@@ -419,18 +419,18 @@ const RESEARCH = [
    meth:["SDOF electromechanical model","bootstrap 95% CI","cross-environment evaluation","parametric sweeps","Numba Monte-Carlo"],
    limit:"Absolute output is fW-scale at 70 dB SPL, reported as-is rather than normalized away. The claim is the design's robustness, not raw power.",
    mlimit:"Output is fW-scale at 70 dB SPL, reported as-is. The claim is robustness, not raw power."},
-  {kick:"Human-in-the-loop energy AI · team hackathon",title:"VPP Trade-Guard: Risk-Aware Bidding for a Virtual Power Plant",
+  {kick:"Human-in-the-loop energy AI · team hackathon",title:"VPP Trade-Guard: Putting Failure Risk Into a Power-Trading Objective",
    chip:["1st place · team hackathon","green"],lead:"As team lead I designed the architecture and the verification loop, not the plumbing. <a href='https://euichanlee0608-svg.github.io/vpp-trade-guard/' target='_blank' rel='noopener'>Read the case study &rarr;</a>",
    blocks:[["Role","A 3-person team built a Human-in-the-Loop bidding system for Jeju's virtual-power-plant market at a Korea University × Upstage hackathon (<b>1st place, 23 teams</b>). As team lead I owned the <b>system architecture, the objective function, and the verification/feedback loop</b>; my teammates built the n8n node implementation, the Slack UI, and the data-ingestion pipeline.","Team hackathon, <b>1st of 23 teams</b>. I owned the <b>architecture, objective function, and verification loop</b>; teammates built the n8n nodes, Slack UI, and data ingestion."],
-     ["Problem","Existing VPP trading logic always assumes equipment is 100% healthy: when the power price rises, it drives batteries into aggressive output regardless of their actual condition, and the resulting failures can outweigh the trading profit they were chasing.","Existing VPP logic assumes equipment is always 100% healthy, so it overdrives batteries whenever price is high, and failure losses can outweigh the profit."],
-     ["System design","I put failure risk directly into the objective function (net profit = revenue − failure-probability × risk cost), then designed the architecture around a single guardrail: <b>the AI only proposes, code always decides</b>. A proposer LLM suggests output ratios without doing any math; a deterministic engine computes the actual revenue and risk cost; two LLM reviewers cross-check the recommendation from independent angles (safety vs. financial, on different priority rules); and, critically, a separate rule-based node never trusts either LLM's numbers — it independently re-derives the same revenue and risk figures from scratch and rejects the recommendation on any mismatch. No dollar figure an LLM produces reaches a human unverified.","Architecture guardrail: <b>AI only proposes, code always decides</b>. A proposer LLM suggests ratios; a deterministic engine computes the real numbers; two reviewer LLMs cross-check from independent angles; and a rule-based node never trusts either one — it independently re-derives the same numbers and rejects on mismatch."]],
-   stats:[["1st / 23","teams, Korea University × Upstage Energy AI Hackathon"],["2","independent LLM reviewers cross-checking each recommendation from different angles"],["0","dollar figures an LLM produces that reach a human without an independent recompute"]],
+     ["Problem","It was an energy-AI hackathon, so we started from Jeju's virtual-power-plant market and asked what existing trading tools leave out. They price electricity, and nothing else. Existing VPP trading logic always assumes equipment is 100% healthy: when the power price rises, it drives batteries into aggressive output regardless of their actual condition, and the resulting failures can outweigh the trading profit they were chasing.","Existing VPP logic assumes equipment is always 100% healthy, so it overdrives batteries whenever price is high, and failure losses can outweigh the profit."],
+     ["System design","I put failure risk directly into the objective function (net profit = revenue − failure-probability × risk cost), then designed the architecture around a single guardrail: <b>the AI only proposes, code always decides</b>. A proposer LLM suggests output ratios without doing any math; a deterministic engine computes the actual revenue and risk cost; two LLM reviewers cross-check the recommendation from independent angles (safety vs. financial, on different priority rules); and, critically, a separate rule-based node never trusts either LLM's numbers — it independently re-derives the same revenue and risk figures from scratch and rejects the recommendation on any mismatch. No dollar figure an LLM produces reaches a human unverified. The failure-probability model itself sits behind a <b>plugin interface</b>, so an operator can drop in whatever prognostics they already trust: the contribution is the objective function and the verification loop around it, not the prognostics.","Architecture guardrail: <b>AI only proposes, code always decides</b>. A proposer LLM suggests ratios; a deterministic engine computes the real numbers; two reviewer LLMs cross-check from independent angles; and a rule-based node never trusts either one — it independently re-derives the same numbers and rejects on mismatch."]],
+   stats:[["1st / 23","teams, Korea University × Upstage Energy AI Hackathon"],["2","independent LLM reviewers cross-checking each recommendation from different angles"]],
    meth:["objective-function design","dual LLM cross-review","rule-based recompute diff-check","bounded retry gate","Human-in-the-Loop UX"],
    limit:"Built in a hackathon timeframe: the BMS sensor feed is dummy data rather than real hardware telemetry, and the failure-probability multiplier is an approximation backed out from a single anchor assumption, documented as such in the code.",
    mlimit:"Hackathon timeframe: dummy sensor data, and the failure-probability model is a documented single-anchor approximation, not a fitted one."},
   {kick:"Mechanical capstone · control & power systems",title:"Autonomous Pole-Climbing & Harvesting Robot",
-   chip:["Team capstone · built & demonstrated","green"],lead:"My one <b>hands-on, built-and-tested</b> system. I owned control and power.",
-   blocks:[["Role","A four-part team built an autonomous robot that climbs a vertical PVC pole and harvests the coconut at the top. The team's core mechanism kept the motor count low: a <b>one-way bearing</b> (rather than a ratchet) paired with a <b>C-shaped gear</b> drove the harvesting motion off the climb drivetrain. I led the <b>control software and electrical/power systems</b>: motor drivers, sensing, voltage stabilization, and the climb logic.","Team capstone: a robot that climbs a pole and harvests the coconut on top. The team's core mechanism cut motor count with a <b>one-way bearing</b> (not a ratchet) + <b>C-shaped gear</b> harvest drive; I owned the <b>control + power electronics</b>."],
+   chip:["Team capstone · built & demonstrated","green"],lead:"A four-person capstone team built this one, and it was <b>built and tested</b>, not simulated. I owned control and power.",
+   blocks:[["Role","A four-part team built an autonomous robot that climbs a vertical PVC pole and harvests the coconut at the top. The team's core mechanism kept the motor count low: a <b>one-way bearing</b> paired with a <b>C-shaped gear</b> drove the harvesting motion off the climb drivetrain. A ratchet was the obvious choice, but its friction made the climb itself too hard, so the bearing replaced it. I led the <b>control software and electrical/power systems</b>: motor drivers, sensing, voltage stabilization, and the climb logic.","Team capstone: a robot that climbs a pole and harvests the coconut on top. The team's core mechanism cut motor count with a <b>one-way bearing</b> + <b>C-shaped gear</b> harvest drive (a ratchet's friction made climbing too hard); I owned the <b>control + power electronics</b>."],
      ["Hard problem","Budget forced two mismatched motors (gear ratios 1/144 vs 1/500, stall currents 24 A vs 2 A) onto one synchronized drive. I matched their angular acceleration by inverse-calculating PWM from the spec sheets, then tuned the offset empirically over dozens of climb tests, while a distributed <b>11,000 µF</b> capacitor bank held the rail above the 7 V reset floor through 24 A stall surges.","Two mismatched motors (1/144 vs 1/500, 24 A vs 2 A stall) on one drive, synced by inverse-calculated PWM + empirical tuning; an <b>11,000 µF</b> cap bank held the rail above reset."],
      ["Honest read","It climbed on contest day, but the control is threshold on/off rather than PID, and the motor mismatch left a residual twist. The deeper lesson was process: the first design was scrapped three weeks out for a center-of-mass flaw that a simple design-review gate would have caught on paper.","It worked, but control was on/off (not PID), and a scrapped first design taught me a design-review gate would have caught the flaw on paper."]],
    figs:[["assets/figures/climbing_robot_cad.png","The redesigned assembly: the two motors sit symmetrically about the pole axis so the center of mass falls on the climb axis, fixing the first design's center-of-mass offset."],
@@ -438,11 +438,6 @@ const RESEARCH = [
    meth:["Arduino multi-board (sensing / control split)","heterogeneous-motor synchronization","11,000 µF capacitor bank","moving-average + outlier filtering","torque & current safety-factor budgeting"],
    limit:"A team course project with a defined goal, not original research: on/off control, empirically tuned. Included as the hands-on hardware-and-team complement to the simulation work above.",
    mlimit:"Team course project, not research: on/off control, hands-on. My hardware-and-team complement to the simulation work."},
-  {kick:"Active learning · process optimization",title:"Active Learning for Carbon Nanofilm Synthesis",
-   chip:["Code validated · awaiting lab data","blue"],lead:"Reaching the best process conditions in <b>fewer measurements</b>.",
-   blocks:[["Approach","Each (power, dwell-time) condition costs a real lab measurement, so the pipeline compares two acquisition strategies, <b>AL-Map</b> (sample where the model is most uncertain) and <b>AL-Opt</b> (sample for expected improvement, to find the best G/D ratio), against random and grid baselines, adding one measurement at a time.","Each (power, dwell) point costs a real measurement, so it compares <b>AL-Map</b> (most uncertain) and <b>AL-Opt</b> (expected improvement) vs random/grid, one point at a time."],
-     ["Status","The approach is validated on the existing dataset (15 conditions, 45 replicates). The pipeline is set up to rerun on the low-power lab measurements once they're collected.","Validated on existing data (15 conditions, 45 replicates); ready to rerun on lab data."]],
-   meth:["surrogate model","expected improvement","uncertainty sampling","learning-curve benchmark","sequential design"]},
   {kick:"Fault-tolerant control",title:"Asymmetric-Geometry Rotor Fault Tolerance",
    chip:["Simulation · 6-DOF rebuild","amber"],lead:"Surviving a rotor hit, then rebuilding the model so the result stays honest.",
    blocks:[["Approach","A Monte-Carlo search (~10⁸ samples) over four-rotor geometry maximizes the static stability margin after a rotor fails; the optimum sits at the <b>incenter</b> of the remaining support triangle. The damaged craft is then flown with 3-motor control allocation, deliberately giving up yaw.","A ~10⁸-sample search places the rotors for best post-failure stability (optimum = <b>incenter</b> of the support triangle); the craft then flies on 3 motors, giving up yaw."],
@@ -513,7 +508,7 @@ const SITE="https://euichanlee0608-svg.github.io/";
    come out of a project (those are already covered in the Projects folder) */
 const APPS=[
   {id:"engbrain",name:"Engineering Brain",url:SITE+"engineering-brain/",type:"Web app",
-   desc:"It asks a hard engineering question, you answer in your own words, and it grades the reasoning.",status:["Live","green"]},
+   desc:"It asks a hard engineering or philosophy dilemma, you answer in your own words, and it grades the reasoning.",status:["Live","green"]},
   {id:"newslab",name:"News Literacy Lab",url:SITE+"news-literacy-lab/",type:"Web app",
    desc:"Breaks a news article down by who has a stake in it, rather than by which camp it belongs to. Paste a link.",status:["Live","green"]},
   {id:"emoquad",name:"Emotion Quadrant",url:SITE+"emotion-quadrant/",type:"Web app · Korean",
@@ -534,7 +529,6 @@ const PROJ_META=[
   ["Energy harvesting","A wire array that stays steady across real noise, where the result is robustness rather than peak power.",["Verified","green"]],
   ["Energy AI · team","Risk-aware bidding for a virtual power plant, built so the AI proposes and code decides.",["1st place","green"]],
   ["Robotics · hardware","A team-built robot that climbs a pole and harvests the coconut on top. I owned control and power.",["Built & tested","green"]],
-  ["Active learning","Reaching the best process conditions in as few real lab measurements as possible.",["Awaiting lab data","blue"]],
   ["Fault tolerance","A quadrotor that survives losing a rotor, remodelled in 6-DOF so the numbers stay honest.",["Simulation","amber"]],
   ["Guidance · control","Steering an interceptor onto an evasive drone, comparing four optimization methods.",["Simulation + demo","green"]],
 ];
@@ -548,9 +542,9 @@ const ICO={
   person:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.4" r="3.9"/><path d="M4.6 20.2a7.4 7.4 0 0 1 14.8 0"/></svg>`,
 };
 const TREE={id:"pieces",name:"Portfolio Pieces",kids:[
-  {id:"projects",kind:"dir",name:"Projects",type:"Folder",desc:"Six engineering and research projects, each with its method, its result, and its limits stated plainly.",
+  {id:"projects",kind:"dir",name:"Projects",type:"Folder",countWord:"project",desc:"Engineering and research projects, each with its method, its result, and its limits stated plainly.",
    kids:RESEARCH.map((r,i)=>({id:"p"+i,kind:"proj",ri:i,name:r.title,type:PROJ_META[i][0],desc:PROJ_META[i][1],status:PROJ_META[i][2]}))},
-  {id:"apps",kind:"dir",name:"Live Web Apps",type:"Folder",desc:"Things you can open and use right now. The first four stand on their own; the last three come out of the projects.",
+  {id:"apps",kind:"dir",name:"Live Web Apps",type:"Folder",countWord:"live web app",desc:"Things you can open and use right now. The ones at the top stand on their own; the rest come out of the projects.",
    kids:APPS.map(a=>Object.assign({kind:"app"},a))},
   {id:"systems",kind:"view",view:"systems",name:"Systems & Tooling",type:"Document",
    sub:"what I built, dropped, and where it's heading",
@@ -685,6 +679,16 @@ explorer.addEventListener("keydown",e=>{
 function showLanding(){document.body.classList.remove("exp");explorer.classList.remove("on");}
 document.querySelector(".tile-drive .tic").innerHTML=ICO.drive;
 document.querySelector(".tile-about .tic").innerHTML=ICO.person;
+
+/* counts are derived from TREE, never typed in — the folders keep growing */
+(function(){
+  const plural=(n,w)=>n+" "+w+(n===1?"":"s");
+  const dirs=TREE.kids.filter(k=>k.kind==="dir");
+  const docs=TREE.kids.length-dirs.length;
+  document.getElementById("drivepills").innerHTML=
+    dirs.map(d=>`<span>${plural(d.kids.length,d.countWord)}</span>`).join("")
+    +`<span>${plural(docs,"document")}</span>`;
+})();
 
 /* the About Me hint retires itself once the tile it points at is on screen */
 (function(){
