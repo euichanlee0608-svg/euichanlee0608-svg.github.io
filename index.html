@@ -386,11 +386,11 @@
 
   <section class="sr-only" aria-label="Summary">
     <h2>Projects</h2>
-    <p>Broadband acoustic energy harvesting, where the contribution is robustness rather than peak power (power variation CoV 21% vs 29% across 11 measured noise environments; advantage grows with resonator quality factor). A Human-in-the-Loop, risk-aware bidding system for a virtual power plant, built with a team at a Korea University × Upstage hackathon (1st place, 23 teams), where I led the system architecture, objective function, and verification/feedback loop. A team-capstone autonomous pole-climbing and coconut-harvesting robot, where I led the control software and power electronics. Asymmetric-geometry rotor fault tolerance. A short-range air-defense interception simulator with a playable in-browser demo, where four optimization methods are compared under proportional-navigation guidance.</p>
+    <p>Broadband acoustic energy harvesting, where the contribution is robustness rather than peak power (power variation CoV 21% vs 29% across 11 measured noise environments; advantage grows with resonator quality factor). A Human-in-the-Loop, risk-aware bidding system for a virtual power plant, built with a team at a Korea University × Upstage hackathon (1st place, 23 teams), where I led the system architecture, objective function, and verification/feedback loop. A team-capstone autonomous pole-climbing and coconut-harvesting robot, where I led the control software and power electronics. A replay validation of sequential Bayesian optimization against four published experimental studies, with lookahead sealed and a random-order baseline: five wins, two draws, no losses, and adoption gated on measurement discriminability and design-space size. Asymmetric-geometry rotor fault tolerance. A short-range air-defense interception simulator with a playable in-browser demo, where four optimization methods are compared under proportional-navigation guidance.</p>
     <h2>Live web apps</h2>
-    <p>Acoustic Harvester, an interactive version of the harvesting study. Divert-Sim, a playable interception simulator. VPP Trade-Guard, a case study of the hackathon system. Engineering Brain, which poses engineering questions and grades the answers. News Literacy Lab, which breaks a news article down by stakeholder. Emotion Quadrant, a Korean-language tool for naming a feeling precisely. 357 Stick Breaker, a misère Nim variant played against a solver.</p>
+    <p>Living Paper, a meeting assistant whose MVP is live: it marks the moment you pretended to understand and explains it afterwards from your own lab's documents, with the cloud relaying ciphertext only. Acoustic Harvester, an interactive version of the harvesting study. Divert-Sim, a playable interception simulator. VPP Trade-Guard, a case study of the hackathon system. Engineering Brain, which poses engineering questions and grades the answers. News Literacy Lab, which breaks a news article down by stakeholder. Emotion Quadrant, a Korean-language tool for naming a feeling precisely. 357 Stick Breaker, a misère Nim variant played against a solver.</p>
     <h2>Systems and engineering judgment</h2>
-    <p>A local-first research toolkit where change records come from the git diff, decisions are captured, low-quality experiments are dropped honestly, and an engineering-reasoning dataset feeds local-LLM fine-tuning.</p>
+    <p>Safeguards designed so no tool grades itself: research change records come from the git diff rather than a model's narration, regression gates replay real messages through real handlers instead of checking liveness, remote automation passes approval steps with per-thread heartbeats and terminal fallback, and a physics-equation catalogue is graded by evidence (reference, dimensional, numeric) behind a 95% CI gate. Low-quality experiments are dropped honestly; an engineering-reasoning dataset now feeds a planned campus poster quantifying personalized in-context learning for engineering Q&A.</p>
     <h2>About</h2>
     <p>Euichan Lee (Leechan), Korea University, Mechanical Engineering and Applied Artificial Intelligence. Incoming undergraduate researcher at the Materials Innovation Lab (Prof. Byungseok Seo), Fall 2026. Contact leechan0608@korea.ac.kr.</p>
   </section>
@@ -428,6 +428,15 @@ const RESEARCH = [
    meth:["objective-function design","dual LLM cross-review","rule-based recompute diff-check","bounded retry gate","Human-in-the-Loop UX"],
    limit:"Built in a hackathon timeframe: the BMS sensor feed is dummy data rather than real hardware telemetry, and the failure-probability multiplier is an approximation backed out from a single anchor assumption, documented as such in the code.",
    mlimit:"Hackathon timeframe: dummy sensor data, and the failure-probability model is a documented single-anchor approximation, not a fitted one."},
+  {kick:"Bayesian optimization · experiment design",title:"Sequential Optimization, Replayed on Published Experiments",
+   chip:["Replay validation · 5W–2D–0L","green"],lead:"Before proposing algorithm-guided experiments to a device lab, I checked whether it would actually have helped, with lookahead sealed off.",
+   blocks:[["Problem","A device lab measures one costly condition at a time. Sequential optimization, a Gaussian-process surrogate choosing each next measurement by Expected Improvement, promises fewer measurements, but proposing it on faith would spend someone else's experiments on my guess. The fair question: on studies already completed, would it have reached the same conclusion sooner?","Each measurement is costly. Would GP + Expected Improvement have reached the same conclusion in fewer runs, on studies already completed?"],
+     ["Replay design","I scanned 17 papers from the lab's field and kept the 4 whose responses appear as numbers in the text or tables, reading nothing off figures (main target: Adv. Eng. Mater. 2023, DOI 10.1002/adem.202300669). Each study is then replayed with lookahead sealed: the algorithm sees only conditions it has already 'measured', is scored against a random-order baseline over 400+ shuffles, and measurement noise is injected at exactly the uncertainty each paper reports.","17 papers scanned → 4 with numeric (never figure-read) data. Replay with lookahead sealed, a random-order baseline over 400+ shuffles, and paper-reported noise injected."],
+     ["Finding","Across 7 cases: <b>5 wins, 2 draws, 0 losses</b>, the best case reaching the published conclusion in <b>6 measurements instead of 12</b>. The draws are the useful part: with only 4–6 candidate conditions the saving is zero, and where top designs differ by less than the reported measurement uncertainty, <em>no</em> method can pick a winner in any number of runs. So the recommendation is conditional — discriminability ≥ 1 and 8+ candidates first, or don't introduce it.","7 cases: <b>5–2–0</b>, best case <b>12 → 6 runs</b>. The draws matter most: under 8 candidates the saving is zero, and differences below measurement noise are undecidable by any method. Adoption is conditional."]],
+   stats:[["5–2–0","wins–draws–losses vs a random-order baseline, across 7 replayed cases"],["12 → 6","measurements to the published conclusion in the best case"],["8+","candidate conditions before the method pays — below that, savings were zero"]],
+   meth:["Gaussian-process surrogate","Expected Improvement","lookahead-sealed replay","random-order baseline (400+ shuffles)","reported-uncertainty noise injection","discriminability gating"],
+   limit:"A discrete replay on already-measured conditions: one 12-condition design space and three 4-condition ones. The GP's own predictions were too weak to trust (negative leave-one-out R²), so it was used only to propose the next measurement, never to report values. The papers' data is not republished here; sources are cited by DOI.",
+   mlimit:"Discrete replay, one 12-condition + three 4-condition spaces. GP used as proposer only (negative LOOCV R²). Data stays with the cited papers (main DOI 10.1002/adem.202300669)."},
   {kick:"Mechanical capstone · control & power systems",title:"Autonomous Pole-Climbing & Harvesting Robot",
    chip:["Team capstone · built & demonstrated","green"],lead:"A four-person capstone team built this one, and it was <b>built and tested</b>, not simulated. I owned control and power.",
    blocks:[["Role","A four-part team built an autonomous robot that climbs a vertical PVC pole and harvests the coconut at the top. The team's core mechanism kept the motor count low: a <b>one-way bearing</b> paired with a <b>C-shaped gear</b> drove the harvesting motion off the climb drivetrain. A ratchet was the obvious choice, but its friction made the climb itself too hard, so the bearing replaced it. I led the <b>control software and electrical/power systems</b>: motor drivers, sensing, voltage stabilization, and the climb logic.","Team capstone: a robot that climbs a pole and harvests the coconut on top. The team's core mechanism cut motor count with a <b>one-way bearing</b> + <b>C-shaped gear</b> harvest drive (a ratchet's friction made climbing too hard); I owned the <b>control + power electronics</b>."],
@@ -460,29 +469,32 @@ const RESEARCH = [
    mlimit:"2D, single target, simplified aero: a control-and-optimization study, not a flight model. Built to be playable."},
 ];
 const INTERESTS = [
-  "Physics-informed neural networks with active learning",
-  "Model predictive control",
-  "Sim-to-real reinforcement learning for an asymmetric inverted pendulum",
-  "Variable center-of-mass drone disturbance rejection",
-  "Active dynamic collision-risk detection",
-  "Energy self-sufficiency for microplastic-capture devices",
+  "Design of experiments — space-filling (Latin hypercube, Sobol) vs screening designs, and when each earns its runs",
+  "Surrogate models — polynomial regression, Kriging, moving least squares, RBF, and where each one breaks",
+  "Acquisition functions — Expected Improvement, and its failure modes on noisy responses",
+  "Reliability-based design optimization — FORM/SORM, single-loop methods, most-probable-point reasoning",
+  "Multi-objective optimization — Pareto dominance, and what stays undecidable without a stated preference",
+  "Validating surrogate-found optima against the real solver — never grading a model with itself",
 ];
 const SYSTEMS = [
-  {cls:"",h:"Research automation",role:"research_pipeline + pipeline",
-   p:"A local-first toolkit that keeps my research reproducible. Change summaries come from the actual <b>git diff</b>, not from what a model says it did, so the record can't be fabricated. Only registered, tested modules are trusted, pushes are gated on a verification step, and a baseline-metric check flags silent regressions in either direction.",
-   mp:"Local-first toolkit. Change records come from the <b>git diff</b>, not the model, so they can't be faked. Pushes are gated on verification."},
+  {cls:"",h:"Records from the diff, not the narrator",role:"research pipeline",
+   p:"A local-first toolkit keeps my research reproducible. Change summaries come from the actual <b>git diff</b>, not from what a model says it did, so the record can't be fabricated. Only registered, tested modules are trusted, pushes are gated on verification, and a baseline check flags silent metric changes in both directions.",
+   mp:"Change records come from the <b>git diff</b>, not the model, so they can't be faked. Pushes are gated on verification."},
+  {cls:"",h:"Contract tests, not health checks",role:"regression gate",
+   p:"A status dashboard once showed every check green while four real bugs shipped anyway. 'Is it alive' turned out to be the wrong question. The gate now <b>replays real messages through the real handlers</b>, with no network and no paid calls, and asks the question that matters: who responds, and with what. Nothing ships until that passes.",
+   mp:"All checks green, four bugs shipped anyway. The gate now <b>replays real messages through real handlers</b> and blocks on behaviour, not liveness."},
+  {cls:"",h:"Approval gates and fallbacks",role:"automation safety",
+   p:"Anything I can trigger remotely passes an <b>approval step before it touches a file</b>. The approval channel itself is watched: every always-on thread writes its own heartbeat, because a process can be alive while a thread inside it is dead, and if the channel dies mid-request the request <b>falls back to the terminal</b> instead of silently hanging.",
+   mp:"Remote tasks need <b>approval before touching files</b>; per-thread heartbeats watch the watchers, and a dead channel falls back to the terminal."},
+  {cls:"",h:"Equations that earn their grade",role:"physics verification · private repo",
+   p:"The most dangerous simulation failure isn't an error, it's a <b>plausible wrong number</b> — a wrong coefficient is dimensionally perfect. So every physics equation in my catalogue is graded by evidence rather than declaration: reference, then a dimensional check, then a numeric check against known solutions, with CI refusing any push that drops the verified share below 95%.",
+   mp:"Worst failure: a <b>plausible wrong number</b> (wrong coefficients pass dimensional checks). Equations are graded by evidence — reference → dimensions → numerics — behind a 95% CI gate."},
   {cls:"dep",h:"second_brain · decision capture",role:"deprecated · 2026-06",
    p:"An attempt to auto-extract the decisions I made during work sessions. It ran fine, but the captured reasoning was <b>too low-quality to be useful</b>, so I retired it instead of keeping a system that just produced noise. The idea I kept: store the raw record <em>before</em> any processing can distort it.",
    mp:"Tried auto-extracting my decisions. Too low-quality, so I retired it. Kept the idea: <b>store the raw record first</b>."},
-  {cls:"",h:"Engineering Brain",role:"reasoning dataset · active",
-   p:"The replacement. It poses hard engineering questions and records my free-text answers verbatim, keeping the model that asks separate from the model that grades so the raw answers stay clean. The output is a dataset of engineering reasoning in my own words.",
-   mp:"Poses hard questions, saves my answers verbatim, asker kept separate from grader. Output: a dataset of my engineering reasoning."},
-  {cls:"",h:"Local-LLM LoRA fine-tuning",role:"in progress",
-   p:"That dataset feeds the current work: <b>LoRA fine-tuning a local language model</b> on engineering reasoning, run entirely on local hardware.",
-   mp:"That dataset now <b>LoRA-fine-tunes a local model</b>, run on local hardware."},
-  {cls:"fut",h:"Engineering-domain tendency filter",role:"planned",
-   p:"The next step I'm planning: use the fine-tuned model as a domain filter, and <b>measure its accuracy and reliability against the base model</b> before relying on it.",
-   mp:"Next: use it as a domain filter and <b>measure its accuracy vs the base model</b> before trusting it."},
+  {cls:"",h:"Engineering Brain",role:"reasoning dataset · campus poster planned",
+   p:"The replacement, still running: it poses hard engineering and philosophy dilemmas, records my free-text answers verbatim, and keeps the model that asks separate from the model that grades so the raw answers stay clean. That dataset now feeds the next question — a campus poster is planned quantifying how much <b>in-context learning on a personalized reasoning dataset</b> improves an LLM's engineering Q&A, measured against the base model.",
+   mp:"Poses hard dilemmas, saves answers verbatim, asker separate from grader. Next: a campus poster quantifying how much <b>personalized in-context learning</b> helps engineering Q&A."},
 ];
 const ABOUT = [
   ["Education","Korea University",
@@ -496,9 +508,9 @@ const ABOUT = [
 ];
 const SIMOPS = {
   prog:"Living Paper · Korea University Lab-Startup Innovation Corps (I-Corps, 2026 · UC Berkeley KIC)",
-  stats:[["30%+","of research time lost to debugging pipeline collisions"],["50%↓","targeted reduction in that debugging time"],["20","field interviews so far"]],
-  desc:"In a simulation pipeline (<b>model generation → FEM solve → surrogate model</b>), each stage runs fine on its own, but unexplained errors show up where the stages meet. Since it's hard to tell which boundary caused it, teams rerun the whole pipeline by hand and adjust parameters by intuition. Living Paper <b>finds the problem region, isolates the cause, and re-validates only the suspect segment</b> instead of restarting, with a shared change log so the team works from the same picture. This is a concept being developed through the I-Corps program; there's no MVP yet.",
-  mdesc:"In a pipeline (<b>model → FEM → surrogate</b>), each stage is fine alone but errors appear where they meet. Living Paper <b>finds the bad region, isolates the cause, and re-validates only that</b>, with no full restart. Concept stage; no MVP yet.",
+  stats:[["50","field interviews behind the pivot"],["95% / 88%","of interviewees requiring on-premise privacy / domain accuracy"],["30%","wanted live AI summaries — the obvious product, dropped"]],
+  desc:"This started in I-Corps as SimOps, a tool for debugging simulation-pipeline collisions. Fifty field interviews moved it somewhere else: the recurring pain wasn't pipelines, it was the moment in a meeting when you <b>nod along without actually understanding</b>. The obvious product, live AI summaries, polled at 30%; what people demanded instead was privacy (95% wanted processing kept on premises) and domain accuracy (88%). Living Paper is what came out, and its <b>MVP is live</b>: one tap marks the moment you let something slide, and after the meeting it explains that moment grounded in <b>your own lab's documents</b>. The cloud is only a courier — plaintext and keys never leave your device and the in-lab node, the relay stores ciphertext it cannot read, and a security tab lets you <b>search the relay's actual stored bytes</b> for any word you just typed. Zero hits, verifiably.",
+  mdesc:"Started as pipeline debugging; 50 interviews moved it to the real pain — <b>nodding along in meetings without understanding</b>. One tap marks the moment; afterwards it explains it from <b>your own lab's documents</b>. MVP live. The cloud relays ciphertext only, and a security tab proves it by searching the relay's real bytes.",
 };
 const MOB=()=>window.matchMedia("(max-width:640px)").matches;
 
@@ -507,6 +519,8 @@ const SITE="https://euichanlee0608-svg.github.io/";
 /* live web apps: the ones that stand on their own first, then the three that
    come out of a project (those are already covered in the Projects folder) */
 const APPS=[
+  {id:"livingpaper",name:"Living Paper",url:SITE+"living-paper/",type:"MVP · web app",
+   desc:"Mark the moment you pretended to understand; it explains it afterwards from your own lab's documents. The cloud sees ciphertext only.",status:["MVP live","green"]},
   {id:"engbrain",name:"Engineering Brain",url:SITE+"engineering-brain/",type:"Web app",
    desc:"It asks a hard engineering or philosophy dilemma, you answer in your own words, and it grades the reasoning.",status:["Live","green"]},
   {id:"newslab",name:"News Literacy Lab",url:SITE+"news-literacy-lab/",type:"Web app",
@@ -528,6 +542,7 @@ const APPS=[
 const PROJ_META=[
   ["Energy harvesting","A wire array that stays steady across real noise, where the result is robustness rather than peak power.",["Verified","green"]],
   ["Energy AI · team","Risk-aware bidding for a virtual power plant, built so the AI proposes and code decides.",["1st place","green"]],
+  ["Bayesian optimization","Replaying published experiments to test whether algorithm-chosen measurements would have reached the same result sooner.",["Replay-validated","green"]],
   ["Robotics · hardware","A team-built robot that climbs a pole and harvests the coconut on top. I owned control and power.",["Built & tested","green"]],
   ["Fault tolerance","A quadrotor that survives losing a rotor, remodelled in 6-DOF so the numbers stay honest.",["Simulation","amber"]],
   ["Guidance · control","Steering an interceptor onto an evasive drone, comparing four optimization methods.",["Simulation + demo","green"]],
@@ -547,14 +562,14 @@ const TREE={id:"pieces",name:"Portfolio Pieces",kids:[
   {id:"apps",kind:"dir",name:"Live Web Apps",type:"Folder",countWord:"live web app",desc:"Things you can open and use right now. The ones at the top stand on their own; the rest come out of the projects.",
    kids:APPS.map(a=>Object.assign({kind:"app"},a))},
   {id:"systems",kind:"view",view:"systems",name:"Systems & Tooling",type:"Document",
-   sub:"what I built, dropped, and where it's heading",
-   desc:"The research infrastructure I built because I couldn't buy it, including the piece I retired and why.",status:["5 stages","blue"]},
-  {id:"simops",kind:"view",view:"simops",name:"SimOps — Living Paper",type:"Document",
-   sub:"FEM-pipeline collision detection",
-   desc:"Finding where a simulation pipeline breaks, and re-validating only that part instead of rerunning it all.",status:["Concept · in program","amber"]},
+   sub:"the safeguards in my own tooling, and the piece I dropped",
+   desc:"One design rule everywhere: an independent check that doesn't trust the tool itself. Diff-based records, contract-tested gates, approval steps, graded equations.",status:["Ongoing","blue"]},
+  {id:"simops",kind:"view",view:"simops",name:"Living Paper",type:"Document",
+   sub:"from pipeline debugging to a meeting assistant · I-Corps 2026",
+   desc:"What 50 field interviews did to the original idea, and the zero-knowledge-relay MVP that came out of it.",status:["MVP live","green"]},
   {id:"interests",kind:"view",view:"interests",name:"Research Interests",type:"Document",
-   sub:"6 early-stage directions",
-   desc:"Six directions I'm actively scoping. Earlier-stage than the projects, listed as-is.",status:["Scoping","blue"]},
+   sub:"the optimal-design stack, end to end",
+   desc:"What I'm currently studying: experiment design, surrogate models, optimizers, and reliability-based design.",status:["Studying","blue"]},
 ]};
 
 /* ============ EXPLORER ============ */
@@ -712,8 +727,8 @@ const vbody=document.getElementById("vbody"),vt=document.getElementById("vt"),vc
 function chip(c){return `<span class="chip ${c[1]}">${c[0]}</span>`;}
 function renderSystems(){
   const m=MOB();
-  const lead=m?"I built the research infrastructure I couldn't buy, and kept changing it. The path, <b>including what I dropped</b>:"
-    :"My research needed infrastructure I couldn't buy, so I built it, and it kept changing as I learned what mattered. Here's the path, including <b>what I dropped and why</b>.";
+  const lead=m?"One rule everywhere: an <b>independent check that doesn't trust the tool itself</b>. The safeguards, and what I dropped:"
+    :"Every tool I rely on has ended up with the same shape: an <b>independent check that doesn't trust the tool itself</b>. The safeguards, where each one came from, and the one piece I dropped:";
   const band=m?"A Telegram bot ties it together: run any task from my phone, with approval before anything touches files."
     :"None of this gets used if it's a hassle, so I built a general-purpose Telegram bot as one place to run all of it, triggering any task from my phone, with an approval step before anything touches files.";
   const toy=m?"Same spirit: a guitar-tab extractor that checks itself by re-synthesizing and re-transcribing (note-F1 0.912)."
@@ -728,27 +743,28 @@ function renderAbout(){
     <div class="ab-cta">Open to research collaboration &amp; graduate study · <a href="mailto:leechan0608@korea.ac.kr">leechan0608@korea.ac.kr</a></div>`;
 }
 function renderSimops(){
-  const svg=`<svg viewBox="0 0 720 200" role="img" aria-label="Pipeline collision diagram">
+  const svg=`<svg viewBox="0 0 720 200" role="img" aria-label="Zero-knowledge relay diagram">
     <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#737985"/></marker></defs>
     <g font-family="Inter, sans-serif">
-      <rect x="20" y="58" width="150" height="64" rx="10" fill="#fff" stroke="#dcdcd7"/>
-      <text x="95" y="84" text-anchor="middle" font-size="14" font-weight="600" fill="#15171c">Model gen</text>
-      <text x="95" y="103" text-anchor="middle" font-size="10.5" fill="#737985">mesh · material · BC</text>
-      <rect x="285" y="58" width="150" height="64" rx="10" fill="#fff" stroke="#dcdcd7"/>
-      <text x="360" y="84" text-anchor="middle" font-size="14" font-weight="600" fill="#15171c">FEM solve</text>
-      <text x="360" y="103" text-anchor="middle" font-size="10.5" fill="#737985">solver · convergence</text>
-      <rect x="550" y="58" width="150" height="64" rx="10" fill="#fff" stroke="#dcdcd7"/>
-      <text x="625" y="84" text-anchor="middle" font-size="14" font-weight="600" fill="#15171c">Surrogate</text>
-      <text x="625" y="103" text-anchor="middle" font-size="10.5" fill="#737985">model · optimize</text>
-      <line x1="170" y1="90" x2="278" y2="90" stroke="#737985" stroke-width="1.5" marker-end="url(#ar)"/>
-      <line x1="435" y1="90" x2="543" y2="90" stroke="#737985" stroke-width="1.5" marker-end="url(#ar)"/>
-      <text x="224" y="50" text-anchor="middle" font-size="18">⚡</text>
-      <text x="489" y="50" text-anchor="middle" font-size="18">⚡</text>
-      <text x="356" y="30" text-anchor="middle" font-size="11.5" fill="#9a3b2e" font-weight="600">errors appear where stages meet</text>
-      <rect x="150" y="150" width="420" height="34" rx="9" fill="#eef1f5" stroke="#cdd8e8"/>
-      <text x="360" y="172" text-anchor="middle" font-size="12" font-weight="600" fill="#2a2d33">detect the region → isolate the cause → re-validate only the suspect segment</text>
-      <line x1="224" y1="124" x2="300" y2="148" stroke="#cdd8e8" stroke-width="1.3"/>
-      <line x1="489" y1="124" x2="420" y2="148" stroke="#cdd8e8" stroke-width="1.3"/>
+      <rect x="20" y="52" width="170" height="70" rx="10" fill="#fff" stroke="#dcdcd7"/>
+      <text x="105" y="78" text-anchor="middle" font-size="14" font-weight="600" fill="#15171c">Your device</text>
+      <text x="105" y="97" text-anchor="middle" font-size="10.5" fill="#737985">record · mark · encrypt</text>
+      <text x="105" y="112" text-anchor="middle" font-size="10.5" fill="#2f7d4f">plaintext + keys stay here</text>
+      <rect x="275" y="52" width="170" height="70" rx="10" fill="#f1f3f6" stroke="#dcdcd7" stroke-dasharray="5 4"/>
+      <text x="360" y="78" text-anchor="middle" font-size="14" font-weight="600" fill="#15171c">Cloud relay</text>
+      <text x="360" y="97" text-anchor="middle" font-size="10.5" fill="#737985">queues ciphertext only</text>
+      <text x="360" y="112" text-anchor="middle" font-size="10.5" fill="#9a3b2e">cannot read a word of it</text>
+      <rect x="530" y="52" width="170" height="70" rx="10" fill="#fff" stroke="#dcdcd7"/>
+      <text x="615" y="78" text-anchor="middle" font-size="14" font-weight="600" fill="#15171c">In-lab node</text>
+      <text x="615" y="97" text-anchor="middle" font-size="10.5" fill="#737985">decrypt · lab-docs LLM</text>
+      <text x="615" y="112" text-anchor="middle" font-size="10.5" fill="#2f7d4f">re-seals before replying</text>
+      <line x1="190" y1="78" x2="268" y2="78" stroke="#737985" stroke-width="1.5" marker-end="url(#ar)"/>
+      <line x1="268" y1="98" x2="190" y2="98" stroke="#737985" stroke-width="1.5" marker-end="url(#ar)"/>
+      <line x1="445" y1="78" x2="523" y2="78" stroke="#737985" stroke-width="1.5" marker-end="url(#ar)"/>
+      <line x1="523" y1="98" x2="445" y2="98" stroke="#737985" stroke-width="1.5" marker-end="url(#ar)"/>
+      <text x="360" y="32" text-anchor="middle" font-size="11.5" fill="#2a2d33" font-weight="600">seize the relay and you get routing metadata, nothing else</text>
+      <rect x="120" y="150" width="480" height="34" rx="9" fill="#eef1f5" stroke="#cdd8e8"/>
+      <text x="360" y="172" text-anchor="middle" font-size="12" font-weight="600" fill="#2a2d33">the security tab searches the relay's actual stored bytes for your words — zero hits</text>
     </g></svg>`;
   return `<div class="so-prog">${SIMOPS.prog}</div>
     <div class="so-diagram">${svg}</div>
@@ -771,7 +787,7 @@ function renderResearchOne(i){
     </div></div></div>`;
 }
 function renderInterests(){
-  return `<p class="iv-lead">Directions I'm actively scoping. Earlier-stage than the six projects, listed as-is.</p>
+  return `<p class="iv-lead">What I'm studying right now: the optimal-design stack, end to end. Notes in progress, listed as-is.</p>
     <div class="igrid">${INTERESTS.map((t,i)=>`<div class="ichip"><span>${String(i+1).padStart(2,'0')}</span>${t}</div>`).join("")}</div>`;
 }
 const RENDER={systems:renderSystems,about:renderAbout,simops:renderSimops,interests:renderInterests};
