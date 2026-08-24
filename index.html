@@ -328,6 +328,8 @@ body{word-break:keep-all;overflow-wrap:break-word}
   .rs-grp .k{font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;
     color:var(--accent);flex:0 0 148px;min-width:0;line-height:1.5}
   .rs-grp .v{flex:1 1 250px;font-size:.99rem;color:var(--body);line-height:1.62;min-width:0}
+  .rs-grp .v span{display:inline-block}
+  .rs-grp .v .sep{color:var(--line2);font-weight:400;margin-left:6px}
   .rs-it{margin-bottom:22px}
   .rs-it:last-child{margin-bottom:0}
   .rs-ith{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline}
@@ -337,7 +339,11 @@ body{word-break:keep-all;overflow-wrap:break-word}
   .rs-it p{font-size:1rem;color:var(--body);line-height:1.66;max-width:62ch}
   .rs-tools{font-family:var(--mono);font-size:11px;color:var(--mut);margin-top:8px}
   .rs-tools a,.rs-links a{color:var(--accent);text-decoration:none;border-bottom:1px solid #cdd8e8}
-  .rs-links{font-size:.95rem;color:var(--mut);line-height:1.95;margin-top:6px}
+  .rs-links{font-size:.95rem;color:var(--mut);margin-top:10px}
+  .rs-links .lh{line-height:1.6;margin-bottom:7px}
+  .rs-links a{display:block;padding:5px 0 5px 17px;position:relative;line-height:1.5;border-bottom:none}
+  .rs-links a::before{content:"\2192";position:absolute;left:0;top:5px;color:var(--mut)}
+  .rs-links a:hover{color:var(--ink)}
   .rs-foot{font-size:12.5px;color:var(--mut);line-height:1.62;border-top:1px solid var(--line);padding-top:14px}
   @media(max-width:560px){
     .rs-gpa{grid-template-columns:1fr;gap:8px}
@@ -346,6 +352,21 @@ body{word-break:keep-all;overflow-wrap:break-word}
     .rs-grp .k{flex:1 1 100%}
     .rs-tr .t{flex-basis:76px;font-size:11.5px}
     .abtab{padding:9px 13px}
+    .rs section{margin-bottom:26px}
+    /* the date belongs under the organisation, never wedged between it and the title */
+    .rs-it{display:flex;flex-direction:column}
+    .rs-ith{display:contents}
+    .rs-ith h5{order:1;font-size:1.1rem;line-height:1.35}
+    .rs-ito{order:2;margin:5px 0 1px}
+    .rs-ith em{order:3;margin-bottom:8px}
+    .rs-it p{order:4;font-size:.95rem;line-height:1.62}
+    .rs-tools{order:5}
+    .rs-grp .v{font-size:.93rem;line-height:1.58}
+    .rs-grp{padding:9px 0;gap:5px}
+    .rs-lines li{padding:2px 0;font-size:.97rem;line-height:1.45}
+    .rs-lines em{flex:1 1 100%}
+    .rs-hon{font-size:.97rem;line-height:1.45;gap:4px}
+    .rs-links a{font-size:.93rem}
   }
 
   /* simops */
@@ -647,6 +668,7 @@ const RESUME_EN={
     items:[
       {r:"Design-Optimization Engineering Intern",o:"NumeReal",d:"Aug 2026 – present · hybrid",
        p:"I automate commercial DOE, optimization, and RBDO suites through their Python APIs to run exhaustive, condition-matched experiment matrices, then re-verify every result against the governing equations and the true solver rather than the surrogate that produced it. Fairness audits come before any benchmarking, and reproducible scripts with raw data are the deliverable.",
+       mp:"I automate commercial DOE, optimization, and RBDO suites through their Python APIs, then re-verify every result against the governing equations and the true solver rather than the surrogate that produced it. Reproducible scripts and raw data are the deliverable.",
        t:"HyperStudy · PIAnO · Python"},
       {r:"Physics Tutor and Academy Instructor",o:"Private tutoring · test-prep academy",d:"2025",
        p:"Taught university-entrance physics and mathematics one-on-one and in small classes."},
@@ -659,9 +681,11 @@ const RESUME_EN={
     items:[
       {r:"Undergraduate Researcher (incoming)",o:"Materials Innovation Lab, Korea University",d:"proof-of-concept underway · lab start Fall 2026",
        p:"Advised by Prof. Byungseok Seo. What is running right now is an optimization proof-of-concept for nano-device synthesis rather than physical measurement. The direction I am heading in is data-efficient experiment design for a domain whose ground truth still comes from a measurement.",
+       mp:"Advised by Prof. Byungseok Seo. What is running right now is an optimization proof-of-concept for nano-device synthesis rather than physical measurement.",
        t:"<a href='https://matinnovlab.com/' target='_blank' rel='noopener'>matinnovlab.com</a>"},
       {r:"Team member · Living Paper",o:"Korean I-Corps (TeX-Corps) 2026 · Korea University Lab-Startup Innovation Corps",d:"2026 · certificate of completion",
-       p:"Trained in evidence-based customer discovery, including an on-site phase at UC Berkeley through the Korea Innovation Center (KIC). Fifty field interviews moved the project from simulation-pipeline debugging to meeting comprehension, and the MVP that came out of it keeps plaintext and keys on the device and the in-lab node while the cloud relays ciphertext only."},
+       p:"Trained in evidence-based customer discovery, including an on-site phase at UC Berkeley through the Korea Innovation Center (KIC). Fifty field interviews moved the project from simulation-pipeline debugging to meeting comprehension, and the MVP that came out of it keeps plaintext and keys on the device and the in-lab node while the cloud relays ciphertext only.",
+       mp:"Customer-discovery training with an on-site phase at UC Berkeley through KIC. Fifty interviews moved the project from pipeline debugging to meeting comprehension, and the MVP keeps plaintext on the device and the in-lab node."},
     ],
     projH:"Selected projects, each written up in full elsewhere on this site:",
     proj:[
@@ -880,6 +904,7 @@ window.KO_PATCH = {
       items:[
         {r:"설계최적화 엔지니어링 인턴",o:"NumeReal",d:"2026년 8월 – 현재 · 하이브리드",
          p:"상용 DOE · 최적화 · RBDO 소프트웨어를 Python API로 자동화하여 조건을 일치시킨 실험 매트릭스를 수행하며, 산출된 모든 결과를 surrogate가 아닌 지배방정식과 실제 solver로 재검증합니다. 벤치마킹에 앞서 공정성 감사를 수행하며, 재현 가능한 스크립트와 원시 데이터를 산출물로 제출합니다.",
+         mp:"상용 DOE · 최적화 · RBDO 소프트웨어를 Python API로 자동화하며, 산출된 결과를 surrogate가 아닌 지배방정식과 실제 solver로 재검증합니다. 재현 가능한 스크립트와 원시 데이터를 산출물로 제출합니다.",
          t:"HyperStudy · PIAnO · Python"},
         {r:"물리 과외 · 학원 강사",o:"개인 과외 · 입시 학원",d:"2025년",
          p:"대학 입시 물리와 수학을 개인 지도 및 소규모 강의로 담당했습니다."},
@@ -891,9 +916,11 @@ window.KO_PATCH = {
       h:"연구 · 프로그램",
       items:[
         {r:"학부연구생 (예정)",o:"Materials Innovation Lab, 고려대학교",d:"PoC 진행 중 · 2026년 가을 정식 시작",
-         p:"서병석 교수님 지도. 현재는 물리적 실측이 아니라 nano-device 합성에 대한 최적화 PoC를 진행하고 있습니다. 지향하는 방향은 실측으로만 정답을 확인할 수 있는 영역에서의 데이터 효율적 실험 설계입니다."},
+         p:"서병석 교수님 지도. 현재는 물리적 실측이 아니라 nano-device 합성에 대한 최적화 PoC를 진행하고 있습니다. 지향하는 방향은 실측으로만 정답을 확인할 수 있는 영역에서의 데이터 효율적 실험 설계입니다.",
+         mp:"서병석 교수님 지도. 현재는 실측이 아니라 nano-device 합성에 대한 최적화 PoC를 진행하고 있습니다."},
         {r:"Living Paper 팀원",o:"한국형 I-Corps (TeX-Corps) 2026 · 고려대학교 실험실창업혁신단",d:"2026년 · 수료",
-         p:"근거 기반 customer discovery 방법론을 교육받았으며, Korea Innovation Center(KIC)를 통한 UC Berkeley 현지 과정에 참여했습니다. 현장 인터뷰 50건을 근거로 시뮬레이션 파이프라인 진단에서 미팅 이해도 문제로 방향을 전환했으며, 그 결과물인 MVP는 평문과 복호키를 기기와 원내 노드에 두고 클라우드로는 암호문만 중계합니다."},
+         p:"근거 기반 customer discovery 방법론을 교육받았으며, Korea Innovation Center(KIC)를 통한 UC Berkeley 현지 과정에 참여했습니다. 현장 인터뷰 50건을 근거로 시뮬레이션 파이프라인 진단에서 미팅 이해도 문제로 방향을 전환했으며, 그 결과물인 MVP는 평문과 복호키를 기기와 원내 노드에 두고 클라우드로는 암호문만 중계합니다.",
+         mp:"Customer discovery 교육과 UC Berkeley 현지 과정(KIC)에 참여했습니다. 인터뷰 50건을 근거로 방향을 전환했으며, MVP는 평문을 기기와 원내 노드에 두고 암호문만 중계합니다."},
       ],
       projH:"이 사이트에 상세를 수록한 주요 프로젝트:",
       proj:[
@@ -1275,9 +1302,13 @@ function renderProfile(){
 /* résumé: same data objects, laid out the way a US application expects to read it */
 function renderResume(){
   const R=RESUME, sec=(h,body)=>`<section><h4 class="rs-h">${h}</h4>${body}</section>`;
-  const grp=g=>`<div class="rs-grp"><div class="k">${g[0]}</div><div class="v">${g[1]}</div></div>`;
+  /* each entry stays whole: a narrow screen may only break at the separators */
+  const grp=g=>{const e=g[1].split(" · ");
+    return `<div class="rs-grp"><div class="k">${g[0]}</div><div class="v">`
+      +e.map((x,i)=>`<span>${x}${i<e.length-1?'<b class="sep">·</b>':""}</span>`).join(" ")+`</div></div>`;};
   const item=i=>`<div class="rs-it"><div class="rs-ith"><h5>${i.r}</h5><em>${i.d}</em></div>`
-    +`<div class="rs-ito">${i.o}</div><p>${i.p}</p>`+(i.t?`<div class="rs-tools">${i.t}</div>`:"")+`</div>`;
+    +`<div class="rs-ito">${i.o}</div><p>${MOB()&&i.mp?i.mp:i.p}</p>`
+    +(i.t?`<div class="rs-tools">${i.t}</div>`:"")+`</div>`;
 
   const e=R.edu;
   const bars=e.trend.map(x=>x.gap
@@ -1289,7 +1320,8 @@ function renderResume(){
     +`<div class="rs-sub">${e.trendH}</div>${bars}<p class="rs-note">${e.note}</p>`;
 
   const res=R.res.items.map(item).join("")
-    +`<div class="rs-links">${R.res.projH}<br>${R.res.proj.map(p=>`<a href="${p[1]}">${p[0]}</a>`).join(" · ")}</div>`;
+    +`<div class="rs-links"><div class="lh">${R.res.projH}</div>`
+    +R.res.proj.map(p=>`<a href="${p[1]}">${p[0]}</a>`).join("")+`</div>`;
 
   return `<div class="rs">`
     + sec(e.h,edu)
