@@ -81,7 +81,8 @@ body{word-break:keep-all;overflow-wrap:break-word}
   html[lang="ko"] .so-prog,html[lang="ko"] .stat .l,html[lang="ko"] figcaption,
   html[lang="ko"] .abtab,html[lang="ko"] .rs-h,html[lang="ko"] .rs-g .k,html[lang="ko"] .rs-sub,
   html[lang="ko"] .rs-grp .k,html[lang="ko"] .rs-lines em,html[lang="ko"] .rs-hon em,
-  html[lang="ko"] .rs-ith em,html[lang="ko"] .rs-tools,html[lang="ko"] .rs-tr .n{
+  html[lang="ko"] .rs-ith em,html[lang="ko"] .rs-tools,html[lang="ko"] .rs-tr .n,
+  html[lang="ko"] .rs-head .c a,html[lang="ko"] .rs-hon em{
     font-family:var(--sans);letter-spacing:0}
   html[lang="ko"] .eyebrow{text-transform:none}
   html[lang="ko"] .kick,html[lang="ko"] .blk .l,html[lang="ko"] .facts .f .k,
@@ -298,6 +299,13 @@ body{word-break:keep-all;overflow-wrap:break-word}
   .abtab:hover{color:var(--ink);background:var(--soft)}
   .abtab.on{color:var(--ink);background:var(--panel);border-color:var(--line);border-bottom-color:var(--panel)}
   .rs section{margin-bottom:30px}
+  .rs-head{border-bottom:1px solid var(--line);padding-bottom:17px;margin-bottom:24px}
+  .rs-head .n{font-family:var(--serif);font-size:1.62rem;color:var(--ink);line-height:1.1}
+  .rs-head .l{font-size:.95rem;color:var(--mut);margin-top:6px}
+  .rs-head .c{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 18px}
+  .rs-head .c a{font-family:var(--mono);font-size:11.5px;color:var(--accent);
+    text-decoration:none;border-bottom:1px solid #cdd8e8}
+  .rs-head .c a:hover{color:var(--ink)}
   .rs-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);
     padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:15px}
   .rs-org{font-family:var(--serif);font-size:1.2rem;color:var(--ink);margin-bottom:8px}
@@ -313,6 +321,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
   .rs-g .v small{font-family:var(--sans);font-size:.5em;color:var(--mut);margin-left:6px}
   .rs-sub{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
     color:var(--mut);margin-bottom:10px}
+  .rs-sub.cw{margin-top:26px}
   .rs-tr{display:flex;align-items:center;gap:12px;margin-bottom:7px}
   .rs-tr .t{font-size:12.5px;color:var(--body);flex:0 0 88px;min-width:0}
   .rs-tr .b{flex:1 1 auto;height:9px;border-radius:999px;background:var(--soft);overflow:hidden;min-width:0}
@@ -336,7 +345,11 @@ body{word-break:keep-all;overflow-wrap:break-word}
   .rs-ith h5{font-family:var(--serif);font-size:1.16rem;font-weight:500;color:var(--ink)}
   .rs-ith em{font-family:var(--mono);font-size:11.5px;color:var(--mut);font-style:normal}
   .rs-ito{font-size:.97rem;color:var(--accent);margin:2px 0 8px}
-  .rs-it p{font-size:1rem;color:var(--body);line-height:1.66;max-width:62ch}
+  .rs-b{list-style:none;margin:7px 0 0}
+  .rs-b li{position:relative;padding-left:16px;font-size:1rem;color:var(--ink);line-height:1.6;max-width:62ch}
+  .rs-b li::before{content:"";position:absolute;left:2px;top:.63em;width:5px;height:5px;
+    border-radius:50%;background:var(--accent2)}
+  .rs-it p{font-size:1rem;color:var(--body);line-height:1.66;max-width:62ch;margin-top:8px}
   .rs-tools{font-family:var(--mono);font-size:11px;color:var(--mut);margin-top:8px}
   .rs-tools a,.rs-links a{color:var(--accent);text-decoration:none;border-bottom:1px solid #cdd8e8}
   .rs-links{font-size:.95rem;color:var(--mut);margin-top:10px}
@@ -358,9 +371,12 @@ body{word-break:keep-all;overflow-wrap:break-word}
     .rs-ith{display:contents}
     .rs-ith h5{order:1;font-size:1.1rem;line-height:1.35}
     .rs-ito{order:2;margin:5px 0 1px}
-    .rs-ith em{order:3;margin-bottom:8px}
-    .rs-it p{order:4;font-size:.95rem;line-height:1.62}
-    .rs-tools{order:5}
+    .rs-ith em{order:3;margin-bottom:6px}
+    .rs-b{order:4}
+    .rs-b li{font-size:.95rem;line-height:1.58}
+    .rs-it p{order:5;font-size:.95rem;line-height:1.62}
+    .rs-tools{order:6}
+    .rs-head .n{font-size:1.4rem}
     .rs-grp .v{font-size:.93rem;line-height:1.58}
     .rs-grp{padding:9px 0;gap:5px}
     .rs-lines li{padding:2px 0;font-size:.97rem;line-height:1.45}
@@ -634,6 +650,11 @@ const ABOUT_EN = [
 ];
 const RESUME_EN={
   tabProfile:"Profile", tabResume:"Résumé",
+  head:{name:"Euichan Lee", loc:"Seoul, Republic of Korea", links:[
+    ["leechan0608@korea.ac.kr","mailto:leechan0608@korea.ac.kr"],
+    ["github.com/euichanlee0608-svg","https://github.com/euichanlee0608-svg"],
+    ["linkedin.com/in/euichanlee0608-svg","https://www.linkedin.com/in/euichanlee0608-svg"],
+  ]},
   edu:{
     h:"Education",
     org:"Korea University · Seoul, Republic of Korea",
@@ -652,40 +673,25 @@ const RESUME_EN={
       {t:"2026 Spring",g:4.03},
     ],
     note:"Korea University 4.5 scale, where A+ is 4.5. Four semesters completed, 75 credits earned; third year begins Fall 2026. Grades are transcribed from my own transcript, and the official one is available on request.",
-  },
-  course:{
-    h:"Relevant Coursework",
+    courseH:"Relevant coursework",
     groups:[
       ["Mechanics","Thermodynamics I &amp; II · Solid Mechanics I&deg; &amp; II&deg; · Fluid Mechanics I&deg; · Dynamics · Kinematics of Machinery"],
       ["Computation &amp; mathematics","Numerical Analysis&deg; · Linear Algebra · Signals &amp; Systems&deg; · Engineering Mathematics&deg; · Computer Programming &amp; Practice&deg; · Calculus I"],
       ["Design &amp; fabrication","Creative Mechanical Design (capstone) · Manufacturing Processes &amp; Practice · Computer-Aided Mechanical Drawing · Mechanical Engineering Laboratory I"],
       ["Science","General Physics I · General Chemistry&deg; &amp; Laboratory"],
     ],
-    note:"&deg; taught in English — 24 credits of subject coursework.",
-  },
-  exp:{
-    h:"Experience",
-    items:[
-      {r:"Design-Optimization Engineering Intern",o:"NumeReal",d:"Aug 2026 – present · hybrid",
-       p:"I automate commercial DOE, optimization, and RBDO suites through their Python APIs to run exhaustive, condition-matched experiment matrices, then re-verify every result against the governing equations and the true solver rather than the surrogate that produced it. Fairness audits come before any benchmarking, and reproducible scripts with raw data are the deliverable.",
-       mp:"I automate commercial DOE, optimization, and RBDO suites through their Python APIs, then re-verify every result against the governing equations and the true solver rather than the surrogate that produced it. Reproducible scripts and raw data are the deliverable.",
-       t:"HyperStudy · PIAnO · Python"},
-      {r:"Physics Tutor and Academy Instructor",o:"Private tutoring · test-prep academy",d:"2025",
-       p:"Taught university-entrance physics and mathematics one-on-one and in small classes."},
-      {r:"Mandatory Military Service",o:"Republic of Korea Army",d:"Nov 2022 – May 2024",
-       p:"Statutory national service, on academic leave from Fall 2022 through Fall 2024."},
-    ],
+    courseNote:"&deg; taught in English — 24 credits of subject coursework.",
   },
   res:{
     h:"Research &amp; Programs",
     items:[
       {r:"Undergraduate Researcher (incoming)",o:"Materials Innovation Lab, Korea University",d:"proof-of-concept underway · lab start Fall 2026",
-       p:"Advised by Prof. Byungseok Seo. What is running right now is an optimization proof-of-concept for nano-device synthesis rather than physical measurement. The direction I am heading in is data-efficient experiment design for a domain whose ground truth still comes from a measurement.",
-       mp:"Advised by Prof. Byungseok Seo. What is running right now is an optimization proof-of-concept for nano-device synthesis rather than physical measurement.",
+       b:"Running an optimization proof-of-concept for nano-device synthesis rather than physical measurement.",
+       p:"Advised by Prof. Byungseok Seo. The direction I am heading in is data-efficient experiment design for a domain whose ground truth still comes from a measurement.",
        t:"<a href='https://matinnovlab.com/' target='_blank' rel='noopener'>matinnovlab.com</a>"},
       {r:"Team member · Living Paper",o:"Korean I-Corps (TeX-Corps) 2026 · Korea University Lab-Startup Innovation Corps",d:"2026 · certificate of completion",
-       p:"Trained in evidence-based customer discovery, including an on-site phase at UC Berkeley through the Korea Innovation Center (KIC). Fifty field interviews moved the project from simulation-pipeline debugging to meeting comprehension, and the MVP that came out of it keeps plaintext and keys on the device and the in-lab node while the cloud relays ciphertext only.",
-       mp:"Customer-discovery training with an on-site phase at UC Berkeley through KIC. Fifty interviews moved the project from pipeline debugging to meeting comprehension, and the MVP keeps plaintext on the device and the in-lab node."},
+       b:"Ran fifty field interviews that moved the project from simulation-pipeline debugging to meeting comprehension.",
+       p:"I trained in evidence-based customer discovery, including an on-site phase at UC Berkeley through the Korea Innovation Center (KIC). The MVP keeps plaintext and keys on the device; the cloud relays ciphertext only."},
     ],
     projH:"Selected projects, each written up in full elsewhere on this site:",
     proj:[
@@ -693,6 +699,23 @@ const RESUME_EN={
       ["VPP Trade-Guard · risk-aware power trading","#pieces/projects/p1"],
       ["Sequential optimization, replayed on published experiments","#pieces/projects/p2"],
       ["Autonomous pole-climbing and harvesting robot","#pieces/projects/p3"],
+    ],
+  },
+  pres:{
+    h:"Presentations",
+    items:[["Quantifying how much in-context learning on a personalized reasoning dataset improves an LLM's engineering Q&amp;A, measured against the base model","campus poster · in preparation"]],
+  },
+  exp:{
+    h:"Experience",
+    items:[
+      {r:"Design-Optimization Engineering Intern",o:"NumeReal",d:"Aug 2026 – present · hybrid",
+       b:"Automate commercial DOE, optimization, and RBDO suites through their Python APIs to run exhaustive, condition-matched experiment matrices.",
+       p:"I re-verify every result against the governing equations and the true solver rather than the surrogate that produced it. Fairness audits come before any benchmarking, and reproducible scripts with raw data are the deliverable.",
+       t:"HyperStudy · PIAnO · Python"},
+      {r:"Physics Tutor and Academy Instructor",o:"Private tutoring · test-prep academy",d:"2025",
+       b:"Taught university-entrance physics and mathematics one-on-one and in small classes."},
+      {r:"Mandatory Military Service",o:"Republic of Korea Army",d:"enlisted Nov 2022 · discharged May 2024",
+       b:"Completed statutory national service, on academic leave from Fall 2022 through Fall 2024."},
     ],
   },
   hon:{
@@ -706,11 +729,9 @@ const RESUME_EN={
   skill:{
     h:"Skills",
     groups:[
-      ["Simulation &amp; optimization","Finite element analysis · Monte Carlo simulation · design of experiments · Gaussian-process surrogates · Bayesian optimization · reliability-based design optimization · HyperStudy · PIAnO"],
-      ["Programming","Python (NumPy, Numba) · JavaScript · shell · Git"],
-      ["Machine learning","Active learning · reinforcement learning (PPO) · genetic algorithms · LLM evaluation and tooling"],
-      ["Hardware","Arduino · motor control · power electronics · CAD"],
-      ["Languages","Korean (native) · English (24 credits of subject coursework taught in English, plus the technical writing on this site)"],
+      ["Tools","HyperStudy · PIAnO · Python · Git"],
+      ["Methods","Design of experiments · Bayesian optimization · finite element analysis"],
+      ["Languages","Korean (native) · English (24 credits of subject coursework taught in English)"],
     ],
   },
   foot:"Grades and credits are self-reported from my transcript. Everything else here links to work you can open and check.",
@@ -871,6 +892,7 @@ window.KO_PATCH = {
   ],
   RESUME:{
     tabProfile:"프로필", tabResume:"이력서",
+    head:{name:"이의찬", loc:"서울, 대한민국"},
     edu:{
       h:"학력",
       org:"고려대학교 · 서울",
@@ -888,39 +910,24 @@ window.KO_PATCH = {
         {t:"2026년 1학기"},
       ],
       note:"고려대학교 4.5 만점 기준이며(A+ = 4.5), 이수를 마친 4개 학기에서 75학점을 취득했습니다. 2026년 가을학기에 3학년으로 진입합니다. 수치는 성적증명서에서 직접 옮겨 적은 것이며, 공식 증명서는 요청 시 제출하겠습니다.",
-    },
-    course:{
-      h:"주요 이수 과목",
+      courseH:"주요 이수 과목",
       groups:[
         ["역학","열역학 I · II · 고체역학 I&deg; · II&deg; · 유체역학 I&deg; · 동역학 · 기구학"],
         ["전산 · 수학","수치해석&deg; · 선형대수 · 신호와 시스템&deg; · 공업수학&deg; · 컴퓨터언어 및 실습&deg; · 미적분학 I"],
         ["설계 · 제작","창의적 기계설계(캡스톤) · 기계제작법 및 실습 · 전산기이용 기계제도 · 기계공학실험 I"],
         ["기초과학","일반물리학 I · 일반화학&deg; 및 실험"],
       ],
-      note:"&deg; 표시는 영어 강의이며, 해당 과목은 24학점입니다.",
-    },
-    exp:{
-      h:"경력",
-      items:[
-        {r:"설계최적화 엔지니어링 인턴",o:"NumeReal",d:"2026년 8월 – 현재 · 하이브리드",
-         p:"상용 DOE · 최적화 · RBDO 소프트웨어를 Python API로 자동화하여 조건을 일치시킨 실험 매트릭스를 수행하며, 산출된 모든 결과를 surrogate가 아닌 지배방정식과 실제 solver로 재검증합니다. 벤치마킹에 앞서 공정성 감사를 수행하며, 재현 가능한 스크립트와 원시 데이터를 산출물로 제출합니다.",
-         mp:"상용 DOE · 최적화 · RBDO 소프트웨어를 Python API로 자동화하며, 산출된 결과를 surrogate가 아닌 지배방정식과 실제 solver로 재검증합니다. 재현 가능한 스크립트와 원시 데이터를 산출물로 제출합니다.",
-         t:"HyperStudy · PIAnO · Python"},
-        {r:"물리 과외 · 학원 강사",o:"개인 과외 · 입시 학원",d:"2025년",
-         p:"대학 입시 물리와 수학을 개인 지도 및 소규모 강의로 담당했습니다."},
-        {r:"병역 이행",o:"대한민국 육군",d:"2022년 11월 – 2024년 5월",
-         p:"병역 의무를 이행했으며, 2022년 2학기부터 2024년 2학기까지 휴학했습니다."},
-      ],
+      courseNote:"&deg; 표시는 영어 강의이며, 해당 과목은 24학점입니다.",
     },
     res:{
       h:"연구 · 프로그램",
       items:[
         {r:"학부연구생 (예정)",o:"Materials Innovation Lab, 고려대학교",d:"PoC 진행 중 · 2026년 가을 정식 시작",
-         p:"서병석 교수님 지도. 현재는 물리적 실측이 아니라 nano-device 합성에 대한 최적화 PoC를 진행하고 있습니다. 지향하는 방향은 실측으로만 정답을 확인할 수 있는 영역에서의 데이터 효율적 실험 설계입니다.",
-         mp:"서병석 교수님 지도. 현재는 실측이 아니라 nano-device 합성에 대한 최적화 PoC를 진행하고 있습니다."},
+         b:"실측이 아니라 nano-device 합성에 대한 최적화 PoC를 진행하고 있습니다.",
+         p:"서병석 교수님 지도. 지향하는 방향은 실측으로만 정답을 확인할 수 있는 영역에서의 데이터 효율적 실험 설계입니다."},
         {r:"Living Paper 팀원",o:"한국형 I-Corps (TeX-Corps) 2026 · 고려대학교 실험실창업혁신단",d:"2026년 · 수료",
-         p:"근거 기반 customer discovery 방법론을 교육받았으며, Korea Innovation Center(KIC)를 통한 UC Berkeley 현지 과정에 참여했습니다. 현장 인터뷰 50건을 근거로 시뮬레이션 파이프라인 진단에서 미팅 이해도 문제로 방향을 전환했으며, 그 결과물인 MVP는 평문과 복호키를 기기와 원내 노드에 두고 클라우드로는 암호문만 중계합니다.",
-         mp:"Customer discovery 교육과 UC Berkeley 현지 과정(KIC)에 참여했습니다. 인터뷰 50건을 근거로 방향을 전환했으며, MVP는 평문을 기기와 원내 노드에 두고 암호문만 중계합니다."},
+         b:"현장 인터뷰 50건을 수행하여 시뮬레이션 파이프라인 진단에서 미팅 이해도 문제로 방향을 전환했습니다.",
+         p:"근거 기반 customer discovery 방법론을 교육받았으며, Korea Innovation Center(KIC)를 통한 UC Berkeley 현지 과정에 참여했습니다. 그 결과물인 MVP는 평문과 복호키를 기기와 원내 노드에 두고 클라우드로는 암호문만 중계합니다."},
       ],
       projH:"이 사이트에 상세를 수록한 주요 프로젝트:",
       proj:[
@@ -928,6 +935,23 @@ window.KO_PATCH = {
         ["VPP Trade-Guard · 고장 리스크를 반영한 전력거래"],
         ["선행 연구 재현을 통한 순차 최적화 실효성 검증"],
         ["자율 기둥 등반 · 수확 로봇"],
+      ],
+    },
+    pres:{
+      h:"발표",
+      items:[["개인화 사고 데이터셋 기반 In-Context Learning이 LLM의 공학 질의응답 성능을 베이스 모델 대비 얼마나 향상시키는지 정량 평가","교내 포스터 · 준비 중"]],
+    },
+    exp:{
+      h:"경력",
+      items:[
+        {r:"설계최적화 엔지니어링 인턴",o:"NumeReal",d:"2026년 8월 – 현재 · 하이브리드",
+         b:"상용 DOE · 최적화 · RBDO 소프트웨어를 Python API로 자동화하여 조건을 일치시킨 실험 매트릭스를 수행합니다.",
+         p:"산출된 모든 결과를 surrogate가 아닌 지배방정식과 실제 solver로 재검증합니다. 벤치마킹에 앞서 공정성 감사를 수행하며, 재현 가능한 스크립트와 원시 데이터를 산출물로 제출합니다.",
+         t:"HyperStudy · PIAnO · Python"},
+        {r:"물리 과외 · 학원 강사",o:"개인 과외 · 입시 학원",d:"2025년",
+         b:"대학 입시 물리와 수학을 개인 지도 및 소규모 강의로 담당했습니다."},
+        {r:"병역 이행",o:"대한민국 육군",d:"2022년 11월 입대 · 2024년 5월 전역",
+         b:"병역 의무를 이행했으며, 2022년 2학기부터 2024년 2학기까지 휴학했습니다."},
       ],
     },
     hon:{
@@ -941,15 +965,14 @@ window.KO_PATCH = {
     skill:{
       h:"기술 역량",
       groups:[
-        ["해석 · 최적화","유한요소해석 · Monte Carlo 시뮬레이션 · 실험계획법(DOE) · Gaussian process 대리모델 · Bayesian optimization · 신뢰성 기반 최적설계(RBDO) · HyperStudy · PIAnO"],
-        ["프로그래밍","Python (NumPy, Numba) · JavaScript · shell · Git"],
-        ["머신러닝","Active learning · 강화학습(PPO) · 유전 알고리즘 · LLM 평가 및 도구 구축"],
-        ["하드웨어","Arduino · 모터 제어 · 전력전자 · CAD"],
-        ["언어","한국어(모국어) · 영어(영어 강의 24학점 및 본 사이트의 기술 문서 작성)"],
+        ["도구","HyperStudy · PIAnO · Python · Git"],
+        ["방법론","실험계획법(DOE) · Bayesian optimization · 유한요소해석"],
+        ["언어","한국어(모국어) · 영어(영어 강의 24학점)"],
       ],
     },
     foot:"성적과 학점은 성적증명서에서 직접 옮겨 적은 수치이며, 그 외 항목은 이 사이트에서 직접 열어 확인하실 수 있습니다.",
   },
+
   SIMOPS:{
     prog:"Living Paper · 고려대학교 실험실창업혁신단 (한국형 I-Corps, 2026 · UC Berkeley KIC)",
     stats:[["50","피봇의 근거가 된 현장 인터뷰"],["95% / 88%","원내 처리 요구 비율 / 도메인 정확도 요구 비율"],["30%","실시간 AI 요약 선호 비율 — 당연시했던 방향, 폐기"]],
@@ -1307,29 +1330,37 @@ function renderResume(){
     return `<div class="rs-grp"><div class="k">${g[0]}</div><div class="v">`
       +e.map((x,i)=>`<span>${x}${i<e.length-1?'<b class="sep">·</b>':""}</span>`).join(" ")+`</div></div>`;};
   const item=i=>`<div class="rs-it"><div class="rs-ith"><h5>${i.r}</h5><em>${i.d}</em></div>`
-    +`<div class="rs-ito">${i.o}</div><p>${MOB()&&i.mp?i.mp:i.p}</p>`
-    +(i.t?`<div class="rs-tools">${i.t}</div>`:"")+`</div>`;
+    +`<div class="rs-ito">${i.o}</div><ul class="rs-b"><li>${i.b}</li></ul>`
+    +(i.p?`<p>${i.p}</p>`:"")+(i.t?`<div class="rs-tools">${i.t}</div>`:"")+`</div>`;
+  const rows=a=>a.map(x=>`<div class="rs-hon"><span>${x[0]}</span><em>${x[1]}</em></div>`).join("");
+
+  const h=R.head;
+  const head=`<div class="rs-head"><div class="n">${h.name}</div><div class="l">${h.loc}</div>`
+    +`<div class="c">${RESUME_EN.head.links.map(l=>`<a href="${l[1]}"${l[1].indexOf("mailto")===0?"":' target="_blank" rel="noopener"'}>${l[0]}</a>`).join("")}</div></div>`;
 
   const e=R.edu;
   const bars=e.trend.map(x=>x.gap
     ? `<div class="rs-gap">${x.gap}</div>`
     : `<div class="rs-tr"><span class="t">${x.t}</span><span class="b"><i style="width:${(x.g/4.5*100).toFixed(1)}%"></i></span><span class="n">${x.g.toFixed(2)}</span></div>`).join("");
+  /* coursework belongs inside education, the way a résumé lists it */
   const edu=`<div class="rs-org">${e.org}</div>`
     +`<ul class="rs-lines">${e.lines.map(l=>`<li><span>${l[0]}</span><em>${l[1]}</em></li>`).join("")}</ul>`
     +`<div class="rs-gpa">${e.gpa.map(g=>`<div class="rs-g"><div class="k">${g[0]}</div><div class="v">${g[1]}<small>${e.scale}</small></div></div>`).join("")}</div>`
-    +`<div class="rs-sub">${e.trendH}</div>${bars}<p class="rs-note">${e.note}</p>`;
+    +`<div class="rs-sub">${e.trendH}</div>${bars}<p class="rs-note">${e.note}</p>`
+    +`<div class="rs-sub cw">${e.courseH}</div>${e.groups.map(grp).join("")}`
+    +`<p class="rs-note">${e.courseNote}</p>`;
 
   const res=R.res.items.map(item).join("")
     +`<div class="rs-links"><div class="lh">${R.res.projH}</div>`
     +R.res.proj.map(p=>`<a href="${p[1]}">${p[0]}</a>`).join("")+`</div>`;
 
-  return `<div class="rs">`
+  return `<div class="rs">`+head
     + sec(e.h,edu)
-    + sec(R.course.h, R.course.groups.map(grp).join("")+`<p class="rs-note">${R.course.note}</p>`)
-    + sec(R.exp.h, R.exp.items.map(item).join(""))
-    + sec(R.res.h, res)
-    + sec(R.hon.h, R.hon.items.map(i=>`<div class="rs-hon"><span>${i[0]}</span><em>${i[1]}</em></div>`).join(""))
-    + sec(R.skill.h, R.skill.groups.map(grp).join(""))
+    + sec(R.res.h,res)
+    + sec(R.pres.h,rows(R.pres.items))
+    + sec(R.exp.h,R.exp.items.map(item).join(""))
+    + sec(R.hon.h,rows(R.hon.items))
+    + sec(R.skill.h,R.skill.groups.map(grp).join(""))
     + `<p class="rs-foot">${R.foot}</p></div>`;
 }
 function renderSimops(){
