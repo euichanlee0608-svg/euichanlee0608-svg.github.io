@@ -299,7 +299,15 @@ body{word-break:keep-all;overflow-wrap:break-word}
   .abtab:hover{color:var(--ink);background:var(--soft)}
   .abtab.on{color:var(--ink);background:var(--panel);border-color:var(--line);border-bottom-color:var(--panel)}
   .rs section{margin-bottom:30px}
-  .rs-head{border-bottom:1px solid var(--line);padding-bottom:17px;margin-bottom:24px}
+  .rs-head{border-bottom:1px solid var(--line);padding-bottom:17px;margin-bottom:24px;
+    display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+  .rs-hl{min-width:0}
+  .ponly{display:none}
+  .rs-pdf{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--accent);background:var(--panel);border:1px solid var(--line2);border-radius:8px;
+    padding:8px 13px;cursor:pointer;white-space:nowrap;flex:0 0 auto}
+  .rs-pdf:hover{color:var(--ink);border-color:var(--accent2);background:var(--soft)}
+  .rs-pdf::after{content:" \2193"}
   .rs-head .n{font-family:var(--serif);font-size:1.62rem;color:var(--ink);line-height:1.1}
   .rs-head .l{font-size:.95rem;color:var(--mut);margin-top:6px}
   .rs-head .c{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 18px}
@@ -377,12 +385,94 @@ body{word-break:keep-all;overflow-wrap:break-word}
     .rs-it p{order:5;font-size:.95rem;line-height:1.62}
     .rs-tools{order:6}
     .rs-head .n{font-size:1.4rem}
+    .rs-head{padding-bottom:15px;margin-bottom:20px}
+    .rs-pdf{padding:11px 16px}   /* a tappable target on a phone */
     .rs-grp .v{font-size:.93rem;line-height:1.58}
     .rs-grp{padding:9px 0;gap:5px}
     .rs-lines li{padding:2px 0;font-size:.97rem;line-height:1.45}
     .rs-lines em{flex:1 1 100%}
     .rs-hon{font-size:.97rem;line-height:1.45;gap:4px}
     .rs-links a{font-size:.93rem}
+  }
+
+  /* ===== print: the résumé leaves the website behind and becomes a document ===== */
+  @media print{
+    @page{size:A4;margin:14mm 15mm}
+    html,body{background:#fff!important}
+    body{font-family:var(--sans);font-size:9.6pt;line-height:1.42;color:#111}
+    /* only the résumé prints: everything else on the page is website */
+    .wrap,#scrim{display:none!important}
+    .v-head,.abtabs,.rs-pdf{display:none!important}
+    .viewer{position:static!important;transform:none!important;opacity:1!important;
+      pointer-events:auto!important;width:auto!important;max-width:none!important;
+      max-height:none!important;background:#fff!important;border-radius:0!important;
+      box-shadow:none!important;overflow:visible!important;display:block!important}
+    .v-body{overflow:visible!important;padding:0!important;max-height:none!important}
+    a{color:#111;text-decoration:none}
+
+    .rs-head{padding-bottom:9pt;margin-bottom:11pt;border-bottom:.6pt solid #999}
+    .rs-head .n{font-size:19pt;line-height:1.05}
+    .rs-head .l{font-size:9pt;color:#444;margin-top:2pt}
+    .rs-head .c{margin-top:4pt;gap:2pt 13pt}
+    .rs-head .c a{font-size:8.4pt;border-bottom:0}
+    .ponly{display:inline!important;font-family:var(--mono);font-size:8.4pt;color:#111}
+
+    .rs section{margin-bottom:9pt}
+    .rs-h{font-size:8.6pt;letter-spacing:.1em;color:#111;padding-bottom:2.5pt;margin-bottom:7pt;
+      border-bottom:.6pt solid #bbb;break-after:avoid}
+    .rs-org{font-size:11pt;margin-bottom:3pt}
+    .rs-lines{margin-bottom:6pt}
+    .rs-lines li{font-size:9.6pt;padding:1pt 0}
+    .rs-lines em{font-size:8.4pt;color:#444}
+
+    /* the GPA cards collapse into one line of text */
+    .rs-gpa{display:block!important;margin-bottom:5pt}
+    .rs-g{display:inline!important;border:0!important;background:none!important;
+      padding:0!important;margin-right:15pt}
+    .rs-g .k{display:inline;font-size:8.4pt;color:#444;margin:0}
+    .rs-g .k::after{content:" "}
+    .rs-g .v{display:inline;font-size:10.5pt;color:#111}
+    .rs-g .v small{font-size:8.4pt;color:#444;margin-left:2pt}
+
+    /* the bar chart becomes a compact figure list */
+    .rs-sub{font-size:8.2pt;color:#444;margin:5pt 0 3pt}
+    .rs-sub.cw{margin-top:9pt}
+    .rs-tr{margin-bottom:1pt;gap:0}
+    .rs-tr .b{display:none!important}
+    .rs-tr .t{flex:0 0 74pt;font-size:9pt;color:#111}
+    .rs-tr .n{flex:0 0 auto;text-align:left;font-size:9pt}
+    .rs-gap{font-size:8.6pt;color:#444;margin:3pt 0;padding:0 0 0 9pt;border-left:.6pt dashed #bbb}
+    .rs-note{font-size:8.2pt;color:#444;margin-top:5pt;line-height:1.4}
+
+    .rs-grp{padding:2.5pt 0;border-bottom:0;break-inside:avoid;gap:0;flex-wrap:nowrap}
+    .rs-grp .k{flex:0 0 92pt;font-size:8.2pt;color:#111;line-height:1.4}
+    .rs-grp .v{flex:1 1 auto;min-width:0;font-size:9.2pt;color:#111;line-height:1.4}
+    .rs-grp .v .sep{color:#999;margin-left:4pt}
+
+    .rs-it{margin-bottom:8pt;break-inside:avoid}
+    .rs-ith h5{font-size:10.6pt}
+    .rs-ith em{font-size:8.4pt;color:#444}
+    .rs-ito{font-size:9.4pt;color:#333;margin:1pt 0 2pt}
+    /* a standard résumé is bullets, so the prose becomes one too */
+    .rs-b{margin:2pt 0 0}
+    .rs-b li,.rs-it p{position:relative;padding-left:11pt;margin:1.5pt 0 0;font-size:9.4pt;
+      line-height:1.4;color:#111;max-width:none}
+    .rs-b li::before,.rs-it p::before{content:"\2022";position:absolute;left:1.5pt;top:0;
+      width:auto;height:auto;background:none;color:#111;font-size:9.4pt;line-height:1.4}
+    .rs-tools{font-size:8.4pt;color:#444;margin-top:2pt;padding-left:11pt}
+    .rs-tools a{border-bottom:0}
+
+    /* the project rows read as one line on paper, not as links */
+    .rs-links{margin-top:5pt;font-size:9.2pt}
+    .rs-links .lh{font-size:8.6pt;color:#444;margin-bottom:1pt}
+    .rs-links a{display:inline!important;padding:0!important;border-bottom:0}
+    .rs-links a::before{content:""!important;position:static!important}
+    .rs-links a::after{content:" · ";color:#999}
+    .rs-links a:last-child::after{content:""}
+
+    .rs-hon{padding:2.5pt 0;border-bottom:0;font-size:9.4pt;break-inside:avoid;gap:10pt}
+    .rs-hon em{font-size:8.4pt;color:#444}
+    .rs-foot{font-size:8pt;color:#555;border-top:.6pt solid #bbb;padding-top:5pt;margin-top:7pt}
   }
 
   /* simops */
@@ -650,7 +740,8 @@ const ABOUT_EN = [
 ];
 const RESUME_EN={
   tabProfile:"Profile", tabResume:"Résumé",
-  head:{name:"Euichan Lee", loc:"Seoul, Republic of Korea", links:[
+  pdf:"Download PDF",
+  head:{name:"Euichan Lee", loc:"Seoul, Republic of Korea", site:"euichanlee0608-svg.github.io", links:[
     ["leechan0608@korea.ac.kr","mailto:leechan0608@korea.ac.kr"],
     ["github.com/euichanlee0608-svg","https://github.com/euichanlee0608-svg"],
     ["linkedin.com/in/euichanlee0608-svg","https://www.linkedin.com/in/euichanlee0608-svg"],
@@ -892,6 +983,7 @@ window.KO_PATCH = {
   ],
   RESUME:{
     tabProfile:"프로필", tabResume:"이력서",
+    pdf:"PDF 저장",
     head:{name:"이의찬", loc:"서울, 대한민국"},
     edu:{
       h:"학력",
@@ -1335,8 +1427,10 @@ function renderResume(){
   const rows=a=>a.map(x=>`<div class="rs-hon"><span>${x[0]}</span><em>${x[1]}</em></div>`).join("");
 
   const h=R.head;
-  const head=`<div class="rs-head"><div class="n">${h.name}</div><div class="l">${h.loc}</div>`
-    +`<div class="c">${RESUME_EN.head.links.map(l=>`<a href="${l[1]}"${l[1].indexOf("mailto")===0?"":' target="_blank" rel="noopener"'}>${l[0]}</a>`).join("")}</div></div>`;
+  const head=`<div class="rs-head"><div class="rs-hl"><div class="n">${h.name}</div><div class="l">${h.loc}</div>`
+    +`<div class="c">${RESUME_EN.head.links.map(l=>`<a href="${l[1]}"${l[1].indexOf("mailto")===0?"":' target="_blank" rel="noopener"'}>${l[0]}</a>`).join("")}`
+    +`<span class="ponly">${RESUME_EN.head.site}</span></div></div>`
+    +`<button class="rs-pdf" type="button" onclick="window.print()">${R.pdf}</button></div>`;
 
   const e=R.edu;
   const bars=e.trend.map(x=>x.gap
