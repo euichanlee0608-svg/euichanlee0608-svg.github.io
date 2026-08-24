@@ -78,11 +78,16 @@ body{word-break:keep-all;overflow-wrap:break-word}
   html[lang="ko"] .colb,html[lang="ko"] .row .ty,html[lang="ko"] .chip,
   html[lang="ko"] .ex-search input,html[lang="ko"] .kick,html[lang="ko"] .blk .l,
   html[lang="ko"] .node .role,html[lang="ko"] .facts .f .k,html[lang="ko"] .meth b,
-  html[lang="ko"] .so-prog,html[lang="ko"] .stat .l,html[lang="ko"] figcaption{
+  html[lang="ko"] .so-prog,html[lang="ko"] .stat .l,html[lang="ko"] figcaption,
+  html[lang="ko"] .abtab,html[lang="ko"] .rs-h,html[lang="ko"] .rs-g .k,html[lang="ko"] .rs-sub,
+  html[lang="ko"] .rs-grp .k,html[lang="ko"] .rs-lines em,html[lang="ko"] .rs-hon em,
+  html[lang="ko"] .rs-ith em,html[lang="ko"] .rs-tools,html[lang="ko"] .rs-tr .n{
     font-family:var(--sans);letter-spacing:0}
   html[lang="ko"] .eyebrow{text-transform:none}
   html[lang="ko"] .kick,html[lang="ko"] .blk .l,html[lang="ko"] .facts .f .k,
-  html[lang="ko"] .colb,html[lang="ko"] .ex-side .sl{text-transform:none}
+  html[lang="ko"] .colb,html[lang="ko"] .ex-side .sl,html[lang="ko"] .abtab,
+  html[lang="ko"] .rs-h,html[lang="ko"] .rs-g .k,html[lang="ko"] .rs-sub,
+  html[lang="ko"] .rs-grp .k{text-transform:none}
   /* 세그먼트 컨트롤 — 선택된 칸이 배경째로 미끄러진다 */
   .langbar{position:absolute;top:2px;right:0;display:flex;padding:3px;
     background:linear-gradient(180deg,#f1f3f7,#e9edf2);
@@ -284,6 +289,64 @@ body{word-break:keep-all;overflow-wrap:break-word}
   .facts .f .v small a:hover{color:var(--ink)}
   .ab-cta{margin-top:24px;text-align:center;font-family:var(--serif);font-size:1.2rem;color:var(--ink)}
   .ab-cta a{color:var(--accent);font-family:var(--mono);font-size:1rem;text-decoration:none;border-bottom:1px solid #cdd8e8}
+
+  /* about tabs + résumé */
+  .abtabs{display:flex;gap:5px;margin:-2px 0 26px;border-bottom:1px solid var(--line)}
+  .abtab{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);
+    text-decoration:none;padding:9px 16px;border:1px solid transparent;border-bottom:none;
+    border-radius:9px 9px 0 0;margin-bottom:-1px;white-space:nowrap}
+  .abtab:hover{color:var(--ink);background:var(--soft)}
+  .abtab.on{color:var(--ink);background:var(--panel);border-color:var(--line);border-bottom-color:var(--panel)}
+  .rs section{margin-bottom:30px}
+  .rs-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);
+    padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:15px}
+  .rs-org{font-family:var(--serif);font-size:1.2rem;color:var(--ink);margin-bottom:8px}
+  .rs-lines{list-style:none;margin-bottom:20px}
+  .rs-lines li{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+    font-size:1.02rem;color:var(--body);padding:4px 0}
+  .rs-lines em,.rs-hon em{font-family:var(--mono);font-size:11.5px;color:var(--mut);font-style:normal}
+  .rs-gpa{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+  .rs-g{border:1px solid var(--line);border-radius:11px;background:var(--panel);padding:14px 16px;min-width:0}
+  .rs-g .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--mut);margin-bottom:7px;line-height:1.35}
+  .rs-g .v{font-family:var(--serif);font-size:1.5rem;color:var(--accent);line-height:1}
+  .rs-g .v small{font-family:var(--sans);font-size:.5em;color:var(--mut);margin-left:6px}
+  .rs-sub{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--mut);margin-bottom:10px}
+  .rs-tr{display:flex;align-items:center;gap:12px;margin-bottom:7px}
+  .rs-tr .t{font-size:12.5px;color:var(--body);flex:0 0 88px;min-width:0}
+  .rs-tr .b{flex:1 1 auto;height:9px;border-radius:999px;background:var(--soft);overflow:hidden;min-width:0}
+  .rs-tr .b i{display:block;height:100%;border-radius:999px;background:var(--accent2)}
+  .rs-tr .n{font-family:var(--mono);font-size:12px;color:var(--ink);flex:0 0 34px;text-align:right}
+  .rs-gap{font-size:12px;color:var(--mut);line-height:1.5;border-left:2px dashed var(--line2);
+    margin:10px 0 12px 5px;padding:3px 0 3px 14px}
+  .rs-note{font-size:12.5px;color:var(--mut);line-height:1.62;margin-top:13px}
+  .rs-grp,.rs-hon{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .rs-grp:last-child,.rs-hon:last-child{border-bottom:none}
+  .rs-grp{flex-wrap:wrap}
+  .rs-hon{justify-content:space-between;flex-wrap:wrap;align-items:baseline;font-size:1rem;color:var(--ink)}
+  .rs-grp .k{font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;
+    color:var(--accent);flex:0 0 148px;min-width:0;line-height:1.5}
+  .rs-grp .v{flex:1 1 250px;font-size:.99rem;color:var(--body);line-height:1.62;min-width:0}
+  .rs-it{margin-bottom:22px}
+  .rs-it:last-child{margin-bottom:0}
+  .rs-ith{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline}
+  .rs-ith h5{font-family:var(--serif);font-size:1.16rem;font-weight:500;color:var(--ink)}
+  .rs-ith em{font-family:var(--mono);font-size:11.5px;color:var(--mut);font-style:normal}
+  .rs-ito{font-size:.97rem;color:var(--accent);margin:2px 0 8px}
+  .rs-it p{font-size:1rem;color:var(--body);line-height:1.66;max-width:62ch}
+  .rs-tools{font-family:var(--mono);font-size:11px;color:var(--mut);margin-top:8px}
+  .rs-tools a,.rs-links a{color:var(--accent);text-decoration:none;border-bottom:1px solid #cdd8e8}
+  .rs-links{font-size:.95rem;color:var(--mut);line-height:1.95;margin-top:6px}
+  .rs-foot{font-size:12.5px;color:var(--mut);line-height:1.62;border-top:1px solid var(--line);padding-top:14px}
+  @media(max-width:560px){
+    .rs-gpa{grid-template-columns:1fr;gap:8px}
+    .rs-g{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:12px 15px}
+    .rs-g .k{margin-bottom:0}
+    .rs-grp .k{flex:1 1 100%}
+    .rs-tr .t{flex-basis:76px;font-size:11.5px}
+    .abtab{padding:9px 13px}
+  }
 
   /* simops */
   .so-prog{font-family:var(--mono);font-size:12.5px;color:var(--accent);margin-bottom:10px;line-height:1.5}
@@ -548,6 +611,87 @@ const ABOUT_EN = [
   ["Contact","Get in touch",
     "<a href='mailto:leechan0608@korea.ac.kr'>leechan0608@korea.ac.kr</a><br><a href='https://github.com/euichanlee0608-svg' target='_blank' rel='noopener'>github.com/euichanlee0608-svg</a><br><a href='https://www.linkedin.com/in/euichanlee0608-svg' target='_blank' rel='noopener'>linkedin.com/in/euichanlee0608-svg</a>"],
 ];
+const RESUME_EN={
+  tabProfile:"Profile", tabResume:"Résumé",
+  edu:{
+    h:"Education",
+    org:"Korea University · Seoul, Republic of Korea",
+    lines:[
+      ["B.S. Mechanical Engineering — primary major","Mar 2022 – expected 2028"],
+      ["Applied Artificial Intelligence — convergence major","2026 – present"],
+    ],
+    gpa:[["Cumulative GPA","3.86"],["Major GPA","3.86"],["Last three semesters","3.98"]],
+    scale:"/ 4.5",
+    trendH:"Semester GPA",
+    trend:[
+      {t:"2022 Spring",g:3.47},
+      {gap:"Nov 2022 – May 2024 · mandatory military service, on academic leave through Fall 2024"},
+      {t:"2025 Spring",g:3.92},
+      {t:"2025 Fall",g:4.00},
+      {t:"2026 Spring",g:4.03},
+    ],
+    note:"Korea University 4.5 scale, where A+ is 4.5. Four semesters completed, 75 credits earned; third year begins Fall 2026. Grades are transcribed from my own transcript, and the official one is available on request.",
+  },
+  course:{
+    h:"Relevant Coursework",
+    groups:[
+      ["Mechanics","Thermodynamics I &amp; II · Solid Mechanics I&deg; &amp; II&deg; · Fluid Mechanics I&deg; · Dynamics · Kinematics of Machinery"],
+      ["Computation &amp; mathematics","Numerical Analysis&deg; · Linear Algebra · Signals &amp; Systems&deg; · Engineering Mathematics&deg; · Computer Programming &amp; Practice&deg; · Calculus I"],
+      ["Design &amp; fabrication","Creative Mechanical Design (capstone) · Manufacturing Processes &amp; Practice · Computer-Aided Mechanical Drawing · Mechanical Engineering Laboratory I"],
+      ["Science","General Physics I · General Chemistry&deg; &amp; Laboratory"],
+    ],
+    note:"&deg; taught in English — 24 credits of subject coursework.",
+  },
+  exp:{
+    h:"Experience",
+    items:[
+      {r:"Design-Optimization Engineering Intern",o:"NumeReal",d:"Aug 2026 – present · hybrid",
+       p:"I automate commercial DOE, optimization, and RBDO suites through their Python APIs to run exhaustive, condition-matched experiment matrices, then re-verify every result against the governing equations and the true solver rather than the surrogate that produced it. Fairness audits come before any benchmarking, and reproducible scripts with raw data are the deliverable.",
+       t:"HyperStudy · PIAnO · Python"},
+      {r:"Physics Tutor and Academy Instructor",o:"Private tutoring · test-prep academy",d:"2025",
+       p:"Taught university-entrance physics and mathematics one-on-one and in small classes."},
+      {r:"Mandatory Military Service",o:"Republic of Korea",d:"Nov 2022 – May 2024",
+       p:"Statutory national service, on academic leave from Fall 2022 through Fall 2024."},
+    ],
+  },
+  res:{
+    h:"Research &amp; Programs",
+    items:[
+      {r:"Undergraduate Researcher (incoming)",o:"Materials Innovation Lab, Korea University",d:"from Fall 2026",
+       p:"Advised by Prof. Byungseok Seo. The direction I am heading in is data-efficient experiment design for nano-device synthesis, one of the areas where ground truth still requires a physical measurement.",
+       t:"<a href='https://matinnovlab.com/' target='_blank' rel='noopener'>matinnovlab.com</a>"},
+      {r:"Team member · Living Paper",o:"Korean I-Corps (TeX-Corps) 2026 · Korea University Lab-Startup Innovation Corps",d:"2026 · certificate of completion",
+       p:"Trained in evidence-based customer discovery, including an on-site phase at UC Berkeley through the Korea Innovation Center (KIC). Fifty field interviews moved the project from simulation-pipeline debugging to meeting comprehension, and the MVP that came out of it keeps plaintext and keys on the device and the in-lab node while the cloud relays ciphertext only."},
+    ],
+    projH:"Selected projects, each written up in full elsewhere on this site:",
+    proj:[
+      ["Broadband acoustic energy harvesting","#pieces/projects/p0"],
+      ["VPP Trade-Guard · risk-aware power trading","#pieces/projects/p1"],
+      ["Sequential optimization, replayed on published experiments","#pieces/projects/p2"],
+      ["Autonomous pole-climbing and harvesting robot","#pieces/projects/p3"],
+    ],
+  },
+  hon:{
+    h:"Honors &amp; Activities",
+    items:[
+      ["1st place, Korea University × Upstage Energy AI Hackathon","2026 · first of 23 teams, team lead of three"],
+      ["Certificate of completion, TeX-Corps (Korean I-Corps)","2026"],
+      ["GDGoc · Google Developer Group on Campus, Korea University","member"],
+    ],
+  },
+  skill:{
+    h:"Skills",
+    groups:[
+      ["Simulation &amp; optimization","Finite element analysis · Monte Carlo simulation · design of experiments · Gaussian-process surrogates · Bayesian optimization · reliability-based design optimization · HyperStudy · PIAnO"],
+      ["Programming","Python (NumPy, Numba) · JavaScript · shell · Git"],
+      ["Machine learning","Active learning · reinforcement learning (PPO) · genetic algorithms · LLM evaluation and tooling"],
+      ["Hardware","Arduino · motor control · power electronics · CAD"],
+      ["Languages","Korean (native) · English (24 credits of subject coursework taught in English, plus the technical writing on this site)"],
+    ],
+  },
+  foot:"Grades and credits are self-reported from my transcript. Everything else here links to work you can open and check.",
+};
+
 const SIMOPS_EN = {
   prog:"Living Paper · Korea University Lab-Startup Innovation Corps (Korean I-Corps, 2026 · UC Berkeley KIC)",
   stats:[["50","field interviews behind the pivot"],["95% / 88%","of interviewees requiring on-premise privacy / domain accuracy"],["30%","wanted live AI summaries — the obvious product, dropped"]],
@@ -701,6 +845,84 @@ window.KO_PATCH = {
     ["연구 방향","AI × 기계공학","데이터 효율적 학습과 엄밀한 검증을<br>물리 시스템 연구에 적용"],
     ["연락처","연락하기",null],
   ],
+  RESUME:{
+    tabProfile:"프로필", tabResume:"이력서",
+    edu:{
+      h:"학력",
+      org:"고려대학교 · 서울",
+      lines:[
+        ["기계공학 학사 — 주전공","2022년 3월 – 2028년 졸업 예정"],
+        ["인공지능융합 — 융합전공","2026년 – 현재"],
+      ],
+      gpa:[["전체 평점","3.86"],["전공 평점","3.86"],["최근 세 학기","3.98"]],
+      trendH:"학기별 평점",
+      trend:[
+        {t:"2022년 1학기"},
+        {gap:"2022년 11월 입대, 2024년 5월 전역 · 병역 이행으로 2024년 2학기까지 휴학"},
+        {t:"2025년 1학기"},
+        {t:"2025년 2학기"},
+        {t:"2026년 1학기"},
+      ],
+      note:"고려대학교 4.5 만점 기준이며(A+ = 4.5), 이수를 마친 4개 학기에서 75학점을 취득했습니다. 2026년 가을학기에 3학년으로 진입합니다. 수치는 성적증명서에서 직접 옮겨 적은 것이며, 공식 증명서는 요청 시 제출하겠습니다.",
+    },
+    course:{
+      h:"주요 이수 과목",
+      groups:[
+        ["역학","열역학 I · II · 고체역학 I&deg; · II&deg; · 유체역학 I&deg; · 동역학 · 기구학"],
+        ["전산 · 수학","수치해석&deg; · 선형대수 · 신호와 시스템&deg; · 공업수학&deg; · 컴퓨터언어 및 실습&deg; · 미적분학 I"],
+        ["설계 · 제작","창의적 기계설계(캡스톤) · 기계제작법 및 실습 · 전산기이용 기계제도 · 기계공학실험 I"],
+        ["기초과학","일반물리학 I · 일반화학&deg; 및 실험"],
+      ],
+      note:"&deg; 표시는 영어 강의이며, 해당 과목은 24학점입니다.",
+    },
+    exp:{
+      h:"경력",
+      items:[
+        {r:"설계최적화 엔지니어링 인턴",o:"NumeReal",d:"2026년 8월 – 현재 · 하이브리드",
+         p:"상용 DOE · 최적화 · RBDO 소프트웨어를 Python API로 자동화하여 조건을 일치시킨 실험 매트릭스를 수행하며, 산출된 모든 결과를 surrogate가 아닌 지배방정식과 실제 solver로 재검증합니다. 벤치마킹에 앞서 공정성 감사를 수행하며, 재현 가능한 스크립트와 원시 데이터를 산출물로 제출합니다.",
+         t:"HyperStudy · PIAnO · Python"},
+        {r:"물리 과외 · 학원 강사",o:"개인 과외 · 입시 학원",d:"2025년",
+         p:"대학 입시 물리와 수학을 개인 지도 및 소규모 강의로 담당했습니다."},
+        {r:"병역 이행",o:"대한민국",d:"2022년 11월 – 2024년 5월",
+         p:"병역 의무를 이행했으며, 2022년 2학기부터 2024년 2학기까지 휴학했습니다."},
+      ],
+    },
+    res:{
+      h:"연구 · 프로그램",
+      items:[
+        {r:"학부연구생 (예정)",o:"Materials Innovation Lab, 고려대학교",d:"2026년 가을 시작",
+         p:"서병석 교수님 지도. 물리적 실측 없이는 정답을 확인할 수 없는 nano-device 합성 영역에서, 데이터 효율적 실험 설계를 연구할 계획입니다."},
+        {r:"Living Paper 팀원",o:"한국형 I-Corps (TeX-Corps) 2026 · 고려대학교 실험실창업혁신단",d:"2026년 · 수료",
+         p:"근거 기반 customer discovery 방법론을 교육받았으며, Korea Innovation Center(KIC)를 통한 UC Berkeley 현지 과정에 참여했습니다. 현장 인터뷰 50건을 근거로 시뮬레이션 파이프라인 진단에서 미팅 이해도 문제로 방향을 전환했으며, 그 결과물인 MVP는 평문과 복호키를 기기와 원내 노드에 두고 클라우드로는 암호문만 중계합니다."},
+      ],
+      projH:"이 사이트에 상세를 수록한 주요 프로젝트:",
+      proj:[
+        ["광대역 음향 에너지 하베스팅"],
+        ["VPP Trade-Guard · 고장 리스크를 반영한 전력거래"],
+        ["선행 연구 재현을 통한 순차 최적화 실효성 검증"],
+        ["자율 기둥 등반 · 수확 로봇"],
+      ],
+    },
+    hon:{
+      h:"수상 · 활동",
+      items:[
+        ["고려대학교 × Upstage 에너지 AI 해커톤 금상","2026년 · 23팀 중 1위, 3인 팀 팀장"],
+        ["TeX-Corps (한국형 I-Corps) 수료","2026년"],
+        ["GDGoc · Google Developer Group on Campus, 고려대학교","회원"],
+      ],
+    },
+    skill:{
+      h:"기술 역량",
+      groups:[
+        ["해석 · 최적화","유한요소해석 · Monte Carlo 시뮬레이션 · 실험계획법(DOE) · Gaussian process 대리모델 · Bayesian optimization · 신뢰성 기반 최적설계(RBDO) · HyperStudy · PIAnO"],
+        ["프로그래밍","Python (NumPy, Numba) · JavaScript · shell · Git"],
+        ["머신러닝","Active learning · 강화학습(PPO) · 유전 알고리즘 · LLM 평가 및 도구 구축"],
+        ["하드웨어","Arduino · 모터 제어 · 전력전자 · CAD"],
+        ["언어","한국어(모국어) · 영어(영어 강의 24학점 및 본 사이트의 기술 문서 작성)"],
+      ],
+    },
+    foot:"성적과 학점은 성적증명서에서 직접 옮겨 적은 수치이며, 그 외 항목은 이 사이트에서 직접 열어 확인하실 수 있습니다.",
+  },
   SIMOPS:{
     prog:"Living Paper · 고려대학교 실험실창업혁신단 (한국형 I-Corps, 2026 · UC Berkeley KIC)",
     stats:[["50","피봇의 근거가 된 현장 인터뷰"],["95% / 88%","원내 처리 요구 비율 / 도메인 정확도 요구 비율"],["30%","실시간 AI 요약 선호 비율 — 당연시했던 방향, 폐기"]],
@@ -824,13 +1046,14 @@ let LANG = (function(){
   try{ const v=localStorage.getItem("pf_lang"); if(v==="ko"||v==="en") return v; }catch(e){}
   return "en";                      /* 첫 방문·새로고침은 항상 영문 */
 })();
-let RESEARCH,INTERESTS,SYSTEMS,ABOUT,SIMOPS,APPS,PROJ_META,TREEMETA,TREE;
+let RESEARCH,INTERESTS,SYSTEMS,ABOUT,RESUME,SIMOPS,APPS,PROJ_META,TREEMETA,TREE;
 function applyData(){
   const p = (LANG==="ko" && window.KO_PATCH) ? window.KO_PATCH : {};
   RESEARCH =deepMerge(RESEARCH_EN , p.RESEARCH);
   INTERESTS=deepMerge(INTERESTS_EN, p.INTERESTS);
   SYSTEMS  =deepMerge(SYSTEMS_EN  , p.SYSTEMS);
   ABOUT    =deepMerge(ABOUT_EN    , p.ABOUT);
+  RESUME   =deepMerge(RESUME_EN   , p.RESUME);
   SIMOPS   =deepMerge(SIMOPS_EN   , p.SIMOPS);
   APPS     =deepMerge(APPS_EN     , p.APPS);
   PROJ_META=deepMerge(PROJ_META_EN, p.PROJ_META);
@@ -1039,9 +1262,43 @@ function renderSystems(){
     <div class="band"><span class="ic">telegram_bot</span><p>${band}</p></div>
     <p class="toy">${toy}</p>`;
 }
-function renderAbout(){
+function renderAbout(tab){
+  const on = tab==="resume" ? "resume" : "profile";
+  const t = (id,label)=>`<a class="abtab${on===id?" on":""}" href="#about${id==="resume"?"/resume":""}" role="tab" aria-selected="${on===id}">${label}</a>`;
+  return `<div class="abtabs" role="tablist">${t("profile",RESUME.tabProfile)}${t("resume",RESUME.tabResume)}</div>`
+    + (on==="resume" ? renderResume() : renderProfile());
+}
+function renderProfile(){
   return `<div class="facts">${ABOUT.map(f=>`<div class="f"><div class="k">${f[0]}</div><div class="v">${f[1]}<small>${f[2]}</small></div></div>`).join("")}</div>
     <div class="ab-cta">${UI.aboutCta}<a href="mailto:leechan0608@korea.ac.kr">leechan0608@korea.ac.kr</a></div>`;
+}
+/* résumé: same data objects, laid out the way a US application expects to read it */
+function renderResume(){
+  const R=RESUME, sec=(h,body)=>`<section><h4 class="rs-h">${h}</h4>${body}</section>`;
+  const grp=g=>`<div class="rs-grp"><div class="k">${g[0]}</div><div class="v">${g[1]}</div></div>`;
+  const item=i=>`<div class="rs-it"><div class="rs-ith"><h5>${i.r}</h5><em>${i.d}</em></div>`
+    +`<div class="rs-ito">${i.o}</div><p>${i.p}</p>`+(i.t?`<div class="rs-tools">${i.t}</div>`:"")+`</div>`;
+
+  const e=R.edu;
+  const bars=e.trend.map(x=>x.gap
+    ? `<div class="rs-gap">${x.gap}</div>`
+    : `<div class="rs-tr"><span class="t">${x.t}</span><span class="b"><i style="width:${(x.g/4.5*100).toFixed(1)}%"></i></span><span class="n">${x.g.toFixed(2)}</span></div>`).join("");
+  const edu=`<div class="rs-org">${e.org}</div>`
+    +`<ul class="rs-lines">${e.lines.map(l=>`<li><span>${l[0]}</span><em>${l[1]}</em></li>`).join("")}</ul>`
+    +`<div class="rs-gpa">${e.gpa.map(g=>`<div class="rs-g"><div class="k">${g[0]}</div><div class="v">${g[1]}<small>${e.scale}</small></div></div>`).join("")}</div>`
+    +`<div class="rs-sub">${e.trendH}</div>${bars}<p class="rs-note">${e.note}</p>`;
+
+  const res=R.res.items.map(item).join("")
+    +`<div class="rs-links">${R.res.projH}<br>${R.res.proj.map(p=>`<a href="${p[1]}">${p[0]}</a>`).join(" · ")}</div>`;
+
+  return `<div class="rs">`
+    + sec(e.h,edu)
+    + sec(R.course.h, R.course.groups.map(grp).join("")+`<p class="rs-note">${R.course.note}</p>`)
+    + sec(R.exp.h, R.exp.items.map(item).join(""))
+    + sec(R.res.h, res)
+    + sec(R.hon.h, R.hon.items.map(i=>`<div class="rs-hon"><span>${i[0]}</span><em>${i[1]}</em></div>`).join(""))
+    + sec(R.skill.h, R.skill.groups.map(grp).join(""))
+    + `<p class="rs-foot">${R.foot}</p></div>`;
 }
 function renderSimops(){
   const svg=`<svg viewBox="0 0 720 200" role="img" aria-label="Zero-knowledge relay diagram">
@@ -1127,7 +1384,7 @@ function route(){
   const p=(location.hash||"").replace(/^#\/?/,"").split("/").filter(Boolean);
   if(p[0]==="about"){
     showLanding(); backHash="#";
-    showViewer(UI.aboutTitle,UI.aboutSub,renderAbout());
+    showViewer(UI.aboutTitle,UI.aboutSub,renderAbout(p[1]));
     return;
   }
   if(p[0]!=="pieces"){ showLanding(); hideViewer(); return; }
