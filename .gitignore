@@ -3,3 +3,6 @@ _archive/
 PROGRESS.md
 CONTENT_CANDIDATES.md
 LINKEDIN.md
+.venv/
+editor/
+edit.sh
