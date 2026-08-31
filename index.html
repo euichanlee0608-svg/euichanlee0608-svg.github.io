@@ -622,9 +622,9 @@ body{word-break:keep-all;overflow-wrap:break-word}
     <h2 data-ko="라이브 웹앱">Live web apps</h2>
     <p data-ko="Living Paper — MVP를 운영 중인 미팅 어시스턴트로, 이해하지 못한 채 넘어간 대목을 표시해 두면 회의 후 랩실 문서를 근거로 설명하며 클라우드는 암호문만 중계합니다. 최적설계 시각 가이드 — CAE 최적설계 전 과정의 모든 그래프를 브라우저가 실시간 연산하고 자체검증 74건으로 확인합니다. Acoustic Harvester — 하베스팅 연구의 인터랙티브 버전. Divert-Sim — 직접 조작하는 요격 시뮬레이터. VPP Trade-Guard — 해커톤 시스템의 케이스 스터디. Engineering Brain — 공학 문제를 제시하고 답변을 채점합니다. News Literacy Lab — 기사를 이해관계자 기준으로 분해합니다. Emotion Quadrant — 감정을 정확히 명명하기 위한 한국어 도구. 357 Stick Breaker — 솔버와 대국하는 미제르 Nim 변형.">Living Paper, a meeting assistant whose MVP is live: it marks the moment you pretended to understand and explains it afterwards from your own lab's documents, with the cloud relaying ciphertext only. Acoustic Harvester, an interactive version of the harvesting study. Divert-Sim, a playable interception simulator. VPP Trade-Guard, a case study of the hackathon system. Engineering Brain, which poses engineering questions and grades the answers. News Literacy Lab, which breaks a news article down by stakeholder. Emotion Quadrant, a Korean-language tool for naming a feeling precisely. 357 Stick Breaker, a misère Nim variant played against a solver. An Optimal Design Visual Guide in Korean, where every chart of the CAE optimization stack is computed live in the browser and checked by 74 built-in self-verifications.</p>
     <h2 data-ko="시스템과 공학적 판단">Systems and engineering judgment</h2>
-    <p data-ko="어떤 도구도 자기 자신을 검증하지 않도록 설계한 안전장치입니다. 연구 변경 내역은 모델의 서술이 아닌 git diff에서 추출하고, 회귀 게이트는 생존이 아니라 실제 메시지를 실제 핸들러에 흘려 동작을 검증하며, 원격 자동화는 승인 단계와 스레드별 하트비트·터미널 폴백을 거치고, 물리 수식 카탈로그는 증거로 등급을 부여받습니다(출처·차원·수치, 95% CI 게이트). 품질이 미달한 시도는 솔직히 폐기했으며, 공학 추론 데이터셋은 개인화 In-Context Learning의 공학 질의응답 성능을 정량 평가하는 교내 포스터로 이어집니다.">Safeguards designed so no tool grades itself: research change records come from the git diff rather than a model's narration, regression gates replay real messages through real handlers instead of checking liveness, remote automation passes approval steps with per-thread heartbeats and terminal fallback, and a physics-equation catalogue is graded by evidence (reference, dimensional, numeric) behind a 95% CI gate. Low-quality experiments are dropped honestly; an engineering-reasoning dataset now feeds a planned campus poster quantifying personalized in-context learning for engineering Q&A.</p>
+    <p data-ko="어떤 도구도 자기 자신을 검증하지 않도록 설계한 안전장치입니다. 연구 변경 내역은 모델의 서술이 아닌 git diff에서 추출하고, 회귀 게이트는 생존이 아니라 실제 메시지를 실제 핸들러에 흘려 동작을 검증하며, 원격 자동화는 승인 단계와 스레드별 하트비트·터미널 폴백을 거치고, 물리 수식 카탈로그는 증거로 등급을 부여받습니다(출처·차원·수치, 95% CI 게이트). 품질이 미달한 시도는 솔직히 폐기했으며, 공학 추론 데이터셋은 무엇이 모델로 전이되고 무엇이 전이되지 않는지를 분리해 측정한 교내 포스터로 이어졌습니다.">Safeguards designed so no tool grades itself: research change records come from the git diff rather than a model's narration, regression gates replay real messages through real handlers instead of checking liveness, remote automation passes approval steps with per-thread heartbeats and terminal fallback, and a physics-equation catalogue is graded by evidence (reference, dimensional, numeric) behind a 95% CI gate. Low-quality experiments are dropped honestly, and the engineering-reasoning dataset fed a campus poster separating what transfers into a model from what does not.</p>
     <h2 data-ko="소개">About</h2>
-    <p data-ko="이의찬(Leechan), 고려대학교 기계공학 및 인공지능융합. 2026년 가을부터 Materials Innovation Lab(서병석 교수님) 학부연구생. 연락처 leechan0608@korea.ac.kr.">Euichan Lee (Leechan), Korea University, Mechanical Engineering and Applied Artificial Intelligence. Incoming undergraduate researcher at the Materials Innovation Lab (Prof. Byungseok Seo), Fall 2026. Contact leechan0608@korea.ac.kr.</p>
+    <p data-ko="이의찬(Leechan), 고려대학교 기계공학 및 인공지능융합. Materials Innovation Lab(서병석 교수님) 학부연구생. 연락처 leechan0608@korea.ac.kr.">Euichan Lee (Leechan), Korea University, Mechanical Engineering and Applied Artificial Intelligence. Undergraduate researcher at the Materials Innovation Lab (Prof. Byungseok Seo). Contact leechan0608@korea.ac.kr.</p>
   </section>
 </div>
 
@@ -701,6 +701,16 @@ const RESEARCH_EN = [
    meth:["RK4 rigid-body dynamics","proportional navigation","genetic algorithm / PPO","Monte-Carlo robustness","seeker-noise & delay models"],
    limit:"A 2D simulation with a single target and simplified aerodynamics, built to study control and optimization tradeoffs rather than as a high-fidelity flight model. Included as the interactive, playable piece.",
    mlimit:"2D, single target, simplified aero: a control-and-optimization study, not a flight model. Built to be playable."},
+  {kick:"Personalized in-context learning · LLM evaluation",title:"Moving a Specialist's Tacit Judgement Into a Local Small Model",
+   chip:["Poster submitted","green"],lead:"The result is a split: the <b>form</b> of a decision transfers from one instruction, while the <b>content</b> does not follow at 7.8B.",
+   blocks:[["Problem","Personalizing a model on someone's judgement means putting the context behind that judgement into the prompt: failure history, process conditions, design calls that were never published. That is the material least likely to be cleared for an external API, so personal and organizational use pushes toward models small enough to run locally. Whether a person's decision-making survives at that size is the open part.","Personalizing on someone's judgement puts unpublished context in the prompt, which is what cannot go to an external API. That pushes toward local small models, where transfer is untested."],
+     ["Approach","Ten free-text answers of mine to engineering trade-off dilemmas became the in-context examples, injected as written rather than reshaped into a template. Three conditions differ by one layer each: no instruction, a four-step decision instruction with zero examples, and that instruction plus my answers. The same prompts ran on a cloud model and on a 7.8B model on a Mac mini. A single accuracy number cannot separate imitation from transfer, so two axes were scored apart: the <b>form</b> of a decision on 24 items from domains I had never answered, and the <b>content</b> on my own ten, leave-one-out.","My ten answers became the examples, injected as written. Three conditions separated by one layer each, run identically on a cloud model and a 7.8B local model. Form scored on 24 unseen items, content on my own ten, leave-one-out."],
+     ["Finding","Form came from the instruction alone and did not depend on model size: single-variable commitment rose from 67% to 100% on the cloud model and 67% to 92% locally. Content moved only on the cloud model, 0% to 30%, and did not rise at 7.8B. The local model did not even pick up the compressed style of the examples, holding answer length flat while the cloud model cut its own by more than half. Blind pairwise judging preferred the instruction-only answers, so adding my reasoning did not make answers better, only more like mine.","Form transferred on both models from the instruction alone (67 to 100% cloud, 67 to 92% local). Content moved only on the cloud model (0 to 30%). Blind judging preferred the instruction-only answers, so the personalization made answers more like mine, not better."]],
+   stats:[["67 &rarr; 100 / 92%","single-variable commitment, cloud / local, from the instruction alone"],["0 &rarr; 30%","matching the variable I actually chose, cloud model only"],["10","of my own answers, used as examples rather than as test items"]],
+   figs:[["assets/figures/tacit_transfer.png","Form and content separate. Committing to a single dominant variable rises from the instruction alone on both models (left). Matching the variable I actually chose rises only on the cloud model (right)."]],
+   meth:["leave-one-out evaluation","blind pairwise preference","structured label extraction","paired non-parametric tests","free-tier API + local inference"],
+   limit:"The content axis rests on ten held-out items, so its direction is a trend and not a settled result. One seed, one judge model, and one local model were tested, and the data is mine scored against criteria I designed.",
+   mlimit:"The content axis rests on ten held-out items: a trend, not a settled result. One seed, one judge, one local model, and the data is my own."},
 ];
 const INTERESTS_EN = [
   "Design of experiments — space-filling (Latin hypercube, Sobol) vs screening designs, and when each earns its runs",
@@ -726,15 +736,15 @@ const SYSTEMS_EN = [
   {cls:"dep",h:"second_brain · decision capture",role:"deprecated · 2026-06",
    p:"An attempt to auto-extract the decisions I made during work sessions. It ran fine, but the captured reasoning was <b>too low-quality to be useful</b>, so I retired it instead of keeping a system that just produced noise. The idea I kept: store the raw record <em>before</em> any processing can distort it.",
    mp:"Tried auto-extracting my decisions. Too low-quality, so I retired it. Kept the idea: <b>store the raw record first</b>."},
-  {cls:"",h:"Engineering Brain",role:"reasoning dataset · campus poster planned",
-   p:"The replacement, still running: it poses hard engineering and philosophy dilemmas, records my free-text answers verbatim, and keeps the model that asks separate from the model that grades so the raw answers stay clean. That dataset now feeds the next question — a campus poster is planned quantifying how much <b>in-context learning on a personalized reasoning dataset</b> improves an LLM's engineering Q&A, measured against the base model.",
-   mp:"Poses hard dilemmas, saves answers verbatim, asker separate from grader. Next: a campus poster quantifying how much <b>personalized in-context learning</b> helps engineering Q&A."},
+  {cls:"",h:"Engineering Brain",role:"reasoning dataset · poster submitted",
+   p:"The replacement, still running: it poses hard engineering and philosophy dilemmas, records my free-text answers verbatim, and keeps the model that asks separate from the model that grades so the raw answers stay clean. Ten of those answers then became the examples for a poster study on what actually transfers. The <b>form</b> of a decision, committing to one dominant variable, came from the instruction alone on both a cloud model and a 7.8B model on my Mac mini. The <b>content</b>, picking the variable I picked, moved only on the cloud model.",
+   mp:"Poses hard dilemmas, saves answers verbatim, asker separate from grader. Ten answers became a poster study: the <b>form</b> of a decision transfers from the instruction alone, the <b>content</b> only on the cloud model."},
 ];
 const ABOUT_EN = [
   ["Education","Korea University",
     "B.S. Mechanical Engineering &mdash; primary major<br>Applied Artificial Intelligence &mdash; convergence major<br>Expected graduation 2028"],
-  ["Research · incoming","Materials Innovation Lab",
-    "Undergraduate researcher<br>Prof. Byungseok Seo · starting Fall 2026<br><a href='https://matinnovlab.com/' target='_blank' rel='noopener'>matinnovlab.com</a>"],
+  ["Research","Materials Innovation Lab",
+    "Undergraduate researcher<br>Prof. Byungseok Seo · since Fall 2026<br><a href='https://matinnovlab.com/' target='_blank' rel='noopener'>matinnovlab.com</a>"],
   ["Direction","AI × Mechanical engineering",
     "Data-efficient learning and verification,<br>applied to physical-system research"],
   ["Contact","Get in touch",
@@ -765,7 +775,7 @@ const RESUME_EN={
       {t:"2025 Fall",g:4.00},
       {t:"2026 Spring",g:4.03},
     ],
-    note:"Korea University 4.5 scale, where A+ is 4.5. Four semesters completed, 75 credits earned; third year begins Fall 2026. Grades are transcribed from my own transcript, and the official one is available on request.",
+    note:"Korea University 4.5 scale, where A+ is 4.5. Four semesters completed, 75 credits earned; in the third year as of Fall 2026. Grades are transcribed from my own transcript, and the official one is available on request.",
     courseH:"Relevant coursework",
     groups:[
       ["Mechanics","Thermodynamics I &amp; II · Solid Mechanics I&deg; &amp; II&deg; · Fluid Mechanics I&deg; · Dynamics · Kinematics of Machinery"],
@@ -778,7 +788,7 @@ const RESUME_EN={
   res:{
     h:"Research &amp; Programs",
     items:[
-      {r:"Undergraduate Researcher (incoming)",o:"Materials Innovation Lab, Korea University",d:"proof-of-concept underway · lab start Fall 2026",
+      {r:"Undergraduate Researcher",o:"Materials Innovation Lab, Korea University",d:"Fall 2026 – present · optimization proof-of-concept",
        b:"Running an optimization proof-of-concept for nano-device synthesis rather than physical measurement.",
        p:"Advised by Prof. Byungseok Seo. The direction I am heading in is data-efficient experiment design for a domain whose ground truth still comes from a measurement.",
        t:"<a href='https://matinnovlab.com/' target='_blank' rel='noopener'>matinnovlab.com</a>"},
@@ -796,7 +806,7 @@ const RESUME_EN={
   },
   pres:{
     h:"Presentations",
-    items:[["Quantifying how much in-context learning on a personalized reasoning dataset improves an LLM's engineering Q&amp;A, measured against the base model","campus poster · in preparation"]],
+    items:[["Moving a specialist's tacit judgement into a local small model: personalized in-context learning compared across a cloud model and a 7.8B local model","2026 KU AI Forum, student poster session · submitted"]],
   },
   exp:{
     h:"Experience",
@@ -872,6 +882,7 @@ const PROJ_META_EN=[
   ["Robotics · hardware","A team-built robot that climbs a pole and harvests the coconut on top. I owned control and power.",["Built & tested","green"]],
   ["Fault tolerance","A quadrotor that survives losing a rotor, remodelled in 6-DOF so the numbers stay honest.",["Simulation","amber"]],
   ["Guidance · control","Steering an interceptor onto an evasive drone, comparing four optimization methods.",["Simulation + demo","green"]],
+  ["Personalization · LLM","What transfers when a specialist's reasoning goes into the prompt, and what stops at 7.8B.",["Poster submitted","green"]],
 ];
 const ICO={
   drive:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.75" y="4.25" width="18.5" height="6.75" rx="2"/><rect x="2.75" y="13" width="18.5" height="6.75" rx="2"/><path d="M6 7.6h6.5M6 16.4h6.5"/><circle cx="17.8" cy="7.6" r=".95" fill="currentColor" stroke="none"/><circle cx="17.8" cy="16.4" r=".95" fill="currentColor" stroke="none"/></svg>`,
@@ -928,6 +939,7 @@ window.KO_PATCH = {
     ["로보틱스 · 하드웨어","기둥을 등반해 상단의 코코넛을 수확하는 로봇을 팀으로 제작했으며, 제어와 전력 시스템을 담당했습니다.",["제작·시험 완료","green"]],
     ["내고장성","로터 하나를 상실해도 생존하는 쿼드로터를 6자유도로 재모델링하여, 수치의 정직성을 확보했습니다.",["시뮬레이션","amber"]],
     ["유도 · 제어","회피 기동하는 드론에 요격체를 유도하며, 네 가지 최적화 기법의 성능을 비교했습니다.",["시뮬레이션 + 데모","green"]],
+    ["개인화 · LLM","전문가의 판단을 프롬프트에 넣었을 때 무엇이 전이되고 무엇이 7.8B에서 멈추는지 측정했습니다.",["포스터 제출","green"]],
   ],
   APPS:[
     {name:"Engineering Brain", type:"웹앱",
@@ -973,13 +985,13 @@ window.KO_PATCH = {
     {h:"second_brain · 의사결정 기록", role:"2026-06 폐기",
      p:"작업 중 내린 의사결정을 자동 추출하려는 시도였습니다. 동작 자체는 문제없었으나 추출된 논리의 품질이 실용 수준에 미치지 못해 폐기했습니다.",
      mp:"작업 중 의사결정의 자동 추출을 시도했으나, 추출된 논리의 품질이 실용 수준에 미치지 못해 폐기했습니다."},
-    {h:"Engineering Brain", role:"추론 데이터셋 · 교내 포스터 예정",
-     p:"앞선 시도를 대체한 프로젝트로 현재도 운영 중입니다. 고난도 공학·철학 딜레마를 제시하고 서술형 답변을 원문 그대로 적재하며, 출제 모델과 채점 모델을 분리해 원본 답변의 오염을 차단합니다. 이 데이터셋은 다음 연구로 이어집니다 — <b>개인화 사고 데이터셋 기반 In-Context Learning</b>이 LLM의 공학 질의응답 성능을 베이스 모델 대비 얼마나 향상시키는지 정량 평가하며, 교내 포스터 발표를 준비 중입니다.",
+    {h:"Engineering Brain", role:"추론 데이터셋 · 교내 포스터 제출",
+     p:"앞선 시도를 대체한 프로젝트로 현재도 운영 중입니다. 고난도 공학·철학 딜레마를 제시하고 서술형 답변을 원문 그대로 적재하며, 출제 모델과 채점 모델을 분리해 원본 답변의 오염을 차단합니다. 이 중 10건을 예시로 삼아 무엇이 실제로 전이되는지를 교내 포스터로 정리했습니다. 지배 변수를 하나로 확정하는 <b>형식</b>은 클라우드 모델과 맥미니의 7.8B 모델 모두에서 지시만으로 확보되었으나, 제가 고른 변수를 그대로 고르는 <b>내용</b>은 클라우드 모델에서만 상승했습니다.",
      mp:"고난도 딜레마를 제시하고 답변을 원문 그대로 적재하며, 출제와 채점 모델을 분리합니다. 다음 단계로 <b>개인화 In-Context Learning</b>의 공학 질의응답 성능을 정량 평가합니다."},
   ],
   ABOUT:[
     ["학력","고려대학교","기계공학 학사 &mdash; 주전공<br>인공지능융합 &mdash; 융합전공<br>2028년 졸업 예정"],
-    ["연구 · 예정","Materials Innovation Lab","학부연구생<br>서병석 교수님 · 2026년 가을 시작<br><a href='https://matinnovlab.com/' target='_blank' rel='noopener'>matinnovlab.com</a>"],
+    ["연구","Materials Innovation Lab","학부연구생<br>서병석 교수님 · 2026년 가을 시작<br><a href='https://matinnovlab.com/' target='_blank' rel='noopener'>matinnovlab.com</a>"],
     ["연구 방향","AI × 기계공학","데이터 효율적 학습과 엄밀한 검증을<br>물리 시스템 연구에 적용"],
     ["연락처","연락하기",null],
   ],
@@ -1003,7 +1015,7 @@ window.KO_PATCH = {
         {t:"2025년 2학기"},
         {t:"2026년 1학기"},
       ],
-      note:"고려대학교 4.5 만점 기준이며(A+ = 4.5), 이수를 마친 4개 학기에서 75학점을 취득했습니다. 2026년 가을학기에 3학년으로 진입합니다. 수치는 성적증명서에서 직접 옮겨 적은 것이며, 공식 증명서는 요청 시 제출하겠습니다.",
+      note:"고려대학교 4.5 만점 기준이며(A+ = 4.5), 이수를 마친 4개 학기에서 75학점을 취득했습니다. 2026년 가을학기부터 3학년에 재학 중입니다. 수치는 성적증명서에서 직접 옮겨 적은 것이며, 공식 증명서는 요청 시 제출하겠습니다.",
       courseH:"주요 이수 과목",
       groups:[
         ["역학","열역학 I · II · 고체역학 I&deg; · II&deg; · 유체역학 I&deg; · 동역학 · 기구학"],
@@ -1016,7 +1028,7 @@ window.KO_PATCH = {
     res:{
       h:"연구 · 프로그램",
       items:[
-        {r:"학부연구생 (예정)",o:"Materials Innovation Lab, 고려대학교",d:"PoC 진행 중 · 2026년 가을 정식 시작",
+        {r:"학부연구생",o:"Materials Innovation Lab, 고려대학교",d:"2026년 가을 – 현재 · 최적화 PoC 진행 중",
          b:"실측이 아니라 nano-device 합성에 대한 최적화 PoC를 진행하고 있습니다.",
          p:"서병석 교수님 지도. 지향하는 방향은 실측으로만 정답을 확인할 수 있는 영역에서의 데이터 효율적 실험 설계입니다."},
         {r:"Living Paper 팀원",o:"한국형 I-Corps (TeX-Corps) 2026 · 고려대학교 실험실창업혁신단",d:"2026년 · 수료",
@@ -1033,7 +1045,7 @@ window.KO_PATCH = {
     },
     pres:{
       h:"발표",
-      items:[["개인화 사고 데이터셋 기반 In-Context Learning이 LLM의 공학 질의응답 성능을 베이스 모델 대비 얼마나 향상시키는지 정량 평가","교내 포스터 · 준비 중"]],
+      items:[["전문가의 암묵지를 로컬 소형 모델로 옮길 수 있는가 — 클라우드 대형 모델과 7.8B 로컬 모델의 개인화 In-Context Learning 전이 비교","2026 KU AI 포럼 학생 포스터 세션 · 제출"]],
     },
     exp:{
       h:"경력",
@@ -1171,6 +1183,21 @@ window.KO_PATCH = {
     meth:["RK4 강체 동역학","비례항법 유도","유전 알고리즘 / PPO","몬테카를로 강건성 평가","시커 노이즈 및 지연 모델"],
     limit:"단일 표적과 단순화된 공력을 적용한 2D 시뮬레이션으로, 고정밀 비행 모델이 아니라 제어·최적화의 트레이드오프를 분석하기 위해 구현했습니다. 직접 조작 가능한 항목으로 수록했습니다.",
     mlimit:"2D, 단일 표적, 단순화된 공력입니다. 비행 모델이 아닌 제어·최적화 분석이며, 직접 조작 가능하도록 구현했습니다."},
+   {kick:"개인화 In-Context Learning · LLM 평가", title:"전문가의 암묵지를 로컬 소형 모델로 옮길 수 있는가",
+    chip:["포스터 제출","green"],
+    lead:"핵심은 단순한 성능 향상이 아니라, 무엇이 전이되고 무엇이 전이되지 않는지를 분리해 측정한 데 있습니다.",
+    blocks:[
+     ["문제","타인의 판단을 모델에 이식하려면 그 판단의 근거가 된 맥락을 프롬프트에 함께 넣어야 하며, 실패 이력·공정 조건·미공개 설계 판단이 여기에 해당합니다. 이는 외부 API로 반출하기 가장 어려운 자료이므로, 개인·조직 단위의 개인화는 구조상 로컬 구동이 가능한 소형 모델을 지향하게 됩니다. 그 규모에서 사람의 판단 방식이 실제로 전이되는지가 미해결 지점입니다.",
+      "판단의 근거가 된 맥락은 외부 API로 반출하기 가장 어려운 자료이므로, 개인화는 구조상 로컬 소형 모델을 지향합니다. 그 규모에서의 전이 여부가 미해결 지점입니다."],
+     ["접근","공학 트레이드오프 딜레마에 제가 서술형으로 답한 기록 10건을 In-Context Learning 예시로 삼되, 4단계 틀로 재작성하지 않고 원문 그대로 주입했습니다. 조건은 한 겹씩만 차이가 나도록 세 가지로 구성했으며, 동일한 프롬프트를 클라우드 대형 모델과 맥미니에서 구동한 7.8B 모델에 각각 투입했습니다. 단일한 정확도 수치로는 모방과 전이를 분간할 수 없으므로 측정을 두 축으로 분리하여, 형식은 제가 답한 적 없는 도메인 24문항에서, 내용은 제 10문항에서 leave-one-out으로 평가했습니다.",
+      "제 답변 10건을 원문 그대로 예시로 주입하고, 한 겹씩만 다른 세 조건을 클라우드 모델과 로컬 7.8B에 동일하게 투입했습니다. 형식은 미답 도메인 24문항, 내용은 제 10문항에서 leave-one-out으로 평가했습니다."],
+     ["결과","형식은 지시만으로 확보되었으며 모델 규모에 좌우되지 않았습니다. 지배 변수를 하나로 확정한 비율이 클라우드에서 67%에서 100%로, 로컬에서 67%에서 92%로 함께 상승했습니다. 반면 내용은 클라우드에서만 0%에서 30%로 상승했고 7.8B에서는 상승하지 않았습니다. 로컬 모델은 예시의 압축된 서술 방식조차 반영하지 못해 답변 길이가 거의 변하지 않은 반면, 클라우드 모델은 절반 이하로 줄였습니다. 조건을 가린 1:1 선호 비교에서는 지시만 준 답변이 더 선호되었으므로, 개인화는 더 나은 답이 아니라 저에게 가까운 답을 만든 것으로 해석됩니다.",
+      "형식은 지시만으로 확보되며 모델 규모에 좌우되지 않았습니다. 내용은 클라우드에서만 상승했고 7.8B에서는 상승하지 않았습니다. 선호 비교에서는 지시만 준 답변이 우세했으므로, 개인화는 더 나은 답이 아니라 저에게 가까운 답을 만들었습니다."]],
+    stats:[["67 &rarr; 100 / 92%","지배 변수 단일 확정 비율, 클라우드 / 로컬 · 지시만으로"],["0 &rarr; 30%","제가 실제로 고른 변수와의 일치, 클라우드에서만"],["10","예시로 사용한 제 답변 수 · 평가 문항이 아닙니다"]],
+    figs:[[null,"형식과 내용은 분리됩니다. 지배 변수를 하나로 확정하는 비율은 두 모델 모두 지시만으로 상승하며(좌), 제가 실제로 고른 변수와 일치하는 비율은 클라우드 모델에서만 상승합니다(우)."]],
+    meth:["leave-one-out 평가","블라인드 1:1 선호 비교","구조화 라벨 추출","대응표본 비모수 검정","무료 API + 로컬 추론"],
+    limit:"내용 축은 10문항에 근거하므로 방향성이며 확정된 결과가 아닙니다. 단일 시드·평가자 1종·로컬 모델 1종만 시험했고, 제 데이터를 제가 설계한 지표로 평가했다는 제약이 있습니다.",
+    mlimit:"내용 축은 10문항에 근거한 방향성이며 확정된 결과가 아닙니다. 단일 시드·평가자 1종·로컬 모델 1종이며, 제 데이터를 제가 설계한 지표로 평가했습니다."},
   ],
 };
 
