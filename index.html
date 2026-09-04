@@ -89,28 +89,40 @@ body{word-break:keep-all;overflow-wrap:break-word}
   html[lang="ko"] .colb,html[lang="ko"] .ex-side .sl,html[lang="ko"] .abtab,
   html[lang="ko"] .rs-h,html[lang="ko"] .rs-g .k,html[lang="ko"] .rs-sub,
   html[lang="ko"] .rs-grp .k{text-transform:none}
-  /* 세그먼트 컨트롤 — 선택된 칸이 배경째로 미끄러진다 */
-  .langbar{position:absolute;top:2px;right:0;display:flex;padding:3px;
-    background:linear-gradient(180deg,#f1f3f7,#e9edf2);
-    border:1px solid var(--line2);border-radius:999px;
-    box-shadow:inset 0 1px 2px rgba(40,44,52,.07)}
+  /* 세그먼트 컨트롤 — 선택된 칸이 배경째로 미끄러진다.
+     칸은 그리드로 정확히 반씩 나눈다. 폭을 글자 길이에 맡기면 'EN' 칸과 '한국어' 칸이
+     달라져 50% 짜리 흰 썸이 라벨과 어긋난다(전에 어긋나 있었다). */
+  .langbar{position:absolute;top:2px;right:0;
+    display:grid;grid-template-columns:1fr 1fr;padding:3px;
+    background:rgba(118,120,128,.12);
+    border:1px solid rgba(40,44,52,.06);border-radius:999px;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+    -webkit-user-select:none;user-select:none}
   .lang-thumb{position:absolute;top:3px;left:3px;width:calc(50% - 3px);height:calc(100% - 6px);
     background:#fff;border-radius:999px;
-    box-shadow:0 1px 1px rgba(40,44,52,.14),0 3px 10px -5px rgba(40,44,52,.4);
-    transition:transform .34s cubic-bezier(.16,1,.3,1)}
+    box-shadow:0 0 0 .5px rgba(40,44,52,.05),0 1px 1px rgba(40,44,52,.06),
+               0 3px 8px -2px rgba(40,44,52,.2);
+    transition:transform .38s cubic-bezier(.32,.72,0,1)}
   html[lang="ko"] .lang-thumb{transform:translateX(100%)}
-  .langbar .langopt{position:relative;z-index:1;flex:1 0 auto;min-width:64px;
-    font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.07em;
-    padding:6px 12px;min-height:28px;border:0;background:none;border-radius:999px;
-    color:var(--mut);cursor:pointer;transition:color .24s}
+  /* 누르는 동안 썸이 살짝 줄어든다. :has 가 없는 브라우저에선 규칙째 무시될 뿐이다 */
+  .langbar:has(.langopt:active) .lang-thumb{transform:scale(.94)}
+  html[lang="ko"] .langbar:has(.langopt:active) .lang-thumb{transform:translateX(100%) scale(.94)}
+  .langbar .langopt{position:relative;z-index:1;min-width:0;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--sans);font-size:12.5px;font-weight:600;letter-spacing:.01em;
+    padding:0 15px;min-height:30px;border:0;background:none;border-radius:999px;
+    color:#5f646d;cursor:pointer;transition:color .26s;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation}
+  .langbar .langopt[data-l="en"]{letter-spacing:.07em}
   .langbar .langopt:hover{color:var(--body)}
   .langbar .langopt.on{color:var(--ink)}
   .langbar .langopt:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-  .langbar .langopt[data-l="ko"]{font-family:var(--sans);letter-spacing:0;font-size:12px}
   .head{position:relative}
   @media(max-width:640px){
-    .langbar{top:20px}
-    .langbar .langopt{min-height:32px;min-width:58px;padding:6px 10px}
+    /* 폰에서는 이름 옆에 끼지 않게 위쪽 한 줄을 통째로 내준다.
+       칸 하나가 44px 이상이라 엄지로 눌러도 빗나가지 않는다. */
+    .langbar{top:4px}
+    .langbar .langopt{min-height:44px;padding:0 17px;font-size:13.5px}
   }
   .lead-hint{font-family:var(--mono);font-size:12px;color:var(--mut);line-height:1.6;margin:16px 0 64px}
   .lead-hint b{color:var(--body);font-weight:500}
@@ -516,7 +528,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
   @media(max-width:640px){
     html{font-size:16.5px}
     .wrap{padding:0 20px}
-    .head{padding:24px 0 0}
+    .head{padding:62px 0 0}   /* 위 62px 은 언어 토글이 앉는 자리다 */
     .namerow{font-size:1.5rem;margin-bottom:8px}
     .eyebrow{font-size:11px}
     .head h1{font-size:1.7rem;line-height:1.2;margin-top:11px;max-width:none}
@@ -585,7 +597,7 @@ body{word-break:keep-all;overflow-wrap:break-word}
       <span class="pills" id="drivepills"></span>
       <span class="tgo" data-ko="열기 <i>&#9654;</i>">Open <i>&#9654;</i></span>
     </a>
-    <p class="scroll-cue" id="scue">There's an About Me below <i>&#8595;</i></p>
+    <p class="scroll-cue" id="scue" data-ko="아래에 소개가 있습니다 <i>&#8595;</i>">There's an About Me below <i>&#8595;</i></p>
     <a class="tile tile-about" href="#about">
       <span class="tic" aria-hidden="true"></span>
       <h2 data-ko="소개">About Me</h2>
@@ -801,7 +813,7 @@ const RESUME_EN={
        t:"<a href='https://matinnovlab.com/' target='_blank' rel='noopener'>matinnovlab.com</a>"},
       {r:"Team member · Living Paper",o:"Korean I-Corps (TeX-Corps) 2026 · Korea University Lab-Startup Innovation Corps",d:"2026 · certificate of completion",
        b:"Ran fifty field interviews that moved the project from simulation-pipeline debugging to meeting comprehension.",
-       p:"I trained in evidence-based customer discovery, including an on-site phase at UC Berkeley through the Korea Innovation Center (KIC). The MVP keeps plaintext and keys on the device; the cloud relays ciphertext only."},
+       p:"I trained in evidence-based customer discovery, including an on-site phase at UC Berkeley through the Korea Innovation Center (KIC). What I took from it is the habit of writing the belief down first, so that the interviews have something specific to contradict."},
     ],
     projH:"Selected projects, each written up in full elsewhere on this site:",
     proj:[
@@ -847,11 +859,23 @@ const RESUME_EN={
   foot:"Grades and credits are self-reported from my transcript. Everything else here links to work you can open and check.",
 };
 
+/* 이 항목의 주인공은 과정이다. 아이템은 또 피봇될 수 있으므로 지금 제품의
+   상세는 오래가지 않는다. 오래가는 것은 근거가 결정을 바꾼 경로다. */
 const SIMOPS_EN = {
-  prog:"Living Paper · Korea University Lab-Startup Innovation Corps (Korean I-Corps, 2026 · UC Berkeley KIC)",
-  stats:[["50","field interviews that set the direction"]],
-  desc:"<b>What it does.</b> In a lab meeting there is always a moment you nod through without actually following. One tap marks that moment. After the meeting, Living Paper explains it back to you using <b>your own lab's documents</b> — the glossary, the SOPs, the notebooks someone wrote three years ago — instead of the open internet, so the explanation arrives in the terms your lab actually uses. <b>Where the computation happens.</b> The answer is written by a model running <b>inside the lab</b>, on the lab's own machine. The cloud is only a courier: plaintext and decryption keys never leave your device and the in-lab node, the relay stores ciphertext it cannot read, and a security tab lets you <b>search the relay's actual stored bytes</b> for any word you just typed. Zero hits, verifiably. That constraint is the whole design — a lab that cannot send unpublished work to an external API can still have this. <b>Where it came from.</b> Fifty field interviews in the Korean I-Corps program, including an on-site phase at UC Berkeley, pointed here. <b>Status.</b> The MVP is live and opens without an account. In the public demo the cryptography is real; the relay and the in-lab node are simulated in the tab, and the page says so on every screen.",
-  mdesc:"One tap marks the moment you nodded through; afterwards it explains that moment from <b>your own lab's documents</b>, written by a model running inside the lab. The cloud relays ciphertext it cannot read, and a security tab proves it by searching the relay's real bytes. Fifty field interviews pointed here. MVP live.",
+  prog:"Korean I-Corps 2026 · Korea University Lab-Startup Innovation Corps · on-site phase at UC Berkeley through the Korea Innovation Center · certificate of completion",
+  stats:[["50","field interviews over the program"]],
+  diag:{
+    alt:"How the idea moved: what we believed, what the field said, what we changed",
+    top:"the item can move again; the interviews are what decide",
+    cols:[
+      ["GOING IN","SimOps","find the unstable variable","without opening the model"],
+      ["THE FIELD","50 interviews","the problem was real","people had adapted to it"],
+      ["AFTER","Living Paper","rebuilt around the meeting","you nodded through"],
+    ],
+    foot:"one constraint survived the pivot: unpublished work stays in the lab",
+  },
+  desc:"<b>What the program is.</b> Korean I-Corps is a lab-startup training program run by Korea University's Lab-Startup Innovation Corps, and the method is the content of it: write down what you believe about a customer, take that belief to people who actually have the problem, and let what you hear decide whether the idea survives. My cohort ran through 2026 and included an on-site phase at UC Berkeley through the Korea Innovation Center. I finished it with a certificate of completion. <b>What we believed going in.</b> The team entered as <b>SimOps</b>. When an OEM and a supplier run their simulation models coupled together, the run throws numerical errors nobody can locate, because the supplier's model arrives as a black box and each side points at the other's. We had a way to find the unstable variables from the outside, without opening either model, and we were confident that was the product. <b>What fifty interviews showed.</b> The blame game was real and it cost weeks. It also sat with engineers who had long since built their schedules around it, and none of them were going to reorganize a program for a diagnosis. What came up unprompted, in interview after interview, was smaller and closer to hand: people leave a lab meeting having nodded through the parts they never followed, and the chance to ask again does not come back. <b>What we changed.</b> We dropped the diagnosis tool and rebuilt around that meeting. One constraint carried over intact, because every interview agreed on it: unpublished work cannot leave the lab. The MVP that came out of it, Living Paper, is live and opens without an account. <b>What I keep from it.</b> The interviews outlast the item. This one may move again, and if it does the part worth showing stays the same: the belief we wrote down, the evidence that contradicted it, and how long we took to act on that evidence.",
+  mdesc:"<b>The program.</b> Korean I-Corps 2026, run by Korea University's Lab-Startup Innovation Corps, with an on-site phase at UC Berkeley through the Korea Innovation Center. Certificate of completion. <b>Going in.</b> We were <b>SimOps</b>: find where a coupled OEM-and-supplier simulation goes numerically wrong, without opening either model. <b>Fifty interviews.</b> The problem was real, and the engineers who had it had already built their schedules around it. What came up unprompted was smaller: a lab meeting you leave having nodded through the parts you never followed. <b>What we changed.</b> We dropped the diagnosis tool and rebuilt around that meeting, keeping the one constraint every interview agreed on: unpublished work cannot leave the lab. The MVP, Living Paper, is live. <b>What I keep.</b> The interviews outlast the item. This one may move again; the evidence is what decides.",
 };
 
 const MOB=()=>window.matchMedia("(max-width:640px)").matches;
@@ -863,14 +887,15 @@ const SITE="https://euichanlee0608-svg.github.io/";
 const APPS_EN=[
   {id:"engbrain",name:"Engineering Brain",url:SITE+"engineering-brain/",type:"Web app",
    desc:"It asks a hard engineering or philosophy dilemma, you answer in your own words, and it grades the reasoning.",status:["Live","green"]},
+  {id:"optguide",name:"Optimal Design Visual Guide",url:SITE+"optimal-design-guide/",type:"Guide · EN / KO",
+   desc:"The whole CAE optimization stack (DOE, surrogates, optimizers, reliability) as animations the browser computes live. English and Korean.",status:["Live","green"]},
+  /* 잠긴 항목은 맨 아래. 위 두 개는 지금 열리고, 이건 안 열린다 */
   {id:"studyvault",name:"Study Vault",locked:true,type:"Personal · not public",
-   desc:"My own study space: 1,068 worked problems across four courses, each one re-derived and checked before it goes in. Closed to visitors — it is where I study, not something to show.",status:["Private","amber"]},
+   desc:"My own study space: nothing goes in until I have worked the problem through again and checked it myself. Closed to visitors, because it is where I study.",status:["Private","amber"]},
 ];
 /* Side projects and smaller builds. Kept because they are real and finished,
    filed here because they are not what the work is about. */
 const SIDE_APPS_EN=[
-  {id:"optguide",name:"Optimal Design Visual Guide",url:SITE+"optimal-design-guide/",type:"Guide · EN / KO",
-   desc:"The whole CAE optimization stack (DOE, surrogates, optimizers, reliability) as animations the browser computes live. English and Korean.",status:["Live","green"]},
   {id:"newslab",name:"News Literacy Lab",url:SITE+"news-literacy-lab/",type:"Web app",
    desc:"Breaks a news article down by who has a stake in it, rather than by which camp it belongs to. Paste a link.",status:["Live","green"]},
   {id:"emoquad",name:"Emotion Quadrant",url:SITE+"emotion-quadrant/",type:"Web app · Korean",
@@ -933,9 +958,9 @@ window.KO_PATCH = {
     systems:{name:"Systems & Tooling", type:"문서",
       sub:"직접 구축한 도구의 안전장치, 그리고 폐기한 하나",
       desc:"모든 도구에 동일한 원칙을 적용했습니다. 도구 자신을 신뢰하지 않는 독립적 검증. diff 기반 기록, 계약 테스트 게이트, 승인 단계, 등급이 부여된 수식.", status:["진행 중","blue"]},
-    simops:{name:"Living Paper", type:"문서",
-      sub:"놓친 대목을 우리 랩 문서로 설명해 주는 어시스턴트 · 한국형 I-Corps 2026",
-      desc:"이해하지 못한 채 넘어간 순간을 표시해 두면, 회의 후 랩 문서를 근거로 그 대목을 설명해 줍니다. 연산은 연구실 안에서 돕니다. 현장 인터뷰 50건이 방향을 정했습니다.", status:["MVP 운영 중","green"]},
+    simops:{name:"한국형 I-Corps", type:"문서",
+      sub:"고객 발굴, 그리고 인터뷰 50건이 만든 피봇 · 고려대학교 2026",
+      desc:"실험실 창업 탐색 교육입니다. 고객에 대해 믿는 바를 먼저 적고, 현장에 나가 그 믿음을 확인합니다. 인터뷰 50건이 첫 아이템을 접게 했습니다. 그 자리를 대신한 MVP인 Living Paper는 운영 중입니다.", status:["수료","green"]},
     misc:{name:"기타 · 취미", type:"폴더", countWord:"개",
       desc:"완성했고 실제로 돌아가지만, 저를 평가받고 싶은 대상은 아닌 것들입니다. 연습으로 돌린 시뮬레이션과, 만드는 재미로 만든 앱."},
     interests:{name:"Research Interests", type:"문서",
@@ -955,12 +980,12 @@ window.KO_PATCH = {
   APPS:[
     {name:"Engineering Brain", type:"웹앱",
      desc:"고난도 공학·철학 딜레마를 제시하면 직접 서술한 답변을 받아, 그 논리를 채점해 줍니다.", status:["운영 중","green"]},
-    {name:"Study Vault", type:"개인용 · 비공개",
-     desc:"제 학습 공간입니다. 네 과목 1,068문제를 직접 다시 풀고 검산한 뒤에만 넣습니다. 보여주려고 만든 것이 아니라 제가 공부하는 곳이라 외부에는 열지 않았습니다.", status:["비공개","amber"]},
-  ],
-  SIDE_APPS:[
     {name:"Optimal Design Visual Guide", type:"가이드 · 한/영",
      desc:"CAE 최적설계의 전 과정(실험계획·대리모델·최적화·신뢰성)을 브라우저가 실시간으로 계산하는 애니메이션으로 구성했습니다.", status:["운영 중","green"]},
+    {name:"Study Vault", type:"개인용 · 비공개",
+     desc:"제 학습 공간입니다. 직접 다시 풀고 검산한 문제만 넣습니다. 제가 공부하는 곳이라 외부에는 열지 않았습니다.", status:["비공개","amber"]},
+  ],
+  SIDE_APPS:[
     {name:"News Literacy Lab", type:"웹앱",
      desc:"기사를 진영이 아닌 이해관계자 기준으로 분해합니다. 링크를 입력해 보세요.", status:["운영 중","green"]},
     {name:"Emotion Quadrant", type:"웹앱 · 한국어",
@@ -1041,7 +1066,7 @@ window.KO_PATCH = {
          p:"서병석 교수님 지도. 지향하는 방향은 실측으로만 정답을 확인할 수 있는 영역에서의 데이터 효율적 실험 설계입니다."},
         {r:"Living Paper 팀원",o:"한국형 I-Corps (TeX-Corps) 2026 · 고려대학교 실험실창업혁신단",d:"2026년 · 수료",
          b:"현장 인터뷰 50건을 수행하여 시뮬레이션 파이프라인 진단에서 미팅 이해도 문제로 방향을 전환했습니다.",
-         p:"근거 기반 customer discovery 방법론을 교육받았으며, Korea Innovation Center(KIC)를 통한 UC Berkeley 현지 과정에 참여했습니다. 그 결과물인 MVP는 평문과 복호키를 기기와 원내 노드에 두고 클라우드로는 암호문만 중계합니다."},
+         p:"근거 기반 customer discovery 방법론을 교육받았으며, Korea Innovation Center(KIC)를 통한 UC Berkeley 현지 과정에 참여했습니다. 남은 것은 믿는 바를 먼저 적어 두는 습관입니다. 그래야 인터뷰가 반박할 대상이 생깁니다."},
       ],
       projH:"이 사이트에 상세를 수록한 주요 프로젝트:",
       proj:[
@@ -1088,10 +1113,20 @@ window.KO_PATCH = {
   },
 
   SIMOPS:{
-    prog:"Living Paper · 고려대학교 실험실창업혁신단 (한국형 I-Corps, 2026 · UC Berkeley KIC)",
-    stats:[["50","방향을 정한 현장 인터뷰"]],
-    desc:"<b>무엇을 하는가.</b> 랩미팅에는 이해하지 못한 채 고개만 끄덕이고 넘어가는 순간이 늘 있습니다. 그 순간을 한 번의 탭으로 표시해 둡니다. 회의가 끝나면 Living Paper가 그 대목을 <b>우리 랩의 문서</b>로 다시 설명해 줍니다. 용어집, SOP, 3년 전 누군가가 쓴 실험노트를 근거로 삼기 때문에, 인터넷 검색이 아니라 우리 랩이 실제로 쓰는 용어로 설명이 나옵니다. <b>연산은 어디서 도는가.</b> 답을 쓰는 모델은 <b>연구실 안</b>, 랩 자체 장비에서 돕니다. 클라우드는 전달자에 불과합니다. 평문과 복호키는 기기와 원내 노드를 벗어나지 않고, 릴레이는 해독 불가능한 암호문만 저장하며, 보안 탭에서 <b>릴레이가 실제 저장한 바이트</b>를 방금 입력한 단어로 검색해 0건임을 직접 확인하실 수 있습니다. 이 제약이 설계의 전부입니다. 미공개 연구를 외부 API로 보낼 수 없는 연구실도 이 도구는 쓸 수 있어야 하기 때문입니다. <b>어디서 나왔는가.</b> 한국형 I-Corps 과정에서 진행한 현장 인터뷰 50건이 이 방향을 가리켰고, UC Berkeley 현장 교육도 그 과정에 포함되어 있었습니다. <b>현재 상태.</b> MVP를 운영 중이며 계정 없이 열립니다. 공개 데모에서 암호화는 실제로 동작하고 릴레이와 원내 노드는 탭 안의 모의이며, 그 사실을 모든 화면에 표시해 두었습니다.",
-    mdesc:"이해하지 못한 채 넘어간 순간을 한 번의 탭으로 표시해 두면, 회의 후 <b>우리 랩 문서</b>를 근거로 그 대목을 설명해 줍니다. 답은 연구실 안 모델이 씁니다. 클라우드는 해독 못 하는 암호문만 중계하고, 보안 탭에서 직접 확인하실 수 있습니다. 현장 인터뷰 50건이 이 방향을 정했습니다. MVP 운영 중.",
+    prog:"한국형 I-Corps 2026 · 고려대학교 실험실창업혁신단 · Korea Innovation Center를 통한 UC Berkeley 현장 교육 · 수료",
+    stats:[["50","과정 중 진행한 현장 인터뷰"]],
+    diag:{
+      alt:"아이템이 움직인 경로: 무엇을 믿었고, 현장은 무엇을 말했고, 무엇을 바꿨는가",
+      top:"아이템은 또 움직일 수 있다. 결정하는 것은 인터뷰다",
+      cols:[
+        ["출발","SimOps","모델을 열지 않고","불안정한 변수를 찾는다"],
+        ["현장","인터뷰 50건","문제는 실제로 있었다","다들 이미 적응해 있었다"],
+        ["이후","Living Paper","끄덕이고 넘어간 회의를","중심으로 다시 설계"],
+      ],
+      foot:"피봇 후에도 남은 제약. 미공개 연구는 연구실 밖으로 나가지 않는다",
+    },
+    desc:"<b>어떤 과정인가.</b> 한국형 I-Corps는 고려대학교 실험실창업혁신단이 운영하는 실험실 창업 탐색 교육입니다. 방법 자체가 이 과정의 내용입니다. 고객에 대해 믿고 있는 바를 먼저 적습니다. 그다음 그 문제를 실제로 겪는 사람들을 찾아가 그 믿음을 확인합니다. 아이템의 존속 여부는 현장에서 들은 내용이 결정합니다. 2026년 과정이었고, Korea Innovation Center를 통한 UC Berkeley 현장 교육이 포함되어 있었습니다. 수료증을 받았습니다. <b>처음에 믿었던 것.</b> 팀의 출발점은 <b>SimOps</b>였습니다. OEM과 협력사가 각자의 시뮬레이션 모델을 결합해 돌리면 원인을 짚을 수 없는 수치 오류가 납니다. 협력사 모델이 블랙박스로 넘어오기 때문에 서로 상대 모델을 지목하게 됩니다. 저희에게는 모델을 열지 않고 바깥에서 불안정한 변수를 찾아내는 방법이 있었고, 그것이 제품이라고 확신했습니다. <b>인터뷰 50건이 알려준 것.</b> 책임 공방은 실제로 있었고 몇 주를 잡아먹고 있었습니다. 다만 그 문제를 안고 있는 엔지니어들은 이미 그 상태에 맞춰 일정을 짜고 있었습니다. 진단 하나를 위해 개발 일정을 다시 짤 사람은 없었습니다. 묻지 않아도 인터뷰마다 반복해서 나온 이야기는 더 작고 더 가까운 것이었습니다. 랩미팅에서 이해하지 못한 대목을 끄덕이고 넘어가면, 다시 물을 기회는 돌아오지 않는다는 것입니다. <b>무엇을 바꿨나.</b> 진단 도구를 접고 그 회의를 중심으로 다시 만들었습니다. 제약 하나는 그대로 가져왔습니다. 모든 인터뷰가 같은 말을 했기 때문입니다. 미공개 연구는 연구실 밖으로 나갈 수 없습니다. 그렇게 나온 MVP인 Living Paper는 계정 없이 열립니다. <b>무엇이 남는가.</b> 아이템보다 인터뷰가 오래갑니다. 지금 아이템도 다시 움직일 수 있습니다. 그때도 보여 드릴 것은 같습니다. 무엇을 믿고 적었는지, 어떤 근거가 그것을 뒤집었는지, 그 근거를 받아들이는 데 얼마나 걸렸는지입니다.",
+    mdesc:"<b>어떤 과정인가.</b> 한국형 I-Corps 2026. 고려대학교 실험실창업혁신단 과정이고, Korea Innovation Center를 통한 UC Berkeley 현장 교육을 포함합니다. 수료했습니다. <b>처음 믿었던 것.</b> 출발점은 <b>SimOps</b>였습니다. OEM과 협력사의 시뮬레이션을 결합했을 때 어디서 수치가 어긋나는지, 모델을 열지 않고 찾아내는 도구입니다. <b>인터뷰 50건.</b> 문제는 실제로 있었지만 엔지니어들은 이미 그에 맞춰 일정을 짜고 있었습니다. 묻지 않아도 나온 이야기는 더 작았습니다. 랩미팅에서 끄덕이고 넘어간 대목을 다시 물을 기회가 없다는 것이었습니다. <b>무엇을 바꿨나.</b> 진단 도구를 접고 그 회의를 중심으로 다시 만들었습니다. 모든 인터뷰가 일치한 제약 하나는 그대로 두었습니다. 미공개 연구는 연구실 밖으로 나갈 수 없습니다. MVP인 Living Paper는 운영 중입니다. <b>남는 것.</b> 아이템보다 인터뷰가 오래갑니다. 지금 아이템도 또 움직일 수 있습니다. 결정하는 것은 근거입니다.",
   },
 
   RESEARCH:[
@@ -1266,7 +1301,7 @@ const TREEMETA_EN={
   projects:{name:"Projects",type:"Folder",countWord:"project",desc:"Engineering and research projects, each with its method, its result, and what it does not show."},
   apps:{name:"Live Web Apps",type:"Folder",countWord:"item",desc:"Things you can open and use right now. Apps that came out of a project are filed with that project; the smaller builds are under Other & Hobby."},
   systems:{name:"Systems & Tooling",type:"Document",sub:"the safeguards in my own tooling, and the piece I dropped",desc:"One design rule everywhere: an independent check that doesn't trust the tool itself. Diff-based records, contract-tested gates, approval steps, graded equations.",status:["Ongoing","blue"]},
-  simops:{name:"Living Paper",type:"Document",sub:"explains what you missed, from your own lab's documents · Korean I-Corps 2026",desc:"Mark the moment you nodded through; afterwards it explains that moment from your lab's own documents, computed inside the lab. Fifty field interviews set the direction.",status:["MVP live","green"]},
+  simops:{name:"Korean I-Corps",type:"Document",sub:"customer discovery, and the pivot fifty interviews forced · Korea University 2026",desc:"A lab-startup training program: write down what you believe about a customer, then go and test that belief in the field. Fifty interviews moved us off our first idea. The MVP that replaced it, Living Paper, is live.",status:["Completed","green"]},
   misc:{name:"Other & Hobby",type:"Folder",countWord:"item",desc:"Finished, real, and not what I want to be judged on. Simulations that were exercises, and apps built for the fun of building them."},
   interests:{name:"Research Interests",type:"Document",sub:"the optimal-design stack, end to end",desc:"What I'm currently studying: experiment design, surrogate models, optimizers, and reliability-based design.",status:["Studying","blue"]},
 };
@@ -1280,9 +1315,9 @@ const projNode = (i) => ({id:"p"+i,kind:"proj",ri:i,name:RESEARCH[i].title,
 function buildTree(){ const M=TREEMETA; return {id:"pieces",name:M.drive,kids:[
   Object.assign({id:"projects",kind:"dir",
    kids:RESEARCH.slice(0,CORE).map((_,i)=>projNode(i))}, M.projects),
-  Object.assign({id:"simops",kind:"view",view:"simops"}, M.simops),
   Object.assign({id:"apps",kind:"dir",
    kids:APPS.map(a=>Object.assign({kind:"app"},a))}, M.apps),
+  Object.assign({id:"simops",kind:"view",view:"simops"}, M.simops),
   Object.assign({id:"systems",kind:"view",view:"systems"}, M.systems),
   Object.assign({id:"misc",kind:"dir",
    kids:RESEARCH.slice(CORE).map((_,k)=>projNode(CORE+k))
@@ -1520,28 +1555,25 @@ function renderResume(){
     + `<p class="rs-foot">${R.foot}</p></div>`;
 }
 function renderSimops(){
-  const svg=`<svg viewBox="0 0 720 200" role="img" aria-label="Zero-knowledge relay diagram">
+  /* 다이어그램은 제품 구조 대신 아이템이 움직인 경로를 그린다. 문구는
+     SIMOPS.diag 에 있어 한국어에서도 같이 번역된다. */
+  const D=SIMOPS.diag, X=[20,260,500];
+  const col=i=>{
+    const c=D.cols[i], x=X[i], mid=i===1;
+    return `<rect x="${x}" y="44" width="200" height="92" rx="10" fill="${mid?"#f5f8fc":"#fff"}" stroke="${mid?"#c3cfe0":"#dcdcd7"}"/>
+      <text x="${x+100}" y="66" text-anchor="middle" font-size="9" letter-spacing="1" fill="#9aa0aa">${c[0]}</text>
+      <text x="${x+100}" y="90" text-anchor="middle" font-size="14" font-weight="600" fill="#15171c">${c[1]}</text>
+      <text x="${x+100}" y="110" text-anchor="middle" font-size="10.5" fill="#737985">${c[2]}</text>
+      <text x="${x+100}" y="126" text-anchor="middle" font-size="10.5" fill="#737985">${c[3]}</text>`;
+  };
+  const arrow=(a,b)=>`<line x1="${a}" y1="90" x2="${b}" y2="90" stroke="#737985" stroke-width="1.5" marker-end="url(#ar)"/>`;
+  const svg=`<svg viewBox="0 0 720 200" role="img" aria-label="${D.alt}">
     <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#737985"/></marker></defs>
     <g font-family="Inter, sans-serif">
-      <rect x="20" y="52" width="170" height="70" rx="10" fill="#fff" stroke="#dcdcd7"/>
-      <text x="105" y="78" text-anchor="middle" font-size="14" font-weight="600" fill="#15171c">Your device</text>
-      <text x="105" y="97" text-anchor="middle" font-size="10.5" fill="#737985">record · mark · encrypt</text>
-      <text x="105" y="112" text-anchor="middle" font-size="10.5" fill="#2f7d4f">plaintext + keys stay here</text>
-      <rect x="275" y="52" width="170" height="70" rx="10" fill="#f1f3f6" stroke="#dcdcd7" stroke-dasharray="5 4"/>
-      <text x="360" y="78" text-anchor="middle" font-size="14" font-weight="600" fill="#15171c">Cloud relay</text>
-      <text x="360" y="97" text-anchor="middle" font-size="10.5" fill="#737985">queues ciphertext only</text>
-      <text x="360" y="112" text-anchor="middle" font-size="10.5" fill="#9a3b2e">cannot read a word of it</text>
-      <rect x="530" y="52" width="170" height="70" rx="10" fill="#fff" stroke="#dcdcd7"/>
-      <text x="615" y="78" text-anchor="middle" font-size="14" font-weight="600" fill="#15171c">In-lab node</text>
-      <text x="615" y="97" text-anchor="middle" font-size="10.5" fill="#737985">decrypt · lab-docs LLM</text>
-      <text x="615" y="112" text-anchor="middle" font-size="10.5" fill="#2f7d4f">re-seals before replying</text>
-      <line x1="190" y1="78" x2="268" y2="78" stroke="#737985" stroke-width="1.5" marker-end="url(#ar)"/>
-      <line x1="268" y1="98" x2="190" y2="98" stroke="#737985" stroke-width="1.5" marker-end="url(#ar)"/>
-      <line x1="445" y1="78" x2="523" y2="78" stroke="#737985" stroke-width="1.5" marker-end="url(#ar)"/>
-      <line x1="523" y1="98" x2="445" y2="98" stroke="#737985" stroke-width="1.5" marker-end="url(#ar)"/>
-      <text x="360" y="32" text-anchor="middle" font-size="11.5" fill="#2a2d33" font-weight="600">seize the relay and you get routing metadata, nothing else</text>
-      <rect x="120" y="150" width="480" height="34" rx="9" fill="#eef1f5" stroke="#cdd8e8"/>
-      <text x="360" y="172" text-anchor="middle" font-size="12" font-weight="600" fill="#2a2d33">the security tab searches the relay's actual stored bytes for your words — zero hits</text>
+      <text x="360" y="26" text-anchor="middle" font-size="11.5" fill="#2a2d33" font-weight="600">${D.top}</text>
+      ${col(0)}${arrow(220,254)}${col(1)}${arrow(460,494)}${col(2)}
+      <rect x="100" y="154" width="520" height="32" rx="9" fill="#eef1f5" stroke="#cdd8e8"/>
+      <text x="360" y="175" text-anchor="middle" font-size="12" font-weight="600" fill="#2a2d33">${D.foot}</text>
     </g></svg>`;
   return `<div class="so-prog">${SIMOPS.prog}</div>
     <div class="so-diagram">${svg}</div>
@@ -1637,7 +1669,11 @@ function applyLang(){
   document.title = ko ? META_KO.title : "Euichan Lee — Research & Systems";
   const d=document.querySelector('meta[name="description"]');
   if(d) d.setAttribute("content", ko ? META_KO.desc : d.dataset.en || d.getAttribute("content"));
-  document.querySelectorAll(".langopt").forEach(o=>o.classList.toggle("on", o.dataset.l===LANG));
+  document.querySelectorAll(".langopt").forEach(o=>{
+    const on=o.dataset.l===LANG;
+    o.classList.toggle("on", on);
+    o.setAttribute("aria-pressed", on ? "true" : "false");
+  });
 }
 function setLang(l){
   if(l===LANG) return;
