@@ -66,6 +66,11 @@ html[lang="ko"] .cap h2{font:600 19px/1.4 "IBM Plex Sans KR",sans-serif}
 .cap p{margin:4px 0 0;color:var(--ink2);max-width:36rem}
 .open{flex:none;font:inherit;font-size:15px;color:var(--bg);background:var(--ink);text-decoration:none;padding:9px 16px;min-height:42px;display:inline-flex;align-items:center;white-space:nowrap}
 .open:hover{background:var(--acc)}
+.open.off:hover{background:none}
+.open.off{background:none;color:var(--ink3);border:1px solid var(--line);cursor:default}
+.idx a.soon .kind{font-style:italic}
+.card.soon{cursor:default}
+
 
 /* below the bench: two short lists side by side */
 .notes{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:48px;margin-top:44px;padding-top:28px;border-top:1px solid var(--line)}
@@ -142,7 +147,6 @@ footer{margin-top:40px;color:var(--ink3);font-size:14px}
       <p class="sub"><span lang="en">Local only, not public.</span><span lang="ko">로컬 전용, 비공개입니다.</span></p>
       <ul class="tools">
         <li><b lang="en">Guitar tab extractor</b><b lang="ko">기타 악보 추출</b><span lang="en">Audio or a YouTube link in, tabs and chords out, all on my machine.</span><span lang="ko">음원이나 유튜브 링크를 넣으면 타브와 코드를 뽑아 줍니다. 전부 제 컴퓨터에서 돕니다.</span></li>
-        <li><b lang="en">My handwriting, rendered</b><b lang="ko">내 손글씨 재현</b><span lang="en">Glyphs traced from my own notes, so typed text comes out in my hand.</span><span lang="ko">제 필기에서 글자 윤곽을 따서, 입력한 글을 제 손글씨로 그려 냅니다.</span></li>
       </ul>
     </div>
   </div>
@@ -163,6 +167,8 @@ var APPS=[
   d:["Narrows 434 Korean emotion words in three steps until you can name what you feel.","한국어 감정 단어 434개를 세 단계로 좁혀, 지금 느끼는 감정에 이름을 붙입니다."]},
  {g:0,url:"../living-paper/",img:"living_paper",name:["Living Paper","Living Paper"],kind:["Prototype","시제품"],
   d:["The TeX-Corps team's prototype: a meeting assistant whose relay server only ever sees ciphertext.","TeX-Corps 팀 시제품입니다. 중계 서버가 암호문만 보는 회의 보조 도구입니다."]},
+ {g:0,url:"",img:"global_footnotes",name:["Global Footnotes","Global Footnotes"],kind:["In progress","준비 중"],
+  d:["Interviews with people in their twenties around the world, pinned on a globe: what worries them and how they deal with it. Not public until the first real interview is in; the people on it now are placeholders.","세계 20대의 불안과 그걸 마주하는 방법을 인터뷰해 지구본 위에 기록합니다. 첫 실제 인터뷰가 들어오면 공개하며, 지금 화면의 인물은 예시입니다."]},
  {g:0,url:"../stick-breaker-game/",img:"stick_breaker_game",name:["357 Stick Breaker","357 막대기 게임"],kind:["Game","게임"],
   d:["A Nim-style game with rows of 3, 5 and 7 sticks, against the computer or a friend.","3·5·7개 막대 줄로 하는 님(Nim) 계열 게임입니다. 컴퓨터나 친구와 둘 수 있습니다."]},
  {g:1,url:"../acoustic-harvester/",img:"acoustic_web",name:["Tune a noise harvester","소음 하베스터 튜닝"],kind:["Project","프로젝트"],
@@ -181,8 +187,9 @@ function src(a){return "../assets/workshop/"+a.img+".jpg"}
     idx+='<div class="group"><p class="glabel">'+bi(g)+'</p><ul class="idx">';
     strip+='<div class="strip"><p class="glabel">'+bi(g)+'</p><div class="rail">';
     APPS.forEach(function(a,i){ if(a.g!==gi) return;
-      idx+='<li><a href="'+a.url+'" target="_blank" rel="noopener" data-i="'+i+'"><span class="nm">'+bi(a.name)+'</span><span class="kind">'+bi(a.kind)+'</span></a></li>';
-      strip+='<a class="card" href="'+a.url+'" target="_blank" rel="noopener"><div class="screen"><img src="'+src(a)+'" alt="" width="960" height="600" loading="lazy"></div><h3>'+bi(a.name)+'</h3><p>'+bi(a.d)+'</p></a>';
+      var open=a.url?'<a href="'+a.url+'" target="_blank" rel="noopener"':'<a role="link" aria-disabled="true" tabindex="0" class="soon"';
+      idx+='<li>'+open+' data-i="'+i+'"><span class="nm">'+bi(a.name)+'</span><span class="kind">'+bi(a.kind)+'</span></a></li>';
+      strip+=(a.url?'<a class="card" href="'+a.url+'" target="_blank" rel="noopener">':'<a class="card soon" aria-disabled="true">')+'<div class="screen"><img src="'+src(a)+'" alt="" width="960" height="600" loading="lazy"></div><h3>'+bi(a.name)+'</h3><p>'+bi(a.d)+'</p></a>';
     });
     idx+='</ul></div>'; strip+='</div></div>';
   });
@@ -201,7 +208,9 @@ function src(a){return "../assets/workshop/"+a.img+".jpg"}
     setTimeout(function(){ img.src=src(a); img.classList.remove("fade"); },120);
     document.getElementById("pname").innerHTML=bi(a.name);
     document.getElementById("pdesc").innerHTML=bi(a.d);
-    document.getElementById("popen").href=a.url; document.getElementById("pshot").href=a.url;
+    var po=document.getElementById("popen"), ps=document.getElementById("pshot");
+    if(a.url){ po.href=a.url; ps.href=a.url; po.classList.remove("off"); po.innerHTML=bi(["Open","열기"]); ps.removeAttribute("aria-disabled"); }
+    else { po.removeAttribute("href"); ps.removeAttribute("href"); ps.setAttribute("aria-disabled","true"); po.classList.add("off"); po.innerHTML=bi(["Not public yet","공개 전"]); }
   }
   links.forEach(function(l){ var i=+l.dataset.i;
     l.addEventListener("mouseenter",function(){show(i)}); l.addEventListener("focus",function(){show(i)}); });
