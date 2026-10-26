@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workshop · Euichan Lee</title>
+<meta name="description" content="Euichan Lee (Leechan), undergraduate researcher at the intersection of AI and mechanical engineering: broadband acoustic energy harvesting, optimization, and fault-tolerant control, with the reproducible tooling built around them.">
+<meta name="author" content="Euichan Lee">
+<meta name="theme-color" content="#f7f8fa">
+<meta property="og:title" content="Workshop · Euichan Lee">
+<meta property="og:description" content="Research at the intersection of AI and mechanical engineering: every result stated with its limits, and tooling you can re-run.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://euichanlee0608-svg.github.io/workshop/">
+<meta property="og:image" content="https://euichanlee0608-svg.github.io/assets/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Euichan Lee (Leechan), Korea University — Toward research where AI and mechanical engineering meet.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://euichanlee0608-svg.github.io/assets/og-card.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231f3a5f'/><text x='16' y='22' font-size='14' font-family='Georgia,serif' font-weight='600' fill='white' text-anchor='middle'>EL</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* 한글 줄바꿈: 단어 중간에서 끊지 않되, 끊을 데가 없으면 넘치지 않게 (플레이북 §2-①) */
+body{word-break:keep-all;overflow-wrap:break-word}
+
+  :root{
+    --bg:#f7f8fa; --panel:#fff; --ink:#15171c; --body:#373c44; --mut:#737985;
+    --line:#e8eaed; --line2:#dbdee3; --accent:#2a2d33; --accent2:#4a4e56; --soft:#eef1f5;
+    --green:#2f7d4f; --blue:#2f5fa5; --amber:#9a7a1e;
+    --serif:"Newsreader",Georgia,serif; --sans:"Inter",system-ui,sans-serif; --mono:"JetBrains Mono",monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{font-size:17.5px}
+  body{background:
+      radial-gradient(120% 80% at 20% -10%,rgba(255,255,255,.8),transparent 60%),
+      var(--bg);
+    color:var(--body);font-family:var(--sans);line-height:1.68;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+  ::selection{background:#dfe6ef}
+  b{color:var(--ink);font-weight:600} em{font-style:italic;color:var(--accent)}
+  a{color:inherit}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 34px}
+
+  /* header */
+  .head{padding:60px 0 8px}
+  .namerow{font-family:var(--serif);font-weight:600;font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-.01em;color:var(--ink);line-height:1;margin-bottom:14px}
+  .namerow span{color:var(--mut);font-weight:400;font-size:.6em;letter-spacing:0}
+  .eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+  .head h1{font-family:var(--serif);font-weight:500;font-size:clamp(2.1rem,4.6vw,3.3rem);letter-spacing:-.02em;color:var(--ink);margin:20px 0 0;line-height:1.12;max-width:22ch}
+  .head .intro{margin-top:22px;color:var(--body);max-width:64ch;font-size:1.15rem}
+  .head .intro b{color:var(--ink)}
+  /* sr-only (crawlable + screen-reader content that lives behind clicks) */
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  .intro-m{display:none}
+
+  /* ===== landing: two parallel entries ===== */
+  .landing{display:grid;grid-template-columns:1.12fr 1fr;gap:18px;margin:34px 0 0;align-items:stretch}
+  .tile{display:flex;flex-direction:column;text-decoration:none;background:var(--panel);border:1px solid var(--line2);border-radius:16px;
+    padding:26px 28px 22px;box-shadow:0 18px 38px -30px rgba(40,44,52,.5);
+    transition:transform .22s cubic-bezier(.16,1,.3,1),box-shadow .22s,border-color .22s}
+  .tile:hover,.tile:focus-visible{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 30px 52px -28px rgba(40,44,52,.5);outline:none}
+  .tile-drive{background:linear-gradient(166deg,#fff,#f0f2f6)}
+  .tile .tic{width:44px;height:44px;color:var(--accent);transition:transform .3s cubic-bezier(.16,1,.3,1)}
+  .tile:hover .tic{transform:translateY(-2px) scale(1.06)}
+  .tile .tic svg{width:100%;height:100%;display:block}
+  .tile h2{font-family:var(--serif);font-weight:500;font-size:1.6rem;color:var(--ink);letter-spacing:-.015em;margin:15px 0 7px;line-height:1.12}
+  .tile p{font-size:1rem;color:var(--mut);line-height:1.55;max-width:40ch}
+  .tile .pills{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+  .tile .pills span{font-family:var(--mono);font-size:11px;color:var(--body);background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:4px 10px}
+  .tile .tgo{margin-top:auto;padding-top:18px;font-family:var(--mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:7px}
+  .tile .tgo i{font-style:normal;transition:transform .22s}
+  .tile:hover .tgo i{transform:translateX(4px)}
+  /* 한국어일 때 mono 로 잡힌 라벨류는 한글 자간이 벌어져 읽기 나쁘다 → sans 로 */
+  html[lang="ko"] .eyebrow,html[lang="ko"] .lead-hint,html[lang="ko"] .tile .pills span,
+  html[lang="ko"] .ex-path,html[lang="ko"] .ex-foot,html[lang="ko"] .ex-kbd,
+  html[lang="ko"] .colb,html[lang="ko"] .row .ty,html[lang="ko"] .chip,
+  html[lang="ko"] .ex-search input,html[lang="ko"] .kick,html[lang="ko"] .blk .l,
+  html[lang="ko"] .node .role,html[lang="ko"] .facts .f .k,html[lang="ko"] .meth b,
+  html[lang="ko"] .so-prog,html[lang="ko"] .stat .l,html[lang="ko"] figcaption,
+  html[lang="ko"] .abtab,html[lang="ko"] .rs-h,html[lang="ko"] .rs-g .k,html[lang="ko"] .rs-sub,
+  html[lang="ko"] .rs-grp .k,html[lang="ko"] .rs-lines em,html[lang="ko"] .rs-hon em,
+  html[lang="ko"] .rs-ith em,html[lang="ko"] .rs-tools,html[lang="ko"] .rs-tr .n,
+  html[lang="ko"] .rs-head .c a,html[lang="ko"] .rs-hon em{
+    font-family:var(--sans);letter-spacing:0}
+  html[lang="ko"] .eyebrow{text-transform:none}
+  html[lang="ko"] .kick,html[lang="ko"] .blk .l,html[lang="ko"] .facts .f .k,
+  html[lang="ko"] .colb,html[lang="ko"] .ex-side .sl,html[lang="ko"] .abtab,
+  html[lang="ko"] .rs-h,html[lang="ko"] .rs-g .k,html[lang="ko"] .rs-sub,
+  html[lang="ko"] .rs-grp .k{text-transform:none}
+  /* 세그먼트 컨트롤 — 선택된 칸이 배경째로 미끄러진다.
+     칸은 그리드로 정확히 반씩 나눈다. 폭을 글자 길이에 맡기면 'EN' 칸과 '한국어' 칸이
+     달라져 50% 짜리 흰 썸이 라벨과 어긋난다(전에 어긋나 있었다). */
+  .langbar{position:absolute;top:2px;right:0;
+    display:grid;grid-template-columns:1fr 1fr;padding:3px;
+    background:rgba(118,120,128,.12);
+    border:1px solid rgba(40,44,52,.06);border-radius:999px;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+    -webkit-user-select:none;user-select:none}
+  .lang-thumb{position:absolute;top:3px;left:3px;width:calc(50% - 3px);height:calc(100% - 6px);
+    background:#fff;border-radius:999px;
+    box-shadow:0 0 0 .5px rgba(40,44,52,.05),0 1px 1px rgba(40,44,52,.06),
+               0 3px 8px -2px rgba(40,44,52,.2);
+    transition:transform .38s cubic-bezier(.32,.72,0,1)}
+  html[lang="ko"] .lang-thumb{transform:translateX(100%)}
+  /* 누르는 동안 썸이 살짝 줄어든다. :has 가 없는 브라우저에선 규칙째 무시될 뿐이다 */
+  .langbar:has(.langopt:active) .lang-thumb{transform:scale(.94)}
+  html[lang="ko"] .langbar:has(.langopt:active) .lang-thumb{transform:translateX(100%) scale(.94)}
+  .langbar .langopt{position:relative;z-index:1;min-width:0;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--sans);font-size:12.5px;font-weight:600;letter-spacing:.01em;
+    padding:0 15px;min-height:30px;border:0;background:none;border-radius:999px;
+    color:#5f646d;cursor:pointer;transition:color .26s;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation}
+  .langbar .langopt[data-l="en"]{letter-spacing:.07em}
+  .langbar .langopt:hover{color:var(--body)}
+  .langbar .langopt.on{color:var(--ink)}
+  .langbar .langopt:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .head{position:relative}
+  @media(max-width:640px){
+    /* 폰에서는 이름 옆에 끼지 않게 위쪽 한 줄을 통째로 내준다.
+       칸 하나가 44px 이상이라 엄지로 눌러도 빗나가지 않는다. */
+    .langbar{top:4px}
+    .langbar .langopt{min-height:44px;padding:0 17px;font-size:13.5px}
+  }
+  .lead-hint{font-family:var(--mono);font-size:12px;color:var(--mut);line-height:1.6;margin:16px 0 64px}
+  .lead-hint b{color:var(--body);font-weight:500}
+  /* phones stack the tiles, so About Me can sit under the fold — say so, then
+     get out of the way as soon as the tile is actually on screen */
+  .scroll-cue{display:none}
+  @media(max-width:820px){
+    .scroll-cue{display:flex;align-items:center;justify-content:center;gap:8px;margin:-2px 0 -1px;
+      font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--mut);transition:opacity .35s}
+    .scroll-cue i{font-style:normal;animation:cueBob 1.7s ease-in-out infinite}
+    .scroll-cue.gone{opacity:0}
+  }
+  @keyframes cueBob{0%,100%{transform:translateY(0)}50%{transform:translateY(3px)}}
+
+  /* ===== file explorer ===== */
+  .explorer{display:none;margin:22px 0 64px;border:1px solid var(--line2);border-radius:14px;background:var(--panel);overflow:hidden;
+    box-shadow:0 26px 54px -38px rgba(40,44,52,.55)}
+  .explorer.on{display:block}
+  body.exp .landing,body.exp .lead-hint,body.exp .head h1,body.exp .head .intro,body.exp .head .intro-m{display:none}
+  body.exp .head{padding-bottom:0}
+  .ex-top{display:flex;align-items:center;gap:9px;padding:11px 13px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fdfdfe,#f1f3f6)}
+  .ex-btn{width:32px;height:32px;flex-shrink:0;border-radius:8px;border:1px solid var(--line2);background:#fff;color:var(--body);
+    display:grid;place-items:center;text-decoration:none;font-size:14px;line-height:1;transition:.18s}
+  .ex-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .ex-path{flex:1;min-width:0;display:flex;align-items:center;gap:2px;background:#fff;border:1px solid var(--line2);border-radius:8px;
+    padding:6px 11px;font-family:var(--mono);font-size:12px;color:var(--mut);overflow:hidden;white-space:nowrap}
+  .ex-path a{color:var(--body);text-decoration:none;padding:2px 6px;border-radius:5px;flex-shrink:0}
+  .ex-path a:hover{background:var(--soft);color:var(--accent)}
+  .ex-path .sep{color:var(--line2);flex-shrink:0}
+  .ex-path .cur{color:var(--ink);padding:2px 6px;overflow:hidden;text-overflow:ellipsis}
+  /* toolbar: instant filter, plus the keyboard hint that teaches the shortcuts */
+  .ex-tools{display:flex;align-items:center;gap:12px;padding:9px 13px;border-bottom:1px solid var(--line);background:#fbfcfd}
+  .ex-search{flex:1;min-width:0;max-width:330px;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line2);
+    border-radius:8px;padding:0 11px;transition:border-color .18s,box-shadow .18s}
+  .ex-search:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(42,45,51,.07)}
+  .ex-search svg{width:14px;height:14px;flex-shrink:0;color:var(--mut)}
+  .ex-search input{flex:1;min-width:0;border:0;outline:0;background:none;padding:8px 0;color:var(--ink);
+    font-family:var(--mono);font-size:12.5px}
+  .ex-search input::placeholder{color:var(--mut)}
+  .ex-search input::-webkit-search-cancel-button{-webkit-appearance:none}
+  .ex-kbd{margin-left:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--mut);white-space:nowrap}
+  .ex-kbd b{color:var(--body);background:#fff;border:1px solid var(--line2);border-radius:4px;padding:1px 5px;font-weight:400}
+  /* min-width:0 everywhere a grid item holds text — without it the track grows to
+     its min-content and the file list spills out past the explorer's rounded box */
+  .ex-main{display:grid;grid-template-columns:216px 1fr;min-height:430px}
+  .ex-main>*{min-width:0}
+  .ex-side{border-right:1px solid var(--line);background:#fafbfc;padding:14px 9px}
+  .ex-side .sl{font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);padding:0 10px 9px}
+  .ex-side a{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;text-decoration:none;color:var(--body);font-size:.93rem;line-height:1.3}
+  .ex-side a:hover{background:#eef1f5}
+  .ex-side a.on{background:#e5e9ef;color:var(--ink);font-weight:500}
+  .ex-side a.sub{margin-left:14px;font-size:.89rem;color:var(--mut)}
+  .ex-side a.sub.on{color:var(--ink)}
+  .ex-side a svg{width:16px;height:16px;flex-shrink:0;color:var(--mut)}
+  .ex-side a.on svg{color:var(--accent)}
+  .ex-side .sl.gap{padding-top:18px}
+  .ex-cols{display:grid;grid-template-columns:1fr 150px 176px;gap:16px;padding:4px 22px;border-bottom:1px solid var(--line);background:#fbfcfd}
+  .colb{display:flex;align-items:center;gap:5px;background:none;border:0;padding:7px 0;cursor:pointer;text-align:left;
+    font-family:var(--mono);font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);transition:color .15s}
+  .colb:hover{color:var(--accent)}
+  .colb i{font-style:normal;font-size:9px;opacity:0;transition:opacity .15s,transform .2s}
+  .colb:hover i{opacity:.45}
+  .colb.on{color:var(--ink)}
+  .colb.on i{opacity:1}
+  .colb.on.desc i{transform:rotate(180deg)}
+  .row{position:relative;display:grid;grid-template-columns:1fr 150px 176px;grid-template-areas:"nm ty st";gap:16px;align-items:center;
+    padding:14px 22px;border-bottom:1px solid var(--line);text-decoration:none;transition:background .15s}
+  .row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:0;background:var(--accent);transition:width .18s cubic-bezier(.16,1,.3,1)}
+  .row:hover,.row:focus-visible{background:var(--soft)}
+  .row:hover::before,.row:focus-visible::before{width:3px}
+  .row:focus-visible{outline:none}
+  .row.hid{display:none}
+  /* rows deal in one at a time when a folder opens, like a list being filled */
+  @keyframes rowIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .row{animation:rowIn .36s cubic-bezier(.16,1,.3,1) both;animation-delay:var(--d,0ms)}
+  #exlist.settled .row{animation:none}   /* deal in once per folder, not on every keystroke */
+  .row .nm{grid-area:nm;display:flex;gap:13px;align-items:flex-start;min-width:0}
+  .row .nm>span{min-width:0}
+  /* folder icons open on hover; every other kind just warms to the accent colour */
+  .row .ico{position:relative;width:22px;height:22px;flex-shrink:0;margin-top:1px;color:var(--accent2);transition:color .18s}
+  .row:hover .ico,.row:focus-visible .ico{color:var(--accent)}
+  .row .ico svg{position:absolute;inset:0;width:22px;height:22px;transition:opacity .2s}
+  .row .ico .op{opacity:0}
+  .row:hover .ico .op,.row:focus-visible .ico .op{opacity:1}
+  .row:hover .ico .cl,.row:focus-visible .ico .cl{opacity:0}
+  .ex-empty{padding:44px 22px;text-align:center;font-family:var(--mono);font-size:12px;color:var(--mut);line-height:1.7}
+  .ex-empty b{color:var(--body);font-weight:500}
+  .row .rn{font-family:var(--serif);font-size:1.08rem;font-weight:500;color:var(--ink);line-height:1.28;letter-spacing:-.005em;display:block}
+  .row .rn .ext{font-family:var(--mono);font-size:11px;color:var(--mut)}
+  .row .d{display:block;font-size:.87rem;color:var(--mut);line-height:1.5;margin-top:4px;overflow-wrap:break-word}
+  /* on wide screens the two meta cells are plain columns; on phones the wrapper
+     becomes one flex line so a long type or status wraps instead of truncating */
+  .row .meta{display:contents}
+  .row .ty{grid-area:ty;font-family:var(--mono);font-size:11.5px;color:var(--mut)}
+  .row .st{grid-area:st;justify-self:start;min-width:0}
+  .row .st .chip{white-space:normal}   /* never let a status token get clipped by the column */
+  .row .ch{display:none;grid-area:ch;color:var(--mut);font-size:19px;line-height:1;transition:transform .18s,color .18s}
+  .row:hover .ch{transform:translateX(3px);color:var(--accent)}
+  .ex-foot{padding:10px 20px;border-top:1px solid var(--line);background:#fafbfc;font-family:var(--mono);font-size:11px;color:var(--mut);
+    display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .ex-foot a{color:var(--accent);text-decoration:none;border-bottom:1px solid #cdd8e8}
+  .ex-foot a:hover{color:var(--ink)}
+
+  /* ===== modal viewer ===== */
+  .scrim{position:fixed;inset:0;background:rgba(28,30,38,.4);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .3s;z-index:900}
+  .scrim.on{opacity:1;pointer-events:auto}
+  .viewer{position:fixed;left:50%;top:50%;transform:translate(-50%,-46%) scale(.98);width:min(900px,94vw);max-height:88vh;background:var(--bg);border-radius:16px;box-shadow:0 50px 110px -30px rgba(20,22,30,.55);overflow:hidden;opacity:0;pointer-events:none;transition:opacity .32s cubic-bezier(.16,1,.3,1),transform .32s cubic-bezier(.16,1,.3,1);z-index:1000;display:flex;flex-direction:column}
+  .viewer.on{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+  .v-head{display:flex;align-items:center;justify-content:space-between;padding:20px 28px;border-bottom:1px solid var(--line);background:var(--panel);flex-shrink:0}
+  .v-head .vt{font-family:var(--serif);font-size:1.55rem;font-weight:500;color:var(--ink);letter-spacing:-.01em}
+  .v-head .vc{font-family:var(--mono);font-size:11.5px;color:var(--mut);margin-top:3px}
+  .close{width:36px;height:36px;border-radius:9px;border:1px solid var(--line2);background:#fff;cursor:pointer;display:grid;place-items:center;color:var(--mut);transition:.2s}
+  .close:hover{border-color:var(--accent);color:var(--accent)}
+  .v-body{overflow-y:auto;padding:30px 32px 36px}
+  @media(max-width:560px){.v-body{padding:22px 20px 28px}}
+
+  /* chips */
+  .chip{font-family:var(--mono);font-size:11.5px;padding:4px 11px;border-radius:999px;white-space:nowrap;border:1px solid}
+  .chip.green{color:var(--green);border-color:#cde3d5;background:#f1f8f3}
+  .chip.blue{color:var(--blue);border-color:#d3def0;background:#f1f5fb}
+  .chip.amber{color:var(--amber);border-color:#e8dfc2;background:#faf6e9}
+  /* the app left the Live Web Apps list and lives here now, so the address
+     has to be readable, not only clickable */
+  .liveurl{display:inline-block;margin-left:.5em;font:12.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+           color:var(--muted,#6b7280);letter-spacing:-.01em;word-break:break-all}
+  .row.locked{cursor:default;opacity:.72}
+  .row.locked:hover{background:transparent}
+
+  /* research accordion */
+  .acc{border:1px solid var(--line);border-radius:13px;background:var(--panel);margin-bottom:14px;overflow:hidden;transition:border-color .25s,box-shadow .25s}
+  .acc.flag{border-color:#cdd8e8}
+  .acc.open{border-color:var(--accent);box-shadow:0 16px 40px -28px rgba(31,58,95,.6)}
+  .acc-h{padding:21px 23px;display:flex;gap:16px;align-items:flex-start}
+  .acc-h .m{flex:1;min-width:0}
+  .kick{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:9px}
+  .acc-lead{font-size:1.05rem;color:var(--body)}.acc-lead b{color:var(--ink)}
+  .acc-r{display:flex;flex-direction:column;align-items:flex-end;gap:12px;flex-shrink:0}
+  .acc-b{overflow:hidden}
+  .acc-in{padding:2px 23px 26px}
+  .blk{margin-top:20px}
+  .blk .l{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin-bottom:7px}
+  .blk p{color:var(--body);font-size:1.06rem;line-height:1.7}.blk p b{color:var(--ink)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}
+  @media(max-width:560px){.stats{grid-template-columns:1fr}}
+  .stat{background:var(--soft);border-radius:10px;padding:16px}
+  .stat .v{font-family:var(--serif);font-size:1.5rem;color:var(--accent);line-height:1;margin-bottom:6px}
+  .stat .l{font-size:12.5px;color:var(--mut);line-height:1.45}
+  figure{margin-top:22px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff}
+  figure img{width:100%;display:block}
+  figcaption{font-family:var(--mono);font-size:12px;color:var(--mut);padding:11px 15px;border-top:1px solid var(--line);line-height:1.55}
+  .meth{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}
+  .meth b{font-family:var(--mono);font-size:11.5px;font-weight:400;color:var(--body);background:var(--soft);border:1px solid var(--line);padding:5px 11px;border-radius:6px}
+  .limit{margin-top:20px;padding:14px 16px;border-left:2px solid var(--amber);background:#faf6e9;border-radius:0 8px 8px 0;font-size:1rem;color:#6a5f43}
+  .igrid{display:grid;grid-template-columns:1fr;gap:10px}
+  .ichip{border:1px dashed var(--line2);border-radius:10px;padding:13px 15px;background:#fafbfc;font-size:1rem;color:var(--body);display:flex;gap:12px;align-items:baseline;line-height:1.5}
+  .ichip span{font-family:var(--mono);font-size:11px;color:var(--accent)}
+
+  /* systems timeline */
+  .iv-lead{font-size:1.12rem;color:var(--body);max-width:64ch;margin-bottom:30px}.iv-lead b{color:var(--ink)}
+  .flow{position:relative;padding-left:30px}
+  .flow::before{content:"";position:absolute;left:7px;top:6px;bottom:24px;width:2px;background:linear-gradient(var(--line2),var(--accent))}
+  .node{position:relative;margin-bottom:28px}
+  .node::before{content:"";position:absolute;left:-30px;top:3px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+  .node.dep::before{border-color:var(--line2)}.node.fut::before{border-style:dashed}
+  .node .nt{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:7px}
+  .node h4{font-family:var(--serif);font-size:1.26rem;font-weight:500;color:var(--ink)}
+  .node.dep h4{color:var(--mut);text-decoration:line-through;text-decoration-color:var(--line2)}
+  .node .role{font-family:var(--mono);font-size:10.5px;color:var(--mut);border:1px solid var(--line2);border-radius:4px;padding:2px 7px}
+  .node p{font-size:1.04rem;color:var(--body);line-height:1.66;max-width:62ch}
+  .band{margin-top:10px;border:1px dashed var(--line2);border-radius:12px;padding:19px 21px;background:var(--panel);display:flex;gap:14px;align-items:flex-start}
+  .band .ic{font-family:var(--mono);font-size:11px;color:var(--accent);border:1px solid #cdd8e8;border-radius:6px;padding:4px 8px;white-space:nowrap}
+  .band p{font-size:1rem;color:var(--body);line-height:1.62}
+  .toy{margin-top:16px;font-size:.98rem;color:var(--mut);font-style:italic}.toy b{color:var(--body);font-style:normal}
+
+  /* about grid */
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  @media(max-width:560px){.facts{grid-template-columns:1fr}}
+  .facts .f{background:var(--panel);padding:24px 26px}
+  .facts .f .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin-bottom:11px}
+  .facts .f .v{font-size:1.18rem;color:var(--ink);line-height:1.4;font-family:var(--serif);font-weight:500}
+  .facts .f .v small{color:var(--body);font-size:.74em;display:block;margin-top:9px;line-height:1.85;font-family:var(--sans);font-weight:400}
+  .facts .f .v small a{color:var(--accent);text-decoration:none;border-bottom:1px solid #cdd8e8}
+  .facts .f .v small a:hover{color:var(--ink)}
+  .ab-cta{margin-top:24px;text-align:center;font-family:var(--serif);font-size:1.2rem;color:var(--ink)}
+  .ab-cta a{color:var(--accent);font-family:var(--mono);font-size:1rem;text-decoration:none;border-bottom:1px solid #cdd8e8}
+
+  /* about tabs + résumé */
+  .abtabs{display:flex;gap:5px;margin:-2px 0 26px;border-bottom:1px solid var(--line)}
+  .abtab{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);
+    text-decoration:none;padding:9px 16px;border:1px solid transparent;border-bottom:none;
+    border-radius:9px 9px 0 0;margin-bottom:-1px;white-space:nowrap}
+  .abtab:hover{color:var(--ink);background:var(--soft)}
+  .abtab.on{color:var(--ink);background:var(--panel);border-color:var(--line);border-bottom-color:var(--panel)}
+  .rs section{margin-bottom:30px}
+  .rs-head{border-bottom:1px solid var(--line);padding-bottom:17px;margin-bottom:24px;
+    display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+  .rs-hl{min-width:0}
+  .ponly{display:none}
+  .rs-pdf{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--accent);background:var(--panel);border:1px solid var(--line2);border-radius:8px;
+    padding:8px 13px;cursor:pointer;white-space:nowrap;flex:0 0 auto}
+  .rs-pdf:hover{color:var(--ink);border-color:var(--accent2);background:var(--soft)}
+  .rs-pdf::after{content:" \2193"}
+  .rs-head .n{font-family:var(--serif);font-size:1.62rem;color:var(--ink);line-height:1.1}
+  .rs-head .l{font-size:.95rem;color:var(--mut);margin-top:6px}
+  .rs-head .c{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px 18px}
+  .rs-head .c a{font-family:var(--mono);font-size:11.5px;color:var(--accent);
+    text-decoration:none;border-bottom:1px solid #cdd8e8}
+  .rs-head .c a:hover{color:var(--ink)}
+  .rs-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);
+    padding-bottom:8px;border-bottom:1px solid var(--line);margin-bottom:15px}
+  .rs-org{font-family:var(--serif);font-size:1.2rem;color:var(--ink);margin-bottom:8px}
+  .rs-lines{list-style:none;margin-bottom:20px}
+  .rs-lines li{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+    font-size:1.02rem;color:var(--body);padding:4px 0}
+  .rs-lines em,.rs-hon em{font-family:var(--mono);font-size:11.5px;color:var(--mut);font-style:normal}
+  .rs-gpa{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+  .rs-g{border:1px solid var(--line);border-radius:11px;background:var(--panel);padding:14px 16px;min-width:0}
+  .rs-g .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--mut);margin-bottom:7px;line-height:1.35}
+  .rs-g .v{font-family:var(--serif);font-size:1.5rem;color:var(--accent);line-height:1}
+  .rs-g .v small{font-family:var(--sans);font-size:.5em;color:var(--mut);margin-left:6px}
+  .rs-sub{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--mut);margin-bottom:10px}
+  .rs-sub.cw{margin-top:26px}
+  .rs-tr{display:flex;align-items:center;gap:12px;margin-bottom:7px}
+  .rs-tr .t{font-size:12.5px;color:var(--body);flex:0 0 88px;min-width:0}
+  .rs-tr .b{flex:1 1 auto;height:9px;border-radius:999px;background:var(--soft);overflow:hidden;min-width:0}
+  .rs-tr .b i{display:block;height:100%;border-radius:999px;background:var(--accent2)}
+  .rs-tr .n{font-family:var(--mono);font-size:12px;color:var(--ink);flex:0 0 34px;text-align:right}
+  .rs-gap{font-size:12px;color:var(--mut);line-height:1.5;border-left:2px dashed var(--line2);
+    margin:10px 0 12px 5px;padding:3px 0 3px 14px}
+  .rs-note{font-size:12.5px;color:var(--mut);line-height:1.62;margin-top:13px}
+  .rs-grp,.rs-hon{display:flex;gap:14px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .rs-grp:last-child,.rs-hon:last-child{border-bottom:none}
+  .rs-grp{flex-wrap:wrap}
+  .rs-hon{justify-content:space-between;flex-wrap:wrap;align-items:baseline;font-size:1rem;color:var(--ink)}
+  .rs-grp .k{font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;
+    color:var(--accent);flex:0 0 148px;min-width:0;line-height:1.5}
+  .rs-grp .v{flex:1 1 250px;font-size:.99rem;color:var(--body);line-height:1.62;min-width:0}
+  .rs-grp .v span{display:inline-block}
+  .rs-grp .v .sep{color:var(--line2);font-weight:400;margin-left:6px}
+  .rs-it{margin-bottom:22px}
+  .rs-it:last-child{margin-bottom:0}
+  .rs-ith{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline}
+  .rs-ith h5{font-family:var(--serif);font-size:1.16rem;font-weight:500;color:var(--ink)}
+  .rs-ith em{font-family:var(--mono);font-size:11.5px;color:var(--mut);font-style:normal}
+  .rs-ito{font-size:.97rem;color:var(--accent);margin:2px 0 8px}
+  .rs-b{list-style:none;margin:7px 0 0}
+  .rs-b li{position:relative;padding-left:16px;font-size:1rem;color:var(--ink);line-height:1.6;max-width:62ch}
+  .rs-b li::before{content:"";position:absolute;left:2px;top:.63em;width:5px;height:5px;
+    border-radius:50%;background:var(--accent2)}
+  .rs-it p{font-size:1rem;color:var(--body);line-height:1.66;max-width:62ch;margin-top:8px}
+  .rs-tools{font-family:var(--mono);font-size:11px;color:var(--mut);margin-top:8px}
+  .rs-tools a,.rs-links a{color:var(--accent);text-decoration:none;border-bottom:1px solid #cdd8e8}
+  .rs-links{font-size:.95rem;color:var(--mut);margin-top:10px}
+  .rs-links .lh{line-height:1.6;margin-bottom:7px}
+  .rs-links a{display:block;padding:5px 0 5px 17px;position:relative;line-height:1.5;border-bottom:none}
+  .rs-links a::before{content:"\2192";position:absolute;left:0;top:5px;color:var(--mut)}
+  .rs-links a:hover{color:var(--ink)}
+  .rs-foot{font-size:12.5px;color:var(--mut);line-height:1.62;border-top:1px solid var(--line);padding-top:14px}
+  @media(max-width:560px){
+    .rs-gpa{grid-template-columns:1fr;gap:8px}
+    .rs-g{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:12px 15px}
+    .rs-g .k{margin-bottom:0}
+    .rs-grp .k{flex:1 1 100%}
+    .rs-tr .t{flex-basis:76px;font-size:11.5px}
+    .abtab{padding:9px 13px}
+    .rs section{margin-bottom:26px}
+    /* the date belongs under the organisation, never wedged between it and the title */
+    .rs-it{display:flex;flex-direction:column}
+    .rs-ith{display:contents}
+    .rs-ith h5{order:1;font-size:1.1rem;line-height:1.35}
+    .rs-ito{order:2;margin:5px 0 1px}
+    .rs-ith em{order:3;margin-bottom:6px}
+    .rs-b{order:4}
+    .rs-b li{font-size:.95rem;line-height:1.58}
+    .rs-it p{order:5;font-size:.95rem;line-height:1.62}
+    .rs-tools{order:6}
+    .rs-head .n{font-size:1.4rem}
+    .rs-head{padding-bottom:15px;margin-bottom:20px}
+    .rs-pdf{padding:11px 16px}   /* a tappable target on a phone */
+    .rs-grp .v{font-size:.93rem;line-height:1.58}
+    .rs-grp{padding:9px 0;gap:5px}
+    .rs-lines li{padding:2px 0;font-size:.97rem;line-height:1.45}
+    .rs-lines em{flex:1 1 100%}
+    .rs-hon{font-size:.97rem;line-height:1.45;gap:4px}
+    .rs-links a{font-size:.93rem}
+  }
+
+  /* ===== print: the résumé leaves the website behind and becomes a document ===== */
+  @media print{
+    @page{size:A4;margin:14mm 15mm}
+    html,body{background:#fff!important}
+    body{font-family:var(--sans);font-size:9.6pt;line-height:1.42;color:#111}
+    /* only the résumé prints: everything else on the page is website */
+    .wrap,#scrim{display:none!important}
+    .v-head,.abtabs,.rs-pdf{display:none!important}
+    .viewer{position:static!important;transform:none!important;opacity:1!important;
+      pointer-events:auto!important;width:auto!important;max-width:none!important;
+      max-height:none!important;background:#fff!important;border-radius:0!important;
+      box-shadow:none!important;overflow:visible!important;display:block!important}
+    .v-body{overflow:visible!important;padding:0!important;max-height:none!important}
+    a{color:#111;text-decoration:none}
+
+    .rs-head{padding-bottom:9pt;margin-bottom:11pt;border-bottom:.6pt solid #999}
+    .rs-head .n{font-size:19pt;line-height:1.05}
+    .rs-head .l{font-size:9pt;color:#444;margin-top:2pt}
+    .rs-head .c{margin-top:4pt;gap:2pt 13pt}
+    .rs-head .c a{font-size:8.4pt;border-bottom:0}
+    .ponly{display:inline!important;font-family:var(--mono);font-size:8.4pt;color:#111}
+
+    .rs section{margin-bottom:9pt}
+    .rs-h{font-size:8.6pt;letter-spacing:.1em;color:#111;padding-bottom:2.5pt;margin-bottom:7pt;
+      border-bottom:.6pt solid #bbb;break-after:avoid}
+    .rs-org{font-size:11pt;margin-bottom:3pt}
+    .rs-lines{margin-bottom:6pt}
+    .rs-lines li{font-size:9.6pt;padding:1pt 0}
+    .rs-lines em{font-size:8.4pt;color:#444}
+
+    /* the GPA cards collapse into one line of text */
+    .rs-gpa{display:block!important;margin-bottom:5pt}
+    .rs-g{display:inline!important;border:0!important;background:none!important;
+      padding:0!important;margin-right:15pt}
+    .rs-g .k{display:inline;font-size:8.4pt;color:#444;margin:0}
+    .rs-g .k::after{content:" "}
+    .rs-g .v{display:inline;font-size:10.5pt;color:#111}
+    .rs-g .v small{font-size:8.4pt;color:#444;margin-left:2pt}
+
+    /* the bar chart becomes a compact figure list */
+    .rs-sub{font-size:8.2pt;color:#444;margin:5pt 0 3pt}
+    .rs-sub.cw{margin-top:9pt}
+    .rs-tr{margin-bottom:1pt;gap:0}
+    .rs-tr .b{display:none!important}
+    .rs-tr .t{flex:0 0 74pt;font-size:9pt;color:#111}
+    .rs-tr .n{flex:0 0 auto;text-align:left;font-size:9pt}
+    .rs-gap{font-size:8.6pt;color:#444;margin:3pt 0;padding:0 0 0 9pt;border-left:.6pt dashed #bbb}
+    .rs-note{font-size:8.2pt;color:#444;margin-top:5pt;line-height:1.4}
+
+    .rs-grp{padding:2.5pt 0;border-bottom:0;break-inside:avoid;gap:0;flex-wrap:nowrap}
+    .rs-grp .k{flex:0 0 92pt;font-size:8.2pt;color:#111;line-height:1.4}
+    .rs-grp .v{flex:1 1 auto;min-width:0;font-size:9.2pt;color:#111;line-height:1.4}
+    .rs-grp .v .sep{color:#999;margin-left:4pt}
+
+    .rs-it{margin-bottom:8pt;break-inside:avoid}
+    .rs-ith h5{font-size:10.6pt}
+    .rs-ith em{font-size:8.4pt;color:#444}
+    .rs-ito{font-size:9.4pt;color:#333;margin:1pt 0 2pt}
+    /* a standard résumé is bullets, so the prose becomes one too */
+    .rs-b{margin:2pt 0 0}
+    .rs-b li,.rs-it p{position:relative;padding-left:11pt;margin:1.5pt 0 0;font-size:9.4pt;
+      line-height:1.4;color:#111;max-width:none}
+    .rs-b li::before,.rs-it p::before{content:"\2022";position:absolute;left:1.5pt;top:0;
+      width:auto;height:auto;background:none;color:#111;font-size:9.4pt;line-height:1.4}
+    .rs-tools{font-size:8.4pt;color:#444;margin-top:2pt;padding-left:11pt}
+    .rs-tools a{border-bottom:0}
+
+    /* the project rows read as one line on paper, not as links */
+    .rs-links{margin-top:5pt;font-size:9.2pt}
+    .rs-links .lh{font-size:8.6pt;color:#444;margin-bottom:1pt}
+    .rs-links a{display:inline!important;padding:0!important;border-bottom:0}
+    .rs-links a::before{content:""!important;position:static!important}
+    .rs-links a::after{content:" · ";color:#999}
+    .rs-links a:last-child::after{content:""}
+
+    .rs-hon{padding:2.5pt 0;border-bottom:0;font-size:9.4pt;break-inside:avoid;gap:10pt}
+    .rs-hon em{font-size:8.4pt;color:#444}
+    .rs-foot{font-size:8pt;color:#555;border-top:.6pt solid #bbb;padding-top:5pt;margin-top:7pt}
+  }
+
+  /* simops */
+  .so-prog{font-family:var(--mono);font-size:12.5px;color:var(--accent);margin-bottom:10px;line-height:1.5}
+  .so-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0 24px}
+  @media(max-width:560px){.so-stats{grid-template-columns:1fr}}
+  .so-stat{border:1px solid var(--line);border-radius:11px;background:var(--panel);padding:17px 19px}
+  .so-stat .v{font-family:var(--serif);font-size:1.6rem;color:var(--accent);line-height:1}
+  .so-stat .l{font-size:12.5px;color:var(--mut);margin-top:7px;line-height:1.45}
+  .so-diagram{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:22px 20px;margin:4px 0 22px}
+  .so-diagram svg{width:100%;height:auto;display:block}
+  .so-desc{font-size:1.08rem;color:var(--body);line-height:1.72}.so-desc b{color:var(--ink)}
+
+  /* ===== phone / tablet: explorer collapses to a single pane ===== */
+  @media(max-width:820px){
+    .landing{grid-template-columns:1fr;gap:13px;margin-top:24px}
+    .tile{padding:22px 22px 19px}
+    .tile .tic{width:38px;height:38px}
+    .tile h2{font-size:1.4rem;margin-top:13px}
+    .tile p{font-size:.97rem;max-width:none}
+    .lead-hint{margin-bottom:40px}
+    /* full-bleed so the file list uses the whole phone width */
+    .explorer{margin:16px -20px 44px;border-radius:0;border-left:none;border-right:none}
+    .ex-main{grid-template-columns:1fr;min-height:0}
+    .ex-side,.ex-cols,.ex-kbd{display:none}
+    .ex-tools{padding:9px 20px}
+    .ex-search{max-width:none}
+    .ex-search input{font-size:16px;padding:7px 0}   /* 16px keeps iOS from zooming on focus */
+    .row{grid-template-columns:1fr auto;grid-template-areas:"nm ch" "meta meta";gap:7px 12px;padding:15px 20px}
+    .row .meta{display:flex;grid-area:meta;align-items:center;flex-wrap:wrap;gap:8px;margin-left:35px;min-width:0}
+    .row .ty{margin:0}
+    .row .ch{display:block;align-self:center}
+    .row .rn{font-size:1.06rem}
+  }
+  @media(max-width:640px){
+    html{font-size:16.5px}
+    .wrap{padding:0 20px}
+    .head{padding:62px 0 0}   /* 위 62px 은 언어 토글이 앉는 자리다 */
+    .namerow{font-size:1.5rem;margin-bottom:8px}
+    .eyebrow{font-size:11px}
+    .head h1{font-size:1.7rem;line-height:1.2;margin-top:11px;max-width:none}
+    .head .intro{display:none}
+    .intro-m{display:block;font-size:1rem;color:var(--body);line-height:1.55;margin-top:12px;max-width:38ch}
+    .intro-m b{color:var(--ink)}
+    .row{padding:14px 20px}
+    .row .d{font-size:.85rem}
+    .ex-top{padding:10px 12px}
+    .ex-path{font-size:11.5px}
+
+    /* detail view becomes a bottom sheet */
+    .viewer{left:0;top:auto;bottom:0;transform:translateY(102%) scale(1);width:100%;max-width:100%;
+      max-height:92vh;border-radius:22px 22px 0 0}
+    .viewer.on{transform:translateY(0) scale(1)}
+    .v-head{padding:16px 20px 16px;position:relative}
+    .v-head::before{content:"";position:absolute;top:7px;left:50%;transform:translateX(-50%);width:38px;height:4px;border-radius:99px;background:var(--line2)}
+    .v-head .vt{font-size:1.3rem}
+    .v-head .vc{font-size:11px}
+    .v-body{padding:18px 18px 32px;-webkit-overflow-scrolling:touch}
+
+    /* readable detail typography */
+    .acc-h{flex-direction:column;align-items:stretch;padding:17px 16px;gap:12px}
+    .acc-r{flex-direction:row;align-items:center;justify-content:space-between;width:100%;gap:10px}
+    .acc-lead{font-size:1rem}
+    .acc-in{padding:2px 17px 22px}
+    .kick{font-size:10.5px}
+    .blk p{font-size:1.02rem;line-height:1.66}
+    .stat .v{font-size:1.35rem}
+    figcaption{font-size:11.5px;line-height:1.6;padding:10px 13px}
+    .iv-lead{font-size:1.05rem}
+    .node h4{font-size:1.18rem}
+    .node p{font-size:1.0rem}
+    .band{padding:16px 17px}
+    .facts .f{padding:20px 20px}
+    .facts .f .v{font-size:1.1rem}
+    .so-desc{font-size:1.02rem}
+    .so-diagram{padding:16px 12px;overflow-x:auto}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  }
+  .tomain{margin:2px 0 10px;font-size:14px}.tomain a{color:var(--mut);text-underline-offset:3px}.tomain a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div class="langbar" role="group" aria-label="Language / 언어">
+      <span class="lang-thumb" aria-hidden="true"></span>
+      <button class="langopt" data-l="en" onclick="setLang('en')">EN</button>
+      <button class="langopt" data-l="ko" onclick="setLang('ko')">한국어</button>
+    </div>
+    <div class="namerow">Euichan&nbsp;Lee <span>(Leechan)</span></div>
+    <p class="tomain"><a href="../" data-ko="연구·경력·이력서는 메인 페이지에 있습니다">Research, experience and CV are on the main page</a></p>
+    <div class="eyebrow" data-ko="고려대학교 · 기계공학 &amp; 인공지능응용">Korea University · Mechanical Engineering &amp; AI</div>
+    <h1 data-ko="AI와 기계공학을 잇는 연구를 지향합니다.">Toward research where AI and mechanical engineering meet.</h1>
+    <p class="intro" data-ko="AI와 기계공학을 잇는 연구를 지향합니다. 데이터 효율적 학습과 엄밀한 검증을 통해 Sim2Real 문제를 해결하며, AI와 기계공학의 접점을 탐구하는 연구자를 꿈꿉니다. 아래 작업은 음향 에너지 하베스팅과 직접 제작한 로보틱스 캡스톤, 최적화, 내고장성 제어에 걸쳐 있으며, 이를 재현 가능하게 유지하기 위해 구축한 도구들도 함께 정리했습니다.">I'm working toward becoming a researcher at the intersection of <b>AI and mechanical engineering</b>, applying data-efficient learning and careful verification to physical-system problems. The work below spans acoustic energy harvesting, a hands-on robotics capstone, optimization, and fault-tolerant control, alongside the tooling I built to keep that work reproducible.</p>
+    <p class="intro-m" data-ko="AI와 기계공학을 잇는 연구를 지향합니다.">Research at the meeting point of <b>AI and mechanical engineering</b>.</p>
+  </div>
+
+  <nav class="landing" id="landing" aria-label="Start here">
+    <a class="tile tile-drive" href="#pieces">
+      <span class="tic" aria-hidden="true"></span>
+      <h2 data-ko="프로젝트 &amp; 도구">Portfolio Pieces</h2>
+      <p data-ko="직접 구현한 프로젝트부터 바로 체험할 수 있는 웹앱, 독자적인 검증 툴킷까지 한눈에 확인하실 수 있습니다.">Everything I've built, filed into folders: the projects, the web apps you can open right now, and the tooling behind them.</p>
+      <span class="pills" id="drivepills"></span>
+      <span class="tgo" data-ko="열기 <i>&#9654;</i>">Open <i>&#9654;</i></span>
+    </a>
+    <p class="scroll-cue" id="scue" data-ko="아래에 소개가 있습니다 <i>&#8595;</i>">There's an About Me below <i>&#8595;</i></p>
+    <a class="tile tile-about" href="#about">
+      <span class="tic" aria-hidden="true"></span>
+      <h2 data-ko="소개">About Me</h2>
+      <p data-ko="어디서 공부하고 무엇을 향해 가는지, 그리고 연락 방법입니다.">Where I study, what I'm working toward, and how to reach me.</p>
+      <span class="pills" data-ko="<span>고려대학교</span><span>기계공학 &amp; 인공지능응용</span><span>연락처</span>"><span>Korea University</span><span>ME &amp; Applied AI</span><span>Contact</span></span>
+      <span class="tgo" data-ko="열기 <i>&#9654;</i>">Open <i>&#9654;</i></span>
+    </a>
+  </nav>
+  <p class="lead-hint" data-ko="처음 방문하셨다면 <b>프로젝트 &amp; 도구</b>부터 열어 보세요. 파일 탐색기처럼 동작합니다. 연구 내용은 <b>Projects</b>, 직접 실행해 보고 싶으시면 <b>Live Web Apps</b>를 권해 드립니다.">New here? <b>Portfolio Pieces</b> opens like a file browser. Start with <b>Projects</b> for the research, or <b>Live Web Apps</b> if you'd rather click something than read.</p>
+
+  <section class="explorer" id="explorer" aria-label="Portfolio file browser">
+    <div class="ex-top">
+      <a class="ex-btn" id="exup" href="#" aria-label="Go up one level">&#8593;</a>
+      <div class="ex-path" id="expath"></div>
+    </div>
+    <div class="ex-tools">
+      <label class="ex-search">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="7" cy="7" r="4.4"/><path d="M10.3 10.3 14 14"/></svg>
+        <input id="exq" type="search" placeholder="Filter this folder" aria-label="Filter files in this folder" autocomplete="off" spellcheck="false">
+      </label>
+      <span class="ex-kbd" data-ko="<b>&#8593;</b> <b>&#8595;</b> 이동 · <b>&#8629;</b> 열기"><b>&#8593;</b> <b>&#8595;</b> to move · <b>&#8629;</b> to open</span>
+    </div>
+    <div class="ex-main">
+      <nav class="ex-side" id="exside" aria-label="Locations"></nav>
+      <div>
+        <div class="ex-cols" id="excols">
+          <button class="colb" type="button" data-k="name" data-ko="이름 <i>&#9662;</i>">Name <i>&#9662;</i></button>
+          <button class="colb" type="button" data-k="type" data-ko="종류 <i>&#9662;</i>">Type <i>&#9662;</i></button>
+          <button class="colb" type="button" data-k="status" data-ko="상태 <i>&#9662;</i>">Status <i>&#9662;</i></button>
+        </div>
+        <div id="exlist"></div>
+      </div>
+    </div>
+    <div class="ex-foot"><span id="exfoot"></span><a href="#" data-ko="&#8592; 처음으로">&#8592; Back to start</a></div>
+  </section>
+
+  <section class="sr-only" aria-label="Summary">
+    <h2 data-ko="프로젝트">Projects</h2>
+    <p data-ko="광대역 음향 에너지 하베스팅 — 핵심 기여는 최대 전력이 아닌 강건성입니다(실측 소음 환경 11종에서 변동계수 21% vs 29%, 공진기 품질계수 증가에 따라 이점 확대). 고려대학교 × Upstage 해커톤에서 3인 팀으로 구현한 가상발전소 리스크 인지 입찰 시스템(23팀 중 1위), 팀장으로서 시스템 아키텍처와 목적함수, 검증 루프를 담당했습니다. 소자 실험실의 순차 베이지안 최적화 도입 여부를 검증했습니다 — 공개 소자·박막 데이터 3종에서 무작위 대비 측정 40회를 22회로 줄였으나, 자체 보유 데이터는 분산의 95%가 측정 잡음이어서 현 시점 도입은 권고하지 않았습니다. 팀 캡스톤으로 제작한 자율 기둥 등반·수확 로봇에서는 제어 소프트웨어와 전력 전자를 담당했습니다. 비대칭 배치 로터의 내고장성. 그리고 비례항법 유도 하에서 네 가지 최적화 기법을 비교하는, 브라우저에서 직접 조작 가능한 단거리 방공 요격 시뮬레이터.">Broadband acoustic energy harvesting, where the contribution is steadiness across environments (power variation CoV 21% vs 29% across 11 measured noise environments; advantage grows with resonator quality factor). A Human-in-the-Loop, risk-aware bidding system for a virtual power plant, built with a team at a Korea University × Upstage hackathon (1st place, 23 teams), where I led the system architecture, objective function, and verification/feedback loop. A team-capstone autonomous pole-climbing and coconut-harvesting robot, where I led the control software and power electronics. A decision study on whether a device lab should adopt sequential Bayesian optimization: on three public device/thin-film datasets it reached the random baseline's 40-measurement result in 22, but the lab's own data carries 95% of its variance in measurement noise, so the recommendation was against adopting yet. Asymmetric-geometry rotor fault tolerance. A short-range air-defense interception simulator with a playable in-browser demo, where four optimization methods are compared under proportional-navigation guidance.</p>
+    <h2 data-ko="라이브 웹앱">Live web apps</h2>
+    <p data-ko="Living Paper — MVP를 운영 중인 미팅 어시스턴트로, 이해하지 못한 채 넘어간 대목을 표시해 두면 회의 후 랩실 문서를 근거로 설명하며 클라우드는 암호문만 중계합니다. 최적설계 시각 가이드 — CAE 최적설계 전 과정의 모든 그래프를 브라우저가 실시간 연산합니다. Acoustic Harvester — 하베스팅 연구의 인터랙티브 버전. Divert-Sim — 직접 조작하는 요격 시뮬레이터. VPP Trade-Guard — 해커톤 시스템의 케이스 스터디. Engineering Brain — 공학 문제를 제시하고 답변을 채점합니다. News Literacy Lab — 기사를 이해관계자 기준으로 분해합니다. Emotion Quadrant — 감정을 정확히 명명하기 위한 한국어 도구. 357 Stick Breaker — 솔버와 대국하는 미제르 Nim 변형.">Living Paper, a meeting assistant whose MVP is live: it marks the moment you pretended to understand and explains it afterwards from your own lab's documents, with the cloud relaying ciphertext only. Acoustic Harvester, an interactive version of the harvesting study. Divert-Sim, a playable interception simulator. VPP Trade-Guard, a case study of the hackathon system. Engineering Brain, which poses engineering questions and grades the answers. News Literacy Lab, which breaks a news article down by stakeholder. Emotion Quadrant, a Korean-language tool for naming a feeling precisely. 357 Stick Breaker, a misère Nim variant played against a solver. An Optimal Design Visual Guide in Korean, where every chart of the CAE optimization stack is computed live in the browser.</p>
+    <h2 data-ko="시스템과 공학적 판단">Systems and engineering judgment</h2>
+    <p data-ko="어떤 도구도 자기 자신을 검증하지 않도록 설계한 안전장치입니다. 연구 변경 내역은 모델의 서술이 아닌 git diff에서 추출하고, 회귀 게이트는 생존이 아니라 실제 메시지를 실제 핸들러에 흘려 동작을 검증하며, 원격 자동화는 승인 단계와 스레드별 하트비트·터미널 폴백을 거치고, 물리 수식 카탈로그는 증거로 등급을 부여받습니다(출처·차원·수치, 95% CI 게이트). 품질이 미달한 시도는 솔직히 폐기했으며, 공학 추론 데이터셋은 무엇이 모델로 전이되고 무엇이 전이되지 않는지를 분리해 측정한 교내 포스터로 이어졌습니다.">Safeguards designed so no tool grades itself: research change records are extracted from the git diff, regression gates replay real messages through real handlers instead of checking liveness, remote automation passes approval steps with per-thread heartbeats and terminal fallback, and a physics-equation catalogue is graded by evidence (reference, dimensional, numeric) behind a 95% CI gate. Low-quality experiments get dropped, and the engineering-reasoning dataset fed a campus poster separating what transfers into a model from what does not.</p>
+    <h2 data-ko="소개">About</h2>
+    <p data-ko="이의찬(Leechan), 고려대학교 기계공학 및 인공지능응용. Materials Innovation Lab(서병석 교수님) 학부연구생. 연락처 leechan0608@korea.ac.kr.">Euichan Lee (Leechan), Korea University, Mechanical Engineering and Applied Artificial Intelligence. Undergraduate researcher at the Materials Innovation Lab (Prof. Byungseok Seo). Contact leechan0608@korea.ac.kr.</p>
+  </section>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="vt">
+  <div class="v-head">
+    <div><div class="vt" id="vt">—</div><div class="vc" id="vc"></div></div>
+    <button class="close" id="close" aria-label="Close"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+  </div>
+  <div class="v-body" id="vbody"></div>
+</div>
+
+<script>
+/* ============ CONTENT ============ */
+const RESEARCH_EN = [
+  {kick:"Bayesian optimization · experiment design",title:"Should a Device Lab Adopt Sequential Optimization?",
+   chip:["Decision study · recommended against, for now","amber"],lead:"A decision study for a device lab: measure what the method is actually worth on public device data, then judge five in-house datasets against the same gates. <a href='https://euichanlee0608-svg.github.io/seqopt/' target='_blank' rel='noopener'>See the method in action &rarr;</a><span class='liveurl'>euichanlee0608-svg.github.io/seqopt/</span>",
+   blocks:[["Question","A device lab measures one costly condition at a time, and sequential optimization — a Gaussian-process surrogate picking each next measurement by Expected Improvement — promises to reach the same answer in fewer of them. Recommending it on faith would spend someone else’s experiments on my guess, so the question had to be answered with data before it was answered with a recommendation.","Each measurement is costly. Before recommending GP + Expected Improvement to a lab, I had to show it saves measurements — and that this lab’s data can support it."],
+     ["How it was measured","A campaign simulation of a study that is just starting: no values known, five space-filling measurements, then Expected Improvement proposes each next condition from measured values only, with lookahead sealed — no unmeasured true value is ever read. Choosing a condition returns one of its real replicates, because a researcher who measures once sees one number. Adoption is scored the way a researcher actually decides — take the best <em>measured</em> value, then grade the true rank of that condition against every candidate. Three public device and thin-film datasets (178, 164 and 94 measured conditions), 120 random seeds each, with random order and grid scan in both directions as controls on the same budget.","A fresh-study simulation: lookahead sealed, one replicate per measurement, adoption by best <em>measured</em> value, graded on true rank. Three public datasets (178 / 164 / 94 conditions), 120 seeds, against random and grid controls."],
+     ["What the method is worth","What random order reaches in 40 measurements, sequential reaches in <b>22, 20 and 34</b> — 45%, 50% and 15% fewer. Asked the narrower question of whether the next proposal is any good, EI’s pick sat at the <b>77.6th percentile</b> of all candidates after only five measurements, against 49.4 for random, widening to 90.9 against 51.0 by thirty. Grid scanning, the method labs actually use, swings from 97.2 to 51.1 on the same data depending only on which end of the axis you start from — sequential never needs that choice, because it reads the measurements and turns around on its own.","<b>40 → 22 runs</b> on the main dataset (45%). After five measurements EI’s next pick sat at percentile <b>77.6</b> against 49.4 for random. Grid scan swings 97.2 vs 51.1 on start direction alone."],
+     ["What the gain depends on","The gain is conditional, and the study shows exactly on what. The point where sequential overtakes random (cumulative 7, 14 and 36 runs) lines up exactly with how well the surrogate had learned the response surface (R² = +0.58, +0.30, −0.20), and a semivariogram orders the same datasets the same way by terrain roughness — nugget ratio 0.03 and 0.08 where R² is positive, 0.40 and 0.49 where it is negative. Sweep the budget and two of the three go <em>negative</em> below 30 runs. That yields four gates a dataset has to pass before adoption is even a question: more candidate conditions than budget, surrogate R² above zero, discriminability of at least 1, and replicates on more than half the conditions.","The crossover point tracks surrogate R² exactly, and terrain roughness orders the datasets the same way. Below a 30-run budget two of three turn negative. Hence four gates: candidates &gt; budget, R² &gt; 0, discriminability ≥ 1, replicates on over half the conditions."],
+     ["Verdict on this lab’s data","Eight datasets scored on the same four gates: three external and five in-house. Four of the five in-house sets have only <b>3–4 candidate conditions</b>, so exhaustive measurement wins outright and ‘what should I measure next’ never arises. One in-house set clears the candidate gate and then fails on learnability — leave-one-out R² = −0.27 and negative across all six model families tried, a nugget ratio of 0.49, and <b>95% of the visible variance sitting in measurement noise</b> rather than in the process. Discriminability is 1.03 with a bootstrap interval of [0.49, 1.80], straddling the threshold, so the formal verdict is undecided. The recommendation is therefore to standardize replicates to five (30 more measurements) so the scale is settled first, re-measure learnability on that data, and let R² &gt; 0 be the gate — not to adopt on the strength of the external result.","The in-house data fails the gates: four sets have 3–4 candidates, and the fifth carries <b>95% of its variance in measurement noise</b> (R² = −0.27, discriminability 1.03 with CI [0.49, 1.80]). Fix repeatability first; let R² &gt; 0 decide."]],
+   stats:[["40 → 22","measurements to the same result vs a random-order baseline, main dataset (120 seeds)"],["95%","of one in-house set’s visible variance comes from measurement noise"],["8","datasets — three external, five in-house — scored on the same four adoption gates"]],
+   meth:["Gaussian-process surrogate (Matérn 5/2, ARD)","Expected Improvement","lookahead-sealed campaign simulation","adoption by measured value, graded on true rank","grid forward / reverse controls","budget sweep (10–60) for sensitivity","semivariogram nugget ratio","bootstrap CI on discriminability","UCB / Thompson / space-filling controls"],
+   limit:"Everything here is a recomputation of published numbers: I did not verify the chemistry or materials claims of the cited papers, and did not confirm whether they are the same class of experiment as the lab’s. The simulation can only propose conditions those papers already measured, so a real deployment — which can propose points between them — may do better than this. The three external datasets were themselves collected by Bayesian optimization, which makes the random baseline stronger than in a genuinely new study, so the savings are a lower bound. The recommendation carries a stated falsification condition: once that dataset clears all four gates, run sequential and random side by side on the same budget, and if the adopted conditions do not differ significantly, this study is wrong. All source data stays with the cited papers.",
+   mlimit:"A recomputation of published numbers; the chemistry stays with the papers. Candidates are limited to conditions the papers already measured, and those datasets were themselves BO-collected — so the reported savings are a lower bound. The recommendation carries a stated falsification test."},
+  {kick:"Human-in-the-loop energy AI · team hackathon",title:"VPP Trade-Guard: Putting Failure Risk Into a Power-Trading Objective",
+   chip:["1st place · team hackathon","green"],lead:"As team lead my own work was the architecture and the verification loop. <a href='https://euichanlee0608-svg.github.io/vpp-trade-guard/' target='_blank' rel='noopener'>Read the case study &rarr;</a><span class='liveurl'>euichanlee0608-svg.github.io/vpp-trade-guard/</span>",
+   blocks:[["Role","A 3-person team built a Human-in-the-Loop bidding system for Jeju's virtual-power-plant market at a Korea University × Upstage hackathon (<b>1st place, 23 teams</b>). As team lead I owned the <b>system architecture, the objective function, and the verification/feedback loop</b>; my teammates built the n8n node implementation, the Slack UI, and the data-ingestion pipeline.","Team hackathon, <b>1st of 23 teams</b>. I owned the <b>architecture, objective function, and verification loop</b>; teammates built the n8n nodes, Slack UI, and data ingestion."],
+     ["Problem","It was an energy-AI hackathon, so we started from Jeju's virtual-power-plant market and asked what existing trading tools leave out. They price electricity, and nothing else. Existing VPP trading logic always assumes equipment is 100% healthy: when the power price rises, it drives batteries into aggressive output regardless of their actual condition, and the resulting failures can outweigh the trading profit they were chasing.","Existing VPP logic assumes equipment is always 100% healthy, so it overdrives batteries whenever price is high, and failure losses can outweigh the profit."],
+     ["System design","I put failure risk directly into the objective function (net profit = revenue − failure-probability × risk cost), then designed the architecture around a single guardrail: <b>the AI only proposes, code always decides</b>. A proposer LLM suggests output ratios without doing any math; a deterministic engine computes the actual revenue and risk cost; two LLM reviewers cross-check the recommendation from independent angles (safety vs. financial, on different priority rules); and, critically, a separate rule-based node never trusts either LLM's numbers — it independently re-derives the same revenue and risk figures from scratch and rejects the recommendation on any mismatch. No dollar figure an LLM produces reaches a human unverified. The failure-probability model itself sits behind a <b>plugin interface</b>, so an operator can drop in whatever prognostics they already trust: the contribution lives in the objective function and the verification loop around it.","Architecture guardrail: <b>AI only proposes, code always decides</b>. A proposer LLM suggests ratios; a deterministic engine computes the real numbers; two reviewer LLMs cross-check from independent angles; and a rule-based node never trusts either one — it independently re-derives the same numbers and rejects on mismatch."]],
+   stats:[["1st / 23","teams, Korea University × Upstage Energy AI Hackathon"],["2","independent LLM reviewers cross-checking each recommendation from different angles"]],
+   meth:["objective-function design","dual LLM cross-review","rule-based recompute diff-check","bounded retry gate","Human-in-the-Loop UX"],
+   limit:"Built in a hackathon timeframe: the BMS sensor feed is dummy data, with no hardware telemetry behind it, and the failure-probability multiplier is an approximation backed out from a single anchor assumption, documented as such in the code.",
+   mlimit:"Hackathon timeframe: dummy sensor data, and the failure-probability model is a single-anchor approximation, and the code says so."},
+  {kick:"Personalized in-context learning · LLM evaluation",title:"Moving a Specialist's Tacit Judgement Into a Local Small Model",
+   chip:["Poster submitted","green"],lead:"The result is a split: the <b>form</b> of a decision transfers from one instruction, while the <b>content</b> does not follow at 7.8B.",
+   blocks:[["Problem","Personalizing a model on someone's judgement means putting the context behind that judgement into the prompt: failure history, process conditions, design calls that were never published. That is the material least likely to be cleared for an external API, so personal and organizational use pushes toward models small enough to run locally. Whether a person's decision-making survives at that size is the open part.","Personalizing on someone's judgement puts unpublished context in the prompt, which is what cannot go to an external API. That pushes toward local small models, where transfer is untested."],
+     ["Approach","Ten free-text answers of mine to engineering trade-off dilemmas became the in-context examples, injected as written, with no reshaping into a template. Three conditions differ by one layer each: no instruction, a four-step decision instruction with zero examples, and that instruction plus my answers. The same prompts ran on a cloud model and on a 7.8B model on a Mac mini. A single accuracy number cannot separate imitation from transfer, so two axes were scored apart: the <b>form</b> of a decision on 24 items from domains I had never answered, and the <b>content</b> on my own ten, leave-one-out.","My ten answers became the examples, injected as written. Three conditions separated by one layer each, run identically on a cloud model and a 7.8B local model. Form scored on 24 unseen items, content on my own ten, leave-one-out."],
+     ["Finding","Form came from the instruction alone and did not depend on model size: single-variable commitment rose from 67% to 100% on the cloud model and 67% to 92% locally. Content moved only on the cloud model, 0% to 30%, and did not rise at 7.8B. The local model did not even pick up the compressed style of the examples, holding answer length flat while the cloud model cut its own by more than half. Blind pairwise judging preferred the instruction-only answers, so adding my reasoning did not make answers better, only more like mine.","Form transferred on both models from the instruction alone (67 to 100% cloud, 67 to 92% local). Content moved only on the cloud model (0 to 30%). Blind judging preferred the instruction-only answers, so the personalization made answers more like mine without making them better."]],
+   stats:[["67 &rarr; 100 / 92%","single-variable commitment, cloud / local, from the instruction alone"],["0 &rarr; 30%","matching the variable I actually chose, cloud model only"],["10","of my own answers, spent as examples, which is why they sit outside the unseen set"]],
+   figs:[["../assets/figures/tacit_transfer.png","Form and content separate. Committing to a single dominant variable rises from the instruction alone on both models (left). Matching the variable I actually chose rises only on the cloud model (right)."]],
+   meth:["leave-one-out evaluation","blind pairwise preference","structured label extraction","paired non-parametric tests","free-tier API + local inference"],
+   limit:"The content axis rests on ten held-out items, so its direction is a trend and not a settled result. One seed, one judge model, and one local model were tested, and the data is mine scored against criteria I designed.",
+   mlimit:"The content axis rests on ten held-out items, so its direction is a trend and nothing more. One seed, one judge, one local model, and the data is my own."},
+  {flag:true,kick:"Piezoelectric energy harvesting",title:"Broadband Acoustic Energy Harvesting",
+   chip:["Simulation complete","green"],lead:"The result that matters is <b>robustness</b> across real noise environments. <a href='https://euichanlee0608-svg.github.io/acoustic-harvester/' target='_blank' rel='noopener'>Try the live demo &rarr;</a><span class='liveurl'>euichanlee0608-svg.github.io/acoustic-harvester/</span>",
+   blocks:[["Problem","Microscale acoustic harvesters produce inherently tiny power (~100 fW for a 300-wire array at 70 dB SPL). A single-resonance design chases the spectral peak, but real noise spreads its energy across a wide band, so most of that energy is missed.","Tiny power (~100 fW). One-resonance designs chase a single peak, but real noise is spread wide, so most energy is missed."],
+     ["Approach","A <b>length-distributed</b> piezoelectric cantilever-wire array, evaluated across <b>11 measured noise environments</b> with a validated single-degree-of-freedom electromechanical model, bootstrap 95% confidence intervals, and parametric sweeps over fabrication tolerance, tip mass, and wire density.","A <b>length-distributed</b> piezo array, tested across <b>11 measured noise environments</b> with a validated SDOF model + bootstrap CIs."],
+     ["Finding","The broadband array matches narrowband mean power (99 vs 108 fW) but holds up far better across environments (<b>CoV 21% vs 29%</b>) and is nearly immune to fabrication tolerance. The gap widens with resonator quality factor Q.","Same mean power as narrowband (99 vs 108 fW) but far steadier across environments (<b>CoV 21% vs 29%</b>). The edge grows with Q."]],
+   stats:[["21% / 29%","power variation across environments (CoV), broadband vs narrowband"],["1.07→1.19×","broadband advantage as Q rises (PZT-5A → AlN)"],["11","measured noise environments, cross-evaluated"]],
+   figs:[["../assets/figures/acoustic_heatmap.png","Each row is a harvester design; each column a real noise environment (color = power relative to the best design for that environment). The broadband design (top) stays strong everywhere, while narrowband designs win their own environment but fall off elsewhere."],
+     ["../assets/figures/acoustic_spectrum.png","A measured noise source. Its energy spreads across a wide band with no single dominant peak, which is why a single-resonance harvester leaves most of it uncaptured."]],
+   meth:["SDOF electromechanical model","bootstrap 95% CI","cross-environment evaluation","parametric sweeps","Numba Monte-Carlo"],
+   limit:"Absolute output is fW-scale at 70 dB SPL, reported at face value. The claim here is robustness. Raw power stays tiny at this scale either way.",
+   mlimit:"Output is fW-scale at 70 dB SPL, reported at face value. The claim is robustness; raw power stays tiny either way."},
+  {kick:"Mechanical capstone · control & power systems",title:"Autonomous Pole-Climbing & Harvesting Robot",
+   chip:["Team capstone · built & demonstrated","green"],lead:"A four-person capstone team built this one, and it was <b>built and tested</b>. I owned control and power.",
+   blocks:[["Role","A four-part team built an autonomous robot that climbs a vertical PVC pole and harvests the coconut at the top. The team's core mechanism kept the motor count low: a <b>one-way bearing</b> paired with a <b>C-shaped gear</b> drove the harvesting motion off the climb drivetrain. A ratchet was the obvious choice, but its friction made the climb itself too hard, so the bearing replaced it. I led the <b>control software and electrical/power systems</b>: motor drivers, sensing, voltage stabilization, and the climb logic.","Team capstone: a robot that climbs a pole and harvests the coconut on top. The team's core mechanism cut motor count with a <b>one-way bearing</b> + <b>C-shaped gear</b> harvest drive (a ratchet's friction made climbing too hard); I owned the <b>control + power electronics</b>."],
+     ["Hard problem","Budget forced two mismatched motors (gear ratios 1/144 vs 1/500, stall currents 24 A vs 2 A) onto one synchronized drive. I matched their angular acceleration by inverse-calculating PWM from the spec sheets, then tuned the offset empirically over dozens of climb tests, while a distributed <b>11,000 µF</b> capacitor bank held the rail above the 7 V reset floor through 24 A stall surges.","Two mismatched motors (1/144 vs 1/500, 24 A vs 2 A stall) on one drive, synced by inverse-calculated PWM + empirical tuning; an <b>11,000 µF</b> cap bank held the rail above reset."],
+     ["Honest read","It climbed on contest day, but the control is threshold on/off, and the motor mismatch left a residual twist. The deeper lesson was process: the first design was scrapped three weeks out for a center-of-mass flaw that a simple design-review gate would have caught on paper.","It worked, but control was on/off (not PID), and a scrapped first design taught me a design-review gate would have caught the flaw on paper."]],
+   figs:[["../assets/figures/climbing_robot_cad.png","The redesigned assembly: the two motors sit symmetrically about the pole axis so the center of mass falls on the climb axis, fixing the first design's center-of-mass offset."],
+     ["../assets/figures/climbing_robot_build.jpg","The actual build: drive gears, magnets, and wiring, with the cable tie (circled) that finally fixed the body-guide derailment after magnets and tape had failed."]],
+   meth:["Arduino multi-board (sensing / control split)","heterogeneous-motor synchronization","11,000 µF capacitor bank","moving-average + outlier filtering","torque & current safety-factor budgeting"],
+   limit:"A team course project with a defined goal, and the control is on/off, empirically tuned. Included as the hands-on hardware-and-team complement to the simulation work above.",
+   mlimit:"Team course project: on/off control, hands-on. My hardware-and-team complement to the simulation work."},
+  {kick:"Fault-tolerant control",title:"Asymmetric-Geometry Rotor Fault Tolerance",
+   chip:["Simulation · 6-DOF rebuild","amber"],lead:"Surviving a rotor hit, then rebuilding the model until the result survives a stricter test.",
+   blocks:[["Approach","A Monte-Carlo search (~10⁸ samples) over four-rotor geometry maximizes the static stability margin after a rotor fails; the optimum sits at the <b>incenter</b> of the remaining support triangle. The damaged craft is then flown with 3-motor control allocation, deliberately giving up yaw.","A ~10⁸-sample search places the rotors for best post-failure stability (optimum = <b>incenter</b> of the support triangle); the craft then flies on 3 motors, giving up yaw."],
+     ["Honest rebuild","My first model judged \"survival\" from attitude alone, which flattered the result. I rebuilt it as a realistic <b>6-DOF</b> simulation: it adds translational motion and altitude (so a craft that holds attitude but sinks now counts as a crash), an <b>instantaneous impact impulse</b> instead of a smeared 50 ms force, a post-hit drop in mass / shift in center-of-gravity / change in inertia from losing the rotor, and asymmetric motor spin-up/down with battery voltage sag.","My first model called \"survival\" from attitude alone, too flattering. I rebuilt it in <b>6-DOF</b>: real altitude (sink = crash), an <b>instantaneous</b> impact impulse, post-hit mass/CoG/inertia change, and asymmetric motor response."],
+     ["Finding","Even under the stricter model the craft survives (recovering attitude <em>and</em> holding altitude) for fragment hits up to <b>~420–520 m/s</b> on the axes, and up to <b>~960–1050 m/s</b> for glancing 60° strikes; shallow 30° strikes fall in between (~540–570 m/s).","Even realistically it survives fragment hits up to <b>~420–520 m/s</b> axial, and <b>~960–1050 m/s</b> for 60° glancing strikes (30° in between)."]],
+   stats:[["420–520 m/s","survivable axial fragment speed (1 g) under the realistic 6-DOF model"],["~1050 m/s","survivable glancing 60° strike; shallow angles deflect most of the momentum"],["6-DOF","attitude + altitude + crash, replacing the earlier attitude-only model"]],
+   figs:[["../assets/figures/drone_survival_boundary.png","Critical fragment speed the craft can survive (attitude error ≤ 45° and no crash) after losing one rotor, by strike direction and angle. Glancing 60° hits (right) are survivable far faster than near-axial hits (left), because most of their momentum slides past the airframe without spinning it."]],
+   meth:["~10⁸-sample geometry search","realistic 6-DOF dynamics","instantaneous impact impulse","post-loss mass / CoG / inertia shift","asymmetric motor + voltage sag"],
+   limit:"These are simulation thresholds. Nothing here has flown. The point of the rebuild is the opposite of inflation: it removes the idealizations that made the earlier numbers look better than they should have.",
+   mlimit:"Simulation thresholds with the flattering idealizations stripped out. Nothing has flown."},
+  {kick:"Optimal control · guidance · playable",title:"Short-Range Air-Defense Interception",
+   chip:["Simulation + live demo","green"],
+   lead:"Steering an interceptor onto an evasive drone, and finding the design that hits best. <a href='https://euichanlee0608-svg.github.io/divert-sim/' target='_blank' rel='noopener'>Try the live demo &rarr;</a><span class='liveurl'>euichanlee0608-svg.github.io/divert-sim/</span>",
+   blocks:[["Problem","A short-range air-defense missile changes course only by pushing sideways, so hitting a small drone that jinks at random is genuinely hard. The design question is how much sideways force to give it, where to mount the thruster, and how sensitive the guidance should be.","A short-range interceptor steers only by pushing sideways. Hitting a small jinking drone is hard, so which design hits best?"],
+     ["Approach","A 2D rigid-body engine (RK4) flies the missile under proportional-navigation guidance against a reactive, randomly-evading drone, with seeker measurement noise and first-order control delay. Four methods, grid search, gradient descent, a genetic algorithm, and PPO reinforcement learning, minimize the same objective (intercept time, fuel, miss distance), and each design is scored as a Monte-Carlo average over random evasions.","A 2D RK4 engine flies PN guidance against a jinking drone with noise and delay; four optimizers minimize one objective, scored by Monte-Carlo."],
+     ["Finding","The genetic algorithm reached the best objective with a fifth of grid search's evaluations. Raw sideways force turned out to be the decisive variable, ahead of thruster placement, and once realistic delay is included, a fast, agile drone becomes hard for a missile of this class to reach. Every figure is anchored to public specifications for a small counter-drone interceptor.","The genetic algorithm won on efficiency; sideways force decided the hit, ahead of placement, and realistic delay makes agile drones hard to catch. Numbers follow public specs."]],
+   stats:[["1/5","of grid-search evaluations for the best design, via the genetic algorithm"],["analytic","automated physics checks against closed-form solutions and conservation laws"],["live","in-browser steering demo, computed in real time"]],
+   meth:["RK4 rigid-body dynamics","proportional navigation","genetic algorithm / PPO","Monte-Carlo robustness","seeker-noise & delay models"],
+   limit:"A 2D simulation with a single target and simplified aerodynamics, built to study control and optimization tradeoffs. Included as the interactive, playable piece.",
+   mlimit:"2D, single target, simplified aero: a control-and-optimization study, never meant as a flight model. Built to be playable."},
+
+];
+const INTERESTS_EN = [
+  "Design of experiments — space-filling (Latin hypercube, Sobol) vs screening designs, and when each earns its runs",
+  "Surrogate models — polynomial regression, Kriging, moving least squares, RBF, and where each one breaks",
+  "Acquisition functions — Expected Improvement, and its failure modes on noisy responses",
+  "Reliability-based design optimization — FORM/SORM, single-loop methods, most-probable-point reasoning",
+  "Multi-objective optimization — Pareto dominance, and what stays undecidable without a stated preference",
+  "Validating surrogate-found optima against the real solver — never grading a model with itself",
+];
+const SYSTEMS_EN = [
+  {cls:"",h:"Records from the diff, not the narrator",role:"research pipeline",
+   p:"A local-first toolkit keeps my research reproducible. Change summaries are extracted from the actual <b>git diff</b>, so a model's account of its own work never enters the record. Only registered, tested modules are trusted, pushes are gated on verification, and a baseline check flags silent metric changes in both directions.",
+   mp:"Change records are extracted from the <b>git diff</b>, so they can't be faked. Pushes are gated on verification."},
+  {cls:"",h:"A green dashboard proved nothing",role:"regression gate",
+   p:"A status dashboard once showed every check green while four real bugs shipped anyway. 'Is it alive' turned out to be the wrong question. The gate now <b>replays real messages through the real handlers</b>, with no network and no paid calls, and asks the question that matters: who responds, and with what. Nothing ships until that passes.",
+   mp:"All checks green, four bugs shipped anyway. The gate now <b>replays real messages through real handlers</b> and blocks on behaviour."},
+  {cls:"",h:"Approval gates and fallbacks",role:"automation safety",
+   p:"Anything I can trigger remotely passes an <b>approval step before it touches a file</b>. The approval channel itself is watched: every always-on thread writes its own heartbeat, because a process can be alive while a thread inside it is dead, and if the channel dies mid-request the request <b>falls back to the terminal</b> instead of silently hanging.",
+   mp:"Remote tasks need <b>approval before touching files</b>; per-thread heartbeats watch the watchers, and a dead channel falls back to the terminal."},
+  {cls:"",h:"Equations that earn their grade",role:"physics verification · private repo",
+   p:"The most dangerous simulation failure isn't an error, it's a <b>plausible wrong number</b> — a wrong coefficient is dimensionally perfect. So every physics equation in my catalogue is graded by evidence: a reference, then a dimensional check, then a numeric check against known solutions, with CI refusing any push that drops the verified share below 95%.",
+   mp:"Worst failure: a <b>plausible wrong number</b> (wrong coefficients pass dimensional checks). Equations are graded by evidence — reference → dimensions → numerics — behind a 95% CI gate."},
+  {cls:"dep",h:"second_brain · decision capture",role:"deprecated · 2026-06",
+   p:"An attempt to auto-extract the decisions I made during work sessions. It ran fine, but the captured reasoning was <b>too low-quality to be useful</b>, so I retired it instead of keeping a system that just produced noise. The idea I kept: store the raw record <em>before</em> any processing can distort it.",
+   mp:"Tried auto-extracting my decisions. Too low-quality, so I retired it. Kept the idea: <b>store the raw record first</b>."},
+  {cls:"",h:"Engineering Brain",role:"reasoning dataset · poster submitted",
+   p:"The replacement, still running: it poses hard engineering and philosophy dilemmas, records my free-text answers verbatim, and keeps the model that asks separate from the model that grades so the raw answers stay clean. Ten of those answers then became the examples for a poster study on what actually transfers. The <b>form</b> of a decision, committing to one dominant variable, came from the instruction alone on both a cloud model and a 7.8B model on my Mac mini. The <b>content</b>, picking the variable I picked, moved only on the cloud model.",
+   mp:"Poses hard dilemmas, saves answers verbatim, asker separate from grader. Ten answers became a poster study: the <b>form</b> of a decision transfers from the instruction alone, the <b>content</b> only on the cloud model."},
+];
+const ABOUT_EN = [
+  ["Education","Korea University",
+    "B.S. Mechanical Engineering &mdash; primary major<br>Applied Artificial Intelligence &mdash; convergence major"],
+  ["Research","Materials Innovation Lab",
+    "Undergraduate researcher<br>Prof. Byungseok Seo · since Fall 2026<br><a href='https://matinnovlab.com/' target='_blank' rel='noopener'>matinnovlab.com</a>"],
+  ["Direction","AI × Mechanical engineering",
+    "Data-efficient learning and verification,<br>applied to physical-system research"],
+  ["Contact","Get in touch",
+    "<a href='mailto:leechan0608@korea.ac.kr'>leechan0608@korea.ac.kr</a><br><a href='https://github.com/euichanlee0608-svg' target='_blank' rel='noopener'>github.com/euichanlee0608-svg</a><br><a href='https://www.linkedin.com/in/euichanlee0608-svg' target='_blank' rel='noopener'>linkedin.com/in/euichanlee0608-svg</a>"],
+];
+const RESUME_EN={
+  tabProfile:"Profile", tabResume:"Résumé",
+  pdf:"Download PDF",
+  head:{name:"Euichan Lee", loc:"Seoul, Republic of Korea", site:"euichanlee0608-svg.github.io", links:[
+    ["leechan0608@korea.ac.kr","mailto:leechan0608@korea.ac.kr"],
+    ["github.com/euichanlee0608-svg","https://github.com/euichanlee0608-svg"],
+    ["linkedin.com/in/euichanlee0608-svg","https://www.linkedin.com/in/euichanlee0608-svg"],
+  ]},
+  edu:{
+    h:"Education",
+    org:"Korea University · Seoul, Republic of Korea",
+    lines:[
+      ["B.S. Mechanical Engineering — primary major","Mar 2022 – present"],
+      ["Applied Artificial Intelligence — convergence major","2026 – present"],
+    ],
+    gpa:[["Cumulative GPA","3.86"],["Major GPA","3.86"],["Last three semesters","3.98"]],
+    scale:"/ 4.5",
+    trendH:"Semester GPA",
+    trend:[
+      {t:"2022 Spring",g:3.47},
+      {gap:"Nov 2022 – May 2024 · mandatory military service, on academic leave through Fall 2024"},
+      {t:"2025 Spring",g:3.92},
+      {t:"2025 Fall",g:4.00},
+      {t:"2026 Spring",g:4.03},
+    ],
+    note:"Korea University 4.5 scale, where A+ is 4.5. Four semesters completed, 75 credits earned; in the third year as of Fall 2026. Grades are transcribed from my own transcript, and the official one is available on request.",
+    courseH:"Relevant coursework",
+    groups:[
+      ["Mechanics","Thermodynamics I &amp; II · Solid Mechanics I&deg; &amp; II&deg; · Fluid Mechanics I&deg; · Dynamics · Kinematics of Machinery"],
+      ["Computation &amp; mathematics","Numerical Analysis&deg; · Linear Algebra · Signals &amp; Systems&deg; · Engineering Mathematics&deg; · Computer Programming &amp; Practice&deg; · Calculus I"],
+      ["Design &amp; fabrication","Creative Mechanical Design (capstone) · Manufacturing Processes &amp; Practice · Computer-Aided Mechanical Drawing · Mechanical Engineering Laboratory I"],
+      ["Science","General Physics I · General Chemistry&deg; &amp; Laboratory"],
+    ],
+    courseNote:"&deg; taught in English — 24 credits of subject coursework.",
+  },
+  res:{
+    h:"Research &amp; Programs",
+    items:[
+      {r:"Undergraduate Researcher",o:"Materials Innovation Lab, Korea University",d:"Fall 2026 – present · optimization proof-of-concept",
+       b:"Running an optimization proof-of-concept for nano-device synthesis; the work sits on the design side, upstream of the measurements themselves.",
+       p:"Advised by Prof. Byungseok Seo. The direction I am heading in is data-efficient experiment design for a domain whose ground truth still comes from a measurement.",
+       t:"<a href='https://matinnovlab.com/' target='_blank' rel='noopener'>matinnovlab.com</a>"},
+      {r:"Team member · Living Paper",o:"Korean I-Corps (TeX-Corps) 2026 · Korea University Lab-Startup Innovation Corps",d:"2026 · certificate of completion",
+       b:"Ran fifty field interviews that moved the project from simulation-pipeline debugging to meeting comprehension.",
+       p:"I trained in evidence-based customer discovery, including an on-site phase at UC Berkeley through the Korea Innovation Center (KIC). What I took from it is the habit of writing the belief down first, so that the interviews have something specific to contradict."},
+    ],
+    projH:"Selected projects, each written up in full elsewhere on this site:",
+    proj:[
+      ["Broadband acoustic energy harvesting","#pieces/projects/p3"],
+      ["VPP Trade-Guard · risk-aware power trading","#pieces/projects/p1"],
+      ["Sequential optimization: a decision study for a device lab","#pieces/projects/p0"],
+      ["Autonomous pole-climbing and harvesting robot","#pieces/projects/p4"],
+    ],
+  },
+  pres:{
+    h:"Presentations",
+    items:[["Moving a specialist's tacit judgement into a local small model: personalized in-context learning compared across a cloud model and a 7.8B local model","2026 KU AI Forum, student poster session · submitted"]],
+  },
+  exp:{
+    h:"Experience",
+    items:[
+      {r:"Design-Optimization Engineering Intern",o:"NumeReal",d:"Aug 2026 – present · hybrid",
+       b:"Drive commercial DOE, optimization, and RBDO suites through their Python APIs, running large experiment matrices end to end.",
+       p:"Every result is re-derived from the governing equations and checked against the true solver, so a surrogate never grades its own answer. Reproducible scripts with the raw data are the deliverable.",
+       t:"Python · commercial CAE optimization suites"},
+      {r:"Mandatory Military Service",o:"Republic of Korea Army",d:"enlisted Nov 2022 · discharged May 2024",
+       b:"Completed statutory national service, on academic leave from Fall 2022 through Fall 2024."},
+    ],
+  },
+  hon:{
+    h:"Honors &amp; Activities",
+    items:[
+      ["1st place, Korea University × Upstage Energy AI Hackathon","2026 · first of 23 teams, team lead of three"],
+      ["Certificate of completion, TeX-Corps (Korean I-Corps)","2026"],
+    ],
+  },
+  skill:{
+    h:"Skills",
+    groups:[
+      ["Tools","Python · Git · commercial CAE optimization suites"],
+      ["Methods","Design of experiments · Bayesian optimization · finite element analysis"],
+      ["Languages","Korean (native) · English (24 credits of subject coursework taught in English)"],
+    ],
+  },
+  foot:"Grades and credits are self-reported from my transcript. Everything else here links to work you can open and check.",
+};
+
+/* 이 항목의 주인공은 과정이다. 아이템은 또 피봇될 수 있으므로 지금 제품의
+   상세는 오래가지 않는다. 오래가는 것은 근거가 결정을 바꾼 경로다. */
+const SIMOPS_EN = {
+  prog:"Korean I-Corps 2026 · Korea University Lab-Startup Innovation Corps · on-site phase at UC Berkeley through the Korea Innovation Center · certificate of completion",
+  stats:[["50","field interviews over the program"]],
+  diag:{
+    alt:"How the idea moved: what we believed, what the field said, what we changed",
+    top:"the item can move again; the interviews are what decide",
+    cols:[
+      ["GOING IN","SimOps","find the unstable variable","without opening the model"],
+      ["THE FIELD","50 interviews","the problem was real","people had adapted to it"],
+      ["AFTER","Living Paper","rebuilt around the meeting","you nodded through"],
+    ],
+    foot:"one constraint survived the pivot: unpublished work stays in the lab",
+  },
+  desc:"<b>What the program is.</b> Korean I-Corps is a lab-startup training program run by Korea University's Lab-Startup Innovation Corps, and the method is the content of it: write down what you believe about a customer, take that belief to people who actually have the problem, and let what you hear decide whether the idea survives. My cohort ran through 2026 and included an on-site phase at UC Berkeley through the Korea Innovation Center. I finished it with a certificate of completion. <b>What we believed going in.</b> The team entered as <b>SimOps</b>. When an OEM and a supplier run their simulation models coupled together, the run throws numerical errors nobody can locate, because the supplier's model arrives as a black box and each side points at the other's. We had a way to find the unstable variables from the outside, without opening either model, and we were confident that was the product. <b>What fifty interviews showed.</b> The blame game was real and it cost weeks. It also sat with engineers who had long since built their schedules around it, and none of them were going to reorganize a program for a diagnosis. What came up unprompted, in interview after interview, was smaller and closer to hand: people leave a lab meeting having nodded through the parts they never followed, and the chance to ask again does not come back. <b>What we changed.</b> We dropped the diagnosis tool and rebuilt around that meeting. One constraint carried over intact, because every interview agreed on it: unpublished work cannot leave the lab. The MVP that came out of it, Living Paper, is live and opens without an account. <b>What I keep from it.</b> The interviews outlast the item. This one may move again, and if it does the part worth showing stays the same: the belief we wrote down, the evidence that contradicted it, and how long we took to act on that evidence.",
+  mdesc:"<b>The program.</b> Korean I-Corps 2026, run by Korea University's Lab-Startup Innovation Corps, with an on-site phase at UC Berkeley through the Korea Innovation Center. Certificate of completion. <b>Going in.</b> We were <b>SimOps</b>: find where a coupled OEM-and-supplier simulation goes numerically wrong, without opening either model. <b>Fifty interviews.</b> The problem was real, and the engineers who had it had already built their schedules around it. What came up unprompted was smaller: a lab meeting you leave having nodded through the parts you never followed. <b>What we changed.</b> We dropped the diagnosis tool and rebuilt around that meeting, keeping the one constraint every interview agreed on: unpublished work cannot leave the lab. The MVP, Living Paper, is live. <b>What I keep.</b> The interviews outlast the item. This one may move again; the evidence is what decides.",
+};
+
+const MOB=()=>window.matchMedia("(max-width:640px)").matches;
+
+/* ============ FILE TREE ============ */
+const SITE="https://euichanlee0608-svg.github.io/";
+/* live web apps: the ones that stand on their own first, then the three that
+   come out of a project (those are already covered in the Projects folder) */
+const APPS_EN=[
+  {id:"engbrain",name:"Engineering Brain",url:SITE+"engineering-brain/",type:"Web app",
+   desc:"It asks a hard engineering or philosophy dilemma, you answer in your own words, and it grades the reasoning.",status:["Live","green"]},
+  {id:"optguide",name:"Optimal Design Visual Guide",url:SITE+"optimal-design-guide/",type:"Guide · EN / KO",
+   desc:"The whole CAE optimization stack (DOE, surrogates, optimizers, reliability) as animations the browser computes live. English and Korean.",status:["Live","green"]},
+  /* 잠긴 항목은 맨 아래. 위 두 개는 지금 열리고, 이건 안 열린다 */
+  {id:"studyvault",name:"Study Vault",locked:true,type:"Personal · not public",
+   desc:"My own study space: nothing goes in until I have worked the problem through again and checked it myself. Closed to visitors, because it is where I study.",status:["Private","amber"]},
+];
+/* Side projects and smaller builds. Kept because they are real and finished,
+   filed here because they are not what the work is about. */
+const SIDE_APPS_EN=[
+  {id:"newslab",name:"News Literacy Lab",url:SITE+"news-literacy-lab/",type:"Web app",
+   desc:"Breaks a news article down by who has a stake in it, rather than by which camp it belongs to. Paste a link.",status:["Live","green"]},
+  {id:"emoquad",name:"Emotion Quadrant",url:SITE+"emotion-quadrant/",type:"Web app · Korean",
+   desc:"Narrows 434 Korean emotion words down to the one you actually mean, one choice at a time.",status:["Live","green"]},
+  {id:"stick357",name:"357 Stick Breaker",url:SITE+"stick-breaker-game/",type:"Game",
+   desc:"A misère Nim variant drawn like a notebook doodle. Play the solver, or a friend on the same phone.",status:["Live","green"]},
+];
+
+/* file-list summaries: [type, one-line description, short status].
+   The status here is the scannable token; the full, qualified wording stays on
+   the project's own chip inside the detail sheet. */
+const PROJ_META_EN=[
+  ["Bayesian optimization","A decision study for a device lab: what algorithm-chosen measurements are worth on public device data, and whether the in-house data can support them.",["Decision study","amber"]],
+  ["Energy AI · team","Risk-aware bidding for a virtual power plant, built so the AI proposes and code decides.",["1st place","green"]],
+  ["Personalization · LLM","What transfers when a specialist's reasoning goes into the prompt, and what stops at 7.8B.",["Poster submitted","green"]],
+  ["Energy harvesting","A wire array that stays steady across real noise, where the result is steadiness across environments.",["Simulation complete","green"]],
+  ["Robotics · hardware","A team-built robot that climbs a pole and harvests the coconut on top. I owned control and power.",["Built & tested","green"]],
+  ["Fault tolerance","A quadrotor that survives losing a rotor, remodelled in 6-DOF so the numbers survive a stricter test.",["Simulation","amber"]],
+  ["Guidance · control","Steering an interceptor onto an evasive drone, comparing four optimization methods.",["Simulation + demo","green"]],
+
+];
+const ICO={
+  drive:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2.75" y="4.25" width="18.5" height="6.75" rx="2"/><rect x="2.75" y="13" width="18.5" height="6.75" rx="2"/><path d="M6 7.6h6.5M6 16.4h6.5"/><circle cx="17.8" cy="7.6" r=".95" fill="currentColor" stroke="none"/><circle cx="17.8" cy="16.4" r=".95" fill="currentColor" stroke="none"/></svg>`,
+  folder:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M3 7.6A1.6 1.6 0 0 1 4.6 6h4.1a1.6 1.6 0 0 1 1.13.47l1.27 1.27H19.4A1.6 1.6 0 0 1 21 9.34V18a1.6 1.6 0 0 1-1.6 1.6H4.6A1.6 1.6 0 0 1 3 18z"/></svg>`,
+  folderOpen:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M3 18V7.6A1.6 1.6 0 0 1 4.6 6h4.1a1.6 1.6 0 0 1 1.13.47l1.27 1.27H19.4A1.6 1.6 0 0 1 21 9.34v1.86"/><path d="M3 18 5.9 11.9a1.6 1.6 0 0 1 1.44-.9H22l-2.9 6.1a1.6 1.6 0 0 1-1.44.9H4.6A1.6 1.6 0 0 1 3 18z"/></svg>`,
+  proj:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M13.8 3.6H7.2A1.6 1.6 0 0 0 5.6 5.2v13.6a1.6 1.6 0 0 0 1.6 1.6h9.6a1.6 1.6 0 0 0 1.6-1.6V8.2z"/><path d="M13.8 3.6V8.2h4.6"/><path d="M9 16.6v-3M12 16.6v-5.4M15 16.6v-2" stroke-linecap="round"/></svg>`,
+  doc:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M13.8 3.6H7.2A1.6 1.6 0 0 0 5.6 5.2v13.6a1.6 1.6 0 0 0 1.6 1.6h9.6a1.6 1.6 0 0 0 1.6-1.6V8.2z"/><path d="M13.8 3.6V8.2h4.6"/><path d="M8.8 12.4h6.4M8.8 15.8h4.4" stroke-linecap="round"/></svg>`,
+  app:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><rect x="3" y="4.6" width="18" height="14.8" rx="2"/><path d="M3 9.2h18"/><circle cx="6.1" cy="6.9" r=".72" fill="currentColor" stroke="none"/><circle cx="8.5" cy="6.9" r=".72" fill="currentColor" stroke="none"/><path d="M10.4 15.6 15 11m-3.3 0H15v3.3" stroke-linecap="round"/></svg>`,
+  person:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.4" r="3.9"/><path d="M4.6 20.2a7.4 7.4 0 0 1 14.8 0"/></svg>`,
+};
+/* ================= KO / EN =================
+   영문이 원본이고, 한국어는 '부분 패치'다. KO 에 없는 필드는 영문이 그대로 남으므로
+   번역이 덜 끝난 상태로도 화면이 깨지지 않는다. 기본값은 EN(= 지금까지의 동작). */
+const KO = {};
+/* 한국어 부분 패치 — 없는 필드는 영문이 그대로 남는다 (deepMerge 폴백) */
+window.KO_PATCH = {
+  UI:{
+    statedPlainly:"분명히 밝히면:",
+    alsoScoping:"현재 학습 중인 주제입니다. 최적설계 스택 전 과정을 다루며, 정리 중인 노트를 그대로 옮겼습니다.",
+    systemsLead:"제가 사용하는 도구들은 모두 같은 구조로 수렴했습니다 — <b>도구 자신을 신뢰하지 않는 독립적 검증</b>입니다. 각 안전장치가 어떤 경험에서 나왔는지, 그리고 폐기한 것 하나까지 정리했습니다.",
+    systemsLeadM:"모든 도구가 같은 원칙으로 수렴했습니다 — <b>도구 자신을 신뢰하지 않는 독립적 검증</b>. 안전장치들과 폐기한 것:",
+    band:"번거로우면 결국 사용하지 않게 되므로, 이 모든 것을 한곳에서 실행할 범용 텔레그램 봇을 구축했습니다. 휴대폰에서 어떤 작업이든 실행하되, 파일을 변경하기 전에는 반드시 승인 단계를 거칩니다.",
+    bandM:"텔레그램 봇으로 통합했습니다. 휴대폰에서 실행하되, 파일 변경 전 승인을 거칩니다.",
+    toy:"같은 원칙을 적용한 소규모 프로젝트로 기타 타브 추출기가 있습니다. 채보 결과를 다시 음원으로 합성하고 재채보해 스스로 채점하며, 기준을 넘긴 파라미터만 채택합니다. 전사 모델도 같은 방식으로 골랐습니다. GuitarSet 정답과 대조해 onset F1 0.912를 기록한 모델을 썼습니다.",
+    toyM:"같은 원칙의 소규모 프로젝트입니다. 재합성·재채보로 스스로 채점하는 기타 타브 추출기이고, 전사 모델은 GuitarSet에서 onset F1 0.912로 골랐습니다.",
+    aboutTitle:"소개", aboutSub:"이의찬 (Leechan)",
+    aboutCta:"연구 협업 및 대학원 진학에 열려 있습니다 · ",
+    filter:"검색 — ", locations:"위치", also:"그 외", aboutMe:"소개",
+    items:"개 항목", folders:"개 폴더", inFolder:"·", ofItems:"/",
+    noMatch:"", noMatchTail:" 와 일치하는 파일이 없습니다.",
+    upTop:"처음으로", upDir:"Portfolio Pieces로",
+    document:"개 문서", documents:"개 문서",
+  },
+  TREEMETA:{
+    drive:"Portfolio Pieces",
+    projects:{name:"Projects", type:"폴더", countWord:"개 프로젝트",
+      desc:"공학·연구 프로젝트입니다. 각 항목마다 방법과 결과, 그리고 한계를 함께 기술했습니다."},
+    apps:{name:"Live Web Apps", type:"폴더", countWord:"개 라이브 웹앱",
+      desc:"지금 바로 실행해 보실 수 있는 것들입니다. 프로젝트에서 나온 앱은 해당 프로젝트 안에 두었고, 소규모 작업은 기타 · 취미에 모아 두었습니다."},
+    systems:{name:"Systems & Tooling", type:"문서",
+      sub:"직접 구축한 도구의 안전장치, 그리고 폐기한 하나",
+      desc:"모든 도구에 동일한 원칙을 적용했습니다. 도구 자신을 신뢰하지 않는 독립적 검증. diff 기반 기록, 계약 테스트 게이트, 승인 단계, 등급이 부여된 수식.", status:["진행 중","blue"]},
+    simops:{name:"한국형 I-Corps", type:"문서",
+      sub:"고객 발굴, 그리고 인터뷰 50건이 만든 피봇 · 고려대학교 2026",
+      desc:"실험실 창업 탐색 교육입니다. 고객에 대해 믿는 바를 먼저 적고, 현장에 나가 그 믿음을 확인합니다. 인터뷰 50건이 첫 아이템을 접게 했습니다. 그 자리를 대신한 MVP인 Living Paper는 운영 중입니다.", status:["수료","green"]},
+    misc:{name:"기타 · 취미", type:"폴더", countWord:"개",
+      desc:"완성했고 실제로 돌아가지만, 저를 평가받고 싶은 대상은 아닌 것들입니다. 연습으로 돌린 시뮬레이션과, 만드는 재미로 만든 앱."},
+    interests:{name:"Research Interests", type:"문서",
+      sub:"최적설계 스택 전 과정",
+      desc:"현재 학습 중인 주제입니다 — 실험계획법, 대리모델, 최적화 기법, 신뢰성 기반 설계.", status:["학습 중","blue"]},
+  },
+  PROJ_META:[
+    ["베이지안 최적화","공개 소자 데이터로 알고리즘이 선택한 측정의 실효를 계측하고, 자체 보유 데이터가 이를 받쳐 주는지 동일한 요건으로 심사했습니다.",["도입 검토","amber"]],
+    ["에너지 AI · 팀","고장 리스크를 목적함수에 직접 반영한 VPP 입찰 시스템을 설계하여, AI는 제안하고 코드가 결정하는 구조를 구현했습니다.",["1위","green"]],
+    ["개인화 · LLM","전문가의 판단을 프롬프트에 넣었을 때 무엇이 전이되고 무엇이 7.8B에서 멈추는지 측정했습니다.",["포스터 제출","green"]],
+    ["에너지 하베스팅","실제 소음 환경 전반에서 출력이 크게 흔들리지 않는 와이어 배열을 구현하여, 피크 전력보다 설계 강건성 쪽을 성과로 삼았습니다.",["시뮬레이션 완료","green"]],
+    ["로보틱스 · 하드웨어","기둥을 등반해 상단의 코코넛을 수확하는 로봇을 팀으로 제작했으며, 제어와 전력 시스템을 담당했습니다.",["제작·시험 완료","green"]],
+    ["내고장성","로터 하나를 상실해도 생존하는 쿼드로터를 6자유도로 재모델링하여, 수치의 정직성을 확보했습니다.",["시뮬레이션","amber"]],
+    ["유도 · 제어","회피 기동하는 드론에 요격체를 유도하며, 네 가지 최적화 기법의 성능을 비교했습니다.",["시뮬레이션 + 데모","green"]],
+
+  ],
+  APPS:[
+    {name:"Engineering Brain", type:"웹앱",
+     desc:"고난도 공학·철학 딜레마를 제시하면 직접 서술한 답변을 받아, 그 논리를 채점해 줍니다.", status:["운영 중","green"]},
+    {name:"Optimal Design Visual Guide", type:"가이드 · 한/영",
+     desc:"CAE 최적설계의 전 과정(실험계획·대리모델·최적화·신뢰성)을 브라우저가 실시간으로 계산하는 애니메이션으로 구성했습니다.", status:["운영 중","green"]},
+    {name:"Study Vault", type:"개인용 · 비공개",
+     desc:"제 학습 공간입니다. 직접 다시 풀고 검산한 문제만 넣습니다. 제가 공부하는 곳이라 외부에는 열지 않았습니다.", status:["비공개","amber"]},
+  ],
+  SIDE_APPS:[
+    {name:"News Literacy Lab", type:"웹앱",
+     desc:"기사를 진영이 아닌 이해관계자 기준으로 분해합니다. 링크를 입력해 보세요.", status:["운영 중","green"]},
+    {name:"Emotion Quadrant", type:"웹앱 · 한국어",
+     desc:"한국어 감정단어 434개를 단계적으로 좁혀, 실제로 표현하려던 단어를 찾아 줍니다.", status:["운영 중","green"]},
+    {name:"357 Stick Breaker", type:"게임",
+     desc:"공책 낙서 감성으로 구현한 미제르 Nim 변형입니다. 솔버와 대국하거나 한 대의 휴대폰으로 2인 대전이 가능합니다.", status:["운영 중","green"]},
+  ],
+
+  INTERESTS:[
+    "실험계획법 — 공간 충진(Latin Hypercube·Sobol)과 변수 선별 설계, 그리고 각 기법이 해석 횟수를 정당화하는 조건",
+    "대리모델 — 다항 회귀, Kriging, MLS, RBF의 특성과 각 모델이 무너지는 지점",
+    "획득함수 — Expected Improvement, 그리고 노이즈가 포함된 응답에서의 실패 양상",
+    "신뢰성 기반 설계 최적화(RBDO) — FORM/SORM, 단일 루프 기법, MPP(최대가능파괴점) 기반 해석",
+    "다목적 최적화 — 파레토 지배, 그리고 선호를 명시하지 않으면 끝내 결정되지 않는 영역",
+    "대리모델이 도출한 최적해의 실솔버 검증 — 모델을 그 자신으로 채점하지 않기",
+  ],
+  SYSTEMS:[
+    {h:"기록은 서술이 아니라 diff에서", role:"연구 파이프라인",
+     p:"연구의 재현성을 위해 로컬 중심의 툴킷을 구축했습니다. 변경 내역은 실제 <b>git diff</b>에서 직접 추출합니다. 모델이 스스로 한 일을 서술한 문장은 기록에 들어가지 않으므로 조작할 수 없습니다. 등록되고 검증된 모듈만 신뢰하며, 푸시는 검증 단계를 통과해야 하고, 기준 지표 대조로 양방향의 미세한 성능 변화를 포착합니다.",
+     mp:"변경 내역을 실제 <b>git diff</b>에서 직접 추출하므로 조작이 불가능합니다. 푸시는 검증을 통과해야 합니다."},
+    {h:"초록불은 아무것도 증명하지 못했다", role:"회귀 게이트",
+     p:"상태 점검이 전 항목 정상으로 표시된 상태에서 실제 버그 4건이 배포된 적이 있습니다. '살아 있는가'는 잘못된 질문이었습니다. 현재 게이트는 <b>실제 메시지를 실제 핸들러에 흘려보내</b> 네트워크와 유료 호출 없이 검증하며, 핵심 질문에 답합니다. 누가, 무엇으로 반응하는가. 이를 통과하지 못하면 배포되지 않습니다.",
+     mp:"전 항목 정상 표시 상태에서 버그 4건이 배포됐습니다. 현재 게이트는 <b>실제 메시지를 실제 핸들러에 흘려</b> 동작 자체를 검증합니다."},
+    {h:"승인 게이트와 폴백", role:"자동화 안전장치",
+     p:"원격 실행이 가능한 모든 작업은 <b>파일 변경 이전에 승인 단계</b>를 거칩니다. 승인 채널 자체도 감시 대상입니다. 프로세스가 살아 있어도 내부 스레드는 중단될 수 있으므로, 상시 스레드마다 개별 하트비트를 기록합니다. 요청 도중 채널이 중단되면 무응답으로 방치하지 않고 <b>터미널로 폴백</b>합니다.",
+     mp:"원격 작업은 <b>파일 변경 전 승인</b>을 거치며, 스레드별 하트비트로 감시자를 감시하고, 채널 중단 시 터미널로 폴백합니다."},
+    {h:"등급을 증거로 획득하는 수식", role:"물리 검증 · 비공개 레포",
+     p:"시뮬레이션에서 가장 위험한 실패는 <b>그럴듯하게 틀린 결과</b>입니다. 계수가 잘못되어도 차원은 완벽히 일치하기 때문에, 에러보다 잡아내기 어렵습니다. 따라서 카탈로그의 모든 물리 수식은 증거로 등급을 부여받습니다. 출처 확인, 차원 검산, 알려진 해와의 수치 대조 순입니다. CI는 검증 비율이 95% 미만으로 떨어지는 푸시를 거부합니다.",
+     mp:"가장 위험한 실패는 <b>그럴듯하게 틀린 결과</b>입니다(잘못된 계수도 차원 검산은 통과). 수식은 증거로 등급을 받습니다. 출처 → 차원 → 수치 순이고, 95% CI 게이트가 지킵니다."},
+    {h:"second_brain · 의사결정 기록", role:"2026-06 폐기",
+     p:"작업 중 내린 의사결정을 자동 추출하려는 시도였습니다. 동작 자체는 문제없었으나 추출된 논리의 품질이 실용 수준에 미치지 못해 폐기했습니다.",
+     mp:"작업 중 의사결정의 자동 추출을 시도했으나, 추출된 논리의 품질이 실용 수준에 미치지 못해 폐기했습니다."},
+    {h:"Engineering Brain", role:"추론 데이터셋 · 교내 포스터 제출",
+     p:"앞선 시도를 대체한 프로젝트로 현재도 운영 중입니다. 고난도 공학·철학 딜레마를 제시하고 서술형 답변을 원문 그대로 적재하며, 출제 모델과 채점 모델을 분리해 원본 답변의 오염을 차단합니다. 이 중 10건을 예시로 삼아 무엇이 실제로 전이되는지를 교내 포스터로 정리했습니다. 지배 변수를 하나로 확정하는 <b>형식</b>은 클라우드 모델과 맥미니의 7.8B 모델 모두에서 지시만으로 확보되었으나, 제가 고른 변수를 그대로 고르는 <b>내용</b>은 클라우드 모델에서만 상승했습니다.",
+     mp:"고난도 딜레마를 제시하고 답변을 원문 그대로 적재하며, 출제와 채점 모델을 분리합니다. 다음 단계로 <b>개인화 In-Context Learning</b>의 공학 질의응답 성능을 정량 평가합니다."},
+  ],
+  ABOUT:[
+    ["학력","고려대학교","기계공학 학사 &mdash; 주전공<br>인공지능응용 &mdash; 융합전공"],
+    ["연구","Materials Innovation Lab","학부연구생<br>서병석 교수님 · 2026년 가을 시작<br><a href='https://matinnovlab.com/' target='_blank' rel='noopener'>matinnovlab.com</a>"],
+    ["연구 방향","AI × 기계공학","데이터 효율적 학습과 엄밀한 검증을<br>물리 시스템 연구에 적용"],
+    ["연락처","연락하기",null],
+  ],
+  RESUME:{
+    tabProfile:"프로필", tabResume:"이력서",
+    pdf:"PDF 저장",
+    head:{name:"이의찬", loc:"서울, 대한민국"},
+    edu:{
+      h:"학력",
+      org:"고려대학교 · 서울",
+      lines:[
+        ["기계공학 학사 — 주전공","2022년 3월 – 현재"],
+        ["인공지능응용 — 융합전공","2026년 – 현재"],
+      ],
+      gpa:[["전체 평점","3.86"],["전공 평점","3.86"],["최근 세 학기","3.98"]],
+      trendH:"학기별 평점",
+      trend:[
+        {t:"2022년 1학기"},
+        {gap:"2022년 11월 입대, 2024년 5월 전역 · 병역 이행으로 2024년 2학기까지 휴학"},
+        {t:"2025년 1학기"},
+        {t:"2025년 2학기"},
+        {t:"2026년 1학기"},
+      ],
+      note:"고려대학교 4.5 만점 기준이며(A+ = 4.5), 이수를 마친 4개 학기에서 75학점을 취득했습니다. 2026년 가을학기부터 3학년에 재학 중입니다. 수치는 성적증명서에서 직접 옮겨 적은 것이며, 공식 증명서는 요청 시 제출하겠습니다.",
+      courseH:"주요 이수 과목",
+      groups:[
+        ["역학","열역학 I · II · 고체역학 I&deg; · II&deg; · 유체역학 I&deg; · 동역학 · 기구학"],
+        ["전산 · 수학","수치해석&deg; · 선형대수 · 신호와 시스템&deg; · 공업수학&deg; · 컴퓨터언어 및 실습&deg; · 미적분학 I"],
+        ["설계 · 제작","창의적 기계설계(캡스톤) · 기계제작법 및 실습 · 전산기이용 기계제도 · 기계공학실험 I"],
+        ["기초과학","일반물리학 I · 일반화학&deg; 및 실험"],
+      ],
+      courseNote:"&deg; 표시는 영어 강의이며, 해당 과목은 24학점입니다.",
+    },
+    res:{
+      h:"연구 · 프로그램",
+      items:[
+        {r:"학부연구생",o:"Materials Innovation Lab, 고려대학교",d:"2026년 가을 – 현재 · 최적화 PoC 진행 중",
+         b:"nano-device 합성에 대한 최적화 PoC를 진행하고 있습니다. 측정 자체보다 그 앞단의 설계에 해당하는 일입니다.",
+         p:"서병석 교수님 지도. 지향하는 방향은 실측으로만 정답을 확인할 수 있는 영역에서의 데이터 효율적 실험 설계입니다."},
+        {r:"Living Paper 팀원",o:"한국형 I-Corps (TeX-Corps) 2026 · 고려대학교 실험실창업혁신단",d:"2026년 · 수료",
+         b:"현장 인터뷰 50건을 수행하여 시뮬레이션 파이프라인 진단에서 미팅 이해도 문제로 방향을 전환했습니다.",
+         p:"근거 기반 customer discovery 방법론을 교육받았으며, Korea Innovation Center(KIC)를 통한 UC Berkeley 현지 과정에 참여했습니다. 남은 것은 믿는 바를 먼저 적어 두는 습관입니다. 그래야 인터뷰가 반박할 대상이 생깁니다."},
+      ],
+      projH:"이 사이트에 상세를 수록한 주요 프로젝트:",
+      proj:[
+        ["광대역 음향 에너지 하베스팅"],
+        ["VPP Trade-Guard · 고장 리스크를 반영한 전력거래"],
+        ["소자 실험실 순차 최적화 도입 검토"],
+        ["자율 기둥 등반 · 수확 로봇"],
+      ],
+    },
+    pres:{
+      h:"발표",
+      items:[["전문가의 암묵지를 로컬 소형 모델로 옮길 수 있는가 — 클라우드 대형 모델과 7.8B 로컬 모델의 개인화 In-Context Learning 전이 비교","2026 KU AI 포럼 학생 포스터 세션 · 제출"]],
+    },
+    exp:{
+      h:"경력",
+      items:[
+        {r:"설계최적화 엔지니어링 인턴",o:"NumeReal",d:"2026년 8월 – 현재 · 하이브리드",
+         b:"상용 DOE · 최적화 · RBDO 소프트웨어를 Python API로 자동화해 대규모 실험 매트릭스를 처음부터 끝까지 수행합니다.",
+         p:"산출된 모든 결과는 지배방정식으로 다시 유도하고 실제 solver와 대조합니다. 결과를 만든 surrogate가 스스로를 채점하지 않게 하기 위해서입니다. 재현 가능한 스크립트와 원시 데이터를 산출물로 제출합니다.",
+         t:"Python · 상용 CAE 최적화 소프트웨어"},
+        {r:"병역 이행",o:"대한민국 육군",d:"2022년 11월 입대 · 2024년 5월 전역",
+         b:"병역 의무를 이행했으며, 2022년 2학기부터 2024년 2학기까지 휴학했습니다."},
+      ],
+    },
+    hon:{
+      h:"수상 · 활동",
+      items:[
+        ["고려대학교 × Upstage 에너지 AI 해커톤 금상","2026년 · 23팀 중 1위, 3인 팀 팀장"],
+        ["TeX-Corps (한국형 I-Corps) 수료","2026년"],
+      ],
+    },
+    skill:{
+      h:"기술 역량",
+      groups:[
+        ["도구","Python · Git · 상용 CAE 최적화 소프트웨어"],
+        ["방법론","실험계획법(DOE) · Bayesian optimization · 유한요소해석"],
+        ["언어","한국어(모국어) · 영어(영어 강의 24학점)"],
+      ],
+    },
+    foot:"성적과 학점은 성적증명서에서 직접 옮겨 적은 수치이며, 그 외 항목은 이 사이트에서 직접 열어 확인하실 수 있습니다.",
+  },
+
+  SIMOPS:{
+    prog:"한국형 I-Corps 2026 · 고려대학교 실험실창업혁신단 · Korea Innovation Center를 통한 UC Berkeley 현장 교육 · 수료",
+    stats:[["50","과정 중 진행한 현장 인터뷰"]],
+    diag:{
+      alt:"아이템이 움직인 경로: 무엇을 믿었고, 현장은 무엇을 말했고, 무엇을 바꿨는가",
+      top:"아이템은 또 움직일 수 있다. 결정하는 것은 인터뷰다",
+      cols:[
+        ["출발","SimOps","모델을 열지 않고","불안정한 변수를 찾는다"],
+        ["현장","인터뷰 50건","문제는 실제로 있었다","다들 이미 적응해 있었다"],
+        ["이후","Living Paper","끄덕이고 넘어간 회의를","중심으로 다시 설계"],
+      ],
+      foot:"피봇 후에도 남은 제약. 미공개 연구는 연구실 밖으로 나가지 않는다",
+    },
+    desc:"<b>어떤 과정인가.</b> 한국형 I-Corps는 고려대학교 실험실창업혁신단이 운영하는 실험실 창업 탐색 교육입니다. 방법 자체가 이 과정의 내용입니다. 고객에 대해 믿고 있는 바를 먼저 적습니다. 그다음 그 문제를 실제로 겪는 사람들을 찾아가 그 믿음을 확인합니다. 아이템의 존속 여부는 현장에서 들은 내용이 결정합니다. 2026년 과정이었고, Korea Innovation Center를 통한 UC Berkeley 현장 교육이 포함되어 있었습니다. 수료증을 받았습니다. <b>처음에 믿었던 것.</b> 팀의 출발점은 <b>SimOps</b>였습니다. OEM과 협력사가 각자의 시뮬레이션 모델을 결합해 돌리면 원인을 짚을 수 없는 수치 오류가 납니다. 협력사 모델이 블랙박스로 넘어오기 때문에 서로 상대 모델을 지목하게 됩니다. 저희에게는 모델을 열지 않고 바깥에서 불안정한 변수를 찾아내는 방법이 있었고, 그것이 제품이라고 확신했습니다. <b>인터뷰 50건이 알려준 것.</b> 책임 공방은 실제로 있었고 몇 주를 잡아먹고 있었습니다. 다만 그 문제를 안고 있는 엔지니어들은 이미 그 상태에 맞춰 일정을 짜고 있었습니다. 진단 하나를 위해 개발 일정을 다시 짤 사람은 없었습니다. 묻지 않아도 인터뷰마다 반복해서 나온 이야기는 더 작고 더 가까운 것이었습니다. 랩미팅에서 이해하지 못한 대목을 끄덕이고 넘어가면, 다시 물을 기회는 돌아오지 않는다는 것입니다. <b>무엇을 바꿨나.</b> 진단 도구를 접고 그 회의를 중심으로 다시 만들었습니다. 제약 하나는 그대로 가져왔습니다. 모든 인터뷰가 같은 말을 했기 때문입니다. 미공개 연구는 연구실 밖으로 나갈 수 없습니다. 그렇게 나온 MVP인 Living Paper는 계정 없이 열립니다. <b>무엇이 남는가.</b> 아이템보다 인터뷰가 오래갑니다. 지금 아이템도 다시 움직일 수 있습니다. 그때도 보여 드릴 것은 같습니다. 무엇을 믿고 적었는지, 어떤 근거가 그것을 뒤집었는지, 그 근거를 받아들이는 데 얼마나 걸렸는지입니다.",
+    mdesc:"<b>어떤 과정인가.</b> 한국형 I-Corps 2026. 고려대학교 실험실창업혁신단 과정이고, Korea Innovation Center를 통한 UC Berkeley 현장 교육을 포함합니다. 수료했습니다. <b>처음 믿었던 것.</b> 출발점은 <b>SimOps</b>였습니다. OEM과 협력사의 시뮬레이션을 결합했을 때 어디서 수치가 어긋나는지, 모델을 열지 않고 찾아내는 도구입니다. <b>인터뷰 50건.</b> 문제는 실제로 있었지만 엔지니어들은 이미 그에 맞춰 일정을 짜고 있었습니다. 묻지 않아도 나온 이야기는 더 작았습니다. 랩미팅에서 끄덕이고 넘어간 대목을 다시 물을 기회가 없다는 것이었습니다. <b>무엇을 바꿨나.</b> 진단 도구를 접고 그 회의를 중심으로 다시 만들었습니다. 모든 인터뷰가 일치한 제약 하나는 그대로 두었습니다. 미공개 연구는 연구실 밖으로 나갈 수 없습니다. MVP인 Living Paper는 운영 중입니다. <b>남는 것.</b> 아이템보다 인터뷰가 오래갑니다. 지금 아이템도 또 움직일 수 있습니다. 결정하는 것은 근거입니다.",
+  },
+
+  RESEARCH:[
+   {kick:"베이지안 최적화 · 실험 설계", title:"이 소자 실험실은 순차 최적화를 도입해야 하는가",
+    chip:["도입 검토 · 현 시점 도입 비권고","amber"],
+    lead:"도입 여부를 판정하기 위해, 공개 소자 데이터로 그 실효를 먼저 계측하고, 자체 보유 데이터 5종을 동일한 요건으로 심사했습니다. <a href='https://euichanlee0608-svg.github.io/seqopt/' target='_blank' rel='noopener'>방법을 직접 해보기 &rarr;</a><span class='liveurl'>euichanlee0608-svg.github.io/seqopt/</span>",
+    blocks:[
+     ["문제","소자 실험실은 고비용 조건을 한 번에 하나씩 측정합니다. 순차 최적화 — Gaussian Process 대리모델이 Expected Improvement로 다음 측정점을 고르는 방식 — 는 같은 결론에 더 적은 측정으로 도달할 것을 표방하지만, 검증 없이 제안하는 것은 타인의 실험 자원을 제 가정에 소모하는 일입니다. 그래서 권고를 내기 전에 데이터로 먼저 답해야 했습니다.",
+      "측정 하나하나가 고비용입니다. 실험실에 권고하기 전에, 정말 측정이 절감되는지와 이 실험실 데이터가 그것을 받쳐 주는지를 먼저 보여야 했습니다."],
+     ["계측 방법","지금 막 시작하는 연구를 그대로 모사했습니다. 값은 하나도 모른 채 공간충진 5점을 재고, 이후 Expected Improvement가 오직 측정값만 보고 다음 조건을 제안하며, 아직 재지 않은 조건의 참값은 어디에서도 참조하지 않습니다. 조건 하나를 고르면 실제 반복 측정값 중 하나를 돌려줍니다. 연구자도 한 번 재면 한 번의 값만 보기 때문입니다. 채점 역시 연구자가 실제로 판단하는 방식을 따라, 측정값이 가장 좋은 조건을 채택하고 그 조건의 참 순위로 점수를 매겼습니다. 측정 조건이 178 · 164 · 94개인 공개 소자 · 박막 데이터 3종에 대해 난수 시드 120개로 반복했으며, 같은 예산의 무작위와 격자 스캔 순 · 역방향을 대조군으로 두었습니다.",
+      "신규 연구 모사 — 룩어헤드 차단, 측정 1회는 반복값 하나, 측정값 기준 채택, 참 순위로 채점. 공개 데이터 3종(178 / 164 / 94 조건), 시드 120개, 무작위 · 격자 대조군."],
+     ["무엇을 얻는가","무작위 순서가 40회에 도달하는 성능에 순차는 <b>22 · 20 · 34회</b>로 도달했습니다. 각각 45%, 50%, 15% 절감입니다. 다음 후보 제안 자체의 품질만 따로 물었을 때도, 5점만 잰 상태에서 EI가 고른 조건이 전체 후보의 <b>백분위 77.6</b>이었던 반면 무작위는 49.4였고, 30점에서는 90.9 대 51.0으로 벌어졌습니다. 실험실이 실제로 쓰는 격자 스캔은 같은 데이터에서 축의 어느 쪽 끝에서 시작하느냐만으로 97.2에서 51.1까지 흔들렸습니다. 순차는 그 선택 자체가 필요하지 않습니다. 측정값을 보고 스스로 방향을 바꾸기 때문입니다.",
+      "주 데이터에서 <b>40 → 22회</b>(45% 절감). 5점만 잰 상태에서 EI 제안이 <b>백분위 77.6</b>, 무작위는 49.4였습니다. 격자 스캔은 시작 방향만으로 97.2 대 51.1."],
+     ["이득은 무엇에 달려 있는가","이득은 조건부이며, 무엇에 달렸는지까지 규명했습니다. 순차가 무작위를 앞지르는 시점(누적 7 · 14 · 36회)이 대리모델의 응답면 학습 정도(R² = +0.58, +0.30, −0.20)와 정확히 같은 순서였고, 반변이도로 잰 지형의 거칠기도 같은 순서를 이룹니다. R²가 양수인 데이터의 너깃비는 0.03 · 0.08이고 음수인 데이터는 0.40 · 0.49입니다. 예산을 바꿔 스윕하면 3종 중 2종이 30회 이하에서 <em>음수</em>로 돌아섭니다. 여기서 도입을 논하기 전에 통과해야 할 요건 네 가지를 도출했습니다. 후보 조건 수가 예산보다 많을 것, 대리모델 R²가 0을 넘을 것, 판별력이 1 이상일 것, 반복 측정이 있는 조건이 절반을 넘을 것.",
+      "역전 시점이 대리모델 R² 순서와 정확히 일치하며, 지형 거칠기도 같은 순서입니다. 예산 30회 이하에서는 2종이 음수로 돌아섭니다. 요건 네 가지 — 후보 수 &gt; 예산, R² &gt; 0, 판별력 ≥ 1, 반복 조건 과반."],
+     ["자체 데이터 판정","외부 3종과 자체 5종, 합쳐 여덟 데이터를 같은 네 요건으로 심사했습니다. 자체 데이터 5종 중 4종은 후보 조건이 <b>3~4개뿐</b>이라 전수 측정이 오히려 나으며, '다음에 무엇을 잴까'라는 물음 자체가 성립하지 않습니다. 나머지 한 종만 조건 수 요건을 통과하고 학습성에서 막힙니다. 교차검증 R²가 −0.27이고 시도한 모델 6종 전부에서 음수이며, 너깃비는 0.49이며, <b>보이는 분산의 95%가 측정 잡음</b>입니다. 판별력은 1.03이나 부트스트랩 구간이 [0.49, 1.80]로 임계를 걸쳐, 형식적으로는 판정불가입니다. 따라서 권고는 조건당 반복을 5회로 통일해(추가 30회) 눈금을 먼저 확정하고, 그 데이터로 학습성을 다시 재어 R² &gt; 0를 관문으로 삼는 것이지, 외부 결과를 근거로 지금 도입하는 것이 아닙니다.",
+      "자체 데이터는 요건에서 막힙니다. 4종은 후보가 3~4개이고, 나머지 한 종은 <b>분산의 95%가 측정 잡음</b>(R² = −0.27, 판별력 1.03 · 구간 [0.49, 1.80])입니다. 재현성부터 확정하고 R² &gt; 0로 판단하는 것이 순서입니다."]],
+    stats:[["40 → 22회","무작위 기준선과 같은 결과에 도달한 측정 횟수, 주 데이터(시드 120개)"],["95%","자체 데이터 한 종에서 측정 잡음이 차지하는 분산 비중"],["8종","외부 3종과 자체 5종을 동일한 네 요건으로 심사한 데이터 수"]],
+    meth:["Gaussian Process 대리모델(Matérn 5/2, ARD)","Expected Improvement","룩어헤드 차단 캠페인 모사","측정값 기준 채택 · 참 순위 채점","격자 순 · 역방향 대조군","예산 스윕(10~60)으로 민감도 확인","반변이도 너깃비","판별력 부트스트랩 신뢰구간","UCB · Thompson · 공간충진 대조군"],
+    limit:"여기 있는 것은 전부 공개된 숫자를 다시 계산한 결과입니다. 인용 논문의 화학 · 재료 내용을 검증하지 않았고, 실험실 연구와 같은 계열의 실험인지도 확인하지 못했습니다. 모사는 논문이 이미 측정한 조건만 제안할 수 있으므로, 조건 사이의 임의 지점을 제안할 수 있는 실제 도입은 이보다 나을 수 있습니다. 외부 데이터 3종은 저자들이 베이지안 최적화로 수집한 것이라 무작위 기준선이 실제 신규 연구보다 유리하며, 따라서 절감률은 하한입니다. 본 권고에는 반증 조건을 명시했습니다. 해당 데이터가 네 요건을 모두 갖춘 뒤 순차와 무작위를 같은 예산으로 나란히 돌렸을 때 채택 조건의 품질 차이가 유의하지 않으면 본 검토는 기각됩니다. 원자료는 인용 논문에 있습니다.",
+    mlimit:"공개된 숫자의 재계산이며 화학적 검증은 아닙니다. 후보가 논문이 이미 측정한 조건으로 한정되고, 그 데이터 자체가 BO로 수집된 것이라 보고한 절감률은 하한입니다. 권고에는 반증 조건을 명시했습니다."},
+   {kick:"Human-in-the-Loop 에너지 AI · 팀 해커톤", title:"VPP Trade-Guard: 고장 리스크를 반영한 전력거래 목적함수 설계",
+    chip:["1위 · 팀 해커톤","green"],
+    lead:"팀장으로서 제가 직접 맡은 일은 아키텍처와 검증 루프 설계입니다. <a href='https://euichanlee0608-svg.github.io/vpp-trade-guard/' target='_blank' rel='noopener'>케이스 스터디 &rarr;</a><span class='liveurl'>euichanlee0608-svg.github.io/vpp-trade-guard/</span>",
+    blocks:[
+     ["역할","3인 팀으로 고려대학교 × Upstage 해커톤에 참가해 제주 VPP(가상발전소) 시장을 위한 Human-in-the-Loop 입찰 시스템을 구현했으며, 23팀 중 1위를 기록했습니다. 팀장으로서 시스템 아키텍처와 목적함수, 검증 루프를 담당했으며, 팀원들이 n8n 노드 구현과 Slack UI, 데이터 수집 파이프라인을 맡았습니다.",
+      "3인 팀으로 참가해 23팀 중 1위를 기록했습니다. 팀장으로서 아키텍처·목적함수·검증 루프를 담당했으며, 팀원들이 n8n 노드와 Slack UI, 데이터 수집을 맡았습니다."],
+     ["문제","에너지 AI 해커톤이었기에 제주 VPP 시장에서 출발해, 기존 거래 툴이 무엇을 누락하고 있는지 검토했습니다. 전력 가격만 볼 뿐 설비 상태는 의사결정에 전혀 반영되지 않았습니다. 기존 VPP 거래 로직은 설비를 항상 100% 정상으로 가정하므로, 가격이 상승하면 배터리의 실제 상태와 무관하게 출력을 극대화하고, 그로 인한 고장 손실이 거래 이익을 상회할 수 있습니다.",
+      "기존 VPP 로직은 설비를 항상 100% 정상으로 가정해 가격 상승 시 배터리를 과도하게 운용하며, 고장 손실이 거래 이익을 상회할 수 있습니다."],
+     ["시스템 설계","고장 리스크를 목적함수에 직접 반영했습니다(순이익 = 수익 − 고장확률 × 리스크 비용). 그리고 아키텍처 전체를 하나의 가드레일 위에 설계했습니다. <b>AI는 제안하고, 결정은 코드가 한다.</b> 제안자 LLM은 연산을 일절 수행하지 않고 출력 비율만 제시하며, 결정론적 엔진이 실제 수익과 리스크 비용을 산출합니다. 두 개의 LLM 검토자가 안전과 재무라는 상이한 관점에서 교차 검증하고, 결정적으로 별도의 규칙 기반 노드는 어떤 LLM의 수치도 신뢰하지 않습니다. 동일한 수치를 독립적으로 재도출하여 불일치 시 기각합니다. LLM이 산출한 금액이 검증 없이 사람에게 도달하지 않습니다. 고장확률 모델 자체는 <b>플러그인 인터페이스</b>로 분리해, 운영자가 기존에 신뢰하던 예지보전 알고리즘을 그대로 적용할 수 있도록 설계했습니다. 본 프로젝트의 기여는 목적함수와 그 검증 루프에 있습니다.",
+      "가드레일: <b>AI는 제안하고 결정은 코드가.</b> 제안자 LLM이 비율을 제시하면 결정론적 엔진이 실제 수치를 산출하고, 두 검토 LLM이 교차 검증하며, 규칙 기반 노드가 독립적으로 재도출해 불일치 시 기각합니다. 고장확률 모델은 플러그인으로 분리했습니다."]],
+    stats:[["1위 / 23팀","고려대학교 × Upstage 에너지 AI 해커톤"],["2","상이한 관점에서 교차 검증하는 독립 LLM 검토자"]],
+    meth:["목적함수 설계","이중 LLM 교차 검토","규칙 기반 재계산 대조","제한적 재시도 게이트","Human-in-the-Loop UX"],
+    limit:"해커톤 일정 내에서 구현했습니다. BMS 센서 입력은 더미 데이터이고 실제 하드웨어 텔레메트리는 붙지 않았으며, 고장확률 배수는 단일 기준 가정에서 역산한 근사식으로 코드에 명시했습니다.",
+    mlimit:"해커톤 일정 내 구현으로, 센서는 더미 데이터이며 고장확률 모델은 단일 기준에서 역산한 근사식임을 명시했습니다."},
+   {kick:"개인화 In-Context Learning · LLM 평가", title:"전문가의 암묵지를 로컬 소형 모델로 옮길 수 있는가",
+    chip:["포스터 제출","green"],
+    lead:"핵심은 무엇이 전이되고 무엇이 전이되지 않는지를 분리해 측정한 데 있습니다.",
+    blocks:[
+     ["문제","타인의 판단을 모델에 이식하려면 그 판단의 근거가 된 맥락을 프롬프트에 함께 넣어야 하며, 실패 이력·공정 조건·미공개 설계 판단이 여기에 해당합니다. 이는 외부 API로 반출하기 가장 어려운 자료이므로, 개인·조직 단위의 개인화는 구조상 로컬 구동이 가능한 소형 모델을 지향하게 됩니다. 그 규모에서 사람의 판단 방식이 실제로 전이되는지가 미해결 지점입니다.",
+      "판단의 근거가 된 맥락은 외부 API로 반출하기 가장 어려운 자료이므로, 개인화는 구조상 로컬 소형 모델을 지향합니다. 그 규모에서의 전이 여부가 미해결 지점입니다."],
+     ["접근","공학 트레이드오프 딜레마에 제가 서술형으로 답한 기록 10건을 In-Context Learning 예시로 삼되, 4단계 틀로 재작성하지 않고 원문 그대로 주입했습니다. 조건은 한 겹씩만 차이가 나도록 세 가지로 구성했으며, 동일한 프롬프트를 클라우드 대형 모델과 맥미니에서 구동한 7.8B 모델에 각각 투입했습니다. 단일한 정확도 수치로는 모방과 전이를 분간할 수 없으므로 측정을 두 축으로 분리하여, 형식은 제가 답한 적 없는 도메인 24문항에서, 내용은 제 10문항에서 leave-one-out으로 평가했습니다.",
+      "제 답변 10건을 원문 그대로 예시로 주입하고, 한 겹씩만 다른 세 조건을 클라우드 모델과 로컬 7.8B에 동일하게 투입했습니다. 형식은 미답 도메인 24문항, 내용은 제 10문항에서 leave-one-out으로 평가했습니다."],
+     ["결과","형식은 지시만으로 확보되었으며 모델 규모에 좌우되지 않았습니다. 지배 변수를 하나로 확정한 비율이 클라우드에서 67%에서 100%로, 로컬에서 67%에서 92%로 함께 상승했습니다. 반면 내용은 클라우드에서만 0%에서 30%로 상승했고 7.8B에서는 상승하지 않았습니다. 로컬 모델은 예시의 압축된 서술 방식조차 반영하지 못해 답변 길이가 거의 변하지 않은 반면, 클라우드 모델은 절반 이하로 줄였습니다. 조건을 가린 1:1 선호 비교에서는 지시만 준 답변이 더 선호되었으므로, 개인화는 답을 저에게 가깝게 만들었을 뿐, 더 낫게 만들지는 못한 것으로 해석됩니다.",
+      "형식은 지시만으로 확보되며 모델 규모에 좌우되지 않았습니다. 내용은 클라우드에서만 상승했고 7.8B에서는 상승하지 않았습니다. 선호 비교에서는 지시만 준 답변이 우세했으므로, 개인화는 답을 저에게 가깝게 만들었을 뿐, 더 낫게 만들지는 못했습니다."]],
+    stats:[["67 &rarr; 100 / 92%","지배 변수 단일 확정 비율, 클라우드 / 로컬 · 지시만으로"],["0 &rarr; 30%","제가 실제로 고른 변수와의 일치, 클라우드에서만"],["10","예시로 사용한 제 답변 수 · 평가 문항이 아닙니다"]],
+    figs:[[null,"형식과 내용은 분리됩니다. 지배 변수를 하나로 확정하는 비율은 두 모델 모두 지시만으로 상승하며(좌), 제가 실제로 고른 변수와 일치하는 비율은 클라우드 모델에서만 상승합니다(우)."]],
+    meth:["leave-one-out 평가","블라인드 1:1 선호 비교","구조화 라벨 추출","대응표본 비모수 검정","무료 API + 로컬 추론"],
+    limit:"내용 축은 10문항에 근거하므로 방향성이며 확정된 결과가 아닙니다. 단일 시드·평가자 1종·로컬 모델 1종만 시험했고, 제 데이터를 제가 설계한 지표로 평가했다는 제약이 있습니다.",
+    mlimit:"내용 축은 10문항에 근거한 방향성이며 확정된 결과가 아닙니다. 단일 시드·평가자 1종·로컬 모델 1종이며, 제 데이터를 제가 설계한 지표로 평가했습니다."},
+   {kick:"압전 에너지 하베스팅", title:"광대역 음향 에너지 하베스팅",
+    chip:["시뮬레이션 완료","green"],
+    lead:"핵심은 다양한 실제 소음 환경에서도 출력이 흔들리지 않는 강건성입니다. <a href='https://euichanlee0608-svg.github.io/acoustic-harvester/' target='_blank' rel='noopener'>라이브 데모 &rarr;</a><span class='liveurl'>euichanlee0608-svg.github.io/acoustic-harvester/</span>",
+    blocks:[
+     ["문제","마이크로 스케일 음향 하베스터는 구조상 출력 전력이 매우 낮습니다. 단일 공진 방식은 특정 주파수 peak(피크)만 겨냥하지만, 실제 소음은 광대역에 에너지가 분산되어 있어 실제 소음 환경에서는 효율이 크게 떨어집니다.",
+      "마이크로 스케일 하베스터는 구조상 출력이 매우 낮습니다. 단일 공진 방식은 peak(피크)만 겨냥하나 실제 소음은 광대역에 분산되어 효율이 크게 떨어집니다."],
+     ["접근","길이를 분포시킨 압전 캔틸레버 와이어 배열을 실측 소음 환경 11종에서 평가했습니다. 검증된 1자유도 전기기계 모델과 부트스트랩 95% 신뢰구간을 적용했으며, 제작 공차·팁 질량·와이어 밀도에 대한 파라미터 스윕을 수행했습니다.",
+      "길이를 분포시킨 압전 배열을 실측 소음 환경 11종에서 평가했으며, 검증된 SDOF 모델과 부트스트랩 신뢰구간을 적용했습니다."],
+     ["결과","광대역 배열은 협대역과 평균 전력이 대등하나(99 vs 108 fW), 환경 변화에 훨씬 안정적이며(변동계수 21% vs 29%) 제작 공차의 영향을 거의 받지 않습니다. 이 격차는 공진기 품질계수 Q가 증가할수록 확대됩니다.",
+      "평균 전력은 협대역과 대등하나(99 vs 108 fW) 환경 전반에서 훨씬 안정적입니다(변동계수 21% vs 29%). Q가 증가할수록 이점이 확대됩니다."]],
+    stats:[["21% / 29%","환경 간 전력 변동계수, 광대역 vs 협대역"],["1.07→1.19×","Q 증가에 따른 광대역의 이점 (PZT-5A → AlN)"],["11","교차 평가한 실측 소음 환경"]],
+    figs:[[null,"각 행은 하베스터 설계, 각 열은 실제 소음 환경입니다(색상 = 해당 환경 최고 설계 대비 전력). 광대역 설계(최상단)는 전 환경에서 성능을 유지하는 반면, 협대역 설계는 자기 환경에서만 우위를 보이고 그 외에서는 급락합니다."],
+          [null,"실측 소음원입니다. 에너지가 단일 peak에 집중되지 않고 광대역에 분산되어 있어, 단일 공진 하베스터는 대부분을 포집하지 못합니다."]],
+    meth:["1자유도 전기기계 모델","부트스트랩 95% 신뢰구간","환경 간 교차 평가","파라미터 스윕","Numba 몬테카를로"],
+    limit:"본 연구는 70 dB SPL 환경의 fW급 미소 출력을 정규화 없이 실측 데이터 기반으로 보고합니다. 이는 단순한 절대 전력 극대화가 아닌, 변동성이 큰 실제 환경에서의 설계 강건성 입증에 초점을 맞추었기 때문입니다.",
+    mlimit:"70 dB SPL 환경의 fW급 출력을 정규화 없이 보고합니다. 실제 환경에서의 설계 강건성을 입증하는 것이 목적이기 때문입니다."},
+   {kick:"기계공학 캡스톤 · 제어 & 전력 시스템", title:"자율 기둥 등반 · 수확 로봇",
+    chip:["팀 캡스톤 · 제작 및 시연 완료","green"],
+    lead:"4인 캡스톤 팀으로 제작했으며, 실물로 구현하고 시험까지 마친 시스템입니다. 제어와 전력을 담당했습니다.",
+    blocks:[
+     ["역할","4인 팀이 수직 PVC 기둥을 등반해 상단의 코코넛을 수확하는 자율 로봇을 제작했습니다. 팀의 핵심 메커니즘은 모터 수 최소화였습니다. <b>원웨이 베어링</b>과 <b>C자형 기어</b>를 조합해 등반 구동계에서 수확 동작을 분기했습니다. 래칫이 통상적 선택이었으나 마찰로 인해 등반 자체가 곤란해져 베어링으로 대체했습니다. 저는 <b>제어 소프트웨어와 전기·전력 시스템</b>을 담당했습니다. 모터 드라이버, 센싱, 전압 안정화, 등반 로직입니다.",
+      "팀 캡스톤으로, 핵심은 <b>원웨이 베어링 + C자형 기어</b>를 통한 모터 수 최소화입니다(래칫은 마찰로 등반이 곤란). 저는 <b>제어와 전력 전자</b>를 담당했습니다."],
+     ["난점","예산 제약으로 특성이 상이한 두 모터(감속비 1/144 vs 1/500, 스톨 전류 24 A vs 2 A)를 단일 동기 구동계에 결합해야 했습니다. 사양서로부터 PWM을 역산해 각가속도를 정합한 뒤, 수십 회의 등반 시험을 통해 오프셋을 실험적으로 조정했습니다. 이 과정에서 분산 배치한 <b>11,000 µF</b> 커패시터 뱅크가 24 A 스톨 서지에서도 전원 레일을 7 V 리셋 하한 이상으로 유지했습니다.",
+      "특성이 상이한 두 모터(1/144 vs 1/500, 스톨 24 A vs 2 A)를 단일 구동계에 결합해 PWM 역산과 실험적 조정으로 동기화했으며, <b>11,000 µF</b> 커패시터 뱅크가 레일을 리셋 하한 이상으로 유지했습니다."],
+     ["솔직한 평가","대회 당일 등반에 성공했으나, 제어는 임계값 기반 on/off였고 모터 특성 차이로 잔여 비틀림이 남았습니다. 더 중요한 교훈은 과정에 있었습니다. 첫 설계는 무게중심 결함으로 3주를 남기고 폐기되었는데, 간단한 설계 검토 게이트만 있었어도 도면 단계에서 발견했을 문제였습니다.",
+      "등반에는 성공했으나 제어는 on/off였으며, 폐기된 첫 설계는 설계 검토 게이트가 있었다면 도면 단계에서 발견했을 문제였습니다."]],
+    figs:[[null,"재설계한 조립체입니다. 두 모터를 기둥 축에 대해 대칭 배치해 무게중심이 등반 축 상에 위치하도록 하여, 첫 설계의 무게중심 편심을 해결했습니다."],
+          [null,"실제 제작물입니다. 구동 기어와 자석, 배선이 보이며, 자석과 테이프로 해결되지 않던 본체 가이드 이탈을 최종적으로 잡아준 케이블 타이를 원으로 표시했습니다."]],
+    meth:["아두이노 다중 보드 (센싱 / 제어 분리)","이종 모터 동기화","11,000 µF 커패시터 뱅크","이동평균 + 이상치 필터링","토크·전류 안전율 배분"],
+    limit:"목표가 사전 정의된 팀 수업 프로젝트이며 독창적 연구가 아닙니다. 임계값 기반 on/off 제어를 실험적으로 조정했습니다. 상기 시뮬레이션 작업에 대응하는 하드웨어·팀 경험으로 수록했습니다.",
+    mlimit:"목표가 정해진 팀 수업 프로젝트입니다. on/off 제어를 실험적으로 조정했으며, 시뮬레이션 작업에 대응하는 하드웨어 경험으로 수록했습니다."},
+   {kick:"내고장성 제어", title:"비대칭 배치 로터의 내고장성",
+    chip:["시뮬레이션 · 6자유도 재구축","amber"],
+    lead:"로터 손실 상황에서의 생존, 그리고 결과의 정직성을 확보하기 위한 모델 재구축입니다.",
+    blocks:[
+     ["접근","4로터 배치에 대한 몬테카를로 탐색(약 10⁸ 샘플)으로 로터 하나가 고장난 이후의 정적 안정 여유를 최대화했습니다. 최적점은 잔여 지지 삼각형의 <b>내심</b>에 위치합니다. 손상된 기체는 이후 3모터 제어 배분으로 비행하며, yaw는 의도적으로 포기합니다.",
+      "약 10⁸ 샘플 탐색으로 고장 후 안정성이 최대인 로터 배치를 도출했으며(최적점 = 지지 삼각형의 <b>내심</b>), 기체는 yaw를 포기한 채 3모터로 비행합니다."],
+     ["정직한 재구축","초기 모델은 자세만으로 생존을 판정했기에 결과가 실제보다 유리하게 나타났습니다. 이를 현실적인 <b>6자유도</b> 시뮬레이션으로 재구축했습니다. 병진 운동과 고도를 추가해 자세는 유지하나 하강하는 기체를 추락으로 판정하고, 50 ms에 분산된 힘 대신 <b>순간 충격 임펄스</b>를 적용했으며, 로터 상실에 따른 피격 후 질량 감소·무게중심 이동·관성 변화, 그리고 배터리 전압 강하를 동반한 비대칭 모터 응답까지 반영했습니다.",
+      "초기 모델은 자세만으로 생존을 판정해 결과가 유리하게 나타났습니다. <b>6자유도</b>로 재구축했습니다. 실제 고도(하강 시 추락), 순간 충격 임펄스, 피격 후 질량·무게중심·관성 변화, 비대칭 모터 응답."],
+     ["결과","보다 엄격해진 모델에서도 기체는 자세를 회복하며 고도를 유지합니다. 축 방향 파편 피격은 <b>약 420–520 m/s</b>까지, 60° 빗맞음은 <b>약 960–1050 m/s</b>까지 견디며, 30° 피격은 그 중간인 약 540–570 m/s입니다.",
+      "엄격한 모델에서도 축 방향 <b>약 420–520 m/s</b>, 60° 빗맞음 <b>약 960–1050 m/s</b>까지 견딥니다(30°는 그 중간)."]],
+    stats:[["420–520 m/s","6자유도 모델에서 견딜 수 있는 축 방향 파편 속도(1 g)"],["~1050 m/s","견딜 수 있는 60° 빗맞음. 얕은 각도는 운동량 대부분을 흘려보냅니다"],["6자유도","자세 + 고도 + 추락 판정으로 자세 전용 모델을 대체"]],
+    figs:[[null,"로터 하나를 상실한 이후 기체가 견딜 수 있는 임계 파편 속도(자세 오차 45° 이하이며 추락하지 않음)를 피격 방향과 각도별로 나타냈습니다. 60° 빗맞음(우측)은 축에 근접한 피격(좌측)보다 훨씬 높은 속도까지 견디는데, 운동량 대부분이 기체를 회전시키지 않고 측면으로 흘러가기 때문입니다."]],
+    meth:["약 10⁸ 샘플 배치 탐색","현실적 6자유도 동역학","순간 충격 임펄스","손실 후 질량 / 무게중심 / 관성 변화","비대칭 모터 + 전압 강하"],
+    limit:"본 수치는 시뮬레이션 임계값이며 비행 시험 결과가 아닙니다. 재구축의 목적은 기존 수치를 실제보다 유리하게 보이게 하던 이상화를 걷어내는 데 있었습니다.",
+    mlimit:"비행 시험을 거치지 않은 시뮬레이션 임계값이며, 결과를 유리하게 보이게 하던 이상화를 제거했습니다."},
+   {kick:"최적제어 · 유도 · 플레이 가능", title:"단거리 방공 요격",
+    chip:["시뮬레이션 + 라이브 데모","green"],
+    lead:"회피 기동하는 드론에 요격체를 유도하고, 최적의 설계를 탐색합니다. <a href='https://euichanlee0608-svg.github.io/divert-sim/' target='_blank' rel='noopener'>라이브 데모 &rarr;</a><span class='liveurl'>euichanlee0608-svg.github.io/divert-sim/</span>",
+    blocks:[
+     ["문제","단거리 방공 미사일은 측방향 추력만으로 진로를 변경하므로, 무작위로 급기동하는 소형 드론을 요격하기가 매우 어렵습니다. 설계 과제는 측추력의 크기, 추력기의 장착 위치, 그리고 유도의 민감도를 결정하는 것입니다.",
+      "단거리 요격체는 측방향 추력만으로 조종하므로 급기동하는 소형 드론의 요격이 어렵습니다. 어떤 설계가 최적인지가 과제입니다."],
+     ["접근","2D 강체 엔진(RK4)이 비례항법 유도로 미사일을 비행시키며, 표적은 반응형으로 무작위 회피하는 드론입니다. 시커 측정 노이즈와 1차 제어 지연을 포함했습니다. 그리드 탐색, 경사하강, 유전 알고리즘, PPO 강화학습의 네 가지 기법이 동일한 목적함수(요격 시간, 연료, 최근접 거리)를 최소화하며, 각 설계는 무작위 회피에 대한 몬테카를로 평균으로 평가됩니다.",
+      "2D RK4 엔진이 노이즈와 지연을 포함해 급기동 드론을 상대로 비례항법 유도를 수행하며, 네 가지 최적화 기법이 동일 목적함수를 최소화하고 몬테카를로로 평가합니다."],
+     ["결과","유전 알고리즘이 그리드 탐색 대비 1/5의 평가 횟수로 최선의 목적함수 값에 도달했습니다. 결정적 변수는 추력기 위치보다 측추력의 크기 자체였으며, 현실적 지연을 반영하는 순간 고속·고기동 드론은 이 등급의 미사일로 요격하기 어려워집니다. 모든 수치는 소형 대드론 요격체의 공개 사양에 근거했습니다.",
+      "효율 면에서 유전 알고리즘이 우위였습니다. 명중을 좌우한 것은 위치보다 측추력의 크기였으며, 현실적 지연을 반영하면 고기동 드론의 요격이 어려워집니다. 수치는 공개 사양에 근거했습니다."]],
+    stats:[["1/5","유전 알고리즘으로 최적 설계 도달에 소요된 그리드 탐색 대비 평가 횟수"],["해석해 대조","보존 법칙과 알려진 해에 맞춘 자동 물리 검증"],["라이브","실시간 연산되는 브라우저 내 조종 데모"]],
+    meth:["RK4 강체 동역학","비례항법 유도","유전 알고리즘 / PPO","몬테카를로 강건성 평가","시커 노이즈 및 지연 모델"],
+    limit:"단일 표적과 단순화된 공력을 적용한 2D 시뮬레이션으로, 제어·최적화의 트레이드오프를 분석하기 위해 구현했고, 고정밀 비행 모델을 의도한 적은 없습니다. 직접 조작 가능한 항목으로 수록했습니다.",
+    mlimit:"2D, 단일 표적, 단순화된 공력입니다. 제어·최적화 분석이며, 직접 조작 가능하도록 구현했습니다."},
+
+  ],
+};
+
+function deepMerge(base, patch){
+  if(patch===undefined||patch===null) return base;
+  if(Array.isArray(base)){
+    if(!Array.isArray(patch)) return patch;
+    return base.map((v,i)=>deepMerge(v, patch[i]));
+  }
+  if(base&&typeof base==="object"){
+    if(typeof patch!=="object"||Array.isArray(patch)) return patch;
+    const out={}; for(const k in base) out[k]=deepMerge(base[k], patch[k]);
+    for(const k in patch) if(!(k in out)) out[k]=patch[k];
+    return out;
+  }
+  return patch;
+}
+let LANG = (function(){
+  const q=new URLSearchParams(location.search).get("lang");
+  if(q==="ko"||q==="en") return q;
+  try{ const v=localStorage.getItem("pf_lang"); if(v==="ko"||v==="en") return v; }catch(e){}
+  return "en";                      /* 첫 방문·새로고침은 항상 영문 */
+})();
+let RESEARCH,INTERESTS,SYSTEMS,ABOUT,RESUME,SIMOPS,APPS,SIDE_APPS,PROJ_META,TREEMETA,TREE;
+function applyData(){
+  const p = (LANG==="ko" && window.KO_PATCH) ? window.KO_PATCH : {};
+  RESEARCH =deepMerge(RESEARCH_EN , p.RESEARCH);
+  INTERESTS=deepMerge(INTERESTS_EN, p.INTERESTS);
+  SYSTEMS  =deepMerge(SYSTEMS_EN  , p.SYSTEMS);
+  ABOUT    =deepMerge(ABOUT_EN    , p.ABOUT);
+  RESUME   =deepMerge(RESUME_EN   , p.RESUME);
+  SIMOPS   =deepMerge(SIMOPS_EN   , p.SIMOPS);
+  APPS     =deepMerge(APPS_EN     , p.APPS);
+  SIDE_APPS=deepMerge(SIDE_APPS_EN, p.SIDE_APPS);
+  PROJ_META=deepMerge(PROJ_META_EN, p.PROJ_META);
+  TREEMETA =deepMerge(TREEMETA_EN , p.TREEMETA);
+  UI       =deepMerge(UI_EN       , p.UI);
+  TREE     =buildTree();
+}
+/* 렌더러·탐색기 안의 짧은 문구 */
+const UI_EN={
+  statedPlainly:"Stated plainly:",
+  alsoScoping:"What I'm studying right now: the optimal-design stack, end to end. Notes in progress, listed unedited.",
+  systemsLead:"Every tool I rely on has ended up with the same shape: an <b>independent check that doesn't trust the tool itself</b>. The safeguards, where each one came from, and the one piece I dropped:",
+  systemsLeadM:"One rule everywhere: an <b>independent check that doesn't trust the tool itself</b>. The safeguards, and what I dropped:",
+  band:"None of this gets used if it's a hassle, so I built a general-purpose Telegram bot as one place to run all of it, triggering any task from my phone, with an approval step before anything touches files.",
+  bandM:"A Telegram bot ties it together: run any task from my phone, with approval before anything touches files.",
+  toy:"A smaller project in the same spirit: a guitar-tab extractor that grades its own output by re-synthesizing the transcription and transcribing that again, keeping whichever settings clear the bar. Its transcription model was chosen the same way, scored against GuitarSet ground truth at onset F1 0.912.",
+  toyM:"Same spirit: a guitar-tab extractor that grades itself by re-synthesizing and re-transcribing; its model was picked on GuitarSet at onset F1 0.912.",
+  aboutTitle:"About", aboutSub:"Euichan Lee (Leechan)",
+  aboutCta:"Open to research collaboration &amp; graduate study · ",
+  filter:"Filter ", locations:"Locations", also:"Also", aboutMe:"About Me",
+  items:"items", folders:"folders", inFolder:"in", ofItems:"of",
+  noMatch:"No files match ", noMatchTail:" in this folder.",
+  upTop:"Back to start", upDir:"Up to Portfolio Pieces",
+  document:"document", documents:"documents",
+};
+let UI;
+const TREEMETA_EN={
+  drive:"Portfolio Pieces",
+  projects:{name:"Projects",type:"Folder",countWord:"project",desc:"Engineering and research projects, each with its method, its result, and what it does not show."},
+  apps:{name:"Live Web Apps",type:"Folder",countWord:"item",desc:"Things you can open and use right now. Apps that came out of a project are filed with that project; the smaller builds are under Other & Hobby."},
+  systems:{name:"Systems & Tooling",type:"Document",sub:"the safeguards in my own tooling, and the piece I dropped",desc:"One design rule everywhere: an independent check that doesn't trust the tool itself. Diff-based records, contract-tested gates, approval steps, graded equations.",status:["Ongoing","blue"]},
+  simops:{name:"Korean I-Corps",type:"Document",sub:"customer discovery, and the pivot fifty interviews forced · Korea University 2026",desc:"A lab-startup training program: write down what you believe about a customer, then go and test that belief in the field. Fifty interviews moved us off our first idea. The MVP that replaced it, Living Paper, is live.",status:["Completed","green"]},
+  misc:{name:"Other & Hobby",type:"Folder",countWord:"item",desc:"Finished, real, and not what I want to be judged on. Simulations that were exercises, and apps built for the fun of building them."},
+  interests:{name:"Research Interests",type:"Document",sub:"the optimal-design stack, end to end",desc:"What I'm currently studying: experiment design, surrogate models, optimizers, and reliability-based design.",status:["Studying","blue"]},
+};
+/* The first five projects are the ones the work is actually about; the rest
+   are filed under Other so a reader who has sixty seconds spends them on the
+   five. Changing CORE changes where the line falls, and nothing else. */
+const CORE = 5;
+const projNode = (i) => ({id:"p"+i,kind:"proj",ri:i,name:RESEARCH[i].title,
+  type:PROJ_META[i][0],desc:PROJ_META[i][1],status:PROJ_META[i][2]});
+
+function buildTree(){ const M=TREEMETA; return {id:"pieces",name:M.drive,kids:[
+  Object.assign({id:"projects",kind:"dir",
+   kids:RESEARCH.slice(0,CORE).map((_,i)=>projNode(i))}, M.projects),
+  Object.assign({id:"apps",kind:"dir",
+   kids:APPS.map(a=>Object.assign({kind:"app"},a))}, M.apps),
+  Object.assign({id:"simops",kind:"view",view:"simops"}, M.simops),
+  Object.assign({id:"systems",kind:"view",view:"systems"}, M.systems),
+  Object.assign({id:"misc",kind:"dir",
+   kids:RESEARCH.slice(CORE).map((_,k)=>projNode(CORE+k))
+     .concat(SIDE_APPS.map(a=>Object.assign({kind:"app"},a)))}, M.misc),
+  Object.assign({id:"interests",kind:"view",view:"interests"}, M.interests),
+]}; }
+
+/* ============ EXPLORER ============ */
+const explorer=document.getElementById("explorer"),exlist=document.getElementById("exlist"),
+      expath=document.getElementById("expath"),exside=document.getElementById("exside"),
+      exfoot=document.getElementById("exfoot"),exup=document.getElementById("exup");
+const exq=document.getElementById("exq"),excols=document.getElementById("excols");
+const iconOf=n=>n.kind==="dir"
+  ? `<span class="ico">${ICO.folder.replace("<svg",'<svg class="cl"')}${ICO.folderOpen.replace("<svg",'<svg class="op"')}</span>`
+  : `<span class="ico">${n.kind==="app"?ICO.app:n.kind==="proj"?ICO.proj:ICO.doc}</span>`;
+const hashOf=(dir,n)=>"#pieces"+(dir===TREE?"":"/"+dir.id)+"/"+n.id;
+const statusText=n=>n.status?n.status[0]:"";
+
+let curDir=TREE,sortKey=null,sortDesc=false;
+
+function rowHTML(dir,n,i){
+  const out=!!n.url;
+  // a locked row is listed but has nowhere to go: it is mine, not a demo
+  const tag=n.locked?"div":"a", href=n.locked?"":` href="${out?n.url:hashOf(dir,n)}"`;
+  return `<${tag} class="row${n.locked?" locked":""}" style="--d:${i*38}ms"${href}${out&&!n.locked?' target="_blank" rel="noopener"':''}>
+    <span class="nm">${iconOf(n)}<span><span class="rn">${n.name}${out?' <span class="ext">&#8599;</span>':''}</span><span class="d">${n.desc}</span></span></span>
+    <span class="meta"><span class="ty">${n.type}</span><span class="st">${n.status?chip(n.status):""}</span></span>
+    <span class="ch" aria-hidden="true">${n.locked?"&#128274;":"&#8250;"}</span></${tag}>`;
+}
+/* sorting keeps folders above files, the way a file manager does; with no sort
+   key the curated order in TREE is what you see */
+function sortedKids(dir){
+  const ks=dir.kids.slice();
+  if(!sortKey) return ks;
+  const val=n=>(sortKey==="name"?n.name:sortKey==="type"?n.type:statusText(n)).toLowerCase();
+  ks.sort((a,b)=>{
+    if((a.kind==="dir")!==(b.kind==="dir")) return a.kind==="dir"?-1:1;
+    const r=val(a).localeCompare(val(b));
+    return sortDesc?-r:r;
+  });
+  return ks;
+}
+function paintRows(){
+  const ks=sortedKids(curDir);
+  exlist.innerHTML=ks.map((n,i)=>rowHTML(curDir,n,i)).join("")
+    +`<div class="ex-empty" hidden>${UI.noMatch}<b></b>${UI.noMatchTail}</div>`;
+  applyFilter();
+  [...excols.children].forEach(b=>{
+    b.classList.toggle("on",b.dataset.k===sortKey);
+    b.classList.toggle("desc",b.dataset.k===sortKey&&sortDesc);
+  });
+}
+function applyFilter(){
+  const q=(exq.value||"").trim().toLowerCase();
+  const rows=[...exlist.querySelectorAll(".row")];
+  const ks=sortedKids(curDir);
+  let shown=0;
+  rows.forEach((el,i)=>{
+    const n=ks[i];
+    const hay=(n.name+" "+n.desc+" "+n.type+" "+statusText(n)).toLowerCase();
+    const hit=!q||hay.includes(q);
+    el.classList.toggle("hid",!hit);
+    if(hit) shown++;
+  });
+  const empty=exlist.querySelector(".ex-empty");
+  empty.hidden=shown>0;
+  empty.querySelector("b").textContent='"'+exq.value.trim()+'"';
+  const dirs=curDir.kids.filter(n=>n.kind==="dir").length;
+  exfoot.textContent=q
+    ? shown+" "+UI.ofItems+" "+curDir.kids.length+" "+UI.items
+    : curDir.kids.length+" "+UI.items+(dirs?" · "+dirs+" "+UI.folders:"")
+      +(curDir===TREE?"":" · "+UI.inFolder+" "+curDir.name);
+}
+function paintExplorer(dir){
+  document.body.classList.add("exp");
+  explorer.classList.add("on");
+  const moved=dir!==curDir;
+  curDir=dir;
+  if(moved){ exq.value=""; sortKey=null; sortDesc=false; }
+  exlist.classList.remove("settled");
+  paintRows();
+  /* let the deal-in animation play once, then stop re-animating on filter/sort */
+  clearTimeout(paintExplorer.t);
+  paintExplorer.t=setTimeout(()=>exlist.classList.add("settled"),dir.kids.length*38+420);
+  expath.innerHTML=dir===TREE
+    ? `<span class="cur">${TREEMETA.drive}</span>`
+    : `<a href="#pieces">${TREEMETA.drive}</a><span class="sep">&#8250;</span><span class="cur">${dir.name}</span>`;
+  exup.setAttribute("href",dir===TREE?"#":"#pieces");
+  exup.setAttribute("aria-label",dir===TREE?UI.upTop:UI.upDir);
+  exq.setAttribute("placeholder",UI.filter+(dir===TREE?TREEMETA.drive:dir.name));
+  exside.innerHTML=`<div class="sl">${UI.locations}</div>
+    <a href="#pieces" class="${dir===TREE?"on":""}">${ICO.drive}Portfolio Pieces</a>`
+    +TREE.kids.map(k=>`<a class="sub ${k===dir?"on":""}" href="#pieces/${k.id}">${k.kind==="dir"?ICO.folder:ICO.doc}${k.name}</a>`).join("")
+    +`<div class="sl gap">${UI.also}</div><a href="#about">${ICO.person}${UI.aboutMe}</a>`;
+}
+
+/* filter · sort · keyboard */
+exq.addEventListener("input",applyFilter);
+excols.addEventListener("click",e=>{
+  const b=e.target.closest(".colb"); if(!b) return;
+  const k=b.dataset.k;
+  if(sortKey!==k){sortKey=k;sortDesc=false;}
+  else if(!sortDesc)sortDesc=true;
+  else {sortKey=null;sortDesc=false;}   /* third click returns to the curated order */
+  paintRows();
+});
+const visRows=()=>[...exlist.querySelectorAll(".row:not(.hid)")];
+explorer.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){
+    if(exq.value){exq.value="";applyFilter();exq.focus();}
+    else location.hash=exup.getAttribute("href");
+    e.preventDefault(); return;
+  }
+  if(e.key==="ArrowDown"||e.key==="ArrowUp"||e.key==="Home"||e.key==="End"){
+    const rows=visRows(); if(!rows.length) return;
+    const at=rows.indexOf(document.activeElement);
+    let next;
+    if(e.key==="Home") next=0;
+    else if(e.key==="End") next=rows.length-1;
+    else if(at<0) next=e.key==="ArrowDown"?0:rows.length-1;
+    else next=Math.max(0,Math.min(rows.length-1,at+(e.key==="ArrowDown"?1:-1)));
+    rows[next].focus(); e.preventDefault(); return;
+  }
+  /* start typing anywhere in the explorer and it goes to the filter box —
+     but never swallow Space, which is how people scroll the page */
+  if(e.target!==exq&&e.key.length===1&&e.key!==" "&&!e.metaKey&&!e.ctrlKey&&!e.altKey){
+    exq.focus(); exq.value+=e.key; applyFilter(); e.preventDefault();
+  }
+});
+function showLanding(){document.body.classList.remove("exp");explorer.classList.remove("on");}
+document.querySelector(".tile-drive .tic").innerHTML=ICO.drive;
+document.querySelector(".tile-about .tic").innerHTML=ICO.person;
+
+/* counts are derived from TREE, never typed in — the folders keep growing */
+function paintPills(){
+  const plural=(n,w)=>LANG==="ko" ? (n+w) : (n+" "+w+(n===1?"":"s"));
+  const dirs=TREE.kids.filter(k=>k.kind==="dir");
+  const docs=TREE.kids.length-dirs.length;
+  document.getElementById("drivepills").innerHTML=
+    dirs.map(d=>`<span>${plural(d.kids.length,d.countWord)}</span>`).join("")
+    +`<span>${LANG==="ko"?(docs+UI.documents):(docs+" "+(docs===1?UI.document:UI.documents))}</span>`;
+}
+
+/* the About Me hint retires itself once the tile it points at is on screen */
+(function(){
+  const cue=document.getElementById("scue"),about=document.querySelector(".tile-about");
+  if(!cue||!about||!("IntersectionObserver" in window)) return;
+  /* "partly poking into view" is exactly the case the hint exists for, so retire
+     it only once the tile is essentially all there (or its bottom is on screen,
+     for phones too short to ever show it whole) */
+  new IntersectionObserver(es=>{
+    es.forEach(x=>{
+      const settled=x.intersectionRatio>=.9||x.boundingClientRect.bottom<=window.innerHeight+8;
+      cue.classList.toggle("gone",x.isIntersecting&&settled);
+    });
+  },{threshold:[0,.25,.5,.75,.9,1]}).observe(about);
+})();
+
+/* ============ RENDERERS ============ */
+const scrim=document.getElementById("scrim"),viewer=document.getElementById("viewer");
+const vbody=document.getElementById("vbody"),vt=document.getElementById("vt"),vc=document.getElementById("vc");
+
+function chip(c){return `<span class="chip ${c[1]}">${c[0]}</span>`;}
+function renderSystems(){
+  const m=MOB();
+  const lead=m?UI.systemsLeadM:UI.systemsLead;
+  const band=m?UI.bandM:UI.band;
+  const toy=m?UI.toyM:UI.toy;
+  return `<p class="iv-lead">${lead}</p>
+    <div class="flow">${SYSTEMS.map(n=>`<div class="node ${n.cls}"><div class="nt"><h4>${n.h}</h4><span class="role">${n.role}</span></div><p>${m&&n.mp?n.mp:n.p}</p></div>`).join("")}</div>
+    <div class="band"><span class="ic">telegram_bot</span><p>${band}</p></div>
+    <p class="toy">${toy}</p>`;
+}
+function renderAbout(tab){
+  const on = tab==="resume" ? "resume" : "profile";
+  const t = (id,label)=>`<a class="abtab${on===id?" on":""}" href="#about${id==="resume"?"/resume":""}" role="tab" aria-selected="${on===id}">${label}</a>`;
+  /* 2026-10-26: 이력서는 메인 페이지(/) 하나로 모았다 — 두 곳에 두면 한쪽이 낡는다. 옛 #about/resume 링크는 안내만 한다. */
+  const cv = `<a class="abtab" href="../">${RESUME.tabResume}</a>`;
+  return `<div class="abtabs" role="tablist">${t("profile",RESUME.tabProfile)}${cv}</div>`
+    + (on==="resume"
+      ? `<div class="ab-cta">${LANG==="ko"?"이력서는 메인 페이지로 옮겼습니다. ":"The résumé now lives on the main page. "}<a href="../">${LANG==="ko"?"메인 페이지":"Main page"}</a></div>`
+      : renderProfile());
+}
+function renderProfile(){
+  return `<div class="facts">${ABOUT.map(f=>`<div class="f"><div class="k">${f[0]}</div><div class="v">${f[1]}<small>${f[2]}</small></div></div>`).join("")}</div>
+    <div class="ab-cta">${UI.aboutCta}<a href="mailto:leechan0608@korea.ac.kr">leechan0608@korea.ac.kr</a></div>`;
+}
+/* résumé: same data objects, laid out the way a US application expects to read it */
+/* 이력서를 가져가는 것은 방문자가 할 수 있는 가장 높은 신호의 행동이라,
+   포트폴리오에서 실시간 알림을 붙이는 것은 이 하나뿐이다. 남발하면 예전 소음으로 돌아간다.
+   인쇄 대화상자를 취소해도 발사되므로 메시지는 '저장'이 아니라 '시도'로 적는다. */
+function resumePDF(){
+  try{
+    if(window.__act) window.__act("\uD83D\uDCC4 포트폴리오 — 이력서 PDF 저장 시도 ("
+      + (LANG==="ko"?"KO":"EN") + ") · 유입: " + (document.referrer || "direct"));
+  }catch(e){}
+  window.print();
+}
+function renderResume(){
+  const R=RESUME, sec=(h,body)=>`<section><h4 class="rs-h">${h}</h4>${body}</section>`;
+  /* each entry stays whole: a narrow screen may only break at the separators */
+  const grp=g=>{const e=g[1].split(" · ");
+    return `<div class="rs-grp"><div class="k">${g[0]}</div><div class="v">`
+      +e.map((x,i)=>`<span>${x}${i<e.length-1?'<b class="sep">·</b>':""}</span>`).join(" ")+`</div></div>`;};
+  const item=i=>`<div class="rs-it"><div class="rs-ith"><h5>${i.r}</h5><em>${i.d}</em></div>`
+    +`<div class="rs-ito">${i.o}</div><ul class="rs-b"><li>${i.b}</li></ul>`
+    +(i.p?`<p>${i.p}</p>`:"")+(i.t?`<div class="rs-tools">${i.t}</div>`:"")+`</div>`;
+  const rows=a=>a.map(x=>`<div class="rs-hon"><span>${x[0]}</span><em>${x[1]}</em></div>`).join("");
+
+  const h=R.head;
+  const head=`<div class="rs-head"><div class="rs-hl"><div class="n">${h.name}</div><div class="l">${h.loc}</div>`
+    +`<div class="c">${RESUME_EN.head.links.map(l=>`<a href="${l[1]}"${l[1].indexOf("mailto")===0?"":' target="_blank" rel="noopener"'}>${l[0]}</a>`).join("")}`
+    +`<span class="ponly">${RESUME_EN.head.site}</span></div></div>`
+    +`<button class="rs-pdf" type="button" onclick="resumePDF()">${R.pdf}</button></div>`;
+
+  const e=R.edu;
+  const bars=e.trend.map(x=>x.gap
+    ? `<div class="rs-gap">${x.gap}</div>`
+    : `<div class="rs-tr"><span class="t">${x.t}</span><span class="b"><i style="width:${(x.g/4.5*100).toFixed(1)}%"></i></span><span class="n">${x.g.toFixed(2)}</span></div>`).join("");
+  /* coursework belongs inside education, the way a résumé lists it */
+  const edu=`<div class="rs-org">${e.org}</div>`
+    +`<ul class="rs-lines">${e.lines.map(l=>`<li><span>${l[0]}</span><em>${l[1]}</em></li>`).join("")}</ul>`
+    +`<div class="rs-gpa">${e.gpa.map(g=>`<div class="rs-g"><div class="k">${g[0]}</div><div class="v">${g[1]}<small>${e.scale}</small></div></div>`).join("")}</div>`
+    +`<div class="rs-sub">${e.trendH}</div>${bars}<p class="rs-note">${e.note}</p>`
+    +`<div class="rs-sub cw">${e.courseH}</div>${e.groups.map(grp).join("")}`
+    +`<p class="rs-note">${e.courseNote}</p>`;
+
+  const res=R.res.items.map(item).join("")
+    +`<div class="rs-links"><div class="lh">${R.res.projH}</div>`
+    +R.res.proj.map(p=>`<a href="${p[1]}">${p[0]}</a>`).join("")+`</div>`;
+
+  return `<div class="rs">`+head
+    + sec(e.h,edu)
+    + sec(R.res.h,res)
+    + sec(R.pres.h,rows(R.pres.items))
+    + sec(R.exp.h,R.exp.items.map(item).join(""))
+    + sec(R.hon.h,rows(R.hon.items))
+    + sec(R.skill.h,R.skill.groups.map(grp).join(""))
+    + `<p class="rs-foot">${R.foot}</p></div>`;
+}
+function renderSimops(){
+  /* 다이어그램은 제품 구조 대신 아이템이 움직인 경로를 그린다. 문구는
+     SIMOPS.diag 에 있어 한국어에서도 같이 번역된다. */
+  const D=SIMOPS.diag, X=[20,260,500];
+  const col=i=>{
+    const c=D.cols[i], x=X[i], mid=i===1;
+    return `<rect x="${x}" y="44" width="200" height="92" rx="10" fill="${mid?"#f5f8fc":"#fff"}" stroke="${mid?"#c3cfe0":"#dcdcd7"}"/>
+      <text x="${x+100}" y="66" text-anchor="middle" font-size="9" letter-spacing="1" fill="#9aa0aa">${c[0]}</text>
+      <text x="${x+100}" y="90" text-anchor="middle" font-size="14" font-weight="600" fill="#15171c">${c[1]}</text>
+      <text x="${x+100}" y="110" text-anchor="middle" font-size="10.5" fill="#737985">${c[2]}</text>
+      <text x="${x+100}" y="126" text-anchor="middle" font-size="10.5" fill="#737985">${c[3]}</text>`;
+  };
+  const arrow=(a,b)=>`<line x1="${a}" y1="90" x2="${b}" y2="90" stroke="#737985" stroke-width="1.5" marker-end="url(#ar)"/>`;
+  const svg=`<svg viewBox="0 0 720 200" role="img" aria-label="${D.alt}">
+    <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#737985"/></marker></defs>
+    <g font-family="Inter, sans-serif">
+      <text x="360" y="26" text-anchor="middle" font-size="11.5" fill="#2a2d33" font-weight="600">${D.top}</text>
+      ${col(0)}${arrow(220,254)}${col(1)}${arrow(460,494)}${col(2)}
+      <rect x="100" y="154" width="520" height="32" rx="9" fill="#eef1f5" stroke="#cdd8e8"/>
+      <text x="360" y="175" text-anchor="middle" font-size="12" font-weight="600" fill="#2a2d33">${D.foot}</text>
+    </g></svg>`;
+  return `<div class="so-prog">${SIMOPS.prog}</div>
+    <div class="so-diagram">${svg}</div>
+    <div class="so-stats">${SIMOPS.stats.map(s=>`<div class="so-stat"><div class="v">${s[0]}</div><div class="l">${s[1]}</div></div>`).join("")}</div>
+    <p class="so-desc">${MOB()?SIMOPS.mdesc:SIMOPS.desc}</p>`;
+}
+function renderResearchOne(i){
+  const r=RESEARCH[i],m=MOB();
+  /* the sheet header already carries the title and the kick, so the card
+     opens straight into the lead */
+  return `<div class="acc flag open">
+    <div class="acc-h"><div class="m"><div class="acc-lead">${r.lead}</div></div>
+      <div class="acc-r">${chip(r.chip)}</div></div>
+    <div class="acc-b"><div class="acc-in">
+      ${r.blocks.map(b=>`<div class="blk"><div class="l">${b[0]}</div><p>${m&&b[2]?b[2]:b[1]}</p></div>`).join("")}
+      ${r.stats?`<div class="stats">${r.stats.map(s=>`<div class="stat"><div class="v">${s[0]}</div><div class="l">${s[1]}</div></div>`).join("")}</div>`:""}
+      ${r.figs?r.figs.map(f=>`<figure><img src="${f[0]}" alt="" loading="lazy"><figcaption>${f[1]}</figcaption></figure>`).join(""):""}
+      ${r.meth?`<div class="meth">${r.meth.map(x=>`<b>${x}</b>`).join("")}</div>`:""}
+      ${r.limit?`<div class="limit"><b>${UI.statedPlainly}</b> ${m&&r.mlimit?r.mlimit:r.limit}</div>`:""}
+    </div></div></div>`;
+}
+function renderInterests(){
+  return `<p class="iv-lead">${UI.alsoScoping}</p>
+    <div class="igrid">${INTERESTS.map((t,i)=>`<div class="ichip"><span>${String(i+1).padStart(2,'0')}</span>${t}</div>`).join("")}</div>`;
+}
+const RENDER={systems:renderSystems,about:renderAbout,simops:renderSimops,interests:renderInterests};
+
+/* ============ VIEWER ============ */
+let lastFocus=null,openT=0,viewerOn=false,backHash="#";
+function showViewer(title,sub,html){
+  if(!viewerOn){lastFocus=document.activeElement;openT=performance.now();}
+  vt.textContent=title; vc.textContent=sub;
+  vbody.innerHTML=html; vbody.scrollTop=0;
+  scrim.classList.add("on"); viewer.classList.add("on"); viewerOn=true;
+  document.getElementById("close").focus();
+}
+function hideViewer(){
+  if(!viewerOn) return;
+  scrim.classList.remove("on"); viewer.classList.remove("on"); viewerOn=false;
+  if(lastFocus){lastFocus.focus();lastFocus=null;}
+}
+/* user-initiated close: step back to the folder this item lives in, without
+   pushing a history entry (so the browser Back button still leaves the item) */
+function closeViewer(){
+  if(!viewerOn) return;
+  /* ignore the ghost click a phone fires right after the opening tap —
+     it lands on the scrim (or close button) and would shut the sheet instantly */
+  if(performance.now()-openT<400) return;
+  if(location.hash!==backHash&&(location.hash||"#")!==backHash){
+    history.replaceState(null,"",backHash); route();
+  } else hideViewer();
+}
+document.getElementById("close").onclick=closeViewer;
+scrim.onclick=closeViewer;
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeViewer();});
+
+/* ============ ROUTER (hash = the path you're looking at) ============ */
+function route(){
+  const p=(location.hash||"").replace(/^#\/?/,"").split("/").filter(Boolean);
+  if(p[0]==="about"){
+    showLanding(); backHash="#";
+    showViewer(UI.aboutTitle,UI.aboutSub,renderAbout(p[1]));
+    return;
+  }
+  if(p[0]!=="pieces"){ showLanding(); hideViewer(); return; }
+  let dir=TREE,item=null;
+  for(const seg of p.slice(1)){
+    const n=(dir.kids||[]).find(k=>k.id===seg);
+    if(!n) break;
+    if(n.kind==="dir") dir=n; else { item=n; break; }
+  }
+  paintExplorer(dir);
+  backHash="#pieces"+(dir===TREE?"":"/"+dir.id);
+  if(!item){ hideViewer(); return; }
+  if(item.kind==="proj"){
+    const r=RESEARCH[item.ri];
+    showViewer(r.title,r.kick,renderResearchOne(item.ri));
+  } else showViewer(item.name,item.sub,RENDER[item.view]());
+}
+/* ============ 언어 전환 ============ */
+const META_KO={
+  title:"이의찬 — 연구와 시스템",
+  desc:"이의찬(Leechan), AI와 기계공학이 만나는 지점의 학부연구생. 광대역 음향 에너지 하베스팅, 최적화, 내고장성 제어, 그리고 그 연구를 재현 가능하게 만든 도구들."
+};
+function applyLang(){
+  const ko = LANG==="ko";
+  document.documentElement.lang = ko ? "ko" : "en";
+  /* 정적 문구: 영문 원문을 data-en 에 한 번만 보관해 두고 왕복 전환한다 */
+  document.querySelectorAll("[data-ko]").forEach(el=>{
+    if(!el.hasAttribute("data-en")) el.setAttribute("data-en", el.innerHTML);
+    el.innerHTML = ko ? el.getAttribute("data-ko") : el.getAttribute("data-en");
+  });
+  document.title = ko ? META_KO.title : "Euichan Lee — Research & Systems";
+  const d=document.querySelector('meta[name="description"]');
+  if(d) d.setAttribute("content", ko ? META_KO.desc : d.dataset.en || d.getAttribute("content"));
+  document.querySelectorAll(".langopt").forEach(o=>{
+    const on=o.dataset.l===LANG;
+    o.classList.toggle("on", on);
+    o.setAttribute("aria-pressed", on ? "true" : "false");
+  });
+}
+function setLang(l){
+  if(l===LANG) return;
+  LANG=l;
+  try{ localStorage.setItem("pf_lang", l); }catch(e){}
+  applyData(); applyLang();
+  document.querySelector(".tile-drive .tic").innerHTML=ICO.drive;
+  document.querySelector(".tile-about .tic").innerHTML=ICO.person;
+  paintPills();
+  route();                       /* 현재 화면을 새 언어로 다시 그린다 */
+}
+
+applyData(); applyLang(); paintPills();
+window.addEventListener("hashchange",route);
+route();
+
+</script>
+<script>
+(function(){
+  var WEBAPP_URL = 'https://script.google.com/macros/s/AKfycby6J7xGChz7atOL6sVnbiWui8Z1lXVjeF8WUGTj3MXNgEn7EioTz8xZXb522vkAxkgeXA/exec';
+  try {
+    if (location.protocol === 'file:') {
+      /* local/headless testing must never reach the live notifier */
+    } else if (location.search.indexOf('owner=1') !== -1) {
+      localStorage.setItem('__is_owner__', '1');
+    } else if (localStorage.getItem('__is_owner__') !== '1' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+      var seen = {};
+      var hit = function () {
+        var key = location.pathname + location.hash;
+        if (seen[key]) return;              /* 한 세션에서 같은 라우트는 한 번만 */
+        seen[key] = 1;
+        var im = new Image();
+        im.src = WEBAPP_URL + '?t=pv&s='+encodeURIComponent('portfolio')+'&p='+encodeURIComponent(location.pathname+location.hash)+'&r='+encodeURIComponent(document.referrer||'direct')+'&v='+encodeURIComponent((function(){try{var k='__vid__',v=localStorage.getItem(k);if(!v){v=Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem(k,v);}return v;}catch(e){return'';}})());
+      };
+      hit();
+      window.addEventListener('hashchange', hit);
+    }
+  } catch (e) {}
+
+  /* 액션 알림. 방문(t=pv)은 시트에 조용히 쌓이지만 액션(t=act)은 즉시 텔레그램으로 온다.
+     방문 비콘과 같은 가드를 다시 거는 이유는, 이쪽은 클릭 시점에 따로 호출되기 때문이다. */
+  window.__act = function (msg) {
+    try {
+      if (location.protocol === 'file:' ||
+          location.hostname === 'localhost' ||
+          location.hostname === '127.0.0.1') return;
+      if (localStorage.getItem('__is_owner__') === '1') return;
+      var im = new Image();
+      im.src = WEBAPP_URL + '?t=act&s=' + encodeURIComponent('portfolio')
+             + '&m=' + encodeURIComponent(msg);
+    } catch (e) {}
+  };
+})();
+</script>
+</body>
+</html>
