@@ -17,6 +17,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://euichanlee0608-svg.github.io/assets/og-card.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231f3a5f'/><text x='16' y='22' font-size='14' font-family='Georgia,serif' fill='white' text-anchor='middle'>EL</text></svg>">
+<script>document.documentElement.classList.add("js")</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
@@ -86,10 +87,42 @@ figcaption b{font-weight:500;color:var(--ink2)}
 .workshop{margin-top:56px;padding-top:24px;border-top:1px solid var(--line);color:var(--ink2);max-width:42rem}
 footer{color:var(--ink3);font-size:14px;margin-top:28px}
 
+
+/* tabs: one section at a time (only when JS runs; without it everything stays visible) */
+.js .pane{display:none}
+.js .pane.on{display:block}
+.js .pane h2{display:none}
+.js section.pane{border-top:0;margin-top:20px;padding-top:0}
+.toc a[aria-current="true"]{color:var(--ink);font-weight:500}
+/* entries: title + one line; details on demand */
+.entry{margin:0;border-top:1px solid var(--line)}
+.entry:last-child{border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;padding:18px 0 16px}
+summary::-webkit-details-marker{display:none}
+summary:hover h3{color:var(--acc)}
+summary:focus-visible{outline:2px solid var(--acc);outline-offset:4px}
+summary .where{margin:2px 0 6px}
+.gist{margin:0;color:var(--ink2);max-width:42rem}
+.gist::after{color:var(--acc);font-size:14px;white-space:nowrap}
+html[lang="en"] .gist::after{content:"  Read more"}
+html[lang="ko"] .gist::after{content:"  자세히"}
+html[lang="en"] details[open] .gist::after{content:"  Close"}
+html[lang="ko"] details[open] .gist::after{content:"  접기"}
+.more{padding:0 0 20px}
+.ws-note{color:var(--ink3);font-size:14px}
+.workshop{display:none}
+
 @media (max-width:860px){
   .wrap{grid-template-columns:minmax(0,1fr);gap:8px}
   .side{position:static}
-  .toc{display:none}
+  .toc{display:flex;gap:4px;position:sticky;top:0;z-index:2;background:var(--bg);margin:8px -16px 0;padding:6px 16px;border-top:0;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+  .toc li{flex:none}
+  .toc a{display:block;padding:8px 10px;white-space:nowrap;min-height:44px;line-height:28px}
+  .toc a[aria-current="true"]{box-shadow:inset 0 -2px 0 var(--ink)}
+  .side .cv{display:none}
+  .links{display:flex;flex-wrap:wrap;gap:0 18px;margin-bottom:14px}
+  .aff{margin-bottom:12px}
+  .langbar{margin-bottom:8px}
   .split{grid-template-columns:minmax(0,1fr)}
   .split figure{max-width:260px}
 }
@@ -108,7 +141,11 @@ footer{color:var(--ink3);font-size:14px;margin-top:28px}
   :root{--bg:#fff;--ink:#000;--ink2:#222;--ink3:#555;--line:#ccc}
   body{font-size:10.5pt;line-height:1.45}
   .wrap{display:block;padding:0;max-width:none}
-  .langbar,.toc,.cv,figure,.workshop,footer{display:none}
+  .langbar,.toc,.cv,figure,.workshop,footer,.gist,.ws-note{display:none}
+  .js .pane{display:block!important}
+  summary{padding:0}
+  .more{padding:0}
+  .entry{border:0}
   .name{font-size:24pt}
   .links{display:flex;flex-wrap:wrap;gap:0 14px;line-height:1.5;margin-bottom:8px}
   section{padding-top:10px;margin-top:12px}
@@ -132,15 +169,16 @@ footer{color:var(--ink3);font-size:14px;margin-top:28px}
     <li><a href="mailto:leechan0608@korea.ac.kr">leechan0608@korea.ac.kr</a></li>
     <li><a href="https://github.com/euichanlee0608-svg" target="_blank" rel="noopener">GitHub</a></li>
     <li><a href="https://www.linkedin.com/in/euichanlee0608-svg" target="_blank" rel="noopener">LinkedIn</a></li>
+    <li><a href="workshop/">Workshop</a> <span class="ws-note"><span lang="en">(side projects)</span><span lang="ko">(사이드 프로젝트)</span></span></li>
   </ul>
   <div class="langbar" role="group" aria-label="Language"><span class="lang-thumb"></span>
     <button class="langopt on" type="button" data-l="en">EN</button><button class="langopt" type="button" data-l="ko">한국어</button>
   </div>
-  <ul class="toc">
+  <ul class="toc" role="tablist">
     <li><a href="#research"><span lang="en">Research</span><span lang="ko">연구</span></a></li>
     <li><a href="#experience"><span lang="en">Experience</span><span lang="ko">경력</span></a></li>
     <li><a href="#projects"><span lang="en">Projects</span><span lang="ko">프로젝트</span></a></li>
-    <li><a href="#education"><span lang="en">Education and skills</span><span lang="ko">학력·기술</span></a></li>
+    <li><a href="#education"><span lang="en">Education</span><span lang="ko">학력·기술</span></a></li>
   </ul>
   <button class="cv" type="button" onclick="cvPDF()"><span lang="en">Save as PDF CV</span><span lang="ko">이력서 PDF 저장</span></button>
 </aside>
@@ -150,28 +188,33 @@ footer{color:var(--ink3);font-size:14px;margin-top:28px}
     <span lang="en">I work on getting reliable answers out of expensive experiments and simulations, and on saying exactly how far each answer goes.</span>
     <span lang="ko">비싼 실험과 시뮬레이션에서 믿을 수 있는 답을 얻는 방법, 그리고 그 답이 어디까지 유효한지를 명확히 밝히는 일에 관심을 두고 있습니다.</span>
   </p>
-  <p class="intro-sub">
-    <span lang="en">Below are research, work and projects, each with what I did myself and where the result stops.</span>
-    <span lang="ko">아래의 연구·경력·프로젝트는 제가 직접 수행한 부분과 결과의 한계를 함께 적었습니다.</span>
-  </p>
 
-  <section id="research">
+  <section id="research" class="pane">
     <h2><span lang="en">Research</span><span lang="ko">연구</span></h2>
 
-    <div class="entry">
-      <div class="head"><h3><span lang="en">How water binds to oxygen groups in an rGO humidity sensor (DFT)</span><span lang="ko">rGO 습도 센서의 물–산소 작용기 상호작용 DFT 계산</span></h3><span class="when"><span lang="en">Sep 2026 - present</span><span lang="ko">2026.09 – 진행 중</span></span></div>
-      <p class="where"><span lang="en">Materials Innovation Lab (Prof. Byungseok Seo), Korea University</span><span lang="ko">고려대학교 Materials Innovation Lab (서병석 교수)</span></p>
+    <details class="entry">
+      <summary>
+        <div class="head"><h3><span lang="en">How water binds to oxygen groups in an rGO humidity sensor (DFT)</span><span lang="ko">rGO 습도 센서의 물–산소 작용기 상호작용 DFT 계산</span></h3><span class="when"><span lang="en">Sep 2026 - present</span><span lang="ko">2026.09 – 진행 중</span></span></div>
+        <p class="where"><span lang="en">Materials Innovation Lab (Prof. Byungseok Seo), Korea University</span><span lang="ko">고려대학교 Materials Innovation Lab (서병석 교수)</span></p>
+        <p class="gist"><span lang="en">Which oxygen group drives the lab's rGO humidity sensor, compared by DFT. Ongoing.</span><span lang="ko">연구실 rGO 습도 센서의 신호를 주도하는 산소 작용기를 DFT로 비교하고 있습니다(진행 중).</span></p>
+      </summary>
+      <div class="more">
       <p lang="en">The lab's EATS-fabricated rGO sensor turns humidity into a voltage (0.71 to 3.03 mV from 50 to 100% RH), explained as water adsorbing on oxygen groups. Which group does most of the work has not been calculated. I am computing adsorption energy, charge transfer and work-function change for one water molecule on graphene, epoxy, hydroxyl and carboxyl sites under identical settings (Quantum ESPRESSO, PBE+D3, dipole correction).</p>
       <p lang="ko">연구실의 EATS 공정 rGO 습도 센서는 상대습도 50→100%에서 0.71→3.03 mV의 전압 신호를 내며, 이는 물 분자가 산소 작용기에 흡착하기 때문이라고 설명되어 왔습니다. 그러나 어느 작용기가 신호를 주도하는지는 계산된 바가 없습니다. 이에 그래핀·에폭시·하이드록시·카복실 기판에 물 분자를 올려 흡착에너지·전하 이동·일함수 변화를 동일한 조건에서 계산하고 있습니다(Quantum ESPRESSO, PBE+D3, 쌍극자 보정).</p>
       <p lang="en">So far: fixed three bugs in the model-building code (a bond shortened by the order of structural edits, an inverted water molecule, too thin a vacuum layer), measured cost per cell size (a 5×5 cell needed 18.4 GB and about 15 minutes per SCF step, so I used 3×3), and have nine calculations running.</p>
       <p lang="ko">지금까지 모델 생성 코드의 버그 3개(구조 변형 순서로 인한 결합 길이 단축, 뒤집힌 물 분자, 얇은 진공층)를 수정했고, 셀 크기별 계산 비용을 실측하여(5×5 셀은 메모리 18.4 GB, SCF 1회 약 15분) 3×3 셀을 택했으며, 계산 9건을 진행하고 있습니다.</p>
       <p class="limit" lang="en"><b>Limits.</b> DFT error is larger than the energy window that humidity changes, so I claim the ordering between groups, not absolute values or a fit to the humidity curve. Lateral interactions in a 3×3 cell and other mechanisms such as ionic conduction remain open.</p>
       <p class="limit" lang="ko"><b>한계.</b> DFT 오차가 습도 변화에 해당하는 에너지 창보다 크므로, 절댓값이나 습도-신호 곡선의 정량 재현이 아니라 작용기 간 순서까지만 주장합니다. 3×3 셀의 측면 상호작용과 이온 전도 같은 다른 메커니즘은 배제하지 못했습니다.</p>
-    </div>
+      </div>
+    </details>
 
-    <div class="entry">
-      <div class="head"><h3><span lang="en">Should the lab adopt sequential (Bayesian) optimization?</span><span lang="ko">순차 최적화(베이지안 최적화) 연구실 도입 검토</span></h3><span class="when"><span lang="en">Aug 2026</span><span lang="ko">2026.08</span></span></div>
-      <p class="where"><span lang="en">Independent study, reported to the Materials Innovation Lab (21-page report)</span><span lang="ko">개인 수행, Materials Innovation Lab 보고(21쪽)</span></p>
+    <details class="entry">
+      <summary>
+        <div class="head"><h3><span lang="en">Should the lab adopt sequential (Bayesian) optimization?</span><span lang="ko">순차 최적화(베이지안 최적화) 연구실 도입 검토</span></h3><span class="when"><span lang="en">Aug 2026</span><span lang="ko">2026.08</span></span></div>
+        <p class="where"><span lang="en">Independent study, reported to the Materials Innovation Lab (21-page report)</span><span lang="ko">개인 수행, Materials Innovation Lab 보고(21쪽)</span></p>
+        <p class="gist"><span lang="en">On public data it cut 40 runs to 22, but the lab's own data did not meet its conditions, so I recommended repeat measurements first.</span><span lang="ko">공개 데이터에서는 40회를 22회로 줄였으나, 연구실 데이터는 요건에 미달하여 반복 측정부터 권고했습니다.</span></p>
+      </summary>
+      <div class="more">
       <p lang="en">Sequential optimization changes only the order of measurements: measure a few points, fit a surrogate, pick the next condition. To see whether that saves measurements, I replayed three published datasets (CNT composite films, perovskites, silver nanoparticles) as a sealed lab: the algorithm could only see a value after "measuring" it, and the final pick was the best measured value, not the true best. Four orderings shared the same 40-run budget, averaged over 120 seeds.</p>
       <p lang="ko">순차 최적화는 측정 순서 하나만 바꾸는 방법입니다. 몇 점을 먼저 재고 대리모델로 지형을 그린 뒤 다음 조건을 고릅니다. 측정 횟수가 실제로 줄어드는지 확인하기 위해, 공개 논문 데이터 3종(CNT 복합 박막·페로브스카이트·은 나노입자)을 정답을 가린 '실험실'로 삼아 측정해야만 값을 알 수 있게 막고, 최종 채택도 정답이 아니라 측정값 기준으로 하는 모사 실험을 설계했습니다. 네 가지 순서를 같은 예산(40회)으로 120회씩 반복했습니다.</p>
       <ul lang="en">
@@ -188,11 +231,16 @@ footer{color:var(--ink3);font-size:14px;margin-top:28px}
       </ul>
       <p class="limit" lang="en"><b>Limits.</b> Only already-measured conditions could be chosen, and the public data was itself collected by optimization, which makes random look better than it would in a new study.</p>
       <p class="limit" lang="ko"><b>한계.</b> 이미 측정된 조건 중에서만 고를 수 있었고, 공개 데이터 자체가 최적화로 수집되어 무작위가 신규 연구보다 유리하게 보이는 편향이 있습니다.</p>
-    </div>
+      </div>
+    </details>
 
-    <div class="entry">
-      <div class="head"><h3><span lang="en">Can a small local LLM pick up an engineer's judgment?</span><span lang="ko">엔지니어의 암묵지를 로컬 소형 LLM에 이식할 수 있는가</span></h3><span class="when">2026</span></div>
-      <p class="where"><span lang="en">Poster, KU AI Forum 2026 (supported by HUSS, National Research Foundation of Korea)</span><span lang="ko">2026 KU AI 포럼 포스터 발표 (인문사회디지털융합인재양성사업단·한국연구재단 지원)</span></p>
+    <details class="entry">
+      <summary>
+        <div class="head"><h3><span lang="en">Can a small local LLM pick up an engineer's judgment?</span><span lang="ko">엔지니어의 암묵지를 로컬 소형 LLM에 이식할 수 있는가</span></h3><span class="when">2026</span></div>
+        <p class="where"><span lang="en">Poster, KU AI Forum 2026 (supported by HUSS, National Research Foundation of Korea)</span><span lang="ko">2026 KU AI 포럼 포스터 발표 (인문사회디지털융합인재양성사업단·한국연구재단 지원)</span></p>
+        <p class="gist"><span lang="en">Instructions alone taught a 7.8B local model the format of a decision, but not my actual choices.</span><span lang="ko">지시만으로 7.8B 로컬 모델에 판단의 형식은 옮겨졌으나, 제 실제 선택까지는 옮겨지지 않았습니다.</span></p>
+      </summary>
+      <div class="more">
       <p lang="en">Engineering judgment often depends on context that cannot leave the building, which points to small local models. I built a web app (Engineering Brain) that poses open engineering dilemmas, collected ten of my own written decisions, and compared Gemini 3.5 Flash with EXAONE 3.5 7.8B running locally under three conditions: no guidance, a stated reasoning structure, and my own records as examples. Generation and grading were separate calls, and the grader did not see the condition.</p>
       <p lang="ko">공학 판단은 외부로 반출하기 어려운 맥락에 의존하는 경우가 많아, 로컬 소형 모델이 현실적인 대안입니다. 이에 답이 없는 공학 딜레마를 출제하는 웹앱(Engineering Brain)을 구축하여 제 사고 기록 10건을 수집하고, Gemini 3.5 Flash와 로컬 EXAONE 3.5 7.8B를 세 조건(지시 없음 / 사고 구조 지시 / 제 기록 주입)에서 비교했습니다. 생성과 평가는 별도 호출로 분리하고 평가자에게 조건을 가렸습니다.</p>
       <p lang="en">Committing to one dominant variable came from the instruction alone: 66.7% to 100% on the large model and 66.7% to 95.8% on the small one. Matching the choice I actually made rose only on the large model (0% to 30%), and blind comparison preferred the instruction-only answers 16 to 8.</p>
@@ -203,54 +251,84 @@ footer{color:var(--ink3);font-size:14px;margin-top:28px}
       </figure>
       <p class="limit" lang="en"><b>Limits.</b> The content result rests on ten held-out items (Fisher p = 0.21, not significant). One seed, one judge model, one local model, and I scored content agreement myself.</p>
       <p class="limit" lang="ko"><b>한계.</b> 내용 일치 결과는 10문항에 근거하여 유의하지 않습니다(Fisher p = 0.21). 시드·평가 모델·로컬 모델이 각각 하나이며, 내용 일치 판정을 제가 직접 수행했습니다.</p>
-    </div>
+      </div>
+    </details>
   </section>
 
-  <section id="experience">
+  <section id="experience" class="pane">
     <h2><span lang="en">Experience</span><span lang="ko">경력</span></h2>
 
-    <div class="entry">
-      <div class="head"><h3><span lang="en">Design optimization intern, NumeReal</span><span lang="ko">NumeReal 설계최적화 인턴</span></h3><span class="when"><span lang="en">Aug 2026 - Jan 2027 (expected)</span><span lang="ko">2026.08 – 2027.01 (예정)</span></span></div>
+    <details class="entry">
+      <summary>
+        <div class="head"><h3><span lang="en">Design optimization intern, NumeReal</span><span lang="ko">NumeReal 설계최적화 인턴</span></h3><span class="when"><span lang="en">Aug 2026 - Jan 2027 (expected)</span><span lang="ko">2026.08 – 2027.01 (예정)</span></span></div>
+        <p class="gist"><span lang="en">Benchmarking commercial optimization tools. On my own time, a surrogate optimum labeled 95% reliable measured 1.3%.</span><span lang="ko">상용 최적화 도구를 벤치마킹하고 있습니다. 개인 수행 실험에서는 '신뢰도 95%' 해의 실측 신뢰도가 1.3%였습니다.</span></p>
+      </summary>
+      <div class="more">
       <p lang="en">Benchmarking commercial optimization and CAE tools: Altair HyperStudy, Ansys optiSLang, PIDOTECH PIAnO, and Altair HyperMesh PhysicsAI.</p>
       <p lang="ko">상용 최적화·CAE 소프트웨어(Altair HyperStudy, Ansys optiSLang, 피도텍 PIAnO, Altair HyperMesh PhysicsAI)의 벤치마킹을 수행하고 있습니다.</p>
       <p lang="en">On my own time, I automated two public HyperStudy tutorials through its Python API and ran all 1,420 combinations of optimization, reliability and RBDO settings. A surrogate optimum reported as 95% reliable measured 1.3% on the real solver, and SORA was the only RBDO method that met its target. My takeaway: check a surrogate's optimum with the solver, not with the same surrogate.</p>
       <p lang="ko">인턴 기간 중 개인적으로 HyperStudy 공개 튜토리얼 2종을 Python API로 자동화하여 최적화·신뢰성·RBDO 조합 1,420건을 전수 실행했습니다. 대리모델이 '신뢰도 95%'로 보고한 해의 실측 신뢰도는 1.3%였고, 목표 신뢰도를 실제로 맞춘 RBDO 기법은 SORA뿐이었습니다. 이를 근거로 대리모델이 찾은 해는 같은 대리모델이 아니라 실제 solver로 재검증해야 한다는 기준을 정리했습니다.</p>
-    </div>
+      </div>
+    </details>
 
-    <div class="entry">
-      <div class="head"><h3><span lang="en">Next-Generation Engineer program (PRAXIS)</span><span lang="ko">2026 차세대 공학자 양성사업 (PRAXIS 사업단)</span></h3><span class="when"><span lang="en">Oct 2026 - Feb 2027</span><span lang="ko">2026.10 – 2027.02</span></span></div>
-      <p class="where"><span lang="en">Team member (4), project "Optimizing a ground, subway and air logistics system"</span><span lang="ko">4인 팀 팀원, 과제 「지상–지하–공중 기반 미래 물류 시스템 최적화」</span></p>
+    <details class="entry">
+      <summary>
+        <div class="head"><h3><span lang="en">Next-Generation Engineer program (PRAXIS)</span><span lang="ko">2026 차세대 공학자 양성사업 (PRAXIS 사업단)</span></h3><span class="when"><span lang="en">Oct 2026 - Feb 2027</span><span lang="ko">2026.10 – 2027.02</span></span></div>
+        <p class="where"><span lang="en">Team member (4), project "Optimizing a ground, subway and air logistics system"</span><span lang="ko">4인 팀 팀원, 과제 「지상–지하–공중 기반 미래 물류 시스템 최적화」</span></p>
+        <p class="gist"><span lang="en">I own the drone safety constraint in a subway, ground and drone logistics project. In progress.</span><span lang="ko">지하철·지상·드론 복합 물류 과제에서 드론 안전 제약을 맡고 있습니다(진행 중).</span></p>
+      </summary>
+      <div class="more">
       <p lang="en">Freight rides Seoul subway Line 3, then splits between ground vehicles and drones at transfer hubs. I own the drone safety constraint: correcting a multirotor energy model against 209 public flight logs with Gaussian process regression, a FORM-based payload limit with temperature and gusts as random variables, and a Monte Carlo check that failures stay at or below 0.1%. In progress; target venue IEEE CASE 2027.</p>
       <p lang="ko">지하철 3호선으로 화물을 옮긴 뒤 환적 거점에서 지상과 드론으로 나눠 배송하는 복합 물류 과제에서 드론 안전 제약을 맡고 있습니다. 멀티로터 동력식과 공개 실측 비행 209회의 오차를 가우시안 프로세스 회귀로 보정하고, 기온·돌풍을 확률변수로 둔 신뢰성 해석(FORM)으로 적재 상한을 산정하며, 몬테카를로 시뮬레이션으로 사고율 0.1% 이하 유지 여부를 검증합니다. 진행 중이며 IEEE CASE 2027 투고를 목표로 합니다.</p>
-    </div>
+      </div>
+    </details>
 
-    <div class="entry">
-      <div class="head"><h3><span lang="en">Gold Prize, Korea University × Upstage Energy AI Hackathon</span><span lang="ko">고려대학교 × Upstage 에너지 AI 해커톤 금상</span></h3><span class="when"><span lang="en">Jul 2026</span><span lang="ko">2026.07</span></span></div>
-      <p class="where"><span lang="en">1st of 23 teams, team lead (3)</span><span lang="ko">23팀 중 1위, 3인 팀 팀장</span></p>
+    <details class="entry">
+      <summary>
+        <div class="head"><h3><span lang="en">Gold Prize, Korea University × Upstage Energy AI Hackathon</span><span lang="ko">고려대학교 × Upstage 에너지 AI 해커톤 금상</span></h3><span class="when"><span lang="en">Jul 2026</span><span lang="ko">2026.07</span></span></div>
+        <p class="where"><span lang="en">1st of 23 teams, team lead (3)</span><span lang="ko">23팀 중 1위, 3인 팀 팀장</span></p>
+        <p class="gist"><span lang="en">A bidding assistant where the LLM proposes and code decides. 1st of 23 teams.</span><span lang="ko">LLM은 제안만 하고 계산·판정은 코드가 맡는 입찰 시스템으로 23팀 중 1위를 기록했습니다.</span></p>
+      </summary>
+      <div class="more">
       <p lang="en">Existing trading logic for Jeju's virtual power plant market assumes equipment never fails. I framed the objective as revenue minus failure probability times risk cost, and designed a loop where the LLM only proposes output ratios, code computes the numbers, two LLM reviewers and a rule-based recomputation must agree, and an operator approves in Slack. Teammates built the n8n nodes and data pipeline. <a href="https://euichanlee0608-svg.github.io/vpp-trade-guard/" target="_blank" rel="noopener">Case study</a></p>
       <p lang="ko">제주 가상발전소(VPP) 시장의 기존 거래 로직은 설비가 고장 나지 않는다고 가정합니다. 이에 목적함수를 '판매 수익 − 고장확률 × 리스크 비용'으로 설정하고, LLM은 출력 비율만 제안하며 계산은 코드가 수행하고, 두 LLM 검토자와 규칙 기반 재계산이 일치해야 하며, 최종 승인은 운영자가 Slack에서 내리는 검증 구조를 설계했습니다. n8n 노드 구현과 데이터 수집은 팀원이 담당했습니다. <a href="https://euichanlee0608-svg.github.io/vpp-trade-guard/" target="_blank" rel="noopener">케이스 스터디</a></p>
-    </div>
+      </div>
+    </details>
 
-    <div class="entry">
-      <div class="head"><h3><span lang="en">TeX-Corps, Korea's I-Corps program</span><span lang="ko">2026 공공기술기반 시장연계 창업탐색 지원사업(TeX-Corps)</span></h3><span class="when"><span lang="en">Completed Jul 2026</span><span lang="ko">2026.07 수료</span></span></div>
-      <p class="where"><span lang="en">Ministry of Science and ICT; on-site training at UC Berkeley</span><span lang="ko">과학기술정보통신부, UC Berkeley 현지 교육 포함</span></p>
+    <details class="entry">
+      <summary>
+        <div class="head"><h3><span lang="en">TeX-Corps, Korea's I-Corps program</span><span lang="ko">2026 공공기술기반 시장연계 창업탐색 지원사업(TeX-Corps)</span></h3><span class="when"><span lang="en">Completed Jul 2026</span><span lang="ko">2026.07 수료</span></span></div>
+        <p class="where"><span lang="en">Ministry of Science and ICT; on-site training at UC Berkeley</span><span lang="ko">과학기술정보통신부, UC Berkeley 현지 교육 포함</span></p>
+        <p class="gist"><span lang="en">70 customer interviews that changed the problem the team was solving.</span><span lang="ko">잠재고객 인터뷰 70건으로 팀의 문제 정의를 바꿨습니다.</span></p>
+      </summary>
+      <div class="more">
       <p lang="en">Ran 70 customer interviews (20 in Korea, 50 in Berkeley). They moved the team's problem from simulation debugging time to the understanding gap in engineering meetings, and I led the business model canvas and pitch deck.</p>
       <p lang="ko">국내 20건, 버클리 현지 50건 등 잠재고객 인터뷰 70건을 수행했습니다. 이를 근거로 문제 정의를 '시뮬레이션 디버깅 시간'에서 '협업 회의의 이해 격차'로 전환했으며, 비즈니스 모델 캔버스와 피치덱 작성을 총괄했습니다.</p>
-    </div>
+      </div>
+    </details>
 
-    <div class="entry">
-      <div class="head"><h3><span lang="en">seqopt, a desktop app for sequential experiments</span><span lang="ko">seqopt — 실험용 순차 최적화 데스크톱 앱</span></h3><span class="when">2026</span></div>
+    <details class="entry">
+      <summary>
+        <div class="head"><h3><span lang="en">seqopt, a desktop app for sequential experiments</span><span lang="ko">seqopt — 실험용 순차 최적화 데스크톱 앱</span></h3><span class="when">2026</span></div>
+        <p class="gist"><span lang="en">Suggests the next experiment, or refuses when the data cannot support one.</span><span lang="ko">다음 실험 조건을 추천하되, 데이터가 받쳐 주지 못하면 추천을 막는 앱입니다.</span></p>
+      </summary>
+      <div class="more">
       <p lang="en">Suggests the next experiment with a Gaussian process, and refuses to suggest one when the data fails the four entry conditions above. Windows build through CI. Open source; not in use in the lab. <a href="https://github.com/euichanlee0608-svg/seqopt" target="_blank" rel="noopener">Repository</a></p>
       <p lang="ko">가우시안 프로세스로 다음 실험 조건을 추천하되, 데이터가 위의 도입 요건 4가지를 통과하지 못하면 추천을 막도록 구현했습니다. CI로 윈도우 실행파일을 배포합니다. 공개 레포이며 연구실에서 실제로 쓰이고 있지는 않습니다. <a href="https://github.com/euichanlee0608-svg/seqopt" target="_blank" rel="noopener">레포</a></p>
-    </div>
+      </div>
+    </details>
   </section>
 
-  <section id="projects">
+  <section id="projects" class="pane">
     <h2><span lang="en">Projects</span><span lang="ko">프로젝트</span></h2>
 
-    <div class="entry">
-      <div class="head"><h3><span lang="en">Broadband acoustic energy harvesting</span><span lang="ko">광대역 음향 에너지 하베스팅</span></h3><span class="when">2026</span></div>
-      <p class="where"><span lang="en">Individual, simulation</span><span lang="ko">개인, 시뮬레이션</span></p>
+    <details class="entry">
+      <summary>
+        <div class="head"><h3><span lang="en">Broadband acoustic energy harvesting</span><span lang="ko">광대역 음향 에너지 하베스팅</span></h3><span class="when">2026</span></div>
+        <p class="where"><span lang="en">Individual, simulation</span><span lang="ko">개인, 시뮬레이션</span></p>
+        <p class="gist"><span lang="en">Same mean power as a narrowband design, but steadier across 11 real noise environments.</span><span lang="ko">협대역 설계와 평균 출력은 같지만, 실측 소음 환경 11종에서 더 안정적입니다.</span></p>
+      </summary>
+      <div class="more">
       <p lang="en">A single-resonance harvester misses most of real noise, which spreads across a wide band. I evaluated a piezoelectric wire array with distributed lengths across 11 measured noise environments (single-degree-of-freedom electromechanical model, bootstrap 95% intervals, sweeps over fabrication tolerance). Mean power matched a narrowband design (99 vs 108 fW), but variation across environments was lower (CoV 21% vs 29%), and the gap grew with resonator Q (1.07 to 1.19×). <a href="https://euichanlee0608-svg.github.io/acoustic-harvester/" target="_blank" rel="noopener">Interactive version</a></p>
       <p lang="ko">단일 공진 하베스터는 넓은 대역에 퍼진 실제 소음 에너지 대부분을 놓칩니다. 이에 길이를 분포시킨 압전 와이어 배열을 실측 소음 환경 11종에서 평가했습니다(1자유도 전기기계 모델, 부트스트랩 95% 신뢰구간, 제작 공차 분석). 평균 출력은 협대역 설계와 비슷했으나(99 대 108 fW) 환경 간 변동계수가 21% 대 29%로 작았고, 공진 Q가 클수록 차이가 커졌습니다(1.07→1.19배). <a href="https://euichanlee0608-svg.github.io/acoustic-harvester/" target="_blank" rel="noopener">웹 버전</a></p>
       <figure>
@@ -259,11 +337,16 @@ footer{color:var(--ink3);font-size:14px;margin-top:28px}
       </figure>
       <p class="limit" lang="en"><b>Limits.</b> Absolute output is femtowatt-scale at 70 dB. The claim is robustness only.</p>
       <p class="limit" lang="ko"><b>한계.</b> 절대 출력이 70 dB에서 fW 수준이므로, 주장은 강건성까지로 한정합니다.</p>
-    </div>
+      </div>
+    </details>
 
-    <div class="entry">
-      <div class="head"><h3><span lang="en">Autonomous pole-climbing and harvesting robot</span><span lang="ko">자율 기둥 등반·수확 로봇</span></h3><span class="when">2026</span></div>
-      <p class="where"><span lang="en">Team capstone (4), built and demonstrated; I owned control and power</span><span lang="ko">창의적기계설계 4인 팀, 실물 제작·시연, 본인 담당 제어·전력</span></p>
+    <details class="entry">
+      <summary>
+        <div class="head"><h3><span lang="en">Autonomous pole-climbing and harvesting robot</span><span lang="ko">자율 기둥 등반·수확 로봇</span></h3><span class="when">2026</span></div>
+        <p class="where"><span lang="en">Team capstone (4), built and demonstrated; I owned control and power</span><span lang="ko">창의적기계설계 4인 팀, 실물 제작·시연, 본인 담당 제어·전력</span></p>
+        <p class="gist"><span lang="en">Two mismatched motors synced on one drive; it climbed on competition day.</span><span lang="ko">사양이 다른 두 모터를 하나의 구동으로 맞춰 대회 당일 등반에 성공했습니다.</span></p>
+      </summary>
+      <div class="more">
       <div class="split">
         <div>
           <p lang="en">The team kept the design as simple as the task allowed: a one-way bearing and a C-shaped gear took the harvesting motion off the climb drive, so no extra motor was needed (a ratchet had too much friction to climb). Budget forced two mismatched motors (1/144 vs 1/500 gearing, 24 A vs 2 A stall) onto one synchronized drive. I computed PWM from the datasheets and tuned it over dozens of climbs, and an 11,000 µF capacitor bank kept the supply above the 7 V reset during stalls.</p>
@@ -276,11 +359,16 @@ footer{color:var(--ink3);font-size:14px;margin-top:28px}
           <figcaption><span lang="en"><b>Fig. 3.</b> The build.</span><span lang="ko"><b>그림 3.</b> 실물.</span></figcaption>
         </figure>
       </div>
-    </div>
+      </div>
+    </details>
 
-    <div class="entry">
-      <div class="head"><h3><span lang="en">Surviving a rotor loss with an asymmetric drone layout</span><span lang="ko">비대칭 배치 로터의 내고장성 (드론)</span></h3><span class="when">2026</span></div>
-      <p class="where"><span lang="en">Individual, simulation</span><span lang="ko">개인, 시뮬레이션</span></p>
+    <details class="entry">
+      <summary>
+        <div class="head"><h3><span lang="en">Surviving a rotor loss with an asymmetric drone layout</span><span lang="ko">비대칭 배치 로터의 내고장성 (드론)</span></h3><span class="when">2026</span></div>
+        <p class="where"><span lang="en">Individual, simulation</span><span lang="ko">개인, 시뮬레이션</span></p>
+        <p class="gist"><span lang="en">A rotor layout that survives losing one motor, rebuilt in 6-DOF when the first model proved too kind.</span><span lang="ko">모터 하나를 잃어도 생존하는 로터 배치를 찾고, 낙관적이던 첫 모델을 6자유도로 재구축했습니다.</span></p>
+      </summary>
+      <div class="more">
       <p lang="en">A symmetric quadrotor that loses one motor has nothing left to cancel the opposite moment, so it falls. I asked whether an asymmetric layout could survive that. A search over about 10⁸ layouts put the best one at the incenter of the triangle formed by the remaining three rotors, and the damaged craft flies on three motors by giving up yaw. My first model judged survival from attitude alone, which flattered the result, so I rebuilt it in 6-DOF with altitude, impact impulse, the mass and inertia change after the hit, and battery sag. It still recovers from fragment strikes up to about 420-520 m/s on axis and 960-1,050 m/s at a 60° glancing angle.</p>
       <p lang="ko">대칭형 쿼드로터는 모터 하나가 피격되면 반대 모멘트를 상쇄할 힘이 사라져 추락합니다. 비대칭으로 배치하면 하나가 고장 나도 생존할 수 있는지 확인하고자 약 10⁸개 배치를 탐색했고, 최적점은 남은 세 로터가 이루는 삼각형의 내심이었으며, 손상된 기체는 요 제어를 포기하고 모터 3개로 비행합니다. 자세만 보고 생존을 판정한 첫 모델은 결과가 낙관적이었기에, 고도·충격량·피격 후 질량과 관성 변화·배터리 전압 강하를 넣은 6자유도 모델로 재구축했습니다. 그 결과에서도 축 방향 초속 약 420~520 m, 60° 빗맞음 약 960~1,050 m의 파편 충돌까지 회복했습니다.</p>
       <figure>
@@ -289,10 +377,11 @@ footer{color:var(--ink3);font-size:14px;margin-top:28px}
       </figure>
       <p class="limit" lang="en"><b>Limits.</b> Simulation thresholds only. Nothing here has flown.</p>
       <p class="limit" lang="ko"><b>한계.</b> 시뮬레이션 결과이며 실기체로 검증하지 않았습니다.</p>
-    </div>
+      </div>
+    </details>
   </section>
 
-  <section id="education">
+  <section id="education" class="pane">
     <h2><span lang="en">Education and skills</span><span lang="ko">학력·기술</span></h2>
     <ul class="plain">
       <li><span lang="en">Since 2022</span><span lang="ko">2022 –</span><span><span lang="en">B.S. Mechanical Engineering, Korea University. Secondary major in Applied AI since 2026. GPA 3.86/4.5; 3.98/4.5 over the last three semesters. 24 credits of major courses taught in English.</span><span lang="ko">고려대학교 기계공학부. 인공지능응용 융합전공(2026–). 평점 3.86/4.5, 최근 세 학기 3.98/4.5. 영어 진행 전공 수업 24학점 이수.</span></span></li>
@@ -311,6 +400,23 @@ footer{color:var(--ink3);font-size:14px;margin-top:28px}
 </div>
 
 <script>
+(function(){
+  var root=document.documentElement; root.classList.add("js");
+  var tabs=[].slice.call(document.querySelectorAll(".toc a")), panes=[].slice.call(document.querySelectorAll(".pane"));
+  function show(id,push){
+    if(!panes.some(function(p){return p.id===id})) id="research";
+    panes.forEach(function(p){p.classList.toggle("on",p.id===id)});
+    tabs.forEach(function(a){a.setAttribute("aria-current",a.getAttribute("href")==="#"+id)});
+    if(push) history.replaceState(null,"","#"+id);
+  }
+  tabs.forEach(function(a){a.onclick=function(e){e.preventDefault();show(a.getAttribute("href").slice(1),true);
+    var m=document.querySelector("main"); if(m.getBoundingClientRect().top<0) m.scrollIntoView();}});
+  show(location.hash.slice(1),false);
+  /* printing is the CV: open everything, then put it back */
+  var was=[];
+  addEventListener("beforeprint",function(){was=[].slice.call(document.querySelectorAll("details")).map(function(d){var o=d.open;d.open=true;return o})});
+  addEventListener("afterprint",function(){document.querySelectorAll("details").forEach(function(d,i){d.open=!!was[i]})});
+})();
 (function(){
   var root=document.documentElement, KEY="pf_lang";
   function set(l){
