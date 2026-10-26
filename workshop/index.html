@@ -16,7 +16,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* same paper and ink as the main page; the difference is the layout: pictures first, short lines */
+/* same paper and ink as the main page. the idea: an index on the left, a projector on the right.
+   pointing at a name puts that app's real screen on the projector; clicking opens the app. */
 :root{--bg:#FBFAF8;--surf:#F3F0EA;--ink:#1C1A18;--ink2:#4F4A44;--ink3:#857C72;--line:#E4DFD7;--acc:#1f3a5f}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141210;--surf:#1E1B17;--ink:#EFEBE4;--ink2:#B3ABA1;--ink3:#8A8177;--line:#332E28;--acc:#8fb0d8}}
 :root[data-theme="dark"]{--bg:#141210;--surf:#1E1B17;--ink:#EFEBE4;--ink2:#B3ABA1;--ink3:#8A8177;--line:#332E28;--acc:#8fb0d8}
@@ -28,11 +29,10 @@ html[lang="ko"] body{font-family:"IBM Plex Sans KR","IBM Plex Sans",system-ui,sa
 html[lang="en"] body [lang="ko"],html[lang="ko"] body [lang="en"]{display:none}
 a{color:var(--acc);text-underline-offset:3px;text-decoration-thickness:1px}
 
-.wrap{max-width:1160px;margin:0 auto;padding:22px clamp(16px,4vw,40px) 56px}
+.wrap{max-width:1180px;margin:0 auto;padding:22px clamp(16px,4vw,40px) 48px}
 .bar{display:flex;justify-content:space-between;align-items:center;gap:16px}
 .home{color:var(--ink2);text-decoration:none;font-size:15px;white-space:nowrap}
 .home:hover{color:var(--ink)}
-
 .langbar{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;padding:3px;background:rgba(118,120,128,.12);border-radius:10px;user-select:none;-webkit-tap-highlight-color:transparent;flex:none}
 .lang-thumb{position:absolute;top:3px;left:3px;width:calc(50% - 3px);height:calc(100% - 6px);background:var(--bg);border-radius:8px;box-shadow:0 1px 1px rgba(40,44,52,.06),0 3px 8px -2px rgba(40,44,52,.2);transition:transform .38s cubic-bezier(.32,.72,0,1)}
 html[lang="ko"] .lang-thumb{transform:translateX(100%)}
@@ -40,58 +40,69 @@ html[lang="ko"] .lang-thumb{transform:translateX(100%)}
 .langopt.on{color:var(--ink)}
 .langopt:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
 
-header{padding:48px 0 8px;max-width:44rem}
-h1{font:400 clamp(44px,7vw,72px)/1 Newsreader,Georgia,serif;letter-spacing:-.02em;margin:0 0 14px}
-.lede{color:var(--ink2);font-size:17px;margin:0}
+header{display:flex;align-items:baseline;gap:28px;flex-wrap:wrap;padding:30px 0 26px;border-bottom:1px solid var(--line)}
+h1{font:400 clamp(44px,6vw,64px)/1 Newsreader,Georgia,serif;letter-spacing:-.02em;margin:0}
+.lede{color:var(--ink2);margin:0;max-width:34rem}
 
-h2{font:500 24px/1.25 Newsreader,Georgia,serif;margin:0 0 4px}
-html[lang="ko"] h2{font:600 20px/1.35 "IBM Plex Sans KR",sans-serif}
-.sub{color:var(--ink3);margin:0 0 22px;font-size:15px}
-section{margin-top:56px}
+/* index + projector */
+.bench{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:48px;padding-top:26px;align-items:start}
+.group{margin-bottom:22px}
+.glabel{font:400 15px/1.4 Newsreader,Georgia,serif;font-style:italic;color:var(--ink3);margin:0 0 4px}
+html[lang="ko"] .glabel{font:400 14px "IBM Plex Sans KR",sans-serif;font-style:normal}
+.idx{list-style:none;margin:0;padding:0}
+.idx a{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:12px;padding:9px 0 9px 14px;margin-left:-14px;border-left:2px solid transparent;color:var(--ink2);text-decoration:none;transition:color .2s,border-color .2s,padding .25s}
+.idx .nm{font:500 22px/1.25 Newsreader,Georgia,serif;color:inherit}
+html[lang="ko"] .idx .nm{font:600 18px/1.4 "IBM Plex Sans KR",sans-serif}
+.idx .kind{font-size:13.5px;color:var(--ink3);white-space:nowrap}
+.idx a.on,.idx a:hover,.idx a:focus-visible{color:var(--ink);border-left-color:var(--ink);padding-left:20px;outline:none}
 
-/* web apps: a contact sheet of real screens. the whole tile is the link */
-.sheet{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px 28px}
-.app{display:block;color:inherit;text-decoration:none}
-.shot{aspect-ratio:16/10;overflow:hidden;background:var(--surf);border:1px solid var(--line)}
-.shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;filter:saturate(.9);transition:transform .45s ease-out,filter .45s ease-out}
-.app:hover .shot img,.app:focus-visible .shot img{transform:scale(1.025);filter:none}
-.app:focus-visible{outline:2px solid var(--acc);outline-offset:6px}
-.app h3{font:500 19px/1.3 Newsreader,Georgia,serif;margin:14px 0 4px}
-html[lang="ko"] .app h3{font:600 16.5px/1.4 "IBM Plex Sans KR",sans-serif}
-.app p{margin:0;color:var(--ink2);font-size:15px}
-.app .go{display:inline-block;margin-top:6px;color:var(--acc);font-size:14px}
-.app:hover .go{text-decoration:underline}
+.proj{position:sticky;top:24px}
+.screen{display:block;aspect-ratio:16/10;overflow:hidden;background:var(--surf);border:1px solid var(--line);box-shadow:0 18px 40px -24px rgba(40,30,20,.35)}
+.screen img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;transition:opacity .35s ease-out}
+.screen img.fade{opacity:0}
+.cap{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-top:16px}
+.cap h2{font:500 24px/1.25 Newsreader,Georgia,serif;margin:0}
+html[lang="ko"] .cap h2{font:600 19px/1.4 "IBM Plex Sans KR",sans-serif}
+.cap p{margin:4px 0 0;color:var(--ink2);max-width:36rem}
+.open{flex:none;font:inherit;font-size:15px;color:var(--bg);background:var(--ink);text-decoration:none;padding:9px 16px;min-height:42px;display:inline-flex;align-items:center;white-space:nowrap}
+.open:hover{background:var(--acc)}
 
-/* safety rails: plain rows, no boxes */
-.rails{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:48px;max-width:68rem}
-.rails li{border-top:1px solid var(--line);padding:16px 0 18px}
-.rails b{display:block;font:500 17px/1.35 Newsreader,Georgia,serif;margin-bottom:4px}
-html[lang="ko"] .rails b{font:600 15.5px/1.45 "IBM Plex Sans KR",sans-serif}
-.rails span{color:var(--ink2);font-size:15px}
-.tools{list-style:none;margin:0;padding:0;max-width:44rem}
-.tools li{border-top:1px solid var(--line);padding:12px 0;color:var(--ink2);font-size:15px}
-.tools li b{color:var(--ink);font-weight:500}
-footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink3);font-size:14px}
+/* below the bench: two short lists side by side */
+.notes{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:48px;margin-top:44px;padding-top:28px;border-top:1px solid var(--line)}
+.notes h2{font:500 22px/1.3 Newsreader,Georgia,serif;margin:0 0 4px}
+html[lang="ko"] .notes h2{font:600 18px/1.4 "IBM Plex Sans KR",sans-serif}
+.notes .sub{color:var(--ink3);font-size:14.5px;margin:0 0 14px}
+.rails{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px}
+.rails li{padding:10px 0;border-top:1px solid var(--line);font-size:15px;color:var(--ink2);line-height:1.55}
+.rails b{display:block;color:var(--ink);font-weight:500}
+.tools{list-style:none;margin:0;padding:0}
+.tools li{padding:10px 0;border-top:1px solid var(--line);font-size:15px;color:var(--ink2);line-height:1.55}
+.tools b{display:block;color:var(--ink);font-weight:500}
+footer{margin-top:40px;color:var(--ink3);font-size:14px}
 
+/* phone: the bench becomes swipeable rows of screens; one group per row */
+.strip{display:none}
 @media (max-width:860px){
-  .sheet{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .rails{grid-template-columns:minmax(0,1fr)}
+  .bench{display:block}
+  .idx-col,.proj{display:none}
+  .strip{display:block;margin:0 -16px 26px}
+  .strip .glabel{padding:0 16px}
+  .rail{display:grid;grid-auto-flow:column;grid-auto-columns:78%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:16px;padding:4px 16px 8px;scrollbar-width:none;overscroll-behavior-x:contain}
+  .rail::-webkit-scrollbar{display:none}
+  .card{scroll-snap-align:start;color:inherit;text-decoration:none;display:block}
+  .card .screen{box-shadow:none}
+  .card h3{font:500 19px/1.3 Newsreader,Georgia,serif;margin:10px 0 2px}
+  html[lang="ko"] .card h3{font:600 16.5px/1.4 "IBM Plex Sans KR",sans-serif}
+  .card p{margin:0;font-size:14.5px;color:var(--ink2);line-height:1.55}
+  .notes{grid-template-columns:minmax(0,1fr);gap:28px;margin-top:8px}
+  header{padding:24px 0 18px;gap:10px}
 }
 @media (max-width:640px){
-  header{padding-top:32px}
-  /* phone: thumbnail + text rows, so nine apps do not become a long wall */
-  .sheet{grid-template-columns:minmax(0,1fr);gap:0}
-  .app{display:grid;grid-template-columns:112px minmax(0,1fr);column-gap:14px;align-items:start;padding:14px 0;border-top:1px solid var(--line)}
-  .app .shot{grid-row:1/4}
-  .app h3{margin:0 0 2px;font-size:17px}
-  .app p{font-size:14.5px;line-height:1.55}
-  .app .go{display:none}
-  .sub{margin-bottom:8px}
-  section{margin-top:44px}
+  .rails{grid-template-columns:minmax(0,1fr)}
   .langopt{min-height:44px;padding:0 18px;font-size:14px}
   .home{min-height:44px;display:flex;align-items:center}
 }
-@media (prefers-reduced-motion:reduce){.lang-thumb,.shot img{transition:none}.app:hover .shot img{transform:none}}
+@media (prefers-reduced-motion:reduce){.lang-thumb,.screen img,.idx a{transition:none}}
 </style>
 </head>
 <body>
@@ -106,111 +117,96 @@ footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);color:v
   <header>
     <h1>Workshop</h1>
     <p class="lede">
-      <span lang="en">Things I built for study, for fun, or to run my own work. Lighter than the research, and most of it you can open right now.</span>
-      <span lang="ko">공부하다가, 재미로, 또는 제 작업을 돌리려고 만든 것들입니다. 연구보다 가볍고, 대부분 지금 바로 열어 보실 수 있습니다.</span>
+      <span lang="en">Things I built for study, for fun, or to run my own work. Most of them you can open right now.</span>
+      <span lang="ko">공부하면서, 재미로, 또는 제 작업을 돌리려고 만든 것들입니다. 대부분 지금 바로 열어 볼 수 있습니다.</span>
     </p>
   </header>
 
-  <section>
-    <h2><span lang="en">Web apps</span><span lang="ko">웹앱</span></h2>
-    <p class="sub"><span lang="en">Built and run by me, front end and back end.</span><span lang="ko">프론트와 서버까지 직접 만들고 운영합니다.</span></p>
-    <div class="sheet">
-      <a class="app" href="../engineering-brain/" target="_blank" rel="noopener">
-        <div class="shot"><img src="../assets/workshop/eng_quiz_web.jpg" alt="Engineering Brain start screen" width="960" height="600" loading="lazy"></div>
-        <h3>Engineering Brain</h3>
-        <p><span lang="en">Poses an engineering dilemma with no right answer, takes your reasoning in your own words, and grades it.</span><span lang="ko">정답이 없는 공학 딜레마를 내고, 직접 쓴 답의 사고 과정을 채점합니다.</span></p>
-        <span class="go"><span lang="en">Open</span><span lang="ko">열기</span></span>
-      </a>
-      <a class="app" href="../optimal-design-guide/" target="_blank" rel="noopener">
-        <div class="shot"><img src="../assets/workshop/optimal_design_guide.jpg" alt="Optimal Design Visual Guide" width="960" height="600" loading="lazy"></div>
-        <h3><span lang="en">Optimal Design Visual Guide</span><span lang="ko">최적설계 시각 가이드</span></h3>
-        <p><span lang="en">Design of experiments, surrogates, optimizers and reliability, computed and drawn live in the browser.</span><span lang="ko">실험계획·대리모델·최적화·신뢰성을 브라우저에서 직접 계산해 그려 보여 주는 가이드입니다.</span></p>
-        <span class="go"><span lang="en">Open</span><span lang="ko">열기</span></span>
-      </a>
-      <a class="app" href="../news-literacy-lab/" target="_blank" rel="noopener">
-        <div class="shot"><img src="../assets/workshop/news_literacy_lab.jpg" alt="News Literacy Lab" width="960" height="600" loading="lazy"></div>
-        <h3><span lang="en">News Literacy Lab</span><span lang="ko">뉴스 읽기 훈련소</span></h3>
-        <p><span lang="en">Paste a news article and it maps who has a stake, who gets quoted, and who is left out.</span><span lang="ko">기사를 넣으면 이해관계자와 인용의 균형, 빠진 목소리를 분석합니다.</span></p>
-        <span class="go"><span lang="en">Open</span><span lang="ko">열기</span></span>
-      </a>
-      <a class="app" href="../emotion-quadrant/" target="_blank" rel="noopener">
-        <div class="shot"><img src="../assets/workshop/emotion_quadrant.jpg" alt="Emotion Quadrant" width="960" height="600" loading="lazy"></div>
-        <h3><span lang="en">Emotion Quadrant</span><span lang="ko">감정의 사분면</span></h3>
-        <p><span lang="en">Narrows 434 Korean emotion words in three steps until you can name what you feel. Korean only.</span><span lang="ko">한국어 감정 단어 434개를 세 단계로 좁혀, 지금의 감정에 이름을 붙입니다.</span></p>
-        <span class="go"><span lang="en">Open</span><span lang="ko">열기</span></span>
-      </a>
-      <a class="app" href="../living-paper/" target="_blank" rel="noopener">
-        <div class="shot"><img src="../assets/workshop/living_paper.jpg" alt="Living Paper" width="960" height="600" loading="lazy"></div>
-        <h3>Living Paper</h3>
-        <p><span lang="en">The TeX-Corps team's prototype: a meeting assistant whose relay server only ever sees ciphertext.</span><span lang="ko">TeX-Corps 팀의 시제품입니다. 중계 서버가 암호문만 보도록 만든 회의 보조 도구입니다.</span></p>
-        <span class="go"><span lang="en">Open</span><span lang="ko">열기</span></span>
-      </a>
-      <a class="app" href="../stick-breaker-game/" target="_blank" rel="noopener">
-        <div class="shot"><img src="../assets/workshop/stick_breaker_game.jpg" alt="357 Stick Breaker game" width="960" height="600" loading="lazy"></div>
-        <h3><span lang="en">357 Stick Breaker</span><span lang="ko">357 막대기 게임</span></h3>
-        <p><span lang="en">A Nim-style game with rows of 3, 5 and 7 sticks, against the computer or a friend.</span><span lang="ko">3·5·7개 막대기 줄로 하는 님(Nim) 계열 게임입니다. 컴퓨터나 친구와 둘 수 있습니다.</span></p>
-        <span class="go"><span lang="en">Open</span><span lang="ko">열기</span></span>
-      </a>
+  <div class="bench" id="bench"></div>
+
+  <div class="notes">
+    <div>
+      <h2><span lang="en">Safety rails on my own automation</span><span lang="ko">개인 자동화의 안전장치</span></h2>
+      <p class="sub"><span lang="en">AI agents and bots run on a Mac mini at home. Before giving them more to do, I made sure they could not break things quietly.</span><span lang="ko">집 맥 미니에서 AI 에이전트와 봇이 돌아갑니다. 일을 더 맡기기 전에, 몰래 사고를 칠 수 없게 막는 장치부터 만들었습니다.</span></p>
+      <ul class="rails">
+        <li><b lang="en">Three approval tiers</b><b lang="ko">승인 3단계</b><span lang="en">Each agent command is safe, needs my OK, or blocked, by one shared rules file.</span><span lang="ko">에이전트 명령은 하나의 규칙 파일로 안전·승인 필요·차단을 판정합니다.</span></li>
+        <li><b lang="en">Snapshot first</b><b lang="ko">스냅샷 먼저</b><span lang="en">Full auto mode is allowed only because files are snapshotted before every change.</span><span lang="ko">파일을 바꾸기 전에 스냅샷을 뜨기 때문에 완전 자동 모드를 허용합니다.</span></li>
+        <li><b lang="en">Gate before restart</b><b lang="ko">재기동 전 게이트</b><span lang="en">Bots restart only after regression tests that push real messages through sealed handlers.</span><span lang="ko">외부 호출을 막고 실제 메시지를 흘려 보는 회귀 테스트를 통과해야 봇이 재기동됩니다.</span></li>
+        <li><b lang="en">Humans set baselines</b><b lang="ko">기준선은 사람이</b><span lang="en">Research results never update their own reference, and LLM-written numbers are checked against the source.</span><span lang="ko">연구 기준 결과는 자동으로 갱신하지 않고, LLM이 쓴 수치는 원문과 대조합니다.</span></li>
+        <li><b lang="en">Read-only by default</b><b lang="ko">기본은 읽기 전용</b><span lang="en">The mail bot never sends, calendar entries wait for a tap, each app's alerts have an off switch.</span><span lang="ko">메일 봇은 보내지 않고, 일정 등록은 승인을 거치며, 앱마다 알림을 끄는 스위치가 있습니다.</span></li>
+        <li><b lang="en">Heartbeats and a map</b><b lang="ko">하트비트와 지도</b><span lang="en">A dead bot thread restarts the process, and a checker compares the setup map with what is running.</span><span lang="ko">봇 스레드가 죽으면 프로세스를 재시작하고, 구성 지도와 실제 환경이 어긋나면 검사기가 잡습니다.</span></li>
+      </ul>
     </div>
-  </section>
-
-  <section>
-    <h2><span lang="en">Projects you can play with</span><span lang="ko">직접 만져 보는 프로젝트</span></h2>
-    <p class="sub"><span lang="en">Web versions of project work, simplified so anyone can try them.</span><span lang="ko">프로젝트 결과를 누구나 해 볼 수 있게 줄인 웹 버전입니다.</span></p>
-    <div class="sheet">
-      <a class="app" href="../acoustic-harvester/" target="_blank" rel="noopener">
-        <div class="shot"><img src="../assets/workshop/acoustic_web.jpg" alt="Acoustic harvester game" width="960" height="600" loading="lazy"></div>
-        <h3><span lang="en">Tune a noise harvester</span><span lang="ko">소음 하베스터 튜닝</span></h3>
-        <p><span lang="en">Drag resonant wires across a noise spectrum and see whether your array holds up in 11 environments.</span><span lang="ko">소음 스펙트럼 위에 공진 와이어를 배치하고, 11개 환경에서 버티는지 확인합니다.</span></p>
-        <span class="go"><span lang="en">Open</span><span lang="ko">열기</span></span>
-      </a>
-      <a class="app" href="../divert-sim/" target="_blank" rel="noopener">
-        <div class="shot"><img src="../assets/workshop/missile_sim_web.jpg" alt="Drone interception simulator" width="960" height="600" loading="lazy"></div>
-        <h3><span lang="en">Intercept a dodging drone</span><span lang="ko">회피하는 드론 요격</span></h3>
-        <p><span lang="en">Steer a side-thruster interceptor yourself, then compare four optimization methods on the same problem.</span><span lang="ko">측면 추력기 요격기를 직접 조종해 보고, 같은 문제에서 최적화 기법 4종을 비교합니다.</span></p>
-        <span class="go"><span lang="en">Open</span><span lang="ko">열기</span></span>
-      </a>
-      <a class="app" href="../vpp-trade-guard/" target="_blank" rel="noopener">
-        <div class="shot"><img src="../assets/workshop/vpp_trade_guard.jpg" alt="VPP Trade-Guard case study" width="960" height="600" loading="lazy"></div>
-        <h3>VPP Trade-Guard</h3>
-        <p><span lang="en">The hackathon project as a case study, with a what-if slider running the real objective function.</span><span lang="ko">해커톤 프로젝트의 케이스 스터디입니다. 실제 목적함수로 조건을 바꿔 볼 수 있습니다.</span></p>
-        <span class="go"><span lang="en">Open</span><span lang="ko">열기</span></span>
-      </a>
+    <div>
+      <h2><span lang="en">Small tools</span><span lang="ko">작은 도구</span></h2>
+      <p class="sub"><span lang="en">Local only, not public.</span><span lang="ko">로컬 전용, 비공개입니다.</span></p>
+      <ul class="tools">
+        <li><b lang="en">Guitar tab extractor</b><b lang="ko">기타 악보 추출</b><span lang="en">Audio or a YouTube link in, tabs and chords out, all on my machine.</span><span lang="ko">음원이나 유튜브 링크를 넣으면 타브와 코드를 뽑아 줍니다. 전부 제 컴퓨터에서 돕니다.</span></li>
+        <li><b lang="en">My handwriting, rendered</b><b lang="ko">내 손글씨 재현</b><span lang="en">Glyphs traced from my own notes, so typed text comes out in my hand.</span><span lang="ko">제 필기에서 글자 윤곽을 따서, 입력한 글을 제 손글씨로 그려 냅니다.</span></li>
+      </ul>
     </div>
-  </section>
-
-  <section>
-    <h2><span lang="en">Safety rails on my own automation</span><span lang="ko">개인 자동화의 안전장치</span></h2>
-    <p class="sub"><span lang="en">AI agents and several bots run on a Mac mini at home. Before letting them do more, I made sure they could not do damage quietly.</span><span lang="ko">집의 맥 미니에서 AI 에이전트와 봇 여러 개가 돌아갑니다. 일을 더 맡기기 전에, 조용히 사고를 내지 못하게 하는 장치부터 만들었습니다.</span></p>
-    <ul class="rails">
-      <li><b lang="en">Three tiers of approval</b><b lang="ko">승인 3단계</b>
-        <span lang="en">Every command an agent runs is sorted into safe, needs my approval, or blocked, by one rules file shared by everything.</span><span lang="ko">에이전트가 실행하는 모든 명령을 안전·승인 필요·차단으로 판정하며, 판정 규칙은 한 파일에만 둡니다.</span></li>
-      <li><b lang="en">A snapshot before every change</b><b lang="ko">바꾸기 전에 스냅샷</b>
-        <span lang="en">Fully automatic mode exists only because files are snapshotted before they change, and one command rolls them back.</span><span lang="ko">완전 자동 모드는 파일을 바꾸기 전에 스냅샷을 뜨고 명령 하나로 되돌릴 수 있기 때문에 허용합니다.</span></li>
-      <li><b lang="en">Gates before restart</b><b lang="ko">재기동 전 게이트</b>
-        <span lang="en">Bot code restarts only after a regression gate, including tests that push real messages through handlers with outside calls sealed off.</span><span lang="ko">봇 코드는 회귀 테스트를 통과해야 재기동되며, 외부 호출을 막은 채 실제 메시지를 흘려 보는 테스트를 포함합니다.</span></li>
-      <li><b lang="en">No quiet baselines</b><b lang="ko">기준선은 사람이</b>
-        <span lang="en">Research repos never update their reference results automatically, only verified commits get pushed, and numbers an LLM writes are checked against the source in a second pass.</span><span lang="ko">연구 레포의 기준 결과는 자동으로 갱신하지 않고, 검증을 통과한 커밋만 푸시하며, LLM이 쓴 수치는 별도 호출로 원문과 대조합니다.</span></li>
-      <li><b lang="en">Read-only by default</b><b lang="ko">기본은 읽기 전용</b>
-        <span lang="en">The mail bot reads but never sends, calendar entries wait for a tap, and every web app's notifications have their own off switch.</span><span lang="ko">메일 봇은 읽기만 하고, 캘린더 등록은 버튼 승인을 거치며, 웹앱 알림은 앱마다 끄는 스위치가 있습니다.</span></li>
-      <li><b lang="en">Heartbeats and a map</b><b lang="ko">하트비트와 지도</b>
-        <span lang="en">Each bot writes a heartbeat so a dead thread restarts the process, and a checker compares the map of the whole setup with what is actually running.</span><span lang="ko">봇마다 하트비트를 남겨 죽은 스레드를 감지하면 프로세스를 재시작하고, 전체 구성 지도와 실제 환경이 어긋나면 검사기가 잡습니다.</span></li>
-    </ul>
-  </section>
-
-  <section>
-    <h2><span lang="en">Small tools</span><span lang="ko">작은 도구</span></h2>
-    <p class="sub"><span lang="en">Local only, not public.</span><span lang="ko">로컬에서만 쓰며 공개하지 않습니다.</span></p>
-    <ul class="tools">
-      <li><b><span lang="en">Guitar tab extractor.</span><span lang="ko">기타 악보 추출.</span></b> <span lang="en">Audio or a YouTube link in, tabs and chords out, all on my machine.</span><span lang="ko">음원이나 유튜브 링크를 넣으면 타브와 코드를 뽑아 줍니다. 전부 로컬에서 돕니다.</span></li>
-      <li><b><span lang="en">My handwriting, rendered.</span><span lang="ko">내 손글씨 재현.</span></b> <span lang="en">Traced from my own notes so typed text comes out in my hand.</span><span lang="ko">제 필기에서 글자 윤곽을 따서, 입력한 글을 제 손글씨로 그려 냅니다.</span></li>
-    </ul>
-  </section>
+  </div>
 
   <footer><a href="../"><span lang="en">Research, experience and CV</span><span lang="ko">연구·경력·이력서</span></a></footer>
 </div>
 
 <script>
+/* one list of apps feeds both the desktop index/projector and the phone strips */
+var APPS=[
+ {g:0,url:"../engineering-brain/",img:"eng_quiz_web",name:["Engineering Brain","Engineering Brain"],kind:["Web app","웹앱"],
+  d:["Poses an engineering dilemma with no right answer, then grades the reasoning you write in your own words.","정답이 없는 공학 딜레마를 내고, 직접 쓴 답의 사고 과정을 채점합니다."]},
+ {g:0,url:"../optimal-design-guide/",img:"optimal_design_guide",name:["Optimal Design Visual Guide","최적설계 시각 가이드"],kind:["Guide","가이드"],
+  d:["Design of experiments, surrogates, optimizers and reliability, each computed and drawn live in the browser.","실험계획·대리모델·최적화·신뢰성을 브라우저에서 바로 계산해 그림으로 보여 줍니다."]},
+ {g:0,url:"../news-literacy-lab/",img:"news_literacy_lab",name:["News Literacy Lab","뉴스 읽기 훈련소"],kind:["Web app","웹앱"],
+  d:["Paste a news article to see who has a stake, who gets quoted, and who is missing.","기사를 넣으면 누가 이해관계자이고, 누구 말이 인용되고, 누가 빠졌는지 보여 줍니다."]},
+ {g:0,url:"../emotion-quadrant/",img:"emotion_quadrant",name:["Emotion Quadrant","감정의 사분면"],kind:["Korean only","한국어"],
+  d:["Narrows 434 Korean emotion words in three steps until you can name what you feel.","한국어 감정 단어 434개를 세 단계로 좁혀, 지금 느끼는 감정에 이름을 붙입니다."]},
+ {g:0,url:"../living-paper/",img:"living_paper",name:["Living Paper","Living Paper"],kind:["Prototype","시제품"],
+  d:["The TeX-Corps team's prototype: a meeting assistant whose relay server only ever sees ciphertext.","TeX-Corps 팀 시제품입니다. 중계 서버가 암호문만 보는 회의 보조 도구입니다."]},
+ {g:0,url:"../stick-breaker-game/",img:"stick_breaker_game",name:["357 Stick Breaker","357 막대기 게임"],kind:["Game","게임"],
+  d:["A Nim-style game with rows of 3, 5 and 7 sticks, against the computer or a friend.","3·5·7개 막대 줄로 하는 님(Nim) 계열 게임입니다. 컴퓨터나 친구와 둘 수 있습니다."]},
+ {g:1,url:"../acoustic-harvester/",img:"acoustic_web",name:["Tune a noise harvester","소음 하베스터 튜닝"],kind:["Project","프로젝트"],
+  d:["Drag resonant wires across a noise spectrum and see whether your array holds up in 11 environments.","소음 스펙트럼 위에 공진 와이어를 놓고, 11개 환경에서 버티는지 확인합니다."]},
+ {g:1,url:"../divert-sim/",img:"missile_sim_web",name:["Intercept a dodging drone","회피하는 드론 요격"],kind:["Project","프로젝트"],
+  d:["Fly a side-thruster interceptor yourself, then compare four optimization methods on the same problem.","측면 추력기 요격기를 직접 조종하고, 같은 문제에서 최적화 기법 4종을 비교합니다."]},
+ {g:1,url:"../vpp-trade-guard/",img:"vpp_trade_guard",name:["VPP Trade-Guard","VPP Trade-Guard"],kind:["Case study","케이스 스터디"],
+  d:["The hackathon project as a case study, with a what-if slider running the real objective function.","해커톤 프로젝트 케이스 스터디입니다. 실제 목적함수로 조건을 바꿔 볼 수 있습니다."]}
+];
+var GROUPS=[["Web apps","웹앱"],["Projects you can play with","직접 만져 보는 프로젝트"]];
+function bi(p){return '<span lang="en">'+p[0]+'</span><span lang="ko">'+p[1]+'</span>'}
+function src(a){return "../assets/workshop/"+a.img+".jpg"}
+(function build(){
+  var idx='<div class="idx-col">', strip='';
+  GROUPS.forEach(function(g,gi){
+    idx+='<div class="group"><p class="glabel">'+bi(g)+'</p><ul class="idx">';
+    strip+='<div class="strip"><p class="glabel">'+bi(g)+'</p><div class="rail">';
+    APPS.forEach(function(a,i){ if(a.g!==gi) return;
+      idx+='<li><a href="'+a.url+'" target="_blank" rel="noopener" data-i="'+i+'"><span class="nm">'+bi(a.name)+'</span><span class="kind">'+bi(a.kind)+'</span></a></li>';
+      strip+='<a class="card" href="'+a.url+'" target="_blank" rel="noopener"><div class="screen"><img src="'+src(a)+'" alt="" width="960" height="600" loading="lazy"></div><h3>'+bi(a.name)+'</h3><p>'+bi(a.d)+'</p></a>';
+    });
+    idx+='</ul></div>'; strip+='</div></div>';
+  });
+  idx+='</div>';
+  var a0=APPS[0];
+  var proj='<div class="proj"><a class="screen" id="pshot" href="'+a0.url+'" target="_blank" rel="noopener"><img id="pimg" src="'+src(a0)+'" alt="" width="960" height="600"></a>'
+    +'<div class="cap"><div><h2 id="pname">'+bi(a0.name)+'</h2><p id="pdesc">'+bi(a0.d)+'</p></div>'
+    +'<a class="open" id="popen" href="'+a0.url+'" target="_blank" rel="noopener">'+bi(["Open","열기"])+'</a></div></div>';
+  document.getElementById("bench").innerHTML=idx+proj+strip;
+  /* preload the screens so switching is instant */
+  APPS.forEach(function(a){var im=new Image(); im.src=src(a)});
+  var links=[].slice.call(document.querySelectorAll(".idx a")), cur=-1;
+  function show(i){ if(i===cur) return; cur=i; var a=APPS[i], img=document.getElementById("pimg");
+    links.forEach(function(l){l.classList.toggle("on",+l.dataset.i===i)});
+    img.classList.add("fade");
+    setTimeout(function(){ img.src=src(a); img.classList.remove("fade"); },120);
+    document.getElementById("pname").innerHTML=bi(a.name);
+    document.getElementById("pdesc").innerHTML=bi(a.d);
+    document.getElementById("popen").href=a.url; document.getElementById("pshot").href=a.url;
+  }
+  links.forEach(function(l){ var i=+l.dataset.i;
+    l.addEventListener("mouseenter",function(){show(i)}); l.addEventListener("focus",function(){show(i)}); });
+  show(0);
+})();
 (function(){
   var root=document.documentElement, KEY="pf_lang";
   function set(l){
