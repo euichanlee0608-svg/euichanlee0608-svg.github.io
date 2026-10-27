@@ -156,54 +156,34 @@ footer{color:var(--ink3);font-size:14px;margin-top:36px}
 }
 @media (prefers-reduced-motion:reduce){.lang-thumb,.mark,.mark::before,.mark::after{transition:none}.js .pane.on{animation:none}}
 
-/* printing this page is the CV: a standard 2-page resume.
-   each entry prints as title / where / date + its "what I did" lines; prose, figures and limits stay on the web. */
-@page{size:A4;margin:13mm 15mm}
+/* printing = the academic CV block (#cv) only, standard graduate-school layout, 2 pages */
+#cv{display:none}
+@page{size:A4;margin:14mm 16mm}
 @media print{
-  :root{--bg:#fff;--surf:#fff;--ink:#000;--ink2:#1a1a1a;--ink3:#555;--line:#bbb}
-  html,body{background:#fff}
-  body{font:9.4pt/1.36 "IBM Plex Sans","IBM Plex Sans KR",Arial,sans-serif}
-  html[lang="ko"] body{font-family:"IBM Plex Sans KR","IBM Plex Sans",sans-serif;line-height:1.42}
-  .wrap{display:block;padding:0;max-width:none}
-  .side{position:static;margin-bottom:6pt;padding-bottom:5pt;border-bottom:1.2pt solid #000}
-  .name{display:inline;font:600 19pt/1.1 Newsreader,Georgia,serif}
-  .name-ko{display:inline;font-size:10pt;margin:0 0 0 6pt}
-  .aff{margin:2pt 0 1pt;font-size:9.4pt}
-  .links{display:flex;flex-wrap:wrap;gap:0 12pt;line-height:1.4;margin:0;font-size:9pt}
-  .links li:last-child{display:none}
-  .langbar,.toc,.cv,figure,footer,.ws-note,.mark,.lead,.pane-note,.uses,.gist{display:none!important}
-  main{display:flex;flex-direction:column}
-  #education{order:-3}
-  #research{order:-2}
-  #experience{order:-1}
-  #skills{order:1}
-  .js section#skills{margin-top:7pt}
-  .js .pane,.pane{display:block!important;animation:none!important}
-  section,.js section.pane{border:0;padding:0;margin:7pt 0 0}
-  h2,html[lang="ko"] h2{font:600 10.5pt/1.2 "IBM Plex Sans","IBM Plex Sans KR",sans-serif;letter-spacing:.02em;margin:0 0 3pt;padding-bottom:2pt;border-bottom:.6pt solid #000}
-  .entry,.entry:last-of-type{border:0;break-inside:avoid;margin:0 0 4pt}
-  h2,.subh{break-after:avoid}
-  details::details-content{content-visibility:visible!important;display:block!important}
-  summary{display:block;padding:0}
-  .top{display:flex;justify-content:space-between;gap:10pt}
-  h3,html[lang="ko"] h3{font:600 9.8pt/1.3 "IBM Plex Sans","IBM Plex Sans KR",sans-serif}
-  .when{font-size:8.8pt;color:#333}
-  .where{margin:0;font-size:8.8pt;font-style:italic;color:#333}
-  .entry:not(:has(.did)) .gist{display:block!important;margin:1pt 0 0;font-size:9pt;color:#1a1a1a}
-  .more,details[open] .more{display:block!important;height:auto!important;opacity:1!important;border:0;padding:0;margin:1pt 0 0;font-size:inherit;max-width:none}
-  .more > *:not(.did),.split > div > *:not(.did),.split figure{display:none!important}
-  .split{display:block}
-  .did{display:block;margin:0;padding:0;border:0}
-  .did b{display:none}
-  .did ul{display:block;padding-left:11pt!important}
-  .did li{list-style:disc;padding:0;font-size:9pt;color:#1a1a1a;margin:0!important}
-  .did li::before{display:none}
-  .plain li,.skills li{display:grid;grid-template-columns:7rem minmax(0,1fr);gap:8pt;padding:1.5pt 0;border:0!important;font-size:9pt}
-  .skills li{grid-template-columns:13rem minmax(0,1fr)}
-  .plain li > span:first-child,.skills li > span:first-child{font-size:9pt;color:#000;font-weight:500}
-  .skills .sk-head{display:none}
-  .subh{font:600 10.5pt/1.2 "IBM Plex Sans","IBM Plex Sans KR",sans-serif;letter-spacing:.02em;margin:0 0 3pt;padding-bottom:2pt;border-bottom:.6pt solid #000}
-  a{color:inherit;text-decoration:none}
+  html,body{background:#fff;color:#000}
+  .wrap{display:none!important}
+  #cv{display:block;font:9.5pt/1.38 "IBM Plex Sans","IBM Plex Sans KR",Arial,sans-serif;color:#000}
+  html[lang="ko"] #cv{font-family:"IBM Plex Sans KR","IBM Plex Sans",sans-serif;line-height:1.45}
+  .cv-head{text-align:center;margin-bottom:8pt}
+  .cv-name{font:600 20pt/1.1 Newsreader,Georgia,serif}
+  .cv-name span{font:400 11pt "IBM Plex Sans KR",sans-serif;margin-left:6pt}
+  html[lang="ko"] .cv-name span{display:inline}
+  .cv-contact{font-size:8.8pt;margin-top:3pt}
+  .cv-h{font:600 10.5pt/1.2 Newsreader,Georgia,serif;font-variant:small-caps;letter-spacing:.04em;margin:9pt 0 4pt;padding-bottom:2pt;border-bottom:.7pt solid #000;break-after:avoid}
+  html[lang="ko"] .cv-h{font:600 10pt/1.2 "IBM Plex Sans KR",sans-serif;font-variant:normal;letter-spacing:0}
+  .cv-p{margin:0}
+  .cv-e{margin:0 0 5pt;break-inside:avoid}
+  .cv-r{display:flex;justify-content:space-between;gap:12pt}
+  .cv-r > span{white-space:nowrap;flex:none}
+  .cv-r b{font-weight:600}
+  .cv-r i{font-style:italic}
+  html[lang="ko"] .cv-r i{font-style:normal;color:#333}
+  #cv ul{margin:1.5pt 0 0;padding-left:12pt}
+  #cv li{margin:0 0 1pt}
+  .cv-list{padding-left:12pt}
+  .cv-list li{break-inside:avoid}
+  .cv-skills{list-style:none;padding-left:0!important}
+  .cv-skills li{display:grid;grid-template-columns:5.5rem minmax(0,1fr);gap:8pt}
 }
 </style>
 </head>
@@ -482,28 +462,6 @@ footer{color:var(--ink3);font-size:14px;margin-top:36px}
       </div>
     </details>
 
-    <details class="entry">
-      <summary>
-        <div>
-          <div class="top"><h3><span lang="en">Surviving a rotor loss with an asymmetric drone layout</span><span lang="ko">비대칭 로터 배치로 모터 고장 견디기 (드론)</span></h3><span class="when">2026</span></div>
-          <p class="where"><span lang="en">Individual, simulation</span><span lang="ko">개인, 시뮬레이션</span></p>
-          <p class="gist"><span lang="en">A rotor layout that survives losing one motor, rebuilt in 6-DOF after the first model proved too optimistic.</span><span lang="ko">모터 하나를 잃어도 버티는 로터 배치를 찾고, 낙관적이던 첫 모델을 6자유도로 다시 만들었습니다.</span></p>
-          <p class="uses"><span lang="en">Monte Carlo search · 6-DOF flight dynamics · control allocation · model critique</span><span lang="ko">몬테카를로 탐색 · 6자유도 비행 동역학 · 제어 할당 · 모델 비판적 재검토</span></p>
-        </div>
-        <span class="mark" aria-hidden="true"></span>
-      </summary>
-      <div class="more">
-        <div class="did"><b lang="en">What I did</b><b lang="ko">한 일</b><ul lang="en"><li>Searched about 10⁸ rotor layouts</li><li>Allocated control to three motors by giving up yaw</li><li>Rebuilt an over-optimistic model in 6-DOF and re-ran it</li></ul><ul lang="ko"><li>로터 배치 약 10⁸개 탐색</li><li>요 제어를 포기하는 3모터 제어 할당</li><li>낙관적이던 모델을 6자유도로 재구축해 재계산</li></ul></div>
-        <p lang="en">A symmetric quadrotor that loses one motor has nothing left to cancel the opposite moment, so it falls. I wanted to know whether an asymmetric layout could survive that. A search over about 10⁸ layouts put the optimum at the incenter of the triangle formed by the remaining three rotors, and the damaged craft flies on three motors by giving up yaw control. My first model judged survival from attitude alone, which made the results look better than they were, so I rebuilt it in 6-DOF with altitude, impact impulse, the change in mass and inertia after the hit, and battery voltage sag. Under that model it still recovers from fragment strikes up to about 420-520 m/s on axis and 960-1,050 m/s at a 60° glancing angle.</p>
-        <p lang="ko">대칭형 쿼드로터는 모터 하나가 피격되면 반대쪽 모멘트를 상쇄할 힘이 없어 추락합니다. 로터를 비대칭으로 배치하면 이 상황을 견딜 수 있는지 확인하고 싶었습니다. 약 10⁸개 배치를 탐색한 결과 최적점은 남은 세 로터가 이루는 삼각형의 내심이었고, 손상된 기체는 요 제어를 포기한 채 모터 3개로 비행합니다. 자세만 보고 생존을 판정한 첫 모델은 결과를 실제보다 좋게 보여 줬기 때문에, 고도·충격량·피격 후 질량과 관성 변화·배터리 전압 강하를 넣은 6자유도 모델로 다시 만들었습니다. 이 모델에서도 축 방향 초속 약 420~520 m, 60° 빗맞음 약 960~1,050 m의 파편 충돌까지 회복했습니다.</p>
-        <figure>
-          <img src="assets/figures/drone_survival_boundary.png" alt="Survivable fragment speed by strike direction and angle." width="3900" height="1800" loading="lazy">
-          <figcaption><span lang="en"><b>Fig. 4.</b> Fragment speed the craft survives after losing one rotor, by strike direction and angle (6-DOF).</span><span lang="ko"><b>그림 4.</b> 로터 하나를 잃은 뒤 견딜 수 있는 파편 속도(충돌 방향·각도별, 6자유도).</span></figcaption>
-        </figure>
-        <p class="limit" lang="en"><b>Limits</b>Simulation thresholds only. Nothing here has flown.</p>
-        <p class="limit" lang="ko"><b>한계</b>시뮬레이션 결과이며, 실제 기체로는 검증하지 않았습니다.</p>
-      </div>
-    </details>
   </section>
 
   <section id="education" class="pane">
@@ -521,9 +479,9 @@ footer{color:var(--ink3);font-size:14px;margin-top:36px}
       <li class="sk-head"><span lang="en">Skill</span><span lang="ko">기술</span><span><span lang="en">Where I used it</span><span lang="ko">쓴 곳</span></span></li>
       <li><span><span lang="en">Bayesian optimization, GP regression</span><span lang="ko">베이지안 최적화, GP 회귀</span></span><span><span lang="en">Sequential optimization review, seqopt, PRAXIS drone energy model</span><span lang="ko">순차 최적화 도입 검토, seqopt, PRAXIS 드론 에너지 모델</span></span></li>
       <li><span><span lang="en">Reliability and RBDO (FORM, SORA)</span><span lang="ko">신뢰성·RBDO (FORM, SORA)</span></span><span><span lang="en">NumeReal surrogate study, PRAXIS payload limit</span><span lang="ko">NumeReal 대리모델 실험, PRAXIS 적재 상한</span></span></li>
-      <li><span><span lang="en">Monte Carlo simulation</span><span lang="ko">몬테카를로 시뮬레이션</span></span><span><span lang="en">Drone layout search, PRAXIS failure-rate check, acoustic harvester</span><span lang="ko">드론 배치 탐색, PRAXIS 사고율 검증, 음향 하베스터</span></span></li>
+      <li><span><span lang="en">Monte Carlo simulation</span><span lang="ko">몬테카를로 시뮬레이션</span></span><span><span lang="en">PRAXIS failure-rate check, acoustic harvester</span><span lang="ko">PRAXIS 사고율 검증, 음향 하베스터</span></span></li>
       <li><span><span lang="en">DFT (Quantum ESPRESSO)</span><span lang="ko">DFT (Quantum ESPRESSO)</span></span><span><span lang="en">rGO humidity sensor calculations</span><span lang="ko">rGO 습도 센서 계산</span></span></li>
-      <li><span><span lang="en">Dynamics and control</span><span lang="ko">동역학·제어</span></span><span><span lang="en">6-DOF drone model, climbing robot control and power</span><span lang="ko">드론 6자유도 모델, 등반 로봇 제어·전력</span></span></li>
+      <li><span><span lang="en">Control and power electronics</span><span lang="ko">제어·전력 회로</span></span><span><span lang="en">Climbing robot: motor synchronization, power stabilization</span><span lang="ko">등반 로봇: 모터 동기화, 전원 안정화</span></span></li>
       <li><span><span lang="en">LLM evaluation and verification</span><span lang="ko">LLM 평가·검증</span></span><span><span lang="en">KU AI Forum poster, hackathon check loop</span><span lang="ko">KU AI 포럼 포스터, 해커톤 검증 루프</span></span></li>
       <li><span><span lang="en">Commercial CAE and optimization tools</span><span lang="ko">상용 CAE·최적화 도구</span></span><span><span lang="en">HyperStudy, optiSLang, PIAnO, HyperMesh PhysicsAI (NumeReal)</span><span lang="ko">HyperStudy, optiSLang, PIAnO, HyperMesh PhysicsAI (NumeReal)</span></span></li>
       <li><span><span lang="en">Programming</span><span lang="ko">프로그래밍</span></span><span><span lang="en">Python (scikit-learn, PySide6, NumPy), JavaScript, Git and CI</span><span lang="ko">Python (scikit-learn, PySide6, NumPy), JavaScript, Git·CI</span></span></li>
@@ -532,6 +490,96 @@ footer{color:var(--ink3);font-size:14px;margin-top:36px}
 
   <footer>Euichan Lee</footer>
 </main>
+</div>
+
+<!-- printing = this academic CV only (graduate-school layout). the page above stays the web version.
+     facts come from ~/job_apply/20_이력원장_v2.0.md; run check_ledger.py after editing. -->
+<div id="cv" aria-hidden="true">
+  <header class="cv-head">
+    <div class="cv-name">Euichan Lee <span lang="ko">이의찬</span></div>
+    <div class="cv-contact">leechan0608@korea.ac.kr · euichanlee0608-svg.github.io<br>github.com/euichanlee0608-svg · linkedin.com/in/euichanlee0608-svg</div>
+  </header>
+
+  <h2 class="cv-h"><span lang="en">Research Interests</span><span lang="ko">연구 관심</span></h2>
+  <p class="cv-p"><span lang="en">Sequential and Bayesian optimization for expensive experiments and simulations; when surrogate models can be trusted, and reliability-based design; first-principles modeling of functional materials.</span><span lang="ko">비용이 큰 실험·해석을 위한 순차·베이지안 최적화, 대리모델을 믿을 수 있는 조건과 신뢰성 기반 설계, 기능성 소재의 제일원리 모델링.</span></p>
+
+  <h2 class="cv-h"><span lang="en">Education</span><span lang="ko">학력</span></h2>
+  <div class="cv-e">
+    <div class="cv-r"><b><span lang="en">Korea University</span><span lang="ko">고려대학교</span></b><span><span lang="en">Seoul, Korea</span><span lang="ko">서울</span></span></div>
+    <div class="cv-r"><i><span lang="en">B.S. in Mechanical Engineering; secondary major in Applied AI (since Mar 2026)</span><span lang="ko">기계공학부 학사과정, 인공지능응용 융합전공(2026.03–)</span></i><span><span lang="en">Mar 2022 - present</span><span lang="ko">2022.03 – 현재</span></span></div>
+    <ul>
+      <li><span lang="en">GPA 3.86/4.5 (3.98/4.5 over the last three semesters). 24 credits of major courses taught in English.</span><span lang="ko">평점 3.86/4.5 (최근 세 학기 3.98/4.5). 영강 전공 24학점 이수.</span></li>
+      <li><span lang="en">Leave of absence Fall 2022 - Fall 2024 for military service, Republic of Korea Army (Nov 2022 - May 2024).</span><span lang="ko">대한민국 육군 복무(2022.11 – 2024.05)로 2022년 2학기 – 2024년 2학기 휴학.</span></li>
+    </ul>
+  </div>
+
+  <h2 class="cv-h"><span lang="en">Research Experience</span><span lang="ko">연구 경력</span></h2>
+  <div class="cv-e">
+    <div class="cv-r"><b><span lang="en">Undergraduate Researcher, Materials Innovation Lab, Korea University</span><span lang="ko">고려대학교 Materials Innovation Lab 학부연구생</span></b><span><span lang="en">Sep 2026 - present</span><span lang="ko">2026.09 – 현재</span></span></div>
+    <div class="cv-r"><i><span lang="en">Advisor: Prof. Byungseok Seo</span><span lang="ko">지도교수: 서병석 교수</span></i><span></span></div>
+    <ul>
+      <li><span lang="en">DFT study (Quantum ESPRESSO, PBE+D3) of water adsorption on graphene, epoxy, hydroxyl and carboxyl sites, to identify which oxygen group drives the lab's EATS rGO humidity sensor. In progress.</span><span lang="ko">연구실 EATS rGO 습도 센서의 신호를 주도하는 산소 작용기를 찾기 위해, 그래핀·에폭시·하이드록시·카복실 기판의 물 흡착을 DFT(Quantum ESPRESSO, PBE+D3)로 계산 중.</span></li>
+      <li><span lang="en">Fixed three bugs in the structure-generation code; chose a 3×3 cell after measuring cost (5×5: 18.4 GB, about 15 min per SCF cycle).</span><span lang="ko">구조 생성 코드의 버그 3개 수정, 계산 비용 실측(5×5 셀: 18.4 GB, SCF 1회 약 15분) 후 3×3 셀 채택.</span></li>
+    </ul>
+  </div>
+  <div class="cv-e">
+    <div class="cv-r"><b><span lang="en">Independent Study: Sequential Optimization for Device Experiments</span><span lang="ko">개인 연구: 소자 실험의 순차 최적화 도입 검토</span></b><span><span lang="en">Aug 2026</span><span lang="ko">2026.08</span></span></div>
+    <div class="cv-r"><i><span lang="en">21-page report to the Materials Innovation Lab</span><span lang="ko">Materials Innovation Lab 보고서(21쪽)</span></i><span></span></div>
+    <ul>
+      <li><span lang="en">Replayed three published datasets with unmeasured values sealed off; sequential runs matched the 40-run random baseline in 22, 20 and 34 runs, but lost to random under budgets of 30 or fewer on two datasets.</span><span lang="ko">공개 논문 데이터 3종을 정답이 가려진 상태로 재현. 무작위 40회 수준에 22·20·34회 만에 도달했으나, 예산 30회 이하에서는 2종에서 무작위보다 불리.</span></li>
+      <li><span lang="en">Derived four entry conditions; the lab's own data failed them (discriminability 1.03, 95% noise share), so recommended 30 repeat measurements before adoption, with a stated rejection criterion.</span><span lang="ko">도입 요건 4가지 도출. 연구실 데이터는 미달(판별력 1.03, 잡음 비중 95%)이라 반복 측정 30회를 선행 조건으로 권고하고 기각 조건 명시.</span></li>
+    </ul>
+  </div>
+  <div class="cv-e">
+    <div class="cv-r"><b><span lang="en">Independent Study: Transferring Engineering Judgment to a Local LLM</span><span lang="ko">개인 연구: 엔지니어의 판단을 로컬 LLM에 이식할 수 있는가</span></b><span>2026</span></div>
+    <ul>
+      <li><span lang="en">Compared Gemini 3.5 Flash and a local EXAONE 3.5 7.8B on ten of my own decision records with generation and grading separated. Instruction alone raised decision format to 100% / 95.8%; agreement with my actual choices rose only on the large model (0% to 30%, n = 10, not significant).</span><span lang="ko">제 판단 기록 10건으로 Gemini 3.5 Flash와 로컬 EXAONE 3.5 7.8B를 비교(생성·채점 분리). 판단 형식은 지시만으로 100%/95.8%, 실제 선택과의 일치는 대형 모델에서만 0→30%(n=10, 유의하지 않음).</span></li>
+    </ul>
+  </div>
+
+  <h2 class="cv-h"><span lang="en">Presentations</span><span lang="ko">발표</span></h2>
+  <ul class="cv-list">
+    <li><span lang="en"><b>E. Lee</b>, "Can an engineer's tacit judgment be transferred to a small local LLM?" (title translated from Korean). Student poster, 2026 KU AI Forum, Korea University. Supported by HUSS, National Research Foundation of Korea.</span><span lang="ko"><b>이의찬</b>, 「외부로 내보낼 수 없는 엔지니어의 암묵지, 로컬 소형 LLM에 이식할 수 있는가」, 2026 KU AI 포럼 학생 포스터, 고려대학교. 인문사회디지털융합인재양성사업단·한국연구재단 지원.</span></li>
+  </ul>
+
+  <h2 class="cv-h"><span lang="en">Experience</span><span lang="ko">경력</span></h2>
+  <div class="cv-e">
+    <div class="cv-r"><b><span lang="en">Design Optimization Intern, NumeReal</span><span lang="ko">NumeReal 설계최적화 인턴</span></b><span><span lang="en">Aug 2026 - Jan 2027 (expected)</span><span lang="ko">2026.08 – 2027.01 (예정)</span></span></div>
+    <ul>
+      <li><span lang="en">Benchmarking Altair HyperStudy, Ansys optiSLang, PIDOTECH PIAnO and Altair HyperMesh PhysicsAI.</span><span lang="ko">Altair HyperStudy, Ansys optiSLang, 피도텍 PIAnO, Altair HyperMesh PhysicsAI 벤치마킹.</span></li>
+      <li><span lang="en">Independently automated 1,420 HyperStudy tutorial runs through the Python API; a surrogate optimum reported as 95% reliable measured 1.3% on the real solver.</span><span lang="ko">개인 수행으로 HyperStudy 튜토리얼 1,420건을 Python API로 자동 실행. 대리모델이 '신뢰도 95%'로 보고한 해가 실제 solver에서 1.3%임을 확인.</span></li>
+    </ul>
+  </div>
+  <div class="cv-e">
+    <div class="cv-r"><b><span lang="en">Team Member, Next-Generation Engineer Program (PRAXIS)</span><span lang="ko">2026 차세대 공학자 양성사업(PRAXIS 사업단) 팀원</span></b><span><span lang="en">Oct 2026 - Feb 2027</span><span lang="ko">2026.10 – 2027.02</span></span></div>
+    <ul>
+      <li><span lang="en">Drone safety constraint for a subway, ground and drone logistics optimization project: GP-corrected energy model (209 public flights), FORM payload limit, Monte Carlo failure-rate check. In progress.</span><span lang="ko">지하철·지상·드론 복합 물류 최적화 과제의 드론 안전 제약 담당: 비행 기록 209건 기반 GP 에너지 보정, FORM 적재 상한, 몬테카를로 사고율 검증(진행 중).</span></li>
+    </ul>
+  </div>
+
+  <h2 class="cv-h"><span lang="en">Honors and Programs</span><span lang="ko">수상·교육</span></h2>
+  <div class="cv-e">
+    <div class="cv-r"><b><span lang="en">Gold Prize (1st of 23 teams), Korea University × Upstage Energy AI Hackathon</span><span lang="ko">고려대학교 × Upstage 에너지 AI 해커톤 금상(23팀 중 1위)</span></b><span><span lang="en">Jul 2026</span><span lang="ko">2026.07</span></span></div>
+    <ul><li><span lang="en">Team lead (3). Risk-aware bidding system where the LLM only proposes and code computes and checks.</span><span lang="ko">3인 팀 팀장. LLM은 제안만 하고 계산·검증은 코드가 맡는 고장 리스크 반영 입찰 시스템.</span></li></ul>
+  </div>
+  <div class="cv-e">
+    <div class="cv-r"><b><span lang="en">TeX-Corps (Korea's I-Corps), Ministry of Science and ICT</span><span lang="ko">2026 공공기술기반 시장연계 창업탐색 지원사업(TeX-Corps), 과학기술정보통신부</span></b><span><span lang="en">Completed Jul 2026</span><span lang="ko">2026.07 수료</span></span></div>
+    <ul><li><span lang="en">On-site training at UC Berkeley; 70 customer interviews; led the business model canvas and pitch deck.</span><span lang="ko">UC Berkeley 현지 교육 포함. 고객 인터뷰 70건, 비즈니스 모델 캔버스·피치덱 총괄.</span></li></ul>
+  </div>
+
+  <h2 class="cv-h"><span lang="en">Selected Projects</span><span lang="ko">주요 프로젝트</span></h2>
+  <ul class="cv-list">
+    <li><span lang="en"><b>seqopt</b> (2026). Open-source desktop app for sequential experiment design that withholds suggestions when data fails the entry conditions. Python, PySide6, scikit-learn, CI.</span><span lang="ko"><b>seqopt</b> (2026). 데이터가 도입 요건을 못 갖추면 추천을 막는 순차 실험설계 데스크톱 앱(공개). Python, PySide6, scikit-learn, CI.</span></li>
+    <li><span lang="en"><b>Broadband acoustic energy harvesting</b> (2026, simulation). Length-graded piezoelectric wire array; lower power variation across 11 measured noise environments than a narrowband design (CoV 21% vs 29%).</span><span lang="ko"><b>광대역 음향 에너지 하베스팅</b> (2026, 시뮬레이션). 길이 분포 압전 와이어 배열, 실측 소음 환경 11종에서 협대역 설계보다 출력 편차 감소(변동계수 21% 대 29%).</span></li>
+    <li><span lang="en"><b>Autonomous pole-climbing robot</b> (2026, team of 4, built). Owned control and power: synchronized two mismatched motors by PWM calculation; 11,000 µF bank against stall brownouts.</span><span lang="ko"><b>자율 기둥 등반 로봇</b> (2026, 4인 팀, 실물 제작). 제어·전력 담당: 사양이 다른 두 모터를 PWM 계산으로 동기화, 11,000 µF 커패시터 뱅크로 전압 강하 방지.</span></li>
+  </ul>
+
+  <h2 class="cv-h"><span lang="en">Skills</span><span lang="ko">기술</span></h2>
+  <ul class="cv-list cv-skills">
+    <li><b><span lang="en">Methods</span><span lang="ko">방법</span></b><span><span lang="en">Bayesian optimization, Gaussian process regression, RBDO and FORM, Monte Carlo simulation, DFT, design of experiments</span><span lang="ko">베이지안 최적화, 가우시안 프로세스 회귀, RBDO·FORM, 몬테카를로 시뮬레이션, DFT, 실험계획법</span></span></li>
+    <li><b><span lang="en">Software</span><span lang="ko">소프트웨어</span></b><span>Python (NumPy, scikit-learn, PySide6), Quantum ESPRESSO, Altair HyperStudy, HyperMesh, Ansys optiSLang, PIAnO, Git</span></li>
+    <li><b><span lang="en">Languages</span><span lang="ko">언어</span></b><span><span lang="en">Korean (native), English (major courses taught in English)</span><span lang="ko">한국어(모국어), 영어(영강 전공 수강)</span></span></li>
+  </ul>
 </div>
 
 <script>
