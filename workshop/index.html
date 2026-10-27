@@ -238,8 +238,17 @@ function src(a){return "../assets/workshop/"+a.img+".jpg"}
     } else if (location.search.indexOf('owner=1') !== -1) {
       localStorage.setItem('__is_owner__', '1');
     } else if (localStorage.getItem('__is_owner__') !== '1' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
-      var im = new Image();
-      im.src = WEBAPP_URL + '?t=pv&s='+encodeURIComponent('portfolio')+'&p='+encodeURIComponent(location.pathname+location.hash)+'&r='+encodeURIComponent(document.referrer||'direct')+'&v='+encodeURIComponent((function(){try{var k='__vid__',v=localStorage.getItem(k);if(!v){v=Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem(k,v);}return v;}catch(e){return'';}})());
+      var vid='';
+      try{ vid=localStorage.getItem('__vid__')||''; if(!vid){ vid=Math.random().toString(36).slice(2)+Date.now().toString(36); localStorage.setItem('__vid__',vid); } }catch(e){}
+      var seen={};
+      /* 방문(t=pv)은 시트에 쌓인다. 탭 전환도 같은 경로로 한 세션에 한 번씩 */
+      window.__pv=function(path){ if(seen[path]) return; seen[path]=1;
+        var im=new Image(); im.src=WEBAPP_URL+'?t=pv&s='+encodeURIComponent('portfolio')+'&p='+encodeURIComponent(path)+'&r='+encodeURIComponent(document.referrer||'direct')+'&v='+encodeURIComponent(vid); };
+      window.__pv(location.pathname+location.hash);
+      /* 방문 알림(2026-10-27 사용자 요청): 한 세션(탭)에 한 번만, 첫 페이지에서. 끄기는 COT봇 /webapp_kill */
+      try{ if(!sessionStorage.getItem('pf_visit_told')){ sessionStorage.setItem('pf_visit_told','1');
+        var ref='직접'; if(document.referrer){ ref=document.referrer; try{ ref=new URL(document.referrer).hostname }catch(e){} }
+        var a=new Image(); a.src=WEBAPP_URL+'?t=act&s='+encodeURIComponent('portfolio')+'&m='+encodeURIComponent('\uD83D\uDC40 방문 — Workshop · 유입: '+ref+' · '+(navigator.language||'')+(/Mobi/.test(navigator.userAgent)?' · 폰':' · 컴퓨터')); } }catch(e){}
     }
   } catch (e) {}
 })();
