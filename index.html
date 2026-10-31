@@ -2,6 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>
+/* 임시(2026-10-31 20:30 KST부터 24시간): 명함 QR → Chance's Tales 로 보낸다. 기한이 지나면 아무 일도 안 한다 — 지울 때 이 블록만.
+   포트폴리오를 보려면 ?stay=1 */
+if (Date.now() < Date.parse('2026-11-01T20:30:00+09:00') && !/[?&]stay=1/.test(location.search))
+  location.replace('https://euichanlee0608-svg.github.io/global-footnotes/');
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Euichan Lee</title>
 <meta name="description" content="Euichan Lee, mechanical engineering undergraduate at Korea University. DFT, sequential optimization, reliability-based design, and the limits of each result.">
