@@ -23,7 +23,7 @@ if (Date.now() < Date.parse('2026-11-01T20:30:00+09:00') && !/[?&]stay=1/.test(l
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://euichanlee0608-svg.github.io/assets/og-card.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%231f3a5f'/><text x='16' y='22' font-size='14' font-family='Georgia,serif' fill='white' text-anchor='middle'>EL</text></svg>">
-<script>document.documentElement.classList.add("js")</script>
+<script>document.documentElement.classList.add("js","no-cv")</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
@@ -56,6 +56,24 @@ a:hover{text-decoration-thickness:2px}
 .cv{font:inherit;font-size:15px;color:var(--ink);background:none;border:1px solid var(--ink);padding:9px 16px;cursor:pointer;min-height:44px;white-space:nowrap}
 .cv:hover{background:var(--ink);color:var(--bg)}
 
+.contact-btn{font:inherit;font-size:15px;color:var(--acc);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+dialog#contact{border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:26px 26px 20px;width:min(460px,calc(100vw - 32px));box-shadow:0 24px 60px -20px rgba(30,20,10,.35)}
+dialog#contact::backdrop{background:rgba(20,18,16,.38)}
+#ct-form h2{font:500 26px/1.2 Newsreader,Georgia,serif;margin:0 0 6px}
+html[lang="ko"] #ct-form h2{font:600 20px/1.3 "IBM Plex Sans KR",sans-serif}
+.ct-note{color:var(--ink2);font-size:14.5px;margin:0 0 16px}
+#ct-form label{display:block;font-size:13.5px;color:var(--ink2);margin-bottom:12px}
+#ct-form input,#ct-form textarea{display:block;width:100%;margin-top:4px;font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);padding:9px 10px;border-radius:0}
+#ct-form input:focus,#ct-form textarea:focus{outline:2px solid var(--acc);outline-offset:-1px;border-color:transparent}
+#ct-form textarea{resize:vertical;min-height:110px}
+#ct-form .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.ct-msg{min-height:1.4em;font-size:14px;margin:0 0 10px;color:var(--ink2)}
+.ct-msg.err{color:#a3361f}
+.ct-row{display:flex;justify-content:flex-end;gap:10px}
+.ct-row button{font:inherit;font-size:15px;min-height:44px;padding:0 18px;cursor:pointer}
+.ct-cancel{background:none;border:1px solid var(--line);color:var(--ink2)}
+.ct-send{background:var(--ink);color:var(--bg);border:1px solid var(--ink)}
+.ct-send[disabled]{opacity:.6;cursor:progress}
 /* language toggle (recipe: lang-segmented-slider) */
 .langbar{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;padding:3px;margin-bottom:28px;background:rgba(118,120,128,.12);border-radius:10px;user-select:none;-webkit-tap-highlight-color:transparent}
 .lang-thumb{position:absolute;top:3px;left:3px;width:calc(50% - 3px);height:calc(100% - 6px);background:var(--bg);border-radius:8px;box-shadow:0 1px 1px rgba(40,44,52,.06),0 3px 8px -2px rgba(40,44,52,.2);transition:transform .38s cubic-bezier(.32,.72,0,1)}
@@ -168,6 +186,8 @@ footer{color:var(--ink3);font-size:14px;margin-top:36px}
 @media print{
   html,body{background:#fff;color:#000}
   .wrap{display:none!important}
+  html.no-cv #cv{display:none!important}
+  html.no-cv body::before{content:"CV available on request via the contact form at euichanlee0608-svg.github.io";display:block;font:11pt sans-serif;padding:20mm 0}
   #cv{display:block;font:9.5pt/1.38 "IBM Plex Sans","IBM Plex Sans KR",Arial,sans-serif;color:#000}
   html[lang="ko"] #cv{font-family:"IBM Plex Sans KR","IBM Plex Sans",sans-serif;line-height:1.45}
   .cv-head{text-align:center;margin-bottom:8pt}
@@ -204,9 +224,11 @@ footer{color:var(--ink3);font-size:14px;margin-top:36px}
     <span lang="ko">고려대학교 기계공학부<br>인공지능응용 융합전공</span>
   </p>
   <ul class="links">
-    <li><a href="mailto:leechan0608@korea.ac.kr">leechan0608@korea.ac.kr</a></li>
-    <li><a href="https://github.com/euichanlee0608-svg" target="_blank" rel="noopener">GitHub</a></li>
-    <li><a href="https://www.linkedin.com/in/euichanlee0608-svg" target="_blank" rel="noopener">LinkedIn</a></li>
+    <!-- 이메일·GitHub·LinkedIn 은 소스에 두지 않는다. 켜진 것만 pf-profile 에서 받아 채운다(COT봇 /pf_privacy) -->
+    <li id="pf-email" hidden></li>
+    <li id="pf-github" hidden></li>
+    <li id="pf-linkedin" hidden></li>
+    <li><button class="contact-btn" type="button" data-open-contact><span lang="en">Get in touch</span><span lang="ko">연락하기</span></button></li>
     <li><a href="workshop/">Workshop</a> <span class="ws-note"><span lang="en">(side projects)</span><span lang="ko">(사이드 프로젝트)</span></span></li>
   </ul>
   <div class="langbar" role="group" aria-label="Language"><span class="lang-thumb"></span>
@@ -218,7 +240,7 @@ footer{color:var(--ink3);font-size:14px;margin-top:36px}
     <li><a href="#projects"><span lang="en">Projects</span><span lang="ko">프로젝트</span></a></li>
     <li><a href="#education"><span lang="en">Education</span><span lang="ko">학력·기술</span></a></li>
   </ul>
-  <button class="cv" type="button" onclick="cvPDF()"><span lang="en">Save as PDF CV</span><span lang="ko">이력서 PDF 저장</span></button>
+  <button class="cv" type="button" onclick="cvPDF()" hidden><span lang="en">Save as PDF CV</span><span lang="ko">이력서 PDF 저장</span></button>
 </aside>
 
 <main>
@@ -412,8 +434,8 @@ footer{color:var(--ink3);font-size:14px;margin-top:36px}
       </summary>
       <div class="more">
         <div class="did"><b lang="en">What I did</b><b lang="ko">한 일</b><ul lang="en"><li>Built the GUI, model and checks alone</li><li>Made the refusal part of the code's return types, not just the UI</li><li>Shipped a Windows build that is tested before it is built</li></ul><ul lang="ko"><li>GUI·모델·검사를 단독 개발</li><li>추천 거부를 화면이 아니라 코드 반환 타입으로 강제</li><li>테스트를 통과해야 빌드되는 윈도우 배포</li></ul></div>
-        <p lang="en">Uses a Gaussian process to suggest the next condition, and withholds the suggestion when the data fails the four entry conditions from the sequential optimization review (Research tab). Windows build through CI. Open source, not in use in the lab. <a href="https://github.com/euichanlee0608-svg/seqopt" target="_blank" rel="noopener">Repository</a></p>
-        <p lang="ko">가우시안 프로세스로 다음 조건을 추천하되, 데이터가 순차 최적화 도입 검토(연구 탭)에서 정한 요건 4가지를 통과하지 못하면 추천하지 않습니다. CI로 윈도우 실행파일을 만듭니다. 공개 레포이며, 연구실에서 실제로 쓰이고 있지는 않습니다. <a href="https://github.com/euichanlee0608-svg/seqopt" target="_blank" rel="noopener">레포</a></p>
+        <p lang="en">Uses a Gaussian process to suggest the next condition, and withholds the suggestion when the data fails the four entry conditions from the sequential optimization review (Research tab). Windows build through CI. Open source, not in use in the lab. <a class="needs-github" hidden href="https://github.com/euichanlee0608-svg/seqopt" target="_blank" rel="noopener">Repository</a></p>
+        <p lang="ko">가우시안 프로세스로 다음 조건을 추천하되, 데이터가 순차 최적화 도입 검토(연구 탭)에서 정한 요건 4가지를 통과하지 못하면 추천하지 않습니다. CI로 윈도우 실행파일을 만듭니다. 공개 레포이며, 연구실에서 실제로 쓰이고 있지는 않습니다. <a class="needs-github" hidden href="https://github.com/euichanlee0608-svg/seqopt" target="_blank" rel="noopener">레포</a></p>
       </div>
     </details>
 
@@ -498,12 +520,28 @@ footer{color:var(--ink3);font-size:14px;margin-top:36px}
 </main>
 </div>
 
+<dialog id="contact" aria-labelledby="ct-title">
+  <form id="ct-form" novalidate>
+    <h2 id="ct-title"><span lang="en">Get in touch</span><span lang="ko">연락하기</span></h2>
+    <p class="ct-note"><span lang="en">Leave your email and a short note. I read every message and reply by email.</span><span lang="ko">메일 주소와 짧은 메시지를 남겨 주세요. 모두 읽고 메일로 답장드립니다.</span></p>
+    <label><span lang="en">Your email</span><span lang="ko">메일 주소</span><input name="email" type="email" required autocomplete="email" maxlength="254"></label>
+    <label><span lang="en">Name and affiliation (optional)</span><span lang="ko">이름·소속 (선택)</span><input name="name" type="text" autocomplete="name" maxlength="120"></label>
+    <label><span lang="en">Message</span><span lang="ko">메시지</span><textarea name="message" rows="5" required maxlength="2000"></textarea></label>
+    <label class="hp" aria-hidden="true">Website<input name="hp" type="text" tabindex="-1" autocomplete="off"></label>
+    <p class="ct-msg" id="ct-msg" role="status" aria-live="polite"></p>
+    <div class="ct-row">
+      <button type="button" class="ct-cancel" data-close-contact><span lang="en">Close</span><span lang="ko">닫기</span></button>
+      <button type="submit" class="ct-send"><span lang="en">Send</span><span lang="ko">보내기</span></button>
+    </div>
+  </form>
+</dialog>
+
 <!-- printing = this academic CV only (graduate-school layout). the page above stays the web version.
      facts come from ~/job_apply/20_이력원장_v2.0.md; run check_ledger.py after editing. -->
 <div id="cv" aria-hidden="true">
   <header class="cv-head">
     <div class="cv-name">Euichan Lee <span lang="ko">이의찬</span></div>
-    <div class="cv-contact">leechan0608@korea.ac.kr · euichanlee0608-svg.github.io<br>github.com/euichanlee0608-svg · linkedin.com/in/euichanlee0608-svg</div>
+    <div class="cv-contact" id="cv-contact">euichanlee0608-svg.github.io</div>
   </header>
 
   <h2 class="cv-h"><span lang="en">Research Interests</span><span lang="ko">연구 관심</span></h2>
@@ -646,6 +684,50 @@ function cvPDF(){
   try{ if(window.__act) window.__act("📄 포트폴리오(메인) — 이력서 PDF 저장 시도 (" + (document.documentElement.lang==="ko"?"KO":"EN") + ") · 유입: " + (document.referrer||"direct")); }catch(e){}
   window.print();
 }
+</script>
+<script>
+/* 개인정보는 기본 숨김(익명). 켜진 항목만 서버에서 받아 채운다 — COT봇 /pf_privacy 가 스위치.
+   방문자는 대신 연락 폼으로 메일을 남긴다(pf-profile contact → 저장 + COT봇 알림). */
+(function(){
+  var FN="https://kjlknxwzpmdzawwrurva.supabase.co/functions/v1/pf-profile", root=document.documentElement;
+  function call(body,ms){ return fetch(FN,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body),signal:AbortSignal.timeout?AbortSignal.timeout(ms):undefined}); }
+  function li(id,html){ var el=document.getElementById(id); if(el){ el.innerHTML=html; el.hidden=false; } }
+  call({action:"get"},8000).then(function(r){return r.json()}).then(function(d){
+    var v=d.values||{}, sh=d.show||{}, cv=[];
+    if(v.email){ li("pf-email",'<a href="mailto:'+v.email+'">'+v.email+'</a>'); cv.push(v.email); }
+    if(v.github){ li("pf-github",'<a href="'+v.github+'" target="_blank" rel="noopener">GitHub</a>'); cv.push(v.github.replace(/^https?:\/\//,"")); document.querySelectorAll(".needs-github").forEach(function(a){a.hidden=false}); }
+    if(v.linkedin){ li("pf-linkedin",'<a href="'+v.linkedin+'" target="_blank" rel="noopener">LinkedIn</a>'); cv.push(v.linkedin.replace(/^https?:\/\/(www\.)?/,"")); }
+    var cc=document.getElementById("cv-contact"); if(cc) cc.textContent=["euichanlee0608-svg.github.io"].concat(cv).join(" · ");
+    if(sh.cv){ root.classList.remove("no-cv"); var b=document.querySelector(".cv"); if(b) b.hidden=false; }
+  }).catch(function(e){ console.warn("pf-profile get 실패 — 익명 상태로 둔다", e); });
+
+  var dlg=document.getElementById("contact"), form=document.getElementById("ct-form"), msg=document.getElementById("ct-msg"), send=form.querySelector(".ct-send");
+  var T={en:{sending:"Sending…",slow:"Still sending. No need to press again.",ok:"Sent. I will reply to your email.",email:"Please check the email address.",short:"Please write a little more.",long:"The message is too long (2,000 characters max).",busy:"Too many messages today. Please try again tomorrow.",limit:"You have already sent a few today. I will get back to you.",net:"Could not connect. Your text is kept; please try again.",fail:"Something went wrong on the server. Your text is kept; please try again shortly."},
+         ko:{sending:"보내는 중…",slow:"아직 보내는 중입니다. 다시 누르지 않아도 됩니다.",ok:"보냈습니다. 남겨 주신 메일로 답장드리겠습니다.",email:"메일 주소를 확인해 주세요.",short:"조금 더 적어 주세요.",long:"메시지가 너무 깁니다(최대 2,000자).",busy:"오늘은 요청이 많아 받지 못했습니다. 내일 다시 시도해 주세요.",limit:"오늘 이미 몇 번 보내셨습니다. 확인 후 연락드리겠습니다.",net:"연결되지 않았습니다. 쓰신 내용은 그대로 있으니 다시 눌러 주세요.",fail:"서버에서 문제가 생겼습니다. 쓰신 내용은 그대로 있으니 잠시 뒤 다시 눌러 주세요."}};
+  function t(k){ return T[root.lang==="ko"?"ko":"en"][k]; }
+  function say(k,err){ msg.textContent=t(k); msg.classList.toggle("err",!!err); }
+  function open(){ if(dlg.showModal){ dlg.showModal(); } else { dlg.setAttribute("open",""); } msg.textContent=""; setTimeout(function(){ form.email.focus(); },30); }
+  document.querySelectorAll("[data-open-contact]").forEach(function(b){ b.addEventListener("click",open); });
+  form.querySelector("[data-close-contact]").addEventListener("click",function(){ dlg.close?dlg.close():dlg.removeAttribute("open"); });
+  dlg.addEventListener("click",function(e){ if(e.target===dlg && dlg.close) dlg.close(); });
+  if(location.hash==="#contact") open();
+  form.addEventListener("submit",function(e){
+    e.preventDefault(); if(send.disabled) return;
+    var email=form.email.value.trim(), message=form.message.value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){ say("email",1); form.email.focus(); return; }
+    if(message.length<5){ say("short",1); form.message.focus(); return; }
+    send.disabled=true; say("sending"); var slow=setTimeout(function(){ say("slow"); },4000);
+    call({action:"contact",email:email,name:form.elements["name"].value.trim(),message:message,hp:form.hp.value,lang:root.lang,page:location.pathname+location.hash},15000)
+      .then(function(r){ return r.json().catch(function(){return {}}).then(function(d){ return {s:r.status,d:d}; }); })
+      .then(function(x){
+        if(x.s===200 && x.d.ok){ say("ok"); form.reset(); return; }
+        var k={bad_email:"email",short_message:"short",long_message:"long",busy:"busy",limit:"limit"}[x.d.error]||"fail";
+        console.warn("contact 실패", x.s, x.d); say(k,1);
+      })
+      .catch(function(err){ console.warn("contact 연결 실패", err); say("net",1); })
+      .finally(function(){ clearTimeout(slow); send.disabled=false; });
+  });
+})();
 </script>
 <script>
 (function(){
