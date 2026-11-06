@@ -31,8 +31,8 @@ a{color:var(--acc);text-underline-offset:3px;text-decoration-thickness:1px}
 
 .wrap{max-width:1180px;margin:0 auto;padding:22px clamp(16px,4vw,40px) 48px}
 .bar{display:flex;justify-content:space-between;align-items:center;gap:16px}
-.home{color:var(--ink2);text-decoration:none;font-size:15px;white-space:nowrap}
-.home:hover{color:var(--ink)}
+.contact-btn{font:inherit;font-size:16px;font-weight:500;color:var(--bg);background:var(--ink);border:1px solid var(--ink);padding:10px 20px;min-height:46px;cursor:pointer;white-space:nowrap}
+.contact-btn:hover{background:var(--acc);border-color:var(--acc)}
 .langbar{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;padding:3px;background:rgba(118,120,128,.12);border-radius:10px;user-select:none;-webkit-tap-highlight-color:transparent;flex:none}
 .lang-thumb{position:absolute;top:3px;left:3px;width:calc(50% - 3px);height:calc(100% - 6px);background:var(--bg);border-radius:8px;box-shadow:0 1px 1px rgba(40,44,52,.06),0 3px 8px -2px rgba(40,44,52,.2);transition:transform .38s cubic-bezier(.32,.72,0,1)}
 html[lang="ko"] .lang-thumb{transform:translateX(100%)}
@@ -77,13 +77,47 @@ html[lang="ko"] .cap h2{font:600 19px/1.4 "IBM Plex Sans KR",sans-serif}
 .notes h2{font:500 22px/1.3 Newsreader,Georgia,serif;margin:0 0 4px}
 html[lang="ko"] .notes h2{font:600 18px/1.4 "IBM Plex Sans KR",sans-serif}
 .notes .sub{color:var(--ink3);font-size:14.5px;margin:0 0 14px}
-.rails{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px}
-.rails li{padding:10px 0;border-top:1px solid var(--line);font-size:15px;color:var(--ink2);line-height:1.55}
-.rails b{display:block;color:var(--ink);font-weight:500}
+/* rails: six titles in a tight grid; the sentence opens on tap, so the section stays one screen tall */
+.rails{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 24px;align-items:start}
+.rails details{border-top:1px solid var(--line)}
+.rails summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:10px 0;min-height:44px;font-size:15px;font-weight:500;color:var(--ink)}
+.rails summary::-webkit-details-marker{display:none}
+.rails summary::after{content:"+";color:var(--ink3);font-weight:400;flex:none}
+.rails details[open] summary::after{content:"\2212"}
+.rails summary:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.rails p{margin:-4px 0 12px;font-size:14.5px;color:var(--ink2);line-height:1.55}
+/* interests: titles only, grouped; no boxes */
+.interests{margin-top:44px;padding-top:28px;border-top:1px solid var(--line)}
+.interests h2{font:500 22px/1.3 Newsreader,Georgia,serif;margin:0 0 4px}
+html[lang="ko"] .interests h2{font:600 18px/1.4 "IBM Plex Sans KR",sans-serif}
+.kw{font:400 19px/1.5 Newsreader,Georgia,serif;font-style:italic;color:var(--ink2);margin:6px 0 20px;max-width:58rem}
+html[lang="ko"] .kw{font:400 16px/1.6 "IBM Plex Sans KR",sans-serif;font-style:normal}
+.igrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 32px}
+.igrid h3{font:400 15px/1.4 Newsreader,Georgia,serif;font-style:italic;color:var(--ink3);margin:0 0 6px}
+html[lang="ko"] .igrid h3{font:400 14px "IBM Plex Sans KR",sans-serif;font-style:normal}
+.igrid ul{list-style:none;margin:0;padding:0}
+.igrid li{padding:8px 0;border-top:1px solid var(--line);font-size:15px;color:var(--ink);line-height:1.5}
 .tools{list-style:none;margin:0;padding:0}
 .tools li{padding:10px 0;border-top:1px solid var(--line);font-size:15px;color:var(--ink2);line-height:1.55}
 .tools b{display:block;color:var(--ink);font-weight:500}
-footer{margin-top:40px;color:var(--ink3);font-size:14px}
+footer{margin-top:44px;padding-top:24px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--ink2);font-size:15px}
+footer p{margin:0}
+dialog#contact{border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:26px 26px 20px;width:min(460px,calc(100vw - 32px));box-shadow:0 24px 60px -20px rgba(30,20,10,.35)}
+dialog#contact::backdrop{background:rgba(20,18,16,.38)}
+#ct-form h2{font:500 26px/1.2 Newsreader,Georgia,serif;margin:0 0 6px}
+html[lang="ko"] #ct-form h2{font:600 20px/1.3 "IBM Plex Sans KR",sans-serif}
+.ct-note{color:var(--ink2);font-size:14.5px;margin:0 0 16px}
+#ct-form label{display:block;font-size:13.5px;color:var(--ink2);margin-bottom:12px}
+#ct-form input,#ct-form textarea{display:block;width:100%;margin-top:4px;font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);padding:9px 10px;border-radius:0}
+#ct-form input:focus,#ct-form textarea:focus{outline:2px solid var(--acc);outline-offset:-1px;border-color:transparent}
+#ct-form textarea{resize:vertical;min-height:110px}
+#ct-form .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.ct-msg{min-height:1.4em;font-size:14px;margin:0 0 10px;color:var(--ink2)}
+.ct-msg.err{color:#a3361f}
+.ct-row{display:flex;justify-content:flex-end;gap:10px}
+.ct-row button{font:inherit;font-size:15px;min-height:44px;padding:0 18px;cursor:pointer}
+.ct-cancel{background:none;border:1px solid var(--line);color:var(--ink2)}
+.ct-send{background:var(--ink);color:var(--bg);border:1px solid var(--ink)}
 
 /* phone: the bench becomes swipeable rows of screens; one group per row */
 .strip{display:none}
@@ -99,21 +133,24 @@ footer{margin-top:40px;color:var(--ink3);font-size:14px}
   .card h3{font:500 19px/1.3 Newsreader,Georgia,serif;margin:10px 0 2px}
   html[lang="ko"] .card h3{font:600 16.5px/1.4 "IBM Plex Sans KR",sans-serif}
   .card p{margin:0;font-size:14.5px;color:var(--ink2);line-height:1.55}
-  .notes{grid-template-columns:minmax(0,1fr);gap:28px;margin-top:8px}
+  .notes{grid-template-columns:minmax(0,1fr);gap:28px;margin-top:36px}
+  .igrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px}
+  .interests{margin-top:8px}
   header{padding:24px 0 18px;gap:10px}
 }
 @media (max-width:640px){
-  .rails{grid-template-columns:minmax(0,1fr)}
+  .rails{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 16px}
+  .igrid{grid-template-columns:minmax(0,1fr)}
   .langopt{min-height:44px;padding:0 18px;font-size:14px}
-  .home{min-height:44px;display:flex;align-items:center}
 }
+@media (max-width:360px){.rails{grid-template-columns:minmax(0,1fr)}}
 @media (prefers-reduced-motion:reduce){.lang-thumb,.screen img,.idx a{transition:none}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="bar">
-    <a class="home" href="../">&larr; Euichan Lee</a>
+    <button class="contact-btn" type="button" data-open-contact><span lang="en">Get in touch</span><span lang="ko">연락하기</span></button>
     <div class="langbar" role="group" aria-label="Language"><span class="lang-thumb"></span>
       <button class="langopt on" type="button" data-l="en">EN</button><button class="langopt" type="button" data-l="ko">한국어</button>
     </div>
@@ -129,18 +166,50 @@ footer{margin-top:40px;color:var(--ink3);font-size:14px}
 
   <div class="bench" id="bench"></div>
 
+  <section class="interests" aria-labelledby="int-h">
+    <h2 id="int-h"><span lang="en">Interests</span><span lang="ko">관심 분야</span></h2>
+    <p class="kw"><span lang="en">Reaching a conclusion in fewer expensive runs · surrogate models and Bayesian optimization · reliability · first-principles calculation · energy harvesting · checking what LLMs write</span><span lang="ko">비싼 실험·해석을 적게 돌려 결론 내기 · 대리모델과 베이지안 최적화 · 신뢰성 · 제일원리 계산 · 에너지 하베스팅 · LLM이 쓴 것을 검증하기</span></p>
+    <div class="igrid">
+      <div><h3><span lang="en">Research</span><span lang="ko">연구</span></h3><ul>
+        <li><span lang="en">Which oxygen group drives an rGO humidity sensor (DFT)</span><span lang="ko">rGO 습도 센서의 신호를 만드는 산소 작용기 (DFT)</span></li>
+        <li><span lang="en">Should a lab adopt sequential (Bayesian) optimization?</span><span lang="ko">순차 최적화(베이지안 최적화) 도입 검토</span></li>
+        <li><span lang="en">Can a small local LLM learn an engineer's judgment?</span><span lang="ko">엔지니어의 판단을 로컬 소형 LLM이 배울 수 있는가</span></li>
+      </ul></div>
+      <div><h3><span lang="en">Projects</span><span lang="ko">프로젝트</span></h3><ul>
+        <li><span lang="en">seqopt, a desktop app for sequential experiments</span><span lang="ko">seqopt, 실험용 순차 최적화 데스크톱 앱</span></li>
+        <li><span lang="en">Broadband acoustic energy harvesting</span><span lang="ko">광대역 음향 에너지 하베스팅</span></li>
+        <li><span lang="en">Autonomous pole-climbing and harvesting robot</span><span lang="ko">자율 기둥 등반·수확 로봇</span></li>
+      </ul></div>
+      <div><h3><span lang="en">Experience</span><span lang="ko">경력</span></h3><ul>
+        <li><span lang="en">Undergraduate research, materials lab</span><span lang="ko">소재 연구실 학부연구생</span></li>
+        <li><span lang="en">Design optimization internship</span><span lang="ko">설계최적화 인턴</span></li>
+        <li><span lang="en">Next-generation engineer program</span><span lang="ko">차세대 공학자 양성사업</span></li>
+        <li><span lang="en">Gold prize, energy AI hackathon</span><span lang="ko">에너지 AI 해커톤 금상</span></li>
+        <li><span lang="en">Startup discovery program (I-Corps)</span><span lang="ko">공공기술 창업탐색 프로그램 (I-Corps)</span></li>
+      </ul></div>
+      <div><h3><span lang="en">Skills</span><span lang="ko">기술</span></h3><ul>
+        <li><span lang="en">Bayesian optimization, GP regression</span><span lang="ko">베이지안 최적화, GP 회귀</span></li>
+        <li><span lang="en">Reliability and RBDO, Monte Carlo</span><span lang="ko">신뢰성·RBDO, 몬테카를로</span></li>
+        <li>DFT (Quantum ESPRESSO)</li>
+        <li><span lang="en">Control and power electronics</span><span lang="ko">제어·전력 회로</span></li>
+        <li><span lang="en">Commercial CAE and optimization tools</span><span lang="ko">상용 CAE·최적화 도구</span></li>
+        <li>Python, JavaScript, Git</li>
+      </ul></div>
+    </div>
+  </section>
+
   <div class="notes">
     <div>
       <h2><span lang="en">Safety rails on my own automation</span><span lang="ko">개인 자동화의 안전장치</span></h2>
       <p class="sub"><span lang="en">AI agents and bots run on a Mac mini at home. Before giving them more to do, I made sure they could not break things quietly.</span><span lang="ko">집 맥 미니에서 AI 에이전트와 봇이 돌아갑니다. 일을 더 맡기기 전에, 몰래 사고를 칠 수 없게 막는 장치부터 만들었습니다.</span></p>
-      <ul class="rails">
-        <li><b lang="en">Three approval tiers</b><b lang="ko">승인 3단계</b><span lang="en">Each agent command is safe, needs my OK, or blocked, by one shared rules file.</span><span lang="ko">에이전트 명령은 하나의 규칙 파일로 안전·승인 필요·차단을 판정합니다.</span></li>
-        <li><b lang="en">Snapshot first</b><b lang="ko">스냅샷 먼저</b><span lang="en">Full auto mode is allowed only because files are snapshotted before every change.</span><span lang="ko">파일을 바꾸기 전에 스냅샷을 뜨기 때문에 완전 자동 모드를 허용합니다.</span></li>
-        <li><b lang="en">Gate before restart</b><b lang="ko">재기동 전 게이트</b><span lang="en">Bots restart only after regression tests that push real messages through sealed handlers.</span><span lang="ko">외부 호출을 막고 실제 메시지를 흘려 보는 회귀 테스트를 통과해야 봇이 재기동됩니다.</span></li>
-        <li><b lang="en">Humans set baselines</b><b lang="ko">기준선은 사람이</b><span lang="en">Research results never update their own reference, and LLM-written numbers are checked against the source.</span><span lang="ko">연구 기준 결과는 자동으로 갱신하지 않고, LLM이 쓴 수치는 원문과 대조합니다.</span></li>
-        <li><b lang="en">Read-only by default</b><b lang="ko">기본은 읽기 전용</b><span lang="en">The mail bot never sends, calendar entries wait for a tap, each app's alerts have an off switch.</span><span lang="ko">메일 봇은 보내지 않고, 일정 등록은 승인을 거치며, 앱마다 알림을 끄는 스위치가 있습니다.</span></li>
-        <li><b lang="en">Heartbeats and a map</b><b lang="ko">하트비트와 지도</b><span lang="en">A dead bot thread restarts the process, and a checker compares the setup map with what is running.</span><span lang="ko">봇 스레드가 죽으면 프로세스를 재시작하고, 구성 지도와 실제 환경이 어긋나면 검사기가 잡습니다.</span></li>
-      </ul>
+      <div class="rails">
+        <details><summary><span lang="en">Three approval tiers</span><span lang="ko">승인 3단계</span></summary><p><span lang="en">Each agent command is safe, needs my OK, or blocked, by one shared rules file.</span><span lang="ko">에이전트 명령은 하나의 규칙 파일로 안전·승인 필요·차단을 판정합니다.</span></p></details>
+        <details><summary><span lang="en">Snapshot first</span><span lang="ko">스냅샷 먼저</span></summary><p><span lang="en">Full auto mode is allowed only because files are snapshotted before every change.</span><span lang="ko">파일을 바꾸기 전에 스냅샷을 뜨기 때문에 완전 자동 모드를 허용합니다.</span></p></details>
+        <details><summary><span lang="en">Gate before restart</span><span lang="ko">재기동 전 게이트</span></summary><p><span lang="en">Bots restart only after regression tests that push real messages through sealed handlers.</span><span lang="ko">외부 호출을 막고 실제 메시지를 흘려 보는 회귀 테스트를 통과해야 봇이 재기동됩니다.</span></p></details>
+        <details><summary><span lang="en">Humans set baselines</span><span lang="ko">기준선은 사람이</span></summary><p><span lang="en">Research results never update their own reference, and LLM-written numbers are checked against the source.</span><span lang="ko">연구 기준 결과는 자동으로 갱신하지 않고, LLM이 쓴 수치는 원문과 대조합니다.</span></p></details>
+        <details><summary><span lang="en">Read-only by default</span><span lang="ko">기본은 읽기 전용</span></summary><p><span lang="en">The mail bot never sends, calendar entries wait for a tap, each app's alerts have an off switch.</span><span lang="ko">메일 봇은 보내지 않고, 일정 등록은 승인을 거치며, 앱마다 알림을 끄는 스위치가 있습니다.</span></p></details>
+        <details><summary><span lang="en">Heartbeats and a map</span><span lang="ko">하트비트와 지도</span></summary><p><span lang="en">A dead bot thread restarts the process, and a checker compares the setup map with what is running.</span><span lang="ko">봇 스레드가 죽으면 프로세스를 재시작하고, 구성 지도와 실제 환경이 어긋나면 검사기가 잡습니다.</span></p></details>
+      </div>
     </div>
     <div>
       <h2><span lang="en">Small tools</span><span lang="ko">작은 도구</span></h2>
@@ -151,8 +220,27 @@ footer{margin-top:40px;color:var(--ink3);font-size:14px}
     </div>
   </div>
 
-  <footer><a href="../"><span lang="en">Research, experience and CV</span><span lang="ko">연구·경력·이력서</span></a> · <a href="../#contact"><span lang="en">Get in touch</span><span lang="ko">연락하기</span></a></footer>
+  <footer>
+    <p><span lang="en">Questions, feedback, or something you would like to build together?</span><span lang="ko">궁금한 점이나 의견, 함께 만들고 싶은 것이 있으면 남겨 주세요.</span></p>
+    <button class="contact-btn" type="button" data-open-contact><span lang="en">Get in touch</span><span lang="ko">연락하기</span></button>
+  </footer>
 </div>
+
+<dialog id="contact" aria-labelledby="ct-title">
+  <form id="ct-form" novalidate>
+    <h2 id="ct-title"><span lang="en">Get in touch</span><span lang="ko">연락하기</span></h2>
+    <p class="ct-note"><span lang="en">Leave your email and a short note. I read every message and reply by email.</span><span lang="ko">메일 주소와 짧은 메시지를 남겨 주세요. 모두 읽고 메일로 답장드립니다.</span></p>
+    <label><span lang="en">Your email</span><span lang="ko">메일 주소</span><input name="email" type="email" required autocomplete="email" maxlength="254"></label>
+    <label><span lang="en">Name (optional)</span><span lang="ko">이름 (선택)</span><input name="name" type="text" autocomplete="name" maxlength="120"></label>
+    <label><span lang="en">Message</span><span lang="ko">메시지</span><textarea name="message" rows="5" required maxlength="2000"></textarea></label>
+    <label class="hp" aria-hidden="true">Website<input name="hp" type="text" tabindex="-1" autocomplete="off"></label>
+    <p class="ct-msg" id="ct-msg" role="status" aria-live="polite"></p>
+    <div class="ct-row">
+      <button type="button" class="ct-cancel" data-close-contact><span lang="en">Close</span><span lang="ko">닫기</span></button>
+      <button type="submit" class="ct-send"><span lang="en">Send</span><span lang="ko">보내기</span></button>
+    </div>
+  </form>
+</dialog>
 
 <script>
 /* one list of apps feeds both the desktop index/projector and the phone strips */
@@ -229,6 +317,38 @@ function src(a){return "../assets/workshop/"+a.img+".jpg"}
   try{saved=localStorage.getItem(KEY)}catch(e){}
   set(q==="ko"||q==="en"?q:(saved==="ko"?"ko":"en"));
   document.querySelectorAll(".langopt").forEach(function(b){b.onclick=function(){set(b.dataset.l)}});
+})();
+</script>
+<script>
+/* 연락 폼 — 메인과 같은 창구(pf-profile contact → 저장 + COT봇 알림). 워크숍에서는 메인으로 보내지 않는다(2026-11-07) */
+(function(){
+  var FN="https://kjlknxwzpmdzawwrurva.supabase.co/functions/v1/pf-profile", root=document.documentElement;
+  var dlg=document.getElementById("contact"), form=document.getElementById("ct-form"), msg=document.getElementById("ct-msg"), send=form.querySelector(".ct-send");
+  var T={en:{sending:"Sending…",slow:"Still sending. No need to press again.",ok:"Sent. I will reply to your email.",email:"Please check the email address.",short:"Please write a little more.",long:"The message is too long (2,000 characters max).",busy:"Too many messages today. Please try again tomorrow.",limit:"You have already sent a few today. I will get back to you.",net:"Could not connect. Your text is kept; please try again.",fail:"Something went wrong on the server. Your text is kept; please try again shortly."},
+         ko:{sending:"보내는 중…",slow:"아직 보내는 중입니다. 다시 누르지 않아도 됩니다.",ok:"보냈습니다. 남겨 주신 메일로 답장드리겠습니다.",email:"메일 주소를 확인해 주세요.",short:"조금 더 적어 주세요.",long:"메시지가 너무 깁니다(최대 2,000자).",busy:"오늘은 요청이 많아 받지 못했습니다. 내일 다시 시도해 주세요.",limit:"오늘 이미 몇 번 보내셨습니다. 확인 후 연락드리겠습니다.",net:"연결되지 않았습니다. 쓰신 내용은 그대로 있으니 다시 눌러 주세요.",fail:"서버에서 문제가 생겼습니다. 쓰신 내용은 그대로 있으니 잠시 뒤 다시 눌러 주세요."}};
+  function t(k){ return T[root.lang==="ko"?"ko":"en"][k]; }
+  function say(k,err){ msg.textContent=t(k); msg.classList.toggle("err",!!err); }
+  function open(){ if(dlg.showModal){ dlg.showModal(); } else { dlg.setAttribute("open",""); } msg.textContent=""; setTimeout(function(){ form.email.focus(); },30); }
+  document.querySelectorAll("[data-open-contact]").forEach(function(b){ b.addEventListener("click",open); });
+  form.querySelector("[data-close-contact]").addEventListener("click",function(){ dlg.close?dlg.close():dlg.removeAttribute("open"); });
+  dlg.addEventListener("click",function(e){ if(e.target===dlg && dlg.close) dlg.close(); });
+  if(location.hash==="#contact") open();
+  form.addEventListener("submit",function(e){
+    e.preventDefault(); if(send.disabled) return;
+    var email=form.email.value.trim(), message=form.message.value.trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){ say("email",1); form.email.focus(); return; }
+    if(message.length<5){ say("short",1); form.message.focus(); return; }
+    send.disabled=true; say("sending"); var slow=setTimeout(function(){ say("slow"); },4000);
+    fetch(FN,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({action:"contact",email:email,name:form.elements["name"].value.trim(),message:message,hp:form.hp.value,lang:root.lang,page:location.pathname+location.hash}),signal:AbortSignal.timeout?AbortSignal.timeout(15000):undefined})
+      .then(function(r){ return r.json().catch(function(){return {}}).then(function(d){ return {s:r.status,d:d}; }); })
+      .then(function(x){
+        if(x.s===200 && x.d.ok){ say("ok"); form.reset(); return; }
+        var k={bad_email:"email",short_message:"short",long_message:"long",busy:"busy",limit:"limit"}[x.d.error]||"fail";
+        console.warn("contact 실패", x.s, x.d); say(k,1);
+      })
+      .catch(function(err){ console.warn("contact 연결 실패", err); say("net",1); })
+      .finally(function(){ clearTimeout(slow); send.disabled=false; });
+  });
 })();
 </script>
 <script>

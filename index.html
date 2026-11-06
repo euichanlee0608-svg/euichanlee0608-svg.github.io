@@ -53,12 +53,18 @@ a:hover{text-decoration-thickness:2px}
 .toc a{color:var(--ink3);text-decoration:none}
 .toc a:hover{color:var(--ink)}
 .toc a[aria-current="true"]{color:var(--ink);font-weight:500}
-.cv{font:inherit;font-size:15px;color:var(--ink);background:none;border:1px solid var(--ink);padding:9px 16px;cursor:pointer;min-height:44px;white-space:nowrap}
+.asks{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 22px}
+.contact-btn,.cv{font:inherit;font-size:16px;font-weight:500;padding:10px 20px;min-height:46px;cursor:pointer;white-space:nowrap;border:1px solid var(--ink)}
+.contact-btn{color:var(--bg);background:var(--ink)}
+.contact-btn:hover{background:var(--acc);border-color:var(--acc)}
+.cv{color:var(--ink);background:none}
 .cv:hover{background:var(--ink);color:var(--bg)}
 
-.contact-btn{font:inherit;font-size:15px;color:var(--acc);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
 dialog#contact{border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:26px 26px 20px;width:min(460px,calc(100vw - 32px));box-shadow:0 24px 60px -20px rgba(30,20,10,.35)}
 dialog#contact::backdrop{background:rgba(20,18,16,.38)}
+dialog#contact .m-cv{display:none}
+dialog#contact.cv .m-cv{display:inline}
+dialog#contact.cv .m-contact{display:none}
 #ct-form h2{font:500 26px/1.2 Newsreader,Georgia,serif;margin:0 0 6px}
 html[lang="ko"] #ct-form h2{font:600 20px/1.3 "IBM Plex Sans KR",sans-serif}
 .ct-note{color:var(--ink2);font-size:14.5px;margin:0 0 16px}
@@ -155,7 +161,7 @@ footer{color:var(--ink3);font-size:14px;margin-top:36px}
   .links{display:flex;flex-wrap:wrap;gap:0 18px;margin-bottom:14px}
   .aff{margin-bottom:12px}
   .langbar{margin-bottom:8px}
-  .side .cv{display:none}
+  .asks{margin-bottom:14px}
   .toc{display:flex;gap:4px;position:sticky;top:0;z-index:2;background:var(--bg);margin:8px -16px 0;padding:6px 16px;border-top:0;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
   .toc li{flex:none}
   .toc a{display:block;padding:8px 10px;white-space:nowrap;min-height:44px;line-height:28px}
@@ -228,9 +234,12 @@ footer{color:var(--ink3);font-size:14px;margin-top:36px}
     <li id="pf-email" hidden></li>
     <li id="pf-github" hidden></li>
     <li id="pf-linkedin" hidden></li>
-    <li><button class="contact-btn" type="button" data-open-contact><span lang="en">Get in touch</span><span lang="ko">연락하기</span></button></li>
     <li><a href="workshop/">Workshop</a> <span class="ws-note"><span lang="en">(side projects)</span><span lang="ko">(사이드 프로젝트)</span></span></li>
   </ul>
+  <div class="asks">
+    <button class="contact-btn" type="button" data-open-contact><span lang="en">Get in touch</span><span lang="ko">연락하기</span></button>
+    <button class="cv" type="button" data-open-contact="cv"><span lang="en">Request CV</span><span lang="ko">이력서 요청</span></button>
+  </div>
   <div class="langbar" role="group" aria-label="Language"><span class="lang-thumb"></span>
     <button class="langopt on" type="button" data-l="en">EN</button><button class="langopt" type="button" data-l="ko">한국어</button>
   </div>
@@ -240,7 +249,6 @@ footer{color:var(--ink3);font-size:14px;margin-top:36px}
     <li><a href="#projects"><span lang="en">Projects</span><span lang="ko">프로젝트</span></a></li>
     <li><a href="#education"><span lang="en">Education</span><span lang="ko">학력·기술</span></a></li>
   </ul>
-  <button class="cv" type="button" onclick="cvPDF()" hidden><span lang="en">Save as PDF CV</span><span lang="ko">이력서 PDF 저장</span></button>
 </aside>
 
 <main>
@@ -522,11 +530,11 @@ footer{color:var(--ink3);font-size:14px;margin-top:36px}
 
 <dialog id="contact" aria-labelledby="ct-title">
   <form id="ct-form" novalidate>
-    <h2 id="ct-title"><span lang="en">Get in touch</span><span lang="ko">연락하기</span></h2>
-    <p class="ct-note"><span lang="en">Leave your email and a short note. I read every message and reply by email.</span><span lang="ko">메일 주소와 짧은 메시지를 남겨 주세요. 모두 읽고 메일로 답장드립니다.</span></p>
+    <h2 id="ct-title"><span class="m-contact"><span lang="en">Get in touch</span><span lang="ko">연락하기</span></span><span class="m-cv"><span lang="en">Request my CV</span><span lang="ko">이력서 요청</span></span></h2>
+    <p class="ct-note"><span class="m-contact"><span lang="en">Leave your email and a short note. I read every message and reply by email.</span><span lang="ko">메일 주소와 짧은 메시지를 남겨 주세요. 모두 읽고 메일로 답장드립니다.</span></span><span class="m-cv"><span lang="en">Leave your email and I will send my CV by email. A line on who you are helps.</span><span lang="ko">메일 주소를 남겨 주시면 이력서를 메일로 보내드립니다. 어디서 보셨는지 한 줄 적어 주시면 도움이 됩니다.</span></span></p>
     <label><span lang="en">Your email</span><span lang="ko">메일 주소</span><input name="email" type="email" required autocomplete="email" maxlength="254"></label>
     <label><span lang="en">Name and affiliation (optional)</span><span lang="ko">이름·소속 (선택)</span><input name="name" type="text" autocomplete="name" maxlength="120"></label>
-    <label><span lang="en">Message</span><span lang="ko">메시지</span><textarea name="message" rows="5" required maxlength="2000"></textarea></label>
+    <label><span class="m-contact"><span lang="en">Message</span><span lang="ko">메시지</span></span><span class="m-cv"><span lang="en">Message (optional)</span><span lang="ko">메시지 (선택)</span></span><textarea name="message" rows="5" required maxlength="2000"></textarea></label>
     <label class="hp" aria-hidden="true">Website<input name="hp" type="text" tabindex="-1" autocomplete="off"></label>
     <p class="ct-msg" id="ct-msg" role="status" aria-live="polite"></p>
     <div class="ct-row">
@@ -678,12 +686,9 @@ footer{color:var(--ink3);font-size:14px;margin-top:36px}
   set(q==="ko"||q==="en"?q:(saved==="ko"?"ko":"en"));
   document.querySelectorAll(".langopt").forEach(function(b){b.onclick=function(){set(b.dataset.l)}});
 })();
-/* 이력서를 가져가는 것은 방문자가 할 수 있는 가장 높은 신호의 행동이라 이 페이지의 실시간 알림은 이것 하나뿐이다.
-   인쇄 대화상자를 취소해도 발사되므로 메시지는 '시도'로 적는다. */
-function cvPDF(){
-  try{ if(window.__act) window.__act("📄 포트폴리오(메인) — 이력서 PDF 저장 시도 (" + (document.documentElement.lang==="ko"?"KO":"EN") + ") · 유입: " + (document.referrer||"direct")); }catch(e){}
-  window.print();
-}
+/* 이력서는 방문자가 바로 가져가지 못한다 — '이력서 요청'으로 메일을 남기면 내가 보낸다(2026-11-07).
+   주인(?owner=1 로 표시한 브라우저)만 인쇄하면 CV 가 나온다. */
+try{ if(localStorage.getItem("__is_owner__")==="1") document.documentElement.classList.remove("no-cv"); }catch(e){}
 </script>
 <script>
 /* 개인정보는 기본 숨김(익명). 켜진 항목만 서버에서 받아 채운다 — COT봇 /pf_privacy 가 스위치.
@@ -693,34 +698,35 @@ function cvPDF(){
   function call(body,ms){ return fetch(FN,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body),signal:AbortSignal.timeout?AbortSignal.timeout(ms):undefined}); }
   function li(id,html){ var el=document.getElementById(id); if(el){ el.innerHTML=html; el.hidden=false; } }
   call({action:"get"},8000).then(function(r){return r.json()}).then(function(d){
-    var v=d.values||{}, sh=d.show||{}, cv=[];
+    var v=d.values||{}, cv=[];
     if(v.email){ li("pf-email",'<a href="mailto:'+v.email+'">'+v.email+'</a>'); cv.push(v.email); }
     if(v.github){ li("pf-github",'<a href="'+v.github+'" target="_blank" rel="noopener">GitHub</a>'); cv.push(v.github.replace(/^https?:\/\//,"")); document.querySelectorAll(".needs-github").forEach(function(a){a.hidden=false}); }
     if(v.linkedin){ li("pf-linkedin",'<a href="'+v.linkedin+'" target="_blank" rel="noopener">LinkedIn</a>'); cv.push(v.linkedin.replace(/^https?:\/\/(www\.)?/,"")); }
     var cc=document.getElementById("cv-contact"); if(cc) cc.textContent=["euichanlee0608-svg.github.io"].concat(cv).join(" · ");
-    if(sh.cv){ root.classList.remove("no-cv"); var b=document.querySelector(".cv"); if(b) b.hidden=false; }
   }).catch(function(e){ console.warn("pf-profile get 실패 — 익명 상태로 둔다", e); });
 
   var dlg=document.getElementById("contact"), form=document.getElementById("ct-form"), msg=document.getElementById("ct-msg"), send=form.querySelector(".ct-send");
-  var T={en:{sending:"Sending…",slow:"Still sending. No need to press again.",ok:"Sent. I will reply to your email.",email:"Please check the email address.",short:"Please write a little more.",long:"The message is too long (2,000 characters max).",busy:"Too many messages today. Please try again tomorrow.",limit:"You have already sent a few today. I will get back to you.",net:"Could not connect. Your text is kept; please try again.",fail:"Something went wrong on the server. Your text is kept; please try again shortly."},
-         ko:{sending:"보내는 중…",slow:"아직 보내는 중입니다. 다시 누르지 않아도 됩니다.",ok:"보냈습니다. 남겨 주신 메일로 답장드리겠습니다.",email:"메일 주소를 확인해 주세요.",short:"조금 더 적어 주세요.",long:"메시지가 너무 깁니다(최대 2,000자).",busy:"오늘은 요청이 많아 받지 못했습니다. 내일 다시 시도해 주세요.",limit:"오늘 이미 몇 번 보내셨습니다. 확인 후 연락드리겠습니다.",net:"연결되지 않았습니다. 쓰신 내용은 그대로 있으니 다시 눌러 주세요.",fail:"서버에서 문제가 생겼습니다. 쓰신 내용은 그대로 있으니 잠시 뒤 다시 눌러 주세요."}};
+  var T={en:{sending:"Sending…",slow:"Still sending. No need to press again.",ok:"Sent. I will reply to your email.",okcv:"Request sent. I will email you my CV.",email:"Please check the email address.",short:"Please write a little more.",long:"The message is too long (2,000 characters max).",busy:"Too many messages today. Please try again tomorrow.",limit:"You have already sent a few today. I will get back to you.",net:"Could not connect. Your text is kept; please try again.",fail:"Something went wrong on the server. Your text is kept; please try again shortly."},
+         ko:{sending:"보내는 중…",slow:"아직 보내는 중입니다. 다시 누르지 않아도 됩니다.",ok:"보냈습니다. 남겨 주신 메일로 답장드리겠습니다.",okcv:"요청했습니다. 남겨 주신 메일로 이력서를 보내드리겠습니다.",email:"메일 주소를 확인해 주세요.",short:"조금 더 적어 주세요.",long:"메시지가 너무 깁니다(최대 2,000자).",busy:"오늘은 요청이 많아 받지 못했습니다. 내일 다시 시도해 주세요.",limit:"오늘 이미 몇 번 보내셨습니다. 확인 후 연락드리겠습니다.",net:"연결되지 않았습니다. 쓰신 내용은 그대로 있으니 다시 눌러 주세요.",fail:"서버에서 문제가 생겼습니다. 쓰신 내용은 그대로 있으니 잠시 뒤 다시 눌러 주세요."}};
   function t(k){ return T[root.lang==="ko"?"ko":"en"][k]; }
   function say(k,err){ msg.textContent=t(k); msg.classList.toggle("err",!!err); }
-  function open(){ if(dlg.showModal){ dlg.showModal(); } else { dlg.setAttribute("open",""); } msg.textContent=""; setTimeout(function(){ form.email.focus(); },30); }
-  document.querySelectorAll("[data-open-contact]").forEach(function(b){ b.addEventListener("click",open); });
+  var kind="contact";
+  function open(k){ kind=k==="cv"?"cv":"contact"; dlg.classList.toggle("cv",kind==="cv");
+    if(dlg.showModal){ dlg.showModal(); } else { dlg.setAttribute("open",""); } msg.textContent=""; setTimeout(function(){ form.email.focus(); },30); }
+  document.querySelectorAll("[data-open-contact]").forEach(function(b){ b.addEventListener("click",function(){ open(b.getAttribute("data-open-contact")); }); });
   form.querySelector("[data-close-contact]").addEventListener("click",function(){ dlg.close?dlg.close():dlg.removeAttribute("open"); });
   dlg.addEventListener("click",function(e){ if(e.target===dlg && dlg.close) dlg.close(); });
-  if(location.hash==="#contact") open();
+  if(location.hash==="#contact") open(); else if(location.hash==="#cv") open("cv");
   form.addEventListener("submit",function(e){
     e.preventDefault(); if(send.disabled) return;
     var email=form.email.value.trim(), message=form.message.value.trim();
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){ say("email",1); form.email.focus(); return; }
-    if(message.length<5){ say("short",1); form.message.focus(); return; }
+    if(kind!=="cv" && message.length<5){ say("short",1); form.message.focus(); return; }
     send.disabled=true; say("sending"); var slow=setTimeout(function(){ say("slow"); },4000);
-    call({action:"contact",email:email,name:form.elements["name"].value.trim(),message:message,hp:form.hp.value,lang:root.lang,page:location.pathname+location.hash},15000)
+    call({action:"contact",kind:kind,email:email,name:form.elements["name"].value.trim(),message:message,hp:form.hp.value,lang:root.lang,page:location.pathname+location.hash},15000)
       .then(function(r){ return r.json().catch(function(){return {}}).then(function(d){ return {s:r.status,d:d}; }); })
       .then(function(x){
-        if(x.s===200 && x.d.ok){ say("ok"); form.reset(); return; }
+        if(x.s===200 && x.d.ok){ say(kind==="cv"?"okcv":"ok"); form.reset(); return; }
         var k={bad_email:"email",short_message:"short",long_message:"long",busy:"busy",limit:"limit"}[x.d.error]||"fail";
         console.warn("contact 실패", x.s, x.d); say(k,1);
       })

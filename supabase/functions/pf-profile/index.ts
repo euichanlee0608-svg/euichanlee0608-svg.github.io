@@ -8,7 +8,8 @@
 // actions
 //   get     {}                                     → {show, values(켜진 것만)}           누구나
 //   set     {token, field, on}                     → {show}                              COT봇 /pf_privacy
-//   contact {email, message, name?, lang?, page?, hp?} → {ok}                            누구나(일일 캡·IP당 캡)
+//   contact {email, message, kind?, name?, lang?, page?, hp?} → {ok}                     누구나(일일 캡·IP당 캡)
+//           kind:"cv" = 이력서 요청(메시지 선택, 저장 시 앞에 [이력서 요청]) — 2026-11-07 CV 는 요청제로
 //   list    {token, n?}                            → {items:[...]}                       COT봇 /pf_privacy
 // 원본 = ~/webapps/portfolio/supabase/functions/pf-profile/index.ts (배포는 Supabase MCP, verify_jwt 끔)
 import { createClient } from "jsr:@supabase/supabase-js@2";
@@ -73,10 +74,12 @@ Deno.serve(async (req) => {
   if (body.action === "contact") {
     if (String(body.hp ?? "")) return json({ ok: true });           // 봇: 조용히 성공한 척
     const email = String(body.email ?? "").trim().slice(0, 254);
-    const message = String(body.message ?? "").trim();
+    const cv = body.kind === "cv";
+    const note = String(body.message ?? "").trim();
+    const message = cv ? ("[이력서 요청]" + (note ? " " + note : "")) : note;
     const name = String(body.name ?? "").trim().slice(0, 120);
     if (!EMAIL_RE.test(email)) return json({ error: "bad_email" }, 400);
-    if (message.length < 5) return json({ error: "short_message" }, 400);
+    if (!cv && message.length < 5) return json({ error: "short_message" }, 400);
     if (message.length > 2000) return json({ error: "long_message" }, 400);
     const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "";
     const ipHash = ip ? await sha(ip + "pf") : "";
@@ -94,7 +97,7 @@ Deno.serve(async (req) => {
     // 알림(COT봇). 저장은 이미 끝났으니 알림이 꺼져 있거나 실패해도 요청은 남는다 — /pf_privacy 에서 본다
     const off = g("webapp_notify_off").split(",").map((x: string) => x.trim());
     if (!off.includes("*") && !off.includes("portfolio") && g("telegram_notify_token") && g("telegram_owner_chat")) {
-      const text = `📬 [포트폴리오] 연락 요청\n보낸 사람: ${name || "(이름 없음)"} <${email}>\n언어: ${lang} · ${page}\n\n${message.slice(0, 1500)}`;
+      const text = `${cv ? "📄 [포트폴리오] 이력서 열람 요청" : "📬 [포트폴리오] 연락 요청"}\n보낸 사람: ${name || "(이름 없음)"} <${email}>\n언어: ${lang} · ${page}\n\n${message.slice(0, 1500)}`;
       EdgeRuntime.waitUntil(fetch(`https://api.telegram.org/bot${g("telegram_notify_token")}/sendMessage`, {
         method: "POST", headers: { "content-type": "application/json" },
         body: JSON.stringify({ chat_id: g("telegram_owner_chat"), text, disable_web_page_preview: true }),
