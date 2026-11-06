@@ -1,13 +1,14 @@
 // pf-profile — 포트폴리오의 개인정보 공개 스위치 + 방문자 연락 요청 창구.
 //
-//   app_secrets.pf_show     {"email":bool,"github":bool,"linkedin":bool,"cv":bool}  무엇을 보여 줄지(기본 전부 꺼짐 = 익명)
+//   app_secrets.pf_show     {"email":bool,"github":bool,"linkedin":bool,"cv":"on"|"off"|"request"}  무엇을 보여 줄지(기본 = 익명 + 이력서는 요청제)
+//                           cv: on=PDF 저장 버튼 · off=이력서 버튼 없음 · request=이력서 요청 버튼(2026-11-07). 옛 bool 은 true→on, 그 밖→request
 //   app_secrets.pf_values   {"email","github","linkedin"} 실제 값. 페이지 소스에는 두지 않는다 — 켜진 것만 get 으로 나간다
 //   app_secrets.webapp_notify_admin  바꾸기용 토큰(텔레그램 봇 .env 의 WEBAPP_NOTIFY_TOKEN, 킬스위치와 공용)
 //   public.pf_contacts      방문자 연락 요청(서비스 롤만 읽고 씀, RLS 정책 없음)
 //
 // actions
 //   get     {}                                     → {show, values(켜진 것만)}           누구나
-//   set     {token, field, on}                     → {show}                              COT봇 /pf_privacy
+//   set     {token, field, on} | {token, field:"cv", mode} → {show}                      COT봇 /pf_privacy
 //   contact {email, message, kind?, name?, lang?, page?, hp?} → {ok}                     누구나(일일 캡·IP당 캡)
 //           kind:"cv" = 이력서 요청(메시지 선택, 저장 시 앞에 [이력서 요청]) — 2026-11-07 CV 는 요청제로
 //   list    {token, n?}                            → {items:[...]}                       COT봇 /pf_privacy
@@ -22,7 +23,9 @@ const CORS = {
 const json = (b: unknown, s = 200) =>
   new Response(JSON.stringify(b), { status: s, headers: { ...CORS, "content-type": "application/json" } });
 
-const FIELDS = ["email", "github", "linkedin", "cv"] as const;
+const FIELDS = ["email", "github", "linkedin"] as const;
+const CV_MODES = ["on", "off", "request"];
+const cvMode = (v: unknown) => (v === true ? "on" : CV_MODES.includes(String(v)) ? String(v) : "request");
 const DAILY_CAP = 40;      // 전체 하루 연락 요청 상한
 const PER_IP_CAP = 3;      // 같은 IP 하루 상한
 const EMAIL_RE = /^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,24}$/;
@@ -42,12 +45,13 @@ Deno.serve(async (req) => {
   const { data } = await db.from("app_secrets").select("key,value").in("key",
     ["pf_show", "pf_values", "webapp_notify_admin", "webapp_notify_off", "telegram_notify_token", "telegram_owner_chat"]);
   const g = (k: string) => data?.find((x: { key: string }) => x.key === k)?.value ?? "";
-  let show: Record<string, boolean> = {}, values: Record<string, string> = {};
+  let show: Record<string, unknown> = {}, values: Record<string, string> = {};
   try { show = JSON.parse(g("pf_show") || "{}"); } catch { /* 깨지면 전부 꺼짐 */ }
   try { values = JSON.parse(g("pf_values") || "{}"); } catch { /* */ }
   const view = () => {
-    const s = Object.fromEntries(FIELDS.map((f) => [f, show[f] === true]));
-    const v = Object.fromEntries(Object.entries(values).filter(([k]) => s[k]));
+    const s: Record<string, boolean | string> = Object.fromEntries(FIELDS.map((f) => [f, show[f] === true]));
+    const v = Object.fromEntries(Object.entries(values).filter(([k]) => s[k] === true));
+    s.cv = cvMode(show.cv);
     return { show: s, values: v };
   };
   const admin = () => !!g("webapp_notify_admin") && String(body.token ?? "") === g("webapp_notify_admin");
@@ -55,7 +59,12 @@ Deno.serve(async (req) => {
   if (body.action === "set") {
     if (!admin()) return json({ error: "unauthorized" }, 401);
     const f = String(body.field ?? "");
-    if (f === "*") FIELDS.forEach((k) => (show[k] = body.on === true));
+    if (f === "*") { FIELDS.forEach((k) => (show[k] = body.on === true)); show.cv = body.on === true ? "on" : "off"; }
+    else if (f === "cv") {
+      const m = body.mode !== undefined ? String(body.mode) : (body.on === true ? "on" : "off");
+      if (!CV_MODES.includes(m)) return json({ error: "unknown mode" }, 400);
+      show.cv = m;
+    }
     else if ((FIELDS as readonly string[]).includes(f)) show[f] = body.on === true;
     else return json({ error: "unknown field" }, 400);
     await db.from("app_secrets").upsert({ key: "pf_show", value: JSON.stringify(view().show) });

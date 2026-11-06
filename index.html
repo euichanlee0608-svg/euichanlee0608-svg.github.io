@@ -194,6 +194,7 @@ footer{color:var(--ink3);font-size:14px;margin-top:36px}
   .wrap{display:none!important}
   html.no-cv #cv{display:none!important}
   html.no-cv body::before{content:"CV available on request via the contact form at euichanlee0608-svg.github.io";display:block;font:11pt sans-serif;padding:20mm 0}
+  html.no-cv.cv-off body::before{content:"euichanlee0608-svg.github.io"}
   #cv{display:block;font:9.5pt/1.38 "IBM Plex Sans","IBM Plex Sans KR",Arial,sans-serif;color:#000}
   html[lang="ko"] #cv{font-family:"IBM Plex Sans KR","IBM Plex Sans",sans-serif;line-height:1.45}
   .cv-head{text-align:center;margin-bottom:8pt}
@@ -238,7 +239,8 @@ footer{color:var(--ink3);font-size:14px;margin-top:36px}
   </ul>
   <div class="asks">
     <button class="contact-btn" type="button" data-open-contact><span lang="en">Get in touch</span><span lang="ko">연락하기</span></button>
-    <button class="cv" type="button" data-open-contact="cv"><span lang="en">Request CV</span><span lang="ko">이력서 요청</span></button>
+    <button class="cv" id="cv-req" type="button" data-open-contact="cv"><span lang="en">Request CV</span><span lang="ko">이력서 요청</span></button>
+    <button class="cv" id="cv-pdf" type="button" onclick="cvPDF()" hidden><span lang="en">Save CV as PDF</span><span lang="ko">이력서 PDF 저장</span></button>
   </div>
   <div class="langbar" role="group" aria-label="Language"><span class="lang-thumb"></span>
     <button class="langopt on" type="button" data-l="en">EN</button><button class="langopt" type="button" data-l="ko">한국어</button>
@@ -686,9 +688,13 @@ footer{color:var(--ink3);font-size:14px;margin-top:36px}
   set(q==="ko"||q==="en"?q:(saved==="ko"?"ko":"en"));
   document.querySelectorAll(".langopt").forEach(function(b){b.onclick=function(){set(b.dataset.l)}});
 })();
-/* 이력서는 방문자가 바로 가져가지 못한다 — '이력서 요청'으로 메일을 남기면 내가 보낸다(2026-11-07).
-   주인(?owner=1 로 표시한 브라우저)만 인쇄하면 CV 가 나온다. */
+/* 이력서 스위치는 3단계(COT봇 /pf_privacy, 2026-11-07): on = PDF 저장 버튼 · request = 이력서 요청 버튼(기본) · off = 버튼 없음.
+   주인(?owner=1 로 표시한 브라우저)은 스위치와 상관없이 인쇄하면 CV 가 나온다. */
 try{ if(localStorage.getItem("__is_owner__")==="1") document.documentElement.classList.remove("no-cv"); }catch(e){}
+function cvPDF(){
+  try{ if(window.__act) window.__act("📄 포트폴리오(메인) — 이력서 PDF 저장 시도 (" + (document.documentElement.lang==="ko"?"KO":"EN") + ") · 유입: " + (document.referrer||"direct")); }catch(e){}
+  window.print();
+}
 </script>
 <script>
 /* 개인정보는 기본 숨김(익명). 켜진 항목만 서버에서 받아 채운다 — COT봇 /pf_privacy 가 스위치.
@@ -698,10 +704,12 @@ try{ if(localStorage.getItem("__is_owner__")==="1") document.documentElement.cla
   function call(body,ms){ return fetch(FN,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body),signal:AbortSignal.timeout?AbortSignal.timeout(ms):undefined}); }
   function li(id,html){ var el=document.getElementById(id); if(el){ el.innerHTML=html; el.hidden=false; } }
   call({action:"get"},8000).then(function(r){return r.json()}).then(function(d){
-    var v=d.values||{}, cv=[];
+    var v=d.values||{}, cvm=(d.show||{}).cv, cv=[];
     if(v.email){ li("pf-email",'<a href="mailto:'+v.email+'">'+v.email+'</a>'); cv.push(v.email); }
     if(v.github){ li("pf-github",'<a href="'+v.github+'" target="_blank" rel="noopener">GitHub</a>'); cv.push(v.github.replace(/^https?:\/\//,"")); document.querySelectorAll(".needs-github").forEach(function(a){a.hidden=false}); }
     if(v.linkedin){ li("pf-linkedin",'<a href="'+v.linkedin+'" target="_blank" rel="noopener">LinkedIn</a>'); cv.push(v.linkedin.replace(/^https?:\/\/(www\.)?/,"")); }
+    if(cvm==="on"){ root.classList.remove("no-cv"); document.getElementById("cv-pdf").hidden=false; document.getElementById("cv-req").hidden=true; }
+    else if(cvm==="off"){ document.getElementById("cv-req").hidden=true; root.classList.add("cv-off"); }
     var cc=document.getElementById("cv-contact"); if(cc) cc.textContent=["euichanlee0608-svg.github.io"].concat(cv).join(" · ");
   }).catch(function(e){ console.warn("pf-profile get 실패 — 익명 상태로 둔다", e); });
 
