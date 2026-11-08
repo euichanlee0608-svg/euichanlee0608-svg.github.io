@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Workshop · Euichan Lee</title>
-<meta name="description" content="Side projects by Euichan Lee: small web apps that each start from a question, and the times my own bots broke.">
+<meta name="description" content="Side projects by Euichan Lee: web apps and projects you can open, and the path and skills behind them.">
 <meta name="theme-color" content="#fbfaf8">
 <meta property="og:title" content="Workshop · Euichan Lee">
-<meta property="og:description" content="Small web apps that each start from a question, and the times my own bots broke.">
+<meta property="og:description" content="Web apps and projects you can open, and the path and skills behind them.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://euichanlee0608-svg.github.io/workshop/">
 <meta property="og:image" content="https://euichanlee0608-svg.github.io/assets/og-card.png">
@@ -16,8 +16,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* same paper and ink as the main page. the idea: an index on the left, a projector on the right.
-   pointing at a name puts that app's real screen on the projector; clicking opens the app. */
+/* same paper and ink as the main page.
+   the page is one header (who, at a glance) and three views behind a sticky tab line:
+   what I made / the path so far / what I work with. one view at a time, so nothing becomes a wall. */
 :root{--bg:#FBFAF8;--surf:#F3F0EA;--ink:#1C1A18;--ink2:#4F4A44;--ink3:#857C72;--line:#E4DFD7;--acc:#1f3a5f}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141210;--surf:#1E1B17;--ink:#EFEBE4;--ink2:#B3ABA1;--ink3:#8A8177;--line:#332E28;--acc:#8fb0d8}}
 :root[data-theme="dark"]{--bg:#141210;--surf:#1E1B17;--ink:#EFEBE4;--ink2:#B3ABA1;--ink3:#8A8177;--line:#332E28;--acc:#8fb0d8}
@@ -28,6 +29,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 "IBM Plex San
 html[lang="ko"] body{font-family:"IBM Plex Sans KR","IBM Plex Sans",system-ui,sans-serif;line-height:1.75}
 html[lang="en"] body [lang="ko"],html[lang="ko"] body [lang="en"]{display:none}
 a{color:var(--acc);text-underline-offset:3px;text-decoration-thickness:1px}
+.serif{font-family:Newsreader,Georgia,serif}
 
 .wrap{max-width:1180px;margin:0 auto;padding:22px clamp(16px,4vw,40px) 48px}
 .bar{display:flex;justify-content:space-between;align-items:center;gap:16px}
@@ -40,50 +42,80 @@ html[lang="ko"] .lang-thumb{transform:translateX(100%)}
 .langopt.on{color:var(--ink)}
 .langopt:focus-visible{outline:2px solid var(--acc);outline-offset:3px}
 
-header{display:flex;align-items:baseline;gap:28px;flex-wrap:wrap;padding:30px 0 26px;border-bottom:1px solid var(--line)}
-h1{font:400 clamp(44px,6vw,64px)/1 Newsreader,Georgia,serif;letter-spacing:-.02em;margin:0}
-.lede{color:var(--ink2);margin:0;max-width:34rem}
+/* header: who, then three lines at a glance */
+header{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:28px 64px;padding:34px 0 30px;align-items:end}
+h1{font:400 clamp(46px,6vw,68px)/1 Newsreader,Georgia,serif;letter-spacing:-.02em;margin:0 0 18px}
+.lede{color:var(--ink2);margin:0;max-width:36rem;font-size:17px}
+html[lang="ko"] .lede{font-size:16.5px}
+.glance{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:0 20px}
+.glance dt{font:400 16px/1.5 Newsreader,Georgia,serif;font-style:italic;color:var(--ink3);padding:11px 0;border-top:1px solid var(--line);white-space:nowrap}
+html[lang="ko"] .glance dt{font:400 14.5px/1.6 "IBM Plex Sans KR",sans-serif;font-style:normal}
+.glance dd{margin:0;padding:11px 0;border-top:1px solid var(--line);font-size:15.5px;line-height:1.5;color:var(--ink)}
 
-/* index + projector */
-.bench{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:48px;padding-top:26px;align-items:start}
+/* the tab line: three words in the serif, a 2px rule slides under the open one. it sticks while you read */
+.tabs{position:sticky;top:0;z-index:5;background:var(--bg);display:flex;gap:clamp(22px,4vw,48px);border-bottom:1px solid var(--line);margin:0 0 6px}
+.tab{position:relative;font:400 clamp(21px,2.2vw,26px)/1 Newsreader,Georgia,serif;color:var(--ink3);background:none;border:0;padding:16px 0 15px;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+html[lang="ko"] .tab{font:600 17px/1 "IBM Plex Sans KR",sans-serif;padding:17px 0 16px}
+.tab[aria-selected="true"]{color:var(--ink)}
+.tab:hover{color:var(--ink)}
+.tab:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.tabline{position:absolute;bottom:-1px;left:0;height:2px;background:var(--ink);width:0;transition:transform .35s cubic-bezier(.32,.72,0,1),width .35s cubic-bezier(.32,.72,0,1)}
+.panel{padding-top:24px;animation:in .28s ease-out}
+.panel[hidden]{display:none}
+@keyframes in{from{opacity:0}to{opacity:1}}
+.pnote{color:var(--ink3);font-size:15px;margin:0 0 18px;max-width:42rem}
+
+/* work: index on the left, projector on the right */
+.bench{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:48px;align-items:start}
 .group{margin-bottom:22px}
 .glabel{font:400 15px/1.4 Newsreader,Georgia,serif;font-style:italic;color:var(--ink3);margin:0 0 4px}
 html[lang="ko"] .glabel{font:400 14px "IBM Plex Sans KR",sans-serif;font-style:normal}
 .idx{list-style:none;margin:0;padding:0}
-.idx a{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:12px;padding:9px 0 9px 14px;margin-left:-14px;border-left:2px solid transparent;color:var(--ink2);text-decoration:none;transition:color .2s,border-color .2s,padding .25s}
-.idx .nm{font:500 22px/1.25 Newsreader,Georgia,serif;color:inherit}
-html[lang="ko"] .idx .nm{font:600 18px/1.4 "IBM Plex Sans KR",sans-serif}
+.idx a{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:baseline;gap:12px;padding:8px 0 8px 14px;margin-left:-14px;border-left:2px solid transparent;color:var(--ink2);text-decoration:none;transition:color .2s,border-color .2s,padding .25s}
+.idx .nm{font:500 21px/1.25 Newsreader,Georgia,serif;color:inherit}
+html[lang="ko"] .idx .nm{font:600 17.5px/1.4 "IBM Plex Sans KR",sans-serif}
 .idx .kind{font-size:13.5px;color:var(--ink3);white-space:nowrap}
 .idx a.on,.idx a:hover,.idx a:focus-visible{color:var(--ink);border-left-color:var(--ink);padding-left:20px;outline:none}
-
-.proj{position:sticky;top:24px}
+.proj{position:sticky;top:76px}
 .screen{display:block;aspect-ratio:16/10;overflow:hidden;background:var(--surf);border:1px solid var(--line);box-shadow:0 18px 40px -24px rgba(40,30,20,.35)}
 .screen img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;transition:opacity .35s ease-out}
 .screen img.fade{opacity:0}
-.cap{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:18px}
-.pmeta{margin:0 0 6px;font:400 15px/1.4 Newsreader,Georgia,serif;font-style:italic;color:var(--ink3)}
-html[lang="ko"] .pmeta{font:400 14px/1.5 "IBM Plex Sans KR",sans-serif;font-style:normal}
-.cap h2{font:400 clamp(26px,2.6vw,34px)/1.18 Newsreader,Georgia,serif;letter-spacing:-.01em;margin:0;max-width:30rem}
-html[lang="ko"] .cap h2{font:600 clamp(21px,2vw,25px)/1.4 "IBM Plex Sans KR",sans-serif;letter-spacing:-.01em}
-.cap p.d{margin:8px 0 0;color:var(--ink2);max-width:34rem}
+.cap{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-top:16px}
+.meta{margin:0 0 4px;font:400 15px/1.4 Newsreader,Georgia,serif;font-style:italic;color:var(--ink3)}
+html[lang="ko"] .meta{font:400 14px/1.5 "IBM Plex Sans KR",sans-serif;font-style:normal}
+.cap h2{font:500 26px/1.2 Newsreader,Georgia,serif;margin:0}
+html[lang="ko"] .cap h2{font:600 20px/1.4 "IBM Plex Sans KR",sans-serif}
+.cap p.d{margin:6px 0 0;color:var(--ink2);max-width:34rem}
 .open{flex:none;font:inherit;font-size:15px;color:var(--bg);background:var(--ink);text-decoration:none;padding:9px 18px;min-height:44px;display:inline-flex;align-items:center;white-space:nowrap}
 .open:hover{background:var(--acc)}
+.rows{display:none}
 
-/* what broke: four real incidents, each with what changed. hairline rows, no boxes, nothing to open */
-.fix{margin-top:64px;padding-top:34px;border-top:1px solid var(--ink)}
-.fix-top{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:48px;align-items:end;margin-bottom:22px}
-.fix h2{font:400 clamp(32px,4vw,46px)/1.08 Newsreader,Georgia,serif;letter-spacing:-.015em;margin:0}
-html[lang="ko"] .fix h2{font:600 clamp(25px,3vw,32px)/1.3 "IBM Plex Sans KR",sans-serif;letter-spacing:-.02em}
-.fix .sub{margin:0;color:var(--ink2);max-width:38rem}
-.fx{list-style:none;margin:0;padding:0}
-.fx li{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,5fr) minmax(0,5fr);gap:12px 40px;padding:20px 0 22px;border-top:1px solid var(--line)}
-.fx h3{font:400 23px/1.25 Newsreader,Georgia,serif;margin:0}
-html[lang="ko"] .fx h3{font:600 18px/1.45 "IBM Plex Sans KR",sans-serif}
-.fx p{margin:0;font-size:15.5px;line-height:1.6}
-.fx .was{color:var(--ink2)}
-.fx .now{color:var(--ink)}
-.rule{margin:6px 0 0;padding-top:22px;border-top:1px solid var(--line);font:400 21px/1.45 Newsreader,Georgia,serif;font-style:italic;color:var(--ink);max-width:46rem}
-html[lang="ko"] .rule{font:500 17px/1.7 "IBM Plex Sans KR",sans-serif;font-style:normal}
+/* path: years sit large in the margin; entries hang off a hairline */
+.year{display:grid;grid-template-columns:150px minmax(0,1fr);gap:0 36px}
+.year+.year{margin-top:8px}
+.yr{font:400 46px/1 Newsreader,Georgia,serif;letter-spacing:-.02em;color:var(--ink3);padding-top:16px;position:sticky;top:78px;align-self:start}
+.ent{list-style:none;margin:0;padding:0;border-left:1px solid var(--line)}
+.ent li{position:relative;padding:16px 0 18px 28px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 24px}
+.ent li+li{border-top:1px solid var(--line)}
+.ent li::before{content:"";position:absolute;left:-4px;top:26px;width:7px;height:7px;border-radius:50%;background:var(--bg);border:1px solid var(--ink3)}
+.ent li.now::before{background:var(--ink);border-color:var(--ink)}
+.ent h3{font:500 21px/1.3 Newsreader,Georgia,serif;margin:0;grid-column:1}
+html[lang="ko"] .ent h3{font:600 17px/1.5 "IBM Plex Sans KR",sans-serif}
+.ent .when{grid-column:2;grid-row:1;font:400 15px/1.6 Newsreader,Georgia,serif;font-style:italic;color:var(--ink3);white-space:nowrap;text-align:right}
+html[lang="ko"] .ent .when{font:400 14px/1.7 "IBM Plex Sans KR",sans-serif;font-style:normal}
+.ent .role{grid-column:1/-1;margin:0;font-size:14.5px;color:var(--ink3)}
+.ent p.d{grid-column:1/-1;margin:4px 0 0;color:var(--ink2);max-width:44rem}
+.ent a.go{font-size:14.5px;white-space:nowrap}
+
+/* skills: a short name, what it covers, where you can see it */
+.sk{list-style:none;margin:0;padding:0}
+.sk li{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,5fr) minmax(0,3fr);gap:6px 36px;padding:18px 0 20px;border-top:1px solid var(--line)}
+.sk h3{font:500 21px/1.3 Newsreader,Georgia,serif;margin:0}
+html[lang="ko"] .sk h3{font:600 17px/1.5 "IBM Plex Sans KR",sans-serif}
+.sk p{margin:0;color:var(--ink)}
+.sk .seen{color:var(--ink3);font-size:14.5px;line-height:1.7}
+.sk .seen a{white-space:nowrap}
+.sk li.ai p{color:var(--ink)}
 
 footer{margin-top:56px;padding-top:24px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--ink2);font-size:15px}
 footer p{margin:0}
@@ -104,32 +136,36 @@ html[lang="ko"] #ct-form h2{font:600 20px/1.3 "IBM Plex Sans KR",sans-serif}
 .ct-cancel{background:none;border:1px solid var(--line);color:var(--ink2)}
 .ct-send{background:var(--ink);color:var(--bg);border:1px solid var(--ink)}
 
-/* phone: the bench becomes swipeable rows of screens; one group per row */
-.strip{display:none}
 @media (max-width:860px){
-  .bench{display:block}
-  .idx-col,.proj{display:none}
-  .strip{display:block;margin:0 -16px 26px}
-  .strip .glabel{padding:0 16px}
-  .rail{display:grid;grid-auto-flow:column;grid-auto-columns:80%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:16px;padding:4px 16px 8px;scrollbar-width:none;overscroll-behavior-x:contain}
-  .rail::-webkit-scrollbar{display:none}
-  .card{scroll-snap-align:start;color:inherit;text-decoration:none;display:block}
-  .card .screen{box-shadow:none}
-  .card .pmeta{margin:10px 0 2px}
-  .card h3{font:400 22px/1.22 Newsreader,Georgia,serif;margin:0 0 4px}
-  html[lang="ko"] .card h3{font:600 17px/1.45 "IBM Plex Sans KR",sans-serif}
-  .card p.d{margin:0;font-size:14.5px;color:var(--ink2);line-height:1.55}
-  header{padding:24px 0 18px;gap:10px}
-  .fix{margin-top:30px;padding-top:26px}
-  .fix-top{grid-template-columns:minmax(0,1fr);gap:10px}
-  .fx li{grid-template-columns:minmax(0,1fr);gap:6px;padding:16px 0 18px}
-  .fx h3{font-size:21px}
-  .rule{font-size:19px}
+  header{grid-template-columns:minmax(0,1fr);padding:26px 0 22px;gap:22px}
+  h1{margin-bottom:12px}
+  .lede{font-size:16px}
+  .tabs{margin:0 -16px 4px;padding:0 16px;gap:26px}
+  /* phone work: screenshot thumb + text rows, readable without swiping */
+  .bench{display:none}
+  .rows{display:block}
+  .rows .glabel{margin-top:6px}
+  .rows ul{list-style:none;margin:0 0 18px;padding:0}
+  .rows a{display:grid;grid-template-columns:112px minmax(0,1fr);gap:14px;align-items:start;padding:14px 0;border-top:1px solid var(--line);color:inherit;text-decoration:none}
+  .rows .thumb{aspect-ratio:16/10;overflow:hidden;background:var(--surf);border:1px solid var(--line)}
+  .rows .thumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+  .rows h3{font:500 19px/1.25 Newsreader,Georgia,serif;margin:0}
+  html[lang="ko"] .rows h3{font:600 16px/1.45 "IBM Plex Sans KR",sans-serif}
+  .rows .meta{margin:2px 0 4px;font-size:14px}
+  .rows p.d{margin:0;font-size:14.5px;line-height:1.55;color:var(--ink2)}
+  .rows a.hl{background:var(--surf)}
+  .year{grid-template-columns:minmax(0,1fr);gap:0}
+  .yr{position:static;font-size:34px;padding:10px 0 6px}
+  .ent li{padding:14px 0 16px 22px;grid-template-columns:minmax(0,1fr)}
+  .ent .when{grid-column:1;grid-row:auto;text-align:left;order:-1}
+  .ent li::before{top:22px}
+  .sk li{grid-template-columns:minmax(0,1fr);gap:4px;padding:16px 0 18px}
 }
 @media (max-width:640px){
   .langopt{min-height:44px;padding:0 18px;font-size:14px}
 }
-@media (prefers-reduced-motion:reduce){.lang-thumb,.screen img,.idx a{transition:none}}
+@media (max-width:360px){.rows a{grid-template-columns:88px minmax(0,1fr);gap:12px}.tabs{gap:20px}}
+@media (prefers-reduced-motion:reduce){.lang-thumb,.screen img,.idx a,.tabline{transition:none}.panel{animation:none}}
 </style>
 </head>
 <body>
@@ -142,45 +178,98 @@ html[lang="ko"] #ct-form h2{font:600 20px/1.3 "IBM Plex Sans KR",sans-serif}
   </div>
 
   <header>
-    <h1>Workshop</h1>
-    <p class="lede">
-      <span lang="en">Every one of these started as a question I wanted answered. Pick one and open it; most run right in your browser.</span>
-      <span lang="ko">하나하나가 궁금한 질문에서 시작했습니다. 마음에 드는 걸 골라 열어 보세요. 대부분 브라우저에서 바로 돌아갑니다.</span>
-    </p>
+    <div>
+      <h1>Workshop</h1>
+      <p class="lede">
+        <span lang="en">I study mechanical engineering and applied AI. My work sits between simulation and optimization: reaching a design I can trust without running every expensive test. Alongside it, I build tools anyone can open in a browser.</span>
+        <span lang="ko">기계공학과 인공지능응용을 공부합니다. 시뮬레이션과 최적화 사이에서, 비싼 실험을 전부 돌리지 않고도 믿을 수 있는 설계에 닿는 방법을 다룹니다. 그 곁에서 누구나 브라우저로 열어 볼 수 있는 도구를 만듭니다.</span>
+      </p>
+    </div>
+    <dl class="glance">
+      <dt><span lang="en">Studying</span><span lang="ko">공부</span></dt>
+      <dd><span lang="en">Mechanical Engineering, Korea University, with a secondary major in Applied AI</span><span lang="ko">고려대학교 기계공학부, 인공지능응용 융합전공</span></dd>
+      <dt><span lang="en">Now</span><span lang="ko">지금</span></dt>
+      <dd><span lang="en">Undergraduate researcher in a materials lab, and design optimization intern</span><span lang="ko">소재 연구실 학부연구생, 설계최적화 인턴</span></dd>
+      <dt><span lang="en">Recently</span><span lang="ko">최근</span></dt>
+      <dd><span lang="en">Gold prize at an energy AI hackathon, and the <span style="white-space:nowrap">TeX-Corps</span> program with training at UC Berkeley</span><span lang="ko">에너지 AI 해커톤 금상, UC Berkeley 현지 교육을 포함한 <span style="white-space:nowrap">TeX-Corps</span> 과정 수료</span></dd>
+    </dl>
   </header>
 
-  <div class="bench" id="bench"></div>
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button class="tab" role="tab" id="t-work" aria-controls="work" aria-selected="true" data-t="work"><span lang="en">Work</span><span lang="ko">만든 것</span></button>
+    <button class="tab" role="tab" id="t-path" aria-controls="path" aria-selected="false" data-t="path"><span lang="en">Path</span><span lang="ko">걸어온 길</span></button>
+    <button class="tab" role="tab" id="t-skills" aria-controls="skills" aria-selected="false" data-t="skills"><span lang="en">Skills</span><span lang="ko">다루는 것</span></button>
+    <span class="tabline" aria-hidden="true"></span>
+  </nav>
 
-  <section class="fix" aria-labelledby="fix-h">
-    <div class="fix-top">
-      <h2 id="fix-h"><span lang="en">When my bots broke</span><span lang="ko">봇이 사고 친 날들</span></h2>
-      <p class="sub"><span lang="en">AI agents and bots run a good part of my own work on a Mac mini at home. None of the guards around them were planned up front. Each one is there because something went wrong first.</span><span lang="ko">집 맥 미니에서 AI 에이전트와 봇이 제 일의 상당 부분을 돌립니다. 안전장치는 미리 설계한 게 아닙니다. 전부 한 번씩 사고가 난 뒤에 생겼습니다.</span></p>
-    </div>
-    <ol class="fx">
-      <li>
-        <h3><span lang="en">All green, still broken</span><span lang="ko">점검은 전부 정상, 실제로는 고장</span></h3>
-        <p class="was"><span lang="en">The health check said every part was fine while four bugs reached me. One feature was grabbing every photo I sent and running a paid model on it.</span><span lang="ko">점검표는 전부 정상이라고 했는데 버그 네 개가 그대로 나왔습니다. 한 기능은 제가 보내는 사진을 전부 가로채 유료 모델에 돌리고 있었습니다.</span></p>
-        <p class="now"><span lang="en">Now a bot restarts only after tests push real messages through its real handlers and check which one answers.</span><span lang="ko">이제는 실제 메시지를 실제 처리 코드에 흘려 누가 반응하는지 확인한 뒤에야 봇을 다시 켭니다.</span></p>
-      </li>
-      <li>
-        <h3><span lang="en">The check that called itself</span><span lang="ko">자기 자신을 부른 검사</span></h3>
-        <p class="was"><span lang="en">I added the test suite to the health check. The tests ran the health check, which ran the tests again, and every round sent me a Telegram report.</span><span lang="ko">점검에 테스트를 넣었더니, 테스트가 점검을 부르고 점검이 다시 테스트를 불렀습니다. 한 바퀴 돌 때마다 텔레그램 보고가 날아왔습니다.</span></p>
-        <p class="now"><span lang="en">Now tests run sealed: they cannot start processes, open outside connections, or send messages.</span><span lang="ko">이제 테스트는 봉인된 채로 돕니다. 새 프로세스도, 외부 연결도, 메시지 전송도 막혀 있습니다.</span></p>
-      </li>
-      <li>
-        <h3><span lang="en">A summary that filled the gaps</span><span lang="ko">빈칸을 지어낸 요약</span></h3>
-        <p class="was"><span lang="en">A small local model summarizing papers named a sponsor the paper never mentioned and added a problem the authors never wrote. It read smoothly, which made it worse.</span><span lang="ko">논문을 요약하던 로컬 소형 모델이 원문에 없는 후원 기관을 적고, 저자가 쓰지 않은 문제를 하나 지어냈습니다. 문장이 매끄러워서 더 위험했습니다.</span></p>
-        <p class="now"><span lang="en">Now every number and name an LLM writes is checked against the source, one line at a time, by a separate and stronger model. That pipeline was retired.</span><span lang="ko">이제 LLM이 쓴 수치와 이름은 더 센 모델이 따로, 한 줄씩 원문과 대조합니다. 그 요약 파이프라인은 접었습니다.</span></p>
-      </li>
-      <li>
-        <h3><span lang="en">Off, but not really</span><span lang="ko">꺼 둔 줄 알았던 에이전트</span></h3>
-        <p class="was"><span lang="en">An agent I had switched off came back at every login after a reboot and crashed in a loop for six weeks, leaving 1.8 GB of error logs. The health check showed red. Nobody looked.</span><span lang="ko">꺼 둔 에이전트가 재부팅 뒤 로그인할 때마다 되살아나 6주 동안 죽었다 살아나기를 반복했고, 에러 로그가 1.8GB 쌓였습니다. 점검표엔 빨간불이 떠 있었는데 아무도 안 봤습니다.</span></p>
-        <p class="now"><span lang="en">Now switching something off also keeps it off through reboots, and one tap in the bot does both.</span><span lang="ko">이제 끄기는 재부팅 뒤에도 꺼진 채로 남고, 봇에서 한 번 누르면 둘 다 처리됩니다.</span></p>
-      </li>
-    </ol>
-    <p class="rule"><span lang="en">The rule all of this left behind: anything that changes the outside world, like sending, pushing or deleting, needs a log, an undo, or my tap first.</span><span lang="ko">그래서 남은 원칙 하나. 보내기·올리기·지우기처럼 바깥을 바꾸는 일은 기록, 되돌리기, 제 승인 중 하나를 먼저 갖춰야 합니다.</span></p>
+  <section class="panel" id="work" role="tabpanel" aria-labelledby="t-work">
+    <div class="bench" id="bench"></div>
+    <div class="rows" id="rows"></div>
   </section>
 
+  <section class="panel" id="path" role="tabpanel" aria-labelledby="t-path" hidden>
+    <div class="year"><div class="yr">2026</div>
+      <ol class="ent">
+        <li class="now"><h3><span lang="en">Next-Generation Engineer Program</span><span lang="ko">차세대 공학자 양성사업</span></h3><span class="when"><span lang="en">Oct – now</span><span lang="ko">10월 – 진행 중</span></span>
+          <p class="role"><span lang="en">Team member</span><span lang="ko">팀원</span></p>
+          <p class="d"><span lang="en">A team project optimizing a delivery network that combines subway, road and drones. I am responsible for the drone safety limits.</span><span lang="ko">지하철·지상·드론을 잇는 복합 물류망을 최적화하는 팀 과제에서 드론 안전 제약을 맡고 있습니다.</span></p></li>
+        <li class="now"><h3><span lang="en">Undergraduate researcher, materials lab</span><span lang="ko">소재 연구실 학부연구생</span></h3><span class="when"><span lang="en">Sep – now</span><span lang="ko">9월 – 진행 중</span></span>
+          <p class="d"><span lang="en">First-principles (DFT) calculations on which oxygen groups drive the signal in a graphene-oxide humidity sensor.</span><span lang="ko">산화 그래핀 습도 센서에서 어떤 산소 작용기가 신호를 만드는지 제일원리(DFT) 계산으로 비교하고 있습니다.</span></p></li>
+        <li class="now"><h3><span lang="en">Design optimization intern</span><span lang="ko">설계최적화 인턴</span></h3><span class="when"><span lang="en">Aug – now</span><span lang="ko">8월 – 진행 중</span></span>
+          <p class="role"><span lang="en">A design-automation startup</span><span lang="ko">설계 자동화 스타트업</span></p>
+          <p class="d"><span lang="en">Benchmarking commercial optimization and simulation software.</span><span lang="ko">상용 최적화·해석 소프트웨어를 벤치마킹하고 있습니다.</span></p></li>
+        <li><h3><span lang="en">Report on sequential optimization</span><span lang="ko">순차 최적화 도입 검토 보고</span></h3><span class="when"><span lang="en">Aug</span><span lang="ko">8월</span></span>
+          <p class="d"><span lang="en">Assessed whether Bayesian optimization could reduce a lab's measurements, and recommended securing repeat measurements before adopting it. The desktop app seqopt came out of this work.</span><span lang="ko">베이지안 최적화로 연구실의 측정 횟수를 줄일 수 있는지 검토했고, 도입 전에 반복 측정부터 확보하자고 권고했습니다. 이 작업에서 데스크톱 앱 seqopt가 나왔습니다.</span></p></li>
+        <li><h3><span lang="en">Gold prize, Energy AI Hackathon</span><span lang="ko">에너지 AI 해커톤 금상</span></h3><span class="when"><span lang="en">Jul</span><span lang="ko">7월</span></span>
+          <p class="role"><span lang="en">Korea University × Upstage · team lead</span><span lang="ko">고려대학교 × 업스테이지 · 팀장</span></p>
+          <p class="d"><span lang="en">A bidding assistant for a virtual power plant that weighs equipment risk against profit. The AI only proposes, code does the math, and a person approves. <a class="go" href="#work" data-app="vpp">See the case study</a></span><span lang="ko">설비 고장 위험과 수익을 함께 따지는 가상발전소 입찰 보조 시스템입니다. AI는 제안만 하고, 계산은 코드가, 승인은 사람이 합니다. <a class="go" href="#work" data-app="vpp">케이스 스터디 보기</a></span></p></li>
+        <li><h3><span lang="en">TeX-Corps, Korea's <span style="white-space:nowrap">I-Corps</span> program</span><span lang="ko">TeX-Corps 창업탐색 과정 <span style="white-space:nowrap">(한국형 I-Corps)</span></span></h3><span class="when"><span lang="en">Jul</span><span lang="ko">7월</span></span>
+          <p class="d"><span lang="en">Customer discovery in Korea and at UC Berkeley. The interviews changed how our team defined the problem it was solving. <a class="go" href="#work" data-app="living">See the prototype</a></span><span lang="ko">국내와 UC Berkeley 현지에서 고객 인터뷰를 했고, 그 결과로 팀이 풀 문제를 다시 정의했습니다. <a class="go" href="#work" data-app="living">시제품 보기</a></span></p></li>
+        <li><h3><span lang="en">Poster, KU AI Forum</span><span lang="ko">KU AI 포럼 포스터 발표</span></h3><span class="when">2026</span>
+          <p class="d"><span lang="en">Can a small local language model learn an engineer's judgment? I built Engineering Brain to collect the reasoning it learns from. <a class="go" href="#work" data-app="eng">Open it</a></span><span lang="ko">엔지니어의 판단 기준을 로컬 소형 언어모델이 배울 수 있는지 비교했습니다. 학습할 사고 기록을 모으려고 Engineering Brain을 만들었습니다. <a class="go" href="#work" data-app="eng">열어 보기</a></span></p></li>
+        <li><h3><span lang="en">Pole-climbing harvesting robot</span><span lang="ko">자율 기둥 등반·수확 로봇</span></h3><span class="when">2026</span>
+          <p class="role"><span lang="en">Capstone design, team of four · control and power</span><span lang="ko">창의적 기계설계, 4인 팀 · 제어·전력 담당</span></p>
+          <p class="d"><span lang="en">We rebuilt the first design after it failed, and the robot climbed on competition day.</span><span lang="ko">첫 설계가 실패한 뒤 다시 만들었고, 대회 당일 등반에 성공했습니다.</span></p></li>
+        <li><h3><span lang="en">Broadband acoustic energy harvesting</span><span lang="ko">광대역 음향 에너지 하베스팅</span></h3><span class="when">2026</span>
+          <p class="role"><span lang="en">Personal project · simulation</span><span lang="ko">개인 프로젝트 · 시뮬레이션</span></p>
+          <p class="d"><span lang="en">A wire array tuned to hold steady across many kinds of everyday noise, rather than peak in one. <a class="go" href="#work" data-app="acoustic">Try it</a></span><span lang="ko">한 소음에서만 강한 대신, 여러 생활 소음에서 고르게 버티도록 와이어 배열을 설계했습니다. <a class="go" href="#work" data-app="acoustic">직접 해 보기</a></span></p></li>
+        <li><h3><span lang="en">Secondary major in Applied AI</span><span lang="ko">인공지능응용 융합전공</span></h3><span class="when"><span lang="en">Mar</span><span lang="ko">3월</span></span></li>
+      </ol>
+    </div>
+    <div class="year"><div class="yr">2024</div>
+      <ol class="ent">
+        <li><h3><span lang="en">Military service, Republic of Korea Army</span><span lang="ko">육군 만기 전역</span></h3><span class="when"><span lang="en">2022 – 2024</span><span lang="ko">2022 – 2024</span></span></li>
+      </ol>
+    </div>
+    <div class="year"><div class="yr">2022</div>
+      <ol class="ent">
+        <li><h3><span lang="en">Mechanical Engineering, Korea University</span><span lang="ko">고려대학교 기계공학부 입학</span></h3><span class="when"><span lang="en">Mar</span><span lang="ko">3월</span></span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="panel" id="skills" role="tabpanel" aria-labelledby="t-skills" hidden>
+    <ul class="sk">
+      <li><h3><span lang="en">Optimization and reliability</span><span lang="ko">최적화·신뢰성</span></h3>
+        <p><span lang="en">Design of experiments, Bayesian optimization, Gaussian process regression, reliability-based design (RBDO, FORM), Monte Carlo</span><span lang="ko">실험계획법, 베이지안 최적화, 가우시안 프로세스 회귀, 신뢰성 기반 설계(RBDO·FORM), 몬테카를로</span></p>
+        <p class="seen"><span lang="en">Seen in </span><span lang="ko">볼 수 있는 곳 </span><a href="#work" data-app="guide"><span lang="en">Optimal Design Guide</span><span lang="ko">최적설계 시각 가이드</span></a>, <a href="#work" data-app="drone"><span lang="en">the drone intercept</span><span lang="ko">드론 요격</span></a>, seqopt</p></li>
+      <li><h3><span lang="en">Simulation</span><span lang="ko">시뮬레이션</span></h3>
+        <p><span lang="en">First-principles calculation (DFT, Quantum ESPRESSO), finite element analysis, electromechanical models</span><span lang="ko">제일원리 계산(DFT, Quantum ESPRESSO), 유한요소해석, 전기기계 모델</span></p>
+        <p class="seen"><span lang="en">Seen in </span><span lang="ko">볼 수 있는 곳 </span><a href="#work" data-app="acoustic"><span lang="en">the noise harvester</span><span lang="ko">소음 하베스터</span></a><span lang="en">, lab research</span><span lang="ko">, 연구실 연구</span></p></li>
+      <li><h3><span lang="en">Engineering software</span><span lang="ko">상용 해석·최적화 도구</span></h3>
+        <p>Altair HyperStudy, HyperMesh, Ansys optiSLang, PIDOTECH PIAnO</p>
+        <p class="seen"><span lang="en">Used at the internship</span><span lang="ko">인턴 업무에서 사용</span></p></li>
+      <li><h3><span lang="en">Software</span><span lang="ko">개발</span></h3>
+        <p>Python, scikit-learn, PySide6, JavaScript, Supabase, Git, GitHub Actions</p>
+        <p class="seen"><span lang="en">Everything under Work, and seqopt</span><span lang="ko">‘만든 것’의 모든 앱, seqopt</span></p></li>
+      <li><h3><span lang="en">Hardware</span><span lang="ko">하드웨어</span></h3>
+        <p><span lang="en">Motor control, power circuits, building and testing a working prototype</span><span lang="ko">모터 제어, 전력 회로, 실물 시제품 제작과 시험</span></p>
+        <p class="seen"><span lang="en">The pole-climbing robot</span><span lang="ko">기둥 등반 로봇</span></p></li>
+      <li class="ai"><h3><span lang="en">Working with AI</span><span lang="ko">AI와 일하는 방식</span></h3>
+        <p><span lang="en">I use AI a great deal, and I set up the check before I trust the result. Generating and verifying are separate steps, and anything that sends, publishes or deletes waits for my approval or can be undone.</span><span lang="ko">AI를 많이 쓰되, 결과를 믿기 전에 확인하는 장치부터 만듭니다. 생성과 검증은 따로 돌리고, 보내기·올리기·지우기처럼 바깥을 바꾸는 일은 제 승인을 거치거나 되돌릴 수 있게 둡니다.</span></p>
+        <p class="seen"><span lang="en">Seen in </span><span lang="ko">볼 수 있는 곳 </span><a href="#work" data-app="vpp">VPP Trade-Guard</a>, <a href="#work" data-app="eng">Engineering Brain</a></p></li>
+    </ul>
+  </section>
 
   <footer>
     <p><span lang="en">Questions, feedback, or something you would like to build together?</span><span lang="ko">궁금한 점이나 의견, 함께 만들고 싶은 것이 있으면 남겨 주세요.</span></p>
@@ -205,76 +294,96 @@ html[lang="ko"] #ct-form h2{font:600 20px/1.3 "IBM Plex Sans KR",sans-serif}
 </dialog>
 
 <script>
-/* one list of apps feeds both the desktop index/projector and the phone strips */
+/* one list of apps feeds the desktop index/projector and the phone rows. ids are what Path/Skills links point at */
 var APPS=[
- {g:0,url:"../engineering-brain/",img:"eng_quiz_web",name:["Engineering Brain","Engineering Brain"],kind:["Web app","웹앱"],
-  q:["When there is no right answer, how do you decide?","정답이 없을 때, 무엇으로 판단하나요?"],
-  d:["Poses an engineering dilemma, then grades the reasoning you write in your own words.","공학 딜레마를 내고, 직접 쓴 답의 사고 과정을 채점합니다."]},
- {g:0,url:"../news-literacy-lab/",img:"news_literacy_lab",name:["News Literacy Lab","뉴스 읽기 훈련소"],kind:["Web app","웹앱"],
-  q:["Who is missing from this article?","이 기사에서 빠진 사람은 누구일까요?"],
-  d:["Paste an article to see who has a stake, who gets quoted, and who never does.","기사를 넣으면 누가 이해관계자이고, 누구 말이 인용되고, 누가 빠졌는지 보여 줍니다."]},
- {g:0,url:"../emotion-quadrant/",img:"emotion_quadrant",name:["Emotion Quadrant","감정의 사분면"],kind:["Korean only","한국어"],
-  q:["What exactly are you feeling right now?","지금 이 감정, 정확히 뭐라고 부를까요?"],
-  d:["Narrows 434 Korean emotion words in three steps until one fits.","한국어 감정 단어 434개를 세 단계로 좁혀 딱 맞는 이름을 찾습니다."]},
- {g:0,url:"https://badaturtle.pages.dev/",img:"turtle_soup",name:["Bada Turtle Soup","바다거북 스프"],kind:["Game","게임"],
-  q:["How did this story really end?","이 이야기는 사실 어떻게 끝났을까요?"],
-  d:["A lateral-thinking horror puzzle. Ask yes-or-no questions; an AI host answers. Korean and English.","예/아니오 질문으로 진짜 결말을 맞히는 추리 호러 게임입니다. AI 주인이 답합니다. 한국어·영어."]},
- {g:0,url:"../stick-breaker-game/",img:"stick_breaker_game",name:["357 Stick Breaker","357 막대기 게임"],kind:["Game","게임"],
-  q:["Can you beat the computer at Nim?","님 게임에서 컴퓨터를 이길 수 있을까요?"],
-  d:["Rows of 3, 5 and 7 sticks, against the computer or a friend.","3·5·7개 막대 줄로 하는 님 계열 게임입니다. 컴퓨터나 친구와 둡니다."]},
- {g:0,url:"../global-footnotes/",img:"global_footnotes",name:["Global Footnotes","Global Footnotes"],kind:["Example data","예시 데이터"],
-  q:["What keeps people in their twenties up at night?","세계의 20대는 무엇 때문에 잠 못 들까요?"],
-  d:["Interviews pinned on a globe. Interviews have not started yet, so everyone on it now is a placeholder.","인터뷰를 지구본 위에 기록합니다. 아직 인터뷰 전이라 지금 지구본 위의 사람은 모두 예시입니다."]},
- {g:0,url:"../living-paper/",img:"living_paper",name:["Living Paper","Living Paper"],kind:["Prototype","시제품"],
-  q:["Can a server pass along notes it cannot read?","읽지 못하는 메모를 서버가 전달할 수 있을까요?"],
-  d:["The TeX-Corps team's meeting assistant. The relay server only ever sees ciphertext.","TeX-Corps 팀의 회의 보조 시제품입니다. 중계 서버는 암호문만 봅니다."]},
- {g:1,url:"../divert-sim/",img:"missile_sim_web",name:["Intercept a dodging drone","회피하는 드론 요격"],kind:["Project","프로젝트"],
-  q:["Can you hit a drone that dodges?","피하는 드론을 맞힐 수 있을까요?"],
-  d:["Fly a side-thruster interceptor yourself, then watch four optimizers try the same shot.","측면 추력기 요격기를 직접 조종하고, 같은 문제를 최적화 기법 4종이 푸는 걸 비교합니다."]},
- {g:1,url:"../acoustic-harvester/",img:"acoustic_web",name:["Tune a noise harvester","소음 하베스터 튜닝"],kind:["Project","프로젝트"],
-  q:["Can a few wires catch noise in 11 different places?","와이어 몇 가닥으로 11곳의 소음을 다 잡을 수 있을까요?"],
-  d:["Drag resonant wires across a noise spectrum and see whether your array holds up.","소음 스펙트럼 위에 공진 와이어를 놓고, 여러 환경에서 버티는지 봅니다."]},
- {g:1,url:"../vpp-trade-guard/",img:"vpp_trade_guard",name:["VPP Trade-Guard","VPP Trade-Guard"],kind:["Case study","케이스 스터디"],
-  q:["Is a profitable trade worth wearing out the equipment?","돈 되는 거래라도, 설비가 상하면 해야 할까요?"],
-  d:["Our hackathon project, with a what-if slider running the real objective function.","해커톤 프로젝트입니다. 실제 목적함수로 조건을 바꿔 볼 수 있습니다."]},
- {g:1,url:"../optimal-design-guide/",img:"optimal_design_guide",name:["Optimal Design Visual Guide","최적설계 시각 가이드"],kind:["Guide","가이드"],
-  q:["What does an optimizer actually do, step by step?","최적화는 실제로 한 걸음씩 무엇을 할까요?"],
-  d:["Design of experiments, surrogates, optimizers and reliability, computed and drawn live.","실험계획·대리모델·최적화·신뢰성을 브라우저에서 바로 계산해 그려 줍니다."]}
+ {g:0,id:"recruit",url:"https://recruit-lab.pages.dev/",img:"recruit_lab",name:["Team Recruiting","같이 할 사람"],kind:["Recruiting, in Korean","팀원 모집"],
+  d:["Where I recruit teammates for competition projects. Choose an open project and apply.","공모전 프로젝트 팀원을 모집하는 곳입니다. 모집 중인 프로젝트를 골라 지원할 수 있습니다."]},
+ {g:0,id:"eng",url:"../engineering-brain/",img:"eng_quiz_web",name:["Engineering Brain","Engineering Brain"],kind:["Web app","웹앱"],
+  d:["Engineering dilemmas without a single right answer. What gets graded is the reasoning you write.","정답이 하나로 정해지지 않은 공학 딜레마를 내고, 직접 쓴 풀이 과정을 채점합니다."]},
+ {g:0,id:"news",url:"../news-literacy-lab/",img:"news_literacy_lab",name:["News Literacy Lab","뉴스 읽기 훈련소"],kind:["Web app","웹앱"],
+  d:["Shows who has a stake in a news article, who is quoted, and who is left out.","기사 속 이해관계자, 인용된 사람, 빠진 사람을 짚어 줍니다."]},
+ {g:0,id:"emotion",url:"../emotion-quadrant/",img:"emotion_quadrant",name:["Emotion Quadrant","감정의 사분면"],kind:["Korean only","웹앱"],
+  d:["Narrows Korean emotion words in three steps until one fits what you feel.","한국어 감정 단어를 세 단계로 좁혀, 지금 감정에 맞는 이름을 찾습니다."]},
+ {g:0,id:"living",url:"../living-paper/",img:"living_paper",name:["Living Paper","Living Paper"],kind:["Prototype","시제품"],
+  d:["Our TeX-Corps team's meeting assistant, built so the relay server never sees the content.","TeX-Corps 팀의 회의 보조 시제품입니다. 중계 서버가 내용을 볼 수 없게 만들었습니다."]},
+ {g:0,id:"footnotes",url:"../global-footnotes/",img:"global_footnotes",name:["Global Footnotes","Global Footnotes"],kind:["Example data","예시 데이터"],
+  d:["Interviews with people in their twenties around the world, on a globe. Interviews have not started, so the people shown are placeholders.","세계 20대의 고민을 인터뷰해 지구본 위에 기록합니다. 아직 인터뷰 전이라 지금 보이는 사람은 모두 예시입니다."]},
+ {g:0,id:"turtle",url:"https://badaturtle.pages.dev/",img:"turtle_soup",name:["Bada Turtle Soup","바다거북 스프"],kind:["Game","게임"],
+  d:["A lateral-thinking mystery. Ask yes-or-no questions until you work out how the story ended.","예/아니오 질문으로 이야기의 진짜 결말을 맞히는 추리 게임입니다."]},
+ {g:0,id:"stick",url:"../stick-breaker-game/",img:"stick_breaker_game",name:["357 Stick Breaker","357 막대기 게임"],kind:["Game","게임"],
+  d:["A Nim-style game with rows of three, five and seven sticks.","3·5·7개 막대 줄로 하는 님 계열 게임입니다."]},
+ {g:1,id:"drone",url:"../divert-sim/",img:"missile_sim_web",name:["Intercept a dodging drone","회피하는 드론 요격"],kind:["Project","프로젝트"],
+  d:["Fly a side-thruster interceptor yourself, then compare optimization methods on the same problem.","측면 추력기 요격기를 직접 조종하고, 같은 문제에서 최적화 기법들을 비교합니다."]},
+ {g:1,id:"acoustic",url:"../acoustic-harvester/",img:"acoustic_web",name:["Tune a noise harvester","소음 하베스터 튜닝"],kind:["Project","프로젝트"],
+  d:["Place resonant wires on a noise spectrum and see whether the array holds up in different places.","소음 스펙트럼 위에 공진 와이어를 놓고, 여러 환경에서 버티는지 확인합니다."]},
+ {g:1,id:"vpp",url:"../vpp-trade-guard/",img:"vpp_trade_guard",name:["VPP Trade-Guard","VPP Trade-Guard"],kind:["Case study","케이스 스터디"],
+  d:["The hackathon project as a case study, with a slider that runs the real objective function.","해커톤 프로젝트 케이스 스터디입니다. 실제 목적함수로 조건을 바꿔 볼 수 있습니다."]},
+ {g:1,id:"guide",url:"../optimal-design-guide/",img:"optimal_design_guide",name:["Optimal Design Guide","최적설계 시각 가이드"],kind:["Guide","가이드"],
+  d:["Design of experiments, surrogate models, optimizers and reliability, computed and drawn in the browser.","실험계획·대리모델·최적화·신뢰성을 브라우저에서 바로 계산해 그려 줍니다."]}
 ];
-var GROUPS=[["Play with these","가볍게 열어 보기"],["Research you can touch","직접 만져 보는 연구"]];
+var GROUPS=[["Web apps","웹앱"],["Projects you can try","직접 만져 보는 프로젝트"]];
 function bi(p){return '<span lang="en">'+p[0]+'</span><span lang="ko">'+p[1]+'</span>'}
-function meta(a){return '<span lang="en">'+a.name[0]+' · '+a.kind[0]+'</span><span lang="ko">'+a.name[1]+' · '+a.kind[1]+'</span>'}
 function src(a){return "../assets/workshop/"+a.img+".jpg"}
+function link(a){return 'href="'+a.url+'" target="_blank" rel="noopener"'}
+var showApp=function(){};
 (function build(){
-  var idx='<div class="idx-col">', strip='';
+  var idx='<div class="idx-col">', rows='';
   GROUPS.forEach(function(g,gi){
     idx+='<div class="group"><p class="glabel">'+bi(g)+'</p><ul class="idx">';
-    strip+='<div class="strip"><p class="glabel">'+bi(g)+'</p><div class="rail">';
+    rows+='<p class="glabel">'+bi(g)+'</p><ul>';
     APPS.forEach(function(a,i){ if(a.g!==gi) return;
-      idx+='<li><a href="'+a.url+'" target="_blank" rel="noopener" data-i="'+i+'"><span class="nm">'+bi(a.name)+'</span><span class="kind">'+bi(a.kind)+'</span></a></li>';
-      strip+='<a class="card" href="'+a.url+'" target="_blank" rel="noopener"><div class="screen"><img src="'+src(a)+'" alt="" width="960" height="600" loading="lazy"></div><p class="pmeta">'+meta(a)+'</p><h3>'+bi(a.q)+'</h3><p class="d">'+bi(a.d)+'</p></a>';
+      idx+='<li><a '+link(a)+' data-i="'+i+'"><span class="nm">'+bi(a.name)+'</span><span class="kind">'+bi(a.kind)+'</span></a></li>';
+      rows+='<li><a '+link(a)+' id="r-'+a.id+'"><span class="thumb"><img src="'+src(a)+'" alt="" width="960" height="600" loading="lazy"></span><span><h3>'+bi(a.name)+'</h3><p class="meta">'+bi(a.kind)+'</p><p class="d">'+bi(a.d)+'</p></span></a></li>';
     });
-    idx+='</ul></div>'; strip+='</div></div>';
+    idx+='</ul></div>'; rows+='</ul>';
   });
   idx+='</div>';
   var proj='<div class="proj"><a class="screen" id="pshot" target="_blank" rel="noopener"><img id="pimg" alt="" width="960" height="600"></a>'
-    +'<div class="cap"><div><p class="pmeta" id="pmeta"></p><h2 id="pq"></h2><p class="d" id="pdesc"></p></div>'
+    +'<div class="cap"><div><p class="meta" id="pkind"></p><h2 id="pname"></h2><p class="d" id="pdesc"></p></div>'
     +'<a class="open" id="popen" target="_blank" rel="noopener">'+bi(["Open","열기"])+'</a></div></div>';
-  document.getElementById("bench").innerHTML=idx+proj+strip;
-  /* preload the screens so switching is instant */
-  APPS.forEach(function(a){var im=new Image(); im.src=src(a)});
+  document.getElementById("bench").innerHTML=idx+proj;
+  document.getElementById("rows").innerHTML=rows;
   var links=[].slice.call(document.querySelectorAll(".idx a")), cur=-1, img=document.getElementById("pimg");
   function show(i){ if(i===cur) return; var first=cur<0; cur=i; var a=APPS[i];
     links.forEach(function(l){l.classList.toggle("on",+l.dataset.i===i)});
     if(first){ img.src=src(a); } else { img.classList.add("fade"); setTimeout(function(){ img.src=src(a); img.classList.remove("fade"); },120); }
-    document.getElementById("pmeta").innerHTML=meta(a);
-    document.getElementById("pq").innerHTML=bi(a.q);
+    document.getElementById("pkind").innerHTML=bi(a.kind);
+    document.getElementById("pname").innerHTML=bi(a.name);
     document.getElementById("pdesc").innerHTML=bi(a.d);
     document.getElementById("popen").href=a.url; document.getElementById("pshot").href=a.url;
   }
   links.forEach(function(l){ var i=+l.dataset.i;
     l.addEventListener("mouseenter",function(){show(i)}); l.addEventListener("focus",function(){show(i)}); });
   show(0);
+  /* preload the desktop screens after first paint */
+  if(matchMedia("(min-width:861px)").matches) setTimeout(function(){APPS.forEach(function(a){var im=new Image(); im.src=src(a)})},600);
+  showApp=function(id){ var i=-1; APPS.forEach(function(a,k){ if(a.id===id) i=k; }); if(i<0) return;
+    if(matchMedia("(max-width:860px)").matches){
+      var r=document.getElementById("r-"+id); r.scrollIntoView({block:"center"}); r.classList.add("hl"); setTimeout(function(){r.classList.remove("hl")},1600);
+    } else { show(i); }
+  };
+})();
+/* tabs: one view at a time; #work #path #skills open a view directly */
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll(".tab")), bar=document.querySelector(".tabs"), line=document.querySelector(".tabline");
+  function place(){ var t=document.querySelector('.tab[aria-selected="true"]'); line.style.width=t.offsetWidth+"px"; line.style.transform="translateX("+t.offsetLeft+"px)"; }
+  function open(name,keep){
+    tabs.forEach(function(t){ var on=t.dataset.t===name; t.setAttribute("aria-selected",on); t.tabIndex=on?0:-1; document.getElementById(t.dataset.t).hidden=!on; });
+    place();
+    if(!keep){ var top=bar.getBoundingClientRect().top+window.scrollY-1; if(window.scrollY>top) window.scrollTo(0,top); }
+    if(window.__pv) window.__pv(location.pathname+"#"+name);
+  }
+  tabs.forEach(function(t,k){
+    t.addEventListener("click",function(){ open(t.dataset.t); try{history.replaceState(null,"","#"+t.dataset.t)}catch(e){} });
+    t.addEventListener("keydown",function(e){ var d=e.key==="ArrowRight"?1:e.key==="ArrowLeft"?-1:0; if(!d) return; var n=tabs[(k+d+tabs.length)%tabs.length]; n.focus(); n.click(); });
+  });
+  document.addEventListener("click",function(e){ var a=e.target.closest("a[data-app]"); if(!a) return; e.preventDefault(); open("work"); try{history.replaceState(null,"","#work")}catch(e){} setTimeout(function(){showApp(a.dataset.app)},30); });
+  var h=location.hash.slice(1); open(["work","path","skills"].indexOf(h)>=0?h:"work",true);
+  /* tab widths change with web fonts and language; re-measure whenever any tab resizes */
+  if(window.ResizeObserver){ var ro=new ResizeObserver(place); tabs.forEach(function(t){ro.observe(t)}); }
+  window.addEventListener("resize",place);
+  /* a #path link opens that view but keeps the header in sight (no native jump to the panel) */
+  if(["work","path","skills"].indexOf(h)>=0) window.addEventListener("load",function(){ setTimeout(function(){ window.scrollTo(0,0); },0); });
 })();
 (function(){
   var root=document.documentElement, KEY="pf_lang";
